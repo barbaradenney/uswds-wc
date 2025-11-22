@@ -105,6 +105,7 @@ jobs:
   snyk-security:
     name: Snyk Security Scan
     runs-on: ubuntu-latest
+    if: ${{ secrets.SNYK_TOKEN != '' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -179,7 +180,7 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || format('HEAD~{0}', github.event.commits && length(github.event.commits) || '1') }}
+          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'HEAD~1' }}
           head: HEAD
           extra_args: --debug --only-verified
 
