@@ -25,8 +25,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import pkg from 'glob';
-const { glob } = pkg;
+import { glob } from 'glob';
 import { getAllComponentPaths, getAllComponentNames, getComponentPath } from '../utils/find-components.js';
 
 const __filename = fileURLToPath(import.meta.url);
