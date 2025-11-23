@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # Skip if CHROMATIC_PROJECT_TOKEN is not configured
-    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' }}
+    if: ${{ secrets.CHROMATIC_PROJECT_TOKEN != '' || github.event_name == 'pull_request' }}
 
     steps:
       - name: Checkout code
