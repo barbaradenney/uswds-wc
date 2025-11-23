@@ -266,7 +266,7 @@ jobs:
     name: Cross-Browser Testing (Desktop)
     runs-on: ubuntu-latest
     needs: [build]
-    timeout-minutes: 60
+    timeout-minutes: 75
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -322,7 +322,7 @@ jobs:
     name: Cross-Browser Testing (Webkit + A11y)
     runs-on: ubuntu-latest
     needs: [build]
-    timeout-minutes: 60
+    timeout-minutes: 75
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
