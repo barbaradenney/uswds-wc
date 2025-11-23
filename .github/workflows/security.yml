@@ -3,8 +3,12 @@ name: Security & Quality Checks
 on:
   push:
     branches: [main, develop]
+    paths-ignore:
+      - '.github/workflows/security.yml'
   pull_request:
     branches: [main, develop]
+    paths-ignore:
+      - '.github/workflows/security.yml'
   schedule:
     # Run security checks daily at 2 AM EST
     - cron: '0 7 * * *'

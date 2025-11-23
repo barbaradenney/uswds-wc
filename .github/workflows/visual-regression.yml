@@ -9,6 +9,8 @@ on:
       - '.storybook/**'
       - 'package.json'
       - 'package-lock.json'
+    paths-ignore:
+      - '.github/workflows/visual-regression.yml'
   pull_request:
     branches: [main, develop]
     paths:
@@ -17,6 +19,8 @@ on:
       - '.storybook/**'
       - 'package.json'
       - 'package-lock.json'
+    paths-ignore:
+      - '.github/workflows/visual-regression.yml'
 
 # Prevent concurrent runs on the same PR
 concurrency:
