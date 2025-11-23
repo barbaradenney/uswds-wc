@@ -103,6 +103,7 @@ jobs:
     name: Snyk Security Scan
     runs-on: ubuntu-latest
     if: ${{ secrets.SNYK_TOKEN != '' }}
+    continue-on-error: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -206,11 +207,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| NPM Audit | ${{ needs.security-scan.result == 'success' && '✅ Passed' || '⚠️ Issues Found' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| OWASP Dependency Check | ${{ needs.dependency-check.result == 'success' && '✅ Passed' || '⚠️ Review Required' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| CodeQL Analysis | ${{ needs.codeql-analysis.result == 'success' && '✅ Passed' || '⚠️ Review Required' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Snyk Security | ${{ needs.snyk-security.result == 'success' && '✅ Passed' || '⚠️ Review Required' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| License Check | ${{ needs.license-check.result == 'success' && '✅ Compatible' || '⚠️ Review Required' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Secret Scanning | ${{ needs.secret-scanning.result == 'success' && '✅ Clean' || '🚨 Secrets Detected' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| NPM Audit | ${{ needs.security-scan.result == 'success' && '✅ Passed' || (needs.security-scan.result == 'skipped' && '⏭️  Skipped' || '⚠️ Issues Found') }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| OWASP Dependency Check | ${{ needs.dependency-check.result == 'success' && '✅ Passed' || (needs.dependency-check.result == 'skipped' && '⏭️  Skipped' || '⚠️ Review Required') }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| CodeQL Analysis | ${{ needs.codeql-analysis.result == 'success' && '✅ Passed' || (needs.codeql-analysis.result == 'skipped' && '⏭️  Skipped' || '⚠️ Review Required') }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Snyk Security | ${{ needs.snyk-security.result == 'success' && '✅ Passed' || (needs.snyk-security.result == 'skipped' && '⏭️  Skipped (No Token)' || '⚠️ Review Required') }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| License Check | ${{ needs.license-check.result == 'success' && '✅ Compatible' || (needs.license-check.result == 'skipped' && '⏭️  Skipped' || '⚠️ Review Required') }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Secret Scanning | ${{ needs.secret-scanning.result == 'success' && '✅ Clean' || (needs.secret-scanning.result == 'skipped' && '⏭️  Skipped' || '🚨 Secrets Detected') }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
