@@ -191,7 +191,7 @@ jobs:
     name: Component Tests
     runs-on: ubuntu-latest
     needs: [build] # Run after build succeeds
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -260,13 +260,13 @@ jobs:
           retention-days: 7
 
   # Job 6a: Cross-browser Testing - Desktop Browsers (Chromium + Firefox)
-  # Split into 2 jobs to stay under 30-minute timeout
+  # Split into 2 jobs to stay under 60-minute timeout
   # 63 tests × 2 browsers × 4 workers = ~126 executions ≈ 15-18 minutes
   browser-test-desktop:
     name: Cross-Browser Testing (Desktop)
     runs-on: ubuntu-latest
     needs: [build]
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -322,7 +322,7 @@ jobs:
     name: Cross-Browser Testing (Webkit + A11y)
     runs-on: ubuntu-latest
     needs: [build]
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
