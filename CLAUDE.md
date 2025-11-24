@@ -1271,32 +1271,39 @@ bash scripts/release/release.sh --help
 **THESE ACTIONS ARE PROHIBITED AND ENFORCED:**
 
 ❌ **Manually edit version fields** in any package.json
-   - Pre-commit hook BLOCKS this
-   - GitHub Actions REJECTS the PR
+
+- Pre-commit hook BLOCKS this
+- GitHub Actions REJECTS the PR
 
 ❌ **Skip validation steps**
-   - Release script runs ALL validations
-   - Cannot be bypassed
+
+- Release script runs ALL validations
+- Cannot be bypassed
 
 ❌ **Create releases outside the script**
-   - Pre-commit hook BLOCKS manual commits
-   - CI pipeline REJECTS manual changes
+
+- Pre-commit hook BLOCKS manual commits
+- CI pipeline REJECTS manual changes
 
 ❌ **Bypass pre-release checks**
-   - Release script enforces all checks
-   - No escape hatch
+
+- Release script enforces all checks
+- No escape hatch
 
 ❌ **Forget to merge back to develop**
-   - Release script handles this automatically
-   - Step 15 of process
+
+- Release script handles this automatically
+- Step 15 of process
 
 ❌ **Skip changelog generation**
-   - Release script generates automatically
-   - Uses conventional commits
+
+- Release script generates automatically
+- Uses conventional commits
 
 ❌ **Manually create GitHub releases**
-   - Release script creates them
-   - Includes full changelog
+
+- Release script creates them
+- Includes full changelog
 
 ### ⚠️ Consequences of Violations
 

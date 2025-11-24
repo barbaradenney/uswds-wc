@@ -1,15 +1,6 @@
 name: Visual Regression Testing
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'packages/*/src/**'
-      - '.storybook/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-    paths-ignore:
-      - '.github/workflows/visual-regression.yml'
   pull_request:
     branches: [main, develop]
     paths:
@@ -30,8 +21,6 @@ jobs:
     name: Visual Regression Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # Skip if CHROMATIC_PROJECT_TOKEN is not configured
-    if: github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code
