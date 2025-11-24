@@ -212,7 +212,19 @@ export class USATable extends USWDSBaseComponent {
 
     // Ensure announcement region persists after re-renders
     // (Lit re-renders wipe out USWDS-set live region content otherwise)
-    this.ensureRequiredElements();
+    // Only run when properties that affect the table structure change
+    // to avoid infinite update loops from DOM manipulation
+    if (
+      changedProperties.has('headers') ||
+      changedProperties.has('data') ||
+      changedProperties.has('scrollable') ||
+      changedProperties.has('sortColumn') ||
+      changedProperties.has('sortDirection') ||
+      changedProperties.has('striped') ||
+      changedProperties.has('borderless')
+    ) {
+      this.ensureRequiredElements();
+    }
   }
 
   private applySlottedContent() {
