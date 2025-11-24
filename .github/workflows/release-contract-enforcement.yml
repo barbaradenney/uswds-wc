@@ -1,0 +1,169 @@
+name: Release Contract Enforcement
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  enforce-release-contract:
+    runs-on: ubuntu-latest
+    name: Enforce Release Script Usage
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for manual version bumps
+        id: check_versions
+        run: |
+          echo "Checking for version changes..."
+
+          # Get the base branch to compare against
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            # For push events, compare with previous commit
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          # Check if any package.json files changed versions
+          CHANGED_VERSIONS=$(git diff $BASE_SHA...HEAD --name-only | grep 'package.json$' || true)
+
+          if [ -z "$CHANGED_VERSIONS" ]; then
+            echo "No package.json files changed"
+            echo "has_version_changes=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check if versions actually changed
+          VERSION_CHANGES=false
+          for file in $CHANGED_VERSIONS; do
+            DIFF=$(git diff $BASE_SHA...HEAD -- "$file" | grep '"version":' || true)
+            if [ ! -z "$DIFF" ]; then
+              echo "Version changed in $file"
+              VERSION_CHANGES=true
+            fi
+          done
+
+          echo "has_version_changes=$VERSION_CHANGES" >> $GITHUB_OUTPUT
+
+      - name: Validate release script usage
+        if: steps.check_versions.outputs.has_version_changes == 'true'
+        run: |
+          echo "::error::Manual version bump detected!"
+          echo ""
+          echo "═══════════════════════════════════════════════════════════"
+          echo "  MANUAL RELEASES ARE STRICTLY PROHIBITED"
+          echo "═══════════════════════════════════════════════════════════"
+          echo ""
+          echo "All releases MUST be done through the official release script:"
+          echo ""
+          echo "  pnpm run release:patch   # Bug fixes"
+          echo "  pnpm run release:minor   # New features"
+          echo "  pnpm run release:major   # Breaking changes"
+          echo ""
+          echo "The release script ensures:"
+          echo "  ✓ All validation steps are run"
+          echo "  ✓ Changelog is generated correctly"
+          echo "  ✓ All packages are built and tested"
+          echo "  ✓ npm packages are published"
+          echo "  ✓ Storybook is deployed"
+          echo "  ✓ GitHub release is created"
+          echo "  ✓ Changes are merged to develop"
+          echo ""
+          echo "See CLAUDE.md for complete documentation."
+          echo ""
+
+          # Check commit message for release script signature
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if echo "$COMMIT_MSG" | grep -q "chore(release): bump version to"; then
+            if echo "$COMMIT_MSG" | grep -q "Generated with \[Claude Code\]"; then
+              echo "✓ Release script signature found - allowing"
+              exit 0
+            fi
+          fi
+
+          echo "::error::This PR contains manual version changes."
+          echo "::error::Please use the release script instead."
+          exit 1
+
+      - name: Comment on PR (if applicable)
+        if: |
+          github.event_name == 'pull_request' &&
+          steps.check_versions.outputs.has_version_changes == 'true' &&
+          failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const message = `## ❌ Release Contract Violation
+
+            This PR contains manual version changes, which is **strictly prohibited**.
+
+            ### 🚨 Required Action
+
+            All releases MUST be done through the official release script:
+
+            \`\`\`bash
+            # For bug fixes
+            pnpm run release:patch
+
+            # For new features
+            pnpm run release:minor
+
+            # For breaking changes
+            pnpm run release:major
+            \`\`\`
+
+            ### Why This Matters
+
+            The release script ensures:
+            - ✅ All validation steps are run
+            - ✅ Changelog is generated correctly
+            - ✅ All packages are built and tested
+            - ✅ npm packages are published with provenance
+            - ✅ Storybook is deployed
+            - ✅ GitHub release is created
+            - ✅ Changes are merged to develop branch
+
+            ### Next Steps
+
+            1. Close this PR
+            2. Checkout main branch
+            3. Run the appropriate release command above
+            4. The script handles everything automatically
+
+            See \`CLAUDE.md\` for complete documentation.`;
+
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: message
+            });
+
+      - name: Success message
+        if: steps.check_versions.outputs.has_version_changes == 'false'
+        run: |
+          echo "✓ No version changes detected - all good!"

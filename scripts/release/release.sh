@@ -5,6 +5,10 @@
 
 set -e
 
+# Mark that we're running from the release script
+# This allows validation hooks to bypass release contract checks
+export RELEASE_SCRIPT_RUNNING=true
+
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'

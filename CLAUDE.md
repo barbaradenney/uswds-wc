@@ -1188,9 +1188,20 @@ See [docs/CODE_QUALITY_ARCHITECTURAL_REVIEW.md](docs/CODE_QUALITY_ARCHITECTURAL_
 
 ## Release Management
 
-### 🚨 MANDATORY: Use Release Script for ALL Releases
+### 🚨 CRITICAL: Release Contract - STRICTLY ENFORCED
 
-**CRITICAL RULE**: All releases MUST be performed using the official release script. Manual releases are prohibited.
+**ABSOLUTE RULE**: All releases MUST be performed using the official release script. Manual releases are **STRICTLY PROHIBITED** and will be **BLOCKED BY MULTIPLE ENFORCEMENT MECHANISMS**.
+
+### 🔒 Enforcement Mechanisms
+
+This is not a suggestion - it's enforced by:
+
+1. **Pre-commit Hook** - Blocks manual version changes before commit
+2. **GitHub Actions** - Rejects PRs with manual version bumps
+3. **PR Comments** - Automatically comments on violations
+4. **Contract Validator** - Validates release script signature
+
+**If you attempt a manual release, your commit WILL BE BLOCKED.**
 
 ### Release Script Usage
 
@@ -1255,16 +1266,49 @@ bash scripts/release/release.sh --help
 **Safety**: Prevents skipped steps and forgotten tasks
 **Documentation**: Auto-generates changelog and release notes
 
-### ❌ What NOT to Do
+### ❌ What NOT to Do - VIOLATIONS WILL BE BLOCKED
 
-**NEVER:**
-- Manually bump version numbers
-- Skip validation steps
-- Create releases without the script
-- Bypass pre-release checks
-- Forget to merge back to develop
-- Skip changelog generation
-- Manually create GitHub releases
+**THESE ACTIONS ARE PROHIBITED AND ENFORCED:**
+
+❌ **Manually edit version fields** in any package.json
+   - Pre-commit hook BLOCKS this
+   - GitHub Actions REJECTS the PR
+
+❌ **Skip validation steps**
+   - Release script runs ALL validations
+   - Cannot be bypassed
+
+❌ **Create releases outside the script**
+   - Pre-commit hook BLOCKS manual commits
+   - CI pipeline REJECTS manual changes
+
+❌ **Bypass pre-release checks**
+   - Release script enforces all checks
+   - No escape hatch
+
+❌ **Forget to merge back to develop**
+   - Release script handles this automatically
+   - Step 15 of process
+
+❌ **Skip changelog generation**
+   - Release script generates automatically
+   - Uses conventional commits
+
+❌ **Manually create GitHub releases**
+   - Release script creates them
+   - Includes full changelog
+
+### ⚠️ Consequences of Violations
+
+Attempting manual releases will result in:
+
+1. **Immediate commit rejection** by pre-commit hook
+2. **PR rejection** by GitHub Actions
+3. **Automated PR comment** explaining the violation
+4. **CI pipeline failure**
+5. **Required use of release script** to proceed
+
+**There is no way to bypass these protections without explicitly disabling validation** (which you should NEVER do for releases).
 
 ### Manual Release Steps (Emergency Only)
 

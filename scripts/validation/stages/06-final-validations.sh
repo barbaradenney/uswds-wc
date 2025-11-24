@@ -65,6 +65,16 @@ node scripts/validate/validate-documentation-placeholders.cjs > /dev/null 2>&1 |
 }
 echo "   ✅ Pass"
 
+# Stage 11c/11: Release contract validation
+echo "🔒 11c/11 Release contract validation..."
+node scripts/validate/validate-release-contract.js || {
+  echo ""
+  echo "❌ Release contract violated!"
+  echo "   Use the official release script instead of manual changes"
+  exit 1
+}
+echo "   ✅ Pass"
+
 # Stage 11c/11: Storybook MDX validation
 echo "📖 11c/11 Storybook MDX files..."
 node scripts/validate/validate-storybook-mdx.js > /dev/null 2>&1 || {
