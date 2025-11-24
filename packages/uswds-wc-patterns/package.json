@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/patterns",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "USWDS Patterns - Web Component Compositions",
   "type": "module",
   "main": "./dist/index.js",
