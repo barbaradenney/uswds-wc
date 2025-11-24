@@ -230,13 +230,7 @@ export class USAContactPreferencesPattern extends LitElement {
     return html`
       <fieldset class="usa-fieldset" aria-describedby="${fieldsetDescribedBy}">
         <legend class="usa-legend usa-legend--large">${this.label}</legend>
-        ${this.hint
-          ? html`
-              <span class="usa-hint" id="${hintId}">
-                ${this.hint}
-              </span>
-            `
-          : ''}
+        ${this.hint ? html` <span class="usa-hint" id="${hintId}"> ${this.hint} </span> ` : ''}
 
         <div class="usa-hint margin-top-1" id="${optionalHintId}">
           Select all that apply (optional)
@@ -257,7 +251,6 @@ export class USAContactPreferencesPattern extends LitElement {
             ></usa-checkbox>
           `
         )}
-
         ${this.showAdditionalInfo
           ? html`
               <div class="margin-top-3">

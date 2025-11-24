@@ -379,6 +379,58 @@ describe('USACheckbox', () => {
       expect(element.checked).toBe(true);
     });
 
+    it('should change state when label is clicked', async () => {
+      element.label = 'Test Label';
+      await element.updateComplete;
+
+      const checkbox = element.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      const label = element.querySelector('label') as HTMLLabelElement;
+
+      expect(checkbox).toBeTruthy();
+      expect(label).toBeTruthy();
+      expect(checkbox.checked).toBe(false);
+
+      // Click the label (simulates user clicking the label text)
+      label.click();
+      await element.updateComplete;
+
+      // Checkbox should now be checked
+      expect(checkbox.checked).toBe(true);
+      expect(element.checked).toBe(true);
+
+      // Click again - should toggle back
+      label.click();
+      await element.updateComplete;
+
+      expect(checkbox.checked).toBe(false);
+      expect(element.checked).toBe(false);
+    });
+
+    it('should change state when checkbox input is clicked directly', async () => {
+      element.label = 'Test Label';
+      await element.updateComplete;
+
+      const checkbox = element.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+      expect(checkbox).toBeTruthy();
+      expect(checkbox.checked).toBe(false);
+
+      // Click the checkbox directly
+      checkbox.click();
+      await element.updateComplete;
+
+      // Checkbox should now be checked
+      expect(checkbox.checked).toBe(true);
+      expect(element.checked).toBe(true);
+
+      // Click again - should toggle back
+      checkbox.click();
+      await element.updateComplete;
+
+      expect(checkbox.checked).toBe(false);
+      expect(element.checked).toBe(false);
+    });
+
     it('should dispatch input event when checkbox is toggled', async () => {
       await element.updateComplete;
 

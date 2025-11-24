@@ -19,6 +19,7 @@ The Multi-Step Form Pattern provides a simple, focused way to manage multi-step 
 ## When to Use the Component Directly
 
 Use form components directly when:
+
 - Single-page form (no steps)
 - Simple form with few fields
 - No step navigation needed
@@ -28,7 +29,7 @@ Use form components directly when:
 ### Basic Example
 
 ```html
-<usa-multi-step-form-pattern .steps=${steps}>
+<usa-multi-step-form-pattern .steps="${steps}">
   <div slot="step-personal-info">
     <h2>Personal Information</h2>
     <usa-text-input label="Name" required></usa-text-input>
@@ -51,7 +52,7 @@ Use form components directly when:
   const steps = [
     { id: 'personal-info', label: 'Personal Information' },
     { id: 'contact', label: 'Contact Details' },
-    { id: 'review', label: 'Review' }
+    { id: 'review', label: 'Review' },
   ];
 </script>
 ```
@@ -59,11 +60,7 @@ Use form components directly when:
 ### With State Persistence
 
 ```html
-<usa-multi-step-form-pattern
-  .steps=${steps}
-  persist-state
-  storage-key="my-form-progress"
->
+<usa-multi-step-form-pattern .steps="${steps}" persist-state storage-key="my-form-progress">
   <!-- Step content -->
 </usa-multi-step-form-pattern>
 ```
@@ -82,9 +79,9 @@ const steps = [
         return false;
       }
       return true;
-    }
+    },
   },
-  { id: 'step2', label: 'Step 2' }
+  { id: 'step2', label: 'Step 2' },
 ];
 ```
 
@@ -94,30 +91,30 @@ const steps = [
 const steps = [
   { id: 'required1', label: 'Required Information' },
   { id: 'optional', label: 'Optional Details', optional: true },
-  { id: 'required2', label: 'Final Step' }
+  { id: 'required2', label: 'Final Step' },
 ];
 ```
 
 ## Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `steps` | `FormStep[]` | `[]` | Array of step configurations |
-| `show-navigation` | `boolean` | `true` | Whether to show navigation buttons |
-| `back-button-label` | `string` | `'Back'` | Label for back button |
-| `next-button-label` | `string` | `'Next'` | Label for next button |
-| `skip-button-label` | `string` | `'Skip'` | Label for skip button |
-| `submit-button-label` | `string` | `'Submit'` | Label for submit button |
-| `persist-state` | `boolean` | `false` | Whether to persist state to localStorage |
-| `storage-key` | `string` | `'uswds-form-progress'` | localStorage key |
+| Property              | Type         | Default                 | Description                              |
+| --------------------- | ------------ | ----------------------- | ---------------------------------------- |
+| `steps`               | `FormStep[]` | `[]`                    | Array of step configurations             |
+| `show-navigation`     | `boolean`    | `true`                  | Whether to show navigation buttons       |
+| `back-button-label`   | `string`     | `'Back'`                | Label for back button                    |
+| `next-button-label`   | `string`     | `'Next'`                | Label for next button                    |
+| `skip-button-label`   | `string`     | `'Skip'`                | Label for skip button                    |
+| `submit-button-label` | `string`     | `'Submit'`              | Label for submit button                  |
+| `persist-state`       | `boolean`    | `false`                 | Whether to persist state to localStorage |
+| `storage-key`         | `string`     | `'uswds-form-progress'` | localStorage key                         |
 
 ## FormStep Interface
 
 ```typescript
 interface FormStep {
-  id: string;                           // Unique step identifier
-  label: string;                        // Step label/heading
-  optional?: boolean;                   // Whether step can be skipped
+  id: string; // Unique step identifier
+  label: string; // Step label/heading
+  optional?: boolean; // Whether step can be skipped
   validate?: () => boolean | Promise<boolean>; // Validation function
 }
 ```
@@ -162,10 +159,10 @@ pattern.addEventListener('form-complete', (e) => {
 
 ## Slots
 
-| Slot | Description |
-|------|-------------|
+| Slot        | Description                                               |
+| ----------- | --------------------------------------------------------- |
 | `step-{id}` | Content for each step (e.g., `slot="step-personal-info"`) |
-| `progress` | Optional custom progress indicator |
+| `progress`  | Optional custom progress indicator                        |
 
 ## Public API
 
@@ -215,7 +212,7 @@ pattern.reset();
 ### Custom Progress Indicator
 
 ```html
-<usa-multi-step-form-pattern .steps=${steps}>
+<usa-multi-step-form-pattern .steps="${steps}">
   <div slot="progress">
     <ol class="usa-process-list">
       <li class="usa-process-list__item">
@@ -238,10 +235,7 @@ pattern.reset();
 <button onclick="pattern.goToStep(1)">Jump to Step 2</button>
 <button onclick="pattern.reset()">Start Over</button>
 
-<usa-multi-step-form-pattern
-  .steps=${steps}
-  show-navigation="false"
->
+<usa-multi-step-form-pattern .steps="${steps}" show-navigation="false">
   <!-- Step content -->
 </usa-multi-step-form-pattern>
 ```
@@ -254,7 +248,7 @@ import { USAMultiStepFormPattern } from '@uswds-wc/patterns';
 function MyForm() {
   const steps = [
     { id: 'step1', label: 'Step 1' },
-    { id: 'step2', label: 'Step 2' }
+    { id: 'step2', label: 'Step 2' },
   ];
 
   const handleStepChange = (e) => {
@@ -262,11 +256,7 @@ function MyForm() {
   };
 
   return (
-    <usa-multi-step-form-pattern
-      steps={steps}
-      persist-state
-      onStep-change={handleStepChange}
-    >
+    <usa-multi-step-form-pattern steps={steps} persist-state onStep-change={handleStepChange}>
       <div slot="step-step1">Step 1 content</div>
       <div slot="step-step2">Step 2 content</div>
     </usa-multi-step-form-pattern>
@@ -284,6 +274,7 @@ function MyForm() {
 ## Browser Support
 
 Works in all modern browsers that support:
+
 - Web Components (Custom Elements v1)
 - ES2015+
 - localStorage (for persistence)

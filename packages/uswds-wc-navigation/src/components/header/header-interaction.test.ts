@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-header.ts';
 import type { USAHeader } from './usa-header.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Header JavaScript Interaction Testing', () => {
   let element: USAHeader;
@@ -87,7 +88,8 @@ describe('Header JavaScript Interaction Testing', () => {
       const nav = element.querySelector('.usa-nav') as HTMLElement;
 
       if (menuButton && nav) {
-        const initialExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        const initialExpanded =
+          (await waitForARIAAttribute(menuButton, 'aria-expanded')) === 'true';
 
         let eventFired = false;
         element.addEventListener('menu-toggle', () => {
@@ -98,7 +100,7 @@ describe('Header JavaScript Interaction Testing', () => {
         menuButton.click();
         await waitForUpdate(element);
 
-        const newExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        const newExpanded = (await waitForARIAAttribute(menuButton, 'aria-expanded')) === 'true';
         const menuToggled = newExpanded !== initialExpanded || eventFired;
 
         if (!menuToggled) {
@@ -136,7 +138,8 @@ describe('Header JavaScript Interaction Testing', () => {
 
       if (dropdownButtons.length > 0) {
         const firstDropdown = dropdownButtons[0] as HTMLButtonElement;
-        const initialExpanded = firstDropdown.getAttribute('aria-expanded') === 'true';
+        const initialExpanded =
+          (await waitForARIAAttribute(firstDropdown, 'aria-expanded')) === 'true';
 
         let eventFired = false;
         element.addEventListener('dropdown-toggle', () => {
@@ -147,7 +150,7 @@ describe('Header JavaScript Interaction Testing', () => {
         firstDropdown.click();
         await waitForUpdate(element);
 
-        const newExpanded = firstDropdown.getAttribute('aria-expanded') === 'true';
+        const newExpanded = (await waitForARIAAttribute(firstDropdown, 'aria-expanded')) === 'true';
         const dropdownToggled = newExpanded !== initialExpanded || eventFired;
 
         if (!dropdownToggled) {
@@ -238,7 +241,7 @@ describe('Header JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing logoText
       element.logoText = 'New Site Title';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const titleElement = element.querySelector('.usa-logo__text');
       if (titleElement) {
@@ -250,7 +253,7 @@ describe('Header JavaScript Interaction Testing', () => {
         { label: 'New Item 1', href: '/new1' },
         { label: 'New Item 2', href: '/new2' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const updatedLinks = element.querySelectorAll('.usa-nav__link');
       expect(updatedLinks.length).toBe(2);
@@ -258,7 +261,7 @@ describe('Header JavaScript Interaction Testing', () => {
 
     it('should handle extended header variant', async () => {
       element.extended = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('.usa-header');
       if (header) {
@@ -276,7 +279,7 @@ describe('Header JavaScript Interaction Testing', () => {
 
       if (currentLink) {
         expect(currentLink.textContent).toContain('Home');
-        expect(currentLink.getAttribute('aria-current')).toBe('page');
+        expect(await waitForARIAAttribute(currentLink, 'aria-current')).toBe('page');
       }
 
       // This test documents current page indication

@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-combo-box.js';
 import type { USAComboBox } from './usa-combo-box.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Combo Box Behavior Contract', () => {
   let element: USAComboBox;
@@ -167,17 +168,17 @@ describe('USWDS Combo Box Behavior Contract', () => {
       const inputEl = element.querySelector('.usa-combo-box__input') as HTMLInputElement;
       const toggleBtn = element.querySelector('.usa-combo-box__toggle-list') as HTMLButtonElement;
 
-      expect(inputEl.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(inputEl, 'aria-expanded')).toBe('false');
 
       toggleBtn.click();
       await waitForBehaviorInit(element);
 
-      expect(inputEl.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(inputEl, 'aria-expanded')).toBe('true');
 
       toggleBtn.click();
       await waitForBehaviorInit(element);
 
-      expect(inputEl.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(inputEl, 'aria-expanded')).toBe('false');
     });
   });
 
@@ -378,7 +379,7 @@ describe('USWDS Combo Box Behavior Contract', () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       const inputEl = element.querySelector('.usa-combo-box__input') as HTMLInputElement;
-      expect(inputEl.getAttribute('aria-autocomplete')).toBe('list');
+      expect(await waitForARIAAttribute(inputEl, 'aria-autocomplete')).toBe('list');
     });
 
     it('should have role="listbox" on list', async () => {
@@ -404,7 +405,7 @@ describe('USWDS Combo Box Behavior Contract', () => {
       inputEl.dispatchEvent(downEvent);
       await waitForBehaviorInit(element);
 
-      const activeDescendant = inputEl.getAttribute('aria-activedescendant');
+      const activeDescendant = await waitForARIAAttribute(inputEl, 'aria-activedescendant');
       expect(activeDescendant).toBeTruthy();
     });
 

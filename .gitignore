@@ -66,10 +66,13 @@ cypress/downloads
 # Test and coverage outputs
 coverage-storybook/
 test-results/
+test-results 2/
 reports/
 /reports/compliance/
 /reports/compliance-reports/
 /reports/playwright-report/
+playwright-report/
+visual-test-results/
 
 # Temporary test files
 test-*.html

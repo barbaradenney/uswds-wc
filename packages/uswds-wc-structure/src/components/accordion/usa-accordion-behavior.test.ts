@@ -15,6 +15,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-accordion.js';
 import type { USAAccordion } from './usa-accordion.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Accordion Behavior Contract', () => {
   let element: USAAccordion;
@@ -48,17 +49,17 @@ describe('USWDS Accordion Behavior Contract', () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
 
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
 
       button.click();
       await waitForBehaviorInit(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
 
       button.click();
       await waitForBehaviorInit(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
     });
 
     it('should use string "true"/"false" for aria-expanded, not boolean', async () => {
@@ -69,8 +70,8 @@ describe('USWDS Accordion Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       // CRITICAL: Must be string "true", not boolean true
-      expect(button.getAttribute('aria-expanded')).toBe('true');
-      expect(button.getAttribute('aria-expanded')).not.toBe(true as any);
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).not.toBe(true as any);
     });
   });
 
@@ -78,7 +79,7 @@ describe('USWDS Accordion Behavior Contract', () => {
     it('should control content visibility via hidden attribute', async () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = element.querySelector(`#${contentId}`) as HTMLElement;
 
       expect(content.hasAttribute('hidden')).toBe(true);
@@ -97,7 +98,7 @@ describe('USWDS Accordion Behavior Contract', () => {
     it('should use hidden attribute (not display:none)', async () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = element.querySelector(`#${contentId}`) as HTMLElement;
 
       // Collapsed: must use hidden attribute
@@ -114,7 +115,7 @@ describe('USWDS Accordion Behavior Contract', () => {
     it('should find controlled element via aria-controls → getElementById', async () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
-      const controlsId = button.getAttribute('aria-controls');
+      const controlsId = await waitForARIAAttribute(button, 'aria-controls');
       const content = document.getElementById(controlsId!);
 
       expect(content).not.toBeNull();
@@ -258,10 +259,10 @@ describe('USWDS Accordion Behavior Contract', () => {
       ) as HTMLButtonElement;
       const content2 = element.querySelector('#test-2-content') as HTMLElement;
 
-      expect(button1.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button1, 'aria-expanded')).toBe('true');
       expect(content1.hasAttribute('hidden')).toBe(false);
 
-      expect(button2.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button2, 'aria-expanded')).toBe('false');
       expect(content2.hasAttribute('hidden')).toBe(true);
     });
 
@@ -270,13 +271,13 @@ describe('USWDS Accordion Behavior Contract', () => {
 
       const buttons = element.querySelectorAll('.usa-accordion__button');
 
-      buttons.forEach((button) => {
-        const contentId = button.getAttribute('aria-controls');
+      for (const button of buttons) {
+        const contentId = await waitForARIAAttribute(button, 'aria-controls');
         const content = element.querySelector(`#${contentId}`) as HTMLElement;
-        const expanded = button.getAttribute('aria-expanded') === 'true';
+        const expanded = (await waitForARIAAttribute(button, 'aria-expanded')) === 'true';
 
         expect(content.hasAttribute('hidden')).toBe(!expanded);
-      });
+      }
     });
   });
 
@@ -295,7 +296,7 @@ describe('USWDS Accordion Behavior Contract', () => {
     it('should have correct content structure', async () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = element.querySelector(`#${contentId}`) as HTMLElement;
 
       expect(content.tagName).toBe('DIV');
@@ -325,7 +326,7 @@ describe('USWDS Accordion Behavior Contract', () => {
     it('should NOT use display:none for hiding content', async () => {
       await waitForBehaviorInit(element);
       const button = element.querySelector('.usa-accordion__button') as HTMLButtonElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = element.querySelector(`#${contentId}`) as HTMLElement;
 
       // Content should use hidden attribute, not inline styles
@@ -340,7 +341,7 @@ describe('USWDS Accordion Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       // Must be string "true", not boolean
-      const expanded = button.getAttribute('aria-expanded');
+      const expanded = await waitForARIAAttribute(button, 'aria-expanded');
       expect(typeof expanded).toBe('string');
       expect(expanded).toBe('true');
     });

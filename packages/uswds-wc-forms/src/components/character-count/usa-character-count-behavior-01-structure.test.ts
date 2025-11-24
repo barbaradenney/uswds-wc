@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-character-count.js';
 import type { USACharacterCount } from './usa-character-count.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Character Count - Contract 1: Component Structure', () => {
   let element: USACharacterCount;
@@ -56,7 +57,7 @@ describe('USWDS Character Count - Contract 1: Component Structure', () => {
     const input = element.querySelector('textarea, input') as HTMLElement;
     const status = element.querySelector('.usa-character-count__status') as HTMLElement;
 
-    const describedBy = input.getAttribute('aria-describedby');
+    const describedBy = await waitForARIAAttribute(input, 'aria-describedby');
     expect(describedBy).toContain(status.id);
   });
 

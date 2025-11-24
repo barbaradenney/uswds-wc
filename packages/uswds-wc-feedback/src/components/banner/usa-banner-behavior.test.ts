@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-banner.js';
 import type { USABanner } from './usa-banner.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Banner Behavior Contract', () => {
   let element: USABanner;
@@ -52,7 +53,7 @@ describe('USWDS Banner Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       const button = element.querySelector('.usa-banner__header [aria-controls]') as HTMLElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = element.querySelector(`#${contentId}`);
 
       expect(content).not.toBeNull();
@@ -64,10 +65,10 @@ describe('USWDS Banner Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       const button = element.querySelector('.usa-banner__header [aria-controls]') as HTMLElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = document.getElementById(contentId!);
 
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
       expect(content?.hasAttribute('hidden')).toBe(true);
     });
 
@@ -93,7 +94,7 @@ describe('USWDS Banner Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       const button = element.querySelector('.usa-banner__header [aria-controls]') as HTMLElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
 
       expect(contentId).toBeTruthy();
       expect(document.getElementById(contentId!)).not.toBeNull();
@@ -136,7 +137,7 @@ describe('USWDS Banner Behavior Contract', () => {
       const button = element.querySelector(
         '.usa-banner__header [aria-controls]'
       ) as HTMLButtonElement;
-      const contentId = button.getAttribute('aria-controls');
+      const contentId = await waitForARIAAttribute(button, 'aria-controls');
       const content = document.getElementById(contentId!) as HTMLElement;
 
       // Should use hidden attribute, not display:none

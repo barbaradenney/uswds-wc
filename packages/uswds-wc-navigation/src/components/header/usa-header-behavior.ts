@@ -195,6 +195,11 @@ const toggleNav = (active?: boolean): boolean => {
  * SOURCE: index.js (Lines 140-148)
  */
 const resize = (): void => {
+  // Guard against undefined document in test teardown (prevents "document is not defined" in CI)
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   const closer = document.body.querySelector(CLOSE_BUTTON) as HTMLElement;
 
   if (isActive() && closer && closer.getBoundingClientRect().width === 0) {
@@ -281,6 +286,11 @@ function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => vo
  * @returns Cleanup function
  */
 export function initializeHeader(root: HTMLElement | Document = document): () => void {
+  // Guard against undefined window/document in test teardown (prevents "window is not defined" in CI)
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return () => {}; // Return noop cleanup function
+  }
+
   const trapContainer = (root as HTMLElement).matches?.(NAV)
     ? (root as HTMLElement)
     : (root as Document | HTMLElement).querySelector(NAV);

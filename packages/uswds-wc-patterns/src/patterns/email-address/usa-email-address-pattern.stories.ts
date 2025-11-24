@@ -259,7 +259,9 @@ export const Interactive: Story = {
           <button
             class="usa-button"
             @click="${() => {
-              const pattern = document.getElementById('interactive-pattern') as USAEmailAddressPattern;
+              const pattern = document.getElementById(
+                'interactive-pattern'
+              ) as USAEmailAddressPattern;
               pattern.setEmailData({
                 email: 'test@example.com',
                 sensitiveInfoConsent: 'yes-info',
@@ -275,7 +277,9 @@ export const Interactive: Story = {
           <button
             class="usa-button"
             @click="${() => {
-              const pattern = document.getElementById('interactive-pattern') as USAEmailAddressPattern;
+              const pattern = document.getElementById(
+                'interactive-pattern'
+              ) as USAEmailAddressPattern;
               pattern.clearEmail();
               const output = document.getElementById('email-output');
               if (output) {
@@ -288,7 +292,9 @@ export const Interactive: Story = {
           <button
             class="usa-button"
             @click="${() => {
-              const pattern = document.getElementById('interactive-pattern') as USAEmailAddressPattern;
+              const pattern = document.getElementById(
+                'interactive-pattern'
+              ) as USAEmailAddressPattern;
               const isValid = pattern.validateEmail();
               alert('Email is ' + (isValid ? 'valid' : 'invalid'));
             }}"
@@ -298,7 +304,9 @@ export const Interactive: Story = {
           <button
             class="usa-button usa-button--outline"
             @click="${() => {
-              const pattern = document.getElementById('interactive-pattern') as USAEmailAddressPattern;
+              const pattern = document.getElementById(
+                'interactive-pattern'
+              ) as USAEmailAddressPattern;
               const output = document.getElementById('email-output');
               if (output) {
                 output.textContent = JSON.stringify(pattern.getEmailData(), null, 2);

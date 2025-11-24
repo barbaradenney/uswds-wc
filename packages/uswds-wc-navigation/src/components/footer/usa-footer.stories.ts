@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './index.ts';
-import '@uswds-wc/layout/components/identifier';
+import '@uswds-wc/layout';
 import type { USAFooter, FooterSection } from './usa-footer.js';
 
 const meta: Meta<USAFooter> = {

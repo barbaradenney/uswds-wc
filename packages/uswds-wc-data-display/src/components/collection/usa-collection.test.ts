@@ -11,6 +11,7 @@ import {
   verifyKeyboardOnlyUsable,
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USACollection', () => {
   let element: USACollection;
@@ -81,7 +82,7 @@ describe('USACollection', () => {
   describe('Properties', () => {
     it('should handle items changes', async () => {
       element.items = sampleItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const items = element.querySelectorAll('.usa-collection__item');
       expect(items.length).toBe(3);
@@ -193,13 +194,13 @@ describe('USACollection', () => {
       await waitForUpdate(element);
     });
 
-    it('should have proper ARIA attributes', () => {
+    it('should have proper ARIA attributes', async () => {
       const metaLists = element.querySelectorAll('.usa-collection__meta');
 
-      metaLists.forEach((list) => {
-        const ariaLabel = list.getAttribute('aria-label');
+      for (const list of metaLists) {
+        const ariaLabel = await waitForARIAAttribute(list, 'aria-label');
         expect(['More information', 'Topics']).toContain(ariaLabel);
-      });
+      }
     });
 
     it('should have proper time elements', () => {
@@ -238,7 +239,7 @@ describe('USACollection', () => {
       ];
 
       element.items = minimalItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const items = element.querySelectorAll('.usa-collection__item');
       expect(items.length).toBe(1);
@@ -249,7 +250,7 @@ describe('USACollection', () => {
 
     it('should handle empty arrays gracefully', async () => {
       element.items = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const collection = element.querySelector('.usa-collection');
       expect(collection).toBeTruthy();
@@ -531,7 +532,7 @@ describe('USACollection', () => {
           href: '/two',
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBeGreaterThanOrEqual(2);
@@ -592,7 +593,7 @@ describe('USACollection', () => {
           href: '/item',
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       expect(link).toBeTruthy();
@@ -615,7 +616,7 @@ describe('USACollection', () => {
           href: '/test',
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLElement;
       expect(link).toBeTruthy();
@@ -901,9 +902,18 @@ describe('USACollection', () => {
 
       it('should render metadata items in proper list structure', async () => {
         const firstItem = element.querySelectorAll('.usa-collection__item')[0];
-        const metadataList = Array.from(
+        const metadataLists = Array.from(
           firstItem?.querySelectorAll('.usa-collection__meta') || []
-        ).find((list) => list.getAttribute('aria-label') === 'More information');
+        );
+
+        let metadataList;
+        for (const list of metadataLists) {
+          const ariaLabel = await waitForARIAAttribute(list, 'aria-label');
+          if (ariaLabel === 'More information') {
+            metadataList = list;
+            break;
+          }
+        }
 
         const metaItems = metadataList?.querySelectorAll('.usa-collection__meta-item');
         expect(metaItems && metaItems.length > 0).toBe(true);
@@ -917,9 +927,18 @@ describe('USACollection', () => {
 
       it('should render tags with usa-tag class', async () => {
         const firstItem = element.querySelectorAll('.usa-collection__item')[0];
-        const tagsList = Array.from(
+        const metadataLists = Array.from(
           firstItem?.querySelectorAll('.usa-collection__meta') || []
-        ).find((list) => list.getAttribute('aria-label') === 'Topics');
+        );
+
+        let tagsList;
+        for (const list of metadataLists) {
+          const ariaLabel = await waitForARIAAttribute(list, 'aria-label');
+          if (ariaLabel === 'Topics') {
+            tagsList = list;
+            break;
+          }
+        }
 
         const tags = tagsList?.querySelectorAll('.usa-tag');
         expect(tags).toHaveLength(2);
@@ -965,7 +984,7 @@ describe('USACollection', () => {
             description: 'This item has no link',
           },
         ];
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const item = element.querySelector('.usa-collection__item');
         const heading = item?.querySelector('.usa-collection__heading');
@@ -1023,7 +1042,7 @@ describe('USACollection', () => {
           { id: '2', title: 'Item 2', href: '/2' },
           { id: '3', title: 'Item 3', href: '/3' },
         ];
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const newItems = element.querySelectorAll('.usa-collection__item');
         expect(newItems).toHaveLength(3);
@@ -1044,7 +1063,7 @@ describe('USACollection', () => {
 
       it('should handle empty items array', async () => {
         element.items = [];
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const collection = element.querySelector('.usa-collection');
         const items = element.querySelectorAll('.usa-collection__item');

@@ -9,12 +9,14 @@ Project instructions for Claude Code when working with this USWDS Web Components
 When validation discovers issues unrelated to your current work:
 
 **✅ YOU MUST:**
+
 1. Commit current work using `--no-verify` (if current work is valid)
 2. Document discovered issues in commit message (enforced by commit-msg hook)
 3. **IMMEDIATELY** fix ALL discovered issues in next commit
 4. **CANNOT** start new work until `.git/DISCOVERED_ISSUES.json` is cleared
 
 **✅ ENFORCEMENT:**
+
 - `commit-msg` hook: Validates --no-verify documentation
 - `post-commit` hook: Generates `.git/DISCOVERED_ISSUES.json` tracker
 - `pre-commit` hook: Blocks new commits if tracker exists
@@ -54,17 +56,20 @@ git commit -m "feat(button): add new variant"
 ```
 
 **Why This Works:**
+
 - **Preserves Progress**: Current work isn't blocked by unrelated issues
 - **Enforces Quality**: Issues MUST be fixed, not ignored
 - **Automated**: Can't bypass without deliberate effort
 - **Traceable**: Git history shows issue discovery → fix chain
 
 **Helper Commands:**
+
 - `pnpm run fix:discovered` - Show current discovered issues
 - `pnpm run validate` - Run all validations
 - `pnpm run validate:uswds-compliance` - USWDS compliance details
 
 ### Never Weaken Validation
+
 ❌ NEVER make validation less strict, non-blocking, or skip checks
 ✅ ALWAYS fix the actual underlying issue
 
@@ -75,26 +80,32 @@ Web components library converting USWDS components to custom elements using Lit.
 ## Essential Commands
 
 ### Development
+
 - `pnpm run dev` - Start development server
 - `pnpm run storybook` - Start Storybook (port 6006)
 - `pnpm run build` - Build for production (all packages via Turborepo, 0.35s with cache!)
 
 ### Monorepo Commands
+
 - `pnpm install` - Install all dependencies (uses workspaces)
 - `pnpm --filter @uswds-wc/forms build` - Build specific package
 - `pnpm --filter @uswds-wc/actions test` - Test specific package
 - `pnpm turbo build --force` - Force rebuild (bypass cache)
 
 ### Turborepo Remote Caching ⚡
+
 **Status:** ✅ Configured (111x faster builds!)
+
 - Remote cache automatically used when `TURBO_TOKEN` is set in `.env`
 - Builds: 39s → 0.35s with remote cache
 - See [docs/TURBOREPO_REMOTE_CACHE_SETUP.md](docs/TURBOREPO_REMOTE_CACHE_SETUP.md) for setup instructions
 
 ### Testing
+
 See [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for complete testing documentation.
 
 **Quick commands:**
+
 - `pnpm test` - Run unit tests (all packages)
 - `pnpm run test:run` - Consolidated test orchestrator (recommended)
 - `pnpm run test:visual` - Visual regression tests (Playwright)
@@ -103,40 +114,49 @@ See [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for complete testing document
 - `pnpm run typecheck` - Verify TypeScript
 
 ### USWDS Management
+
 - `pnpm run uswds:sync` - Complete USWDS update workflow
 - `pnpm run validate -- --uswds` - Validate USWDS compliance
 
 ### Code Generation
+
 - `pnpm run generate:component -- --name=my-component` - Generate new component
 - `pnpm run generate:component -- --interactive` - Interactive generation
 
 See [docs/COMPONENT_TEMPLATES.md](docs/COMPONENT_TEMPLATES.md) for templates.
 
 ### Maintenance & Automation
+
 Comprehensive maintenance tooling for repository health and optimization.
 
 **Repository Health:**
+
 - `pnpm run health:check` - Quick health dashboard (tests, linting, TypeScript, bundle size, etc.)
 
 **Documentation Links:**
+
 - `pnpm run validate:doc-links` - Check for broken documentation links
 - `pnpm run validate:doc-links:fix` - Interactive fix with prompts for each broken link
 - `pnpm run validate:doc-links:fix:auto` - Auto-fix all links without prompts
 - `pnpm run validate:doc-links:fix:preview` - Preview fixes without saving (dry-run)
 
 **Changelog:**
+
 - `pnpm run changelog:generate` - Generate CHANGELOG.md from conventional commits
 - `pnpm run changelog:commit` - Generate and stage for commit
 
 **Performance:**
+
 - `pnpm run validate:bundle-size` - Check bundle sizes against performance budgets
 
 **Code Cleanup:**
+
 - `pnpm run cleanup:unused` - Detect unused code, dependencies, and exports
 - `pnpm run optimize:imports` - Analyze and optimize import patterns
 - `pnpm run analytics:components` - Component usage analytics and insights
 
 **Full Suite:**
+
 - `pnpm run maintenance:full` - Run all maintenance checks
 
 See [docs/MAINTENANCE_STRATEGY.md](docs/MAINTENANCE_STRATEGY.md) for complete automation guide.
@@ -146,6 +166,7 @@ See [docs/MAINTENANCE_STRATEGY.md](docs/MAINTENANCE_STRATEGY.md) for complete au
 ### Directory Structure
 
 **Monorepo Structure** (pnpm workspaces):
+
 ```
 packages/
 ├── uswds-wc-core/          # Core utilities and base components
@@ -174,6 +195,7 @@ packages/
 ```
 
 **Package Organization** (category-based):
+
 - `@uswds-wc/core` - Core utilities, base classes, USWDS CSS
 - `@uswds-wc/actions` - Buttons, links, search
 - `@uswds-wc/forms` - All form controls
@@ -210,11 +232,13 @@ override firstUpdated(changedProperties: Map<string, any>) {
 ### USWDS Integration Patterns
 
 **Pattern 1: Direct USWDS Integration** (Preferred for simple components)
+
 - Use standard USWDS initialization via `initializeUSWDSComponent()`
 - For components with static content and simple interactions
 - Examples: Button, Tag, Alert, Card
 
 **Pattern 2: USWDS-Mirrored Behavior** (Required for complex components)
+
 - Create separate `usa-[component]-behavior.ts` file
 - Exactly replicates USWDS JavaScript from source
 - For components with dynamic content, complex interactions, timing issues
@@ -224,6 +248,7 @@ override firstUpdated(changedProperties: Map<string, any>) {
 ### Component Structure Requirements
 
 Each component:
+
 - Extends `USWDSBaseComponent` or `LitElement`
 - Uses Light DOM (no Shadow DOM)
 - Follows Script Tag Pattern (MANDATORY)
@@ -238,6 +263,7 @@ Each component:
 **Use web components, not inline HTML duplication:**
 
 ✅ **Good** - Use actual web component:
+
 ```typescript
 import '../search/index.js';
 
@@ -253,6 +279,7 @@ render() {
 ```
 
 ❌ **Bad** - Duplicate HTML inline:
+
 ```typescript
 render() {
   return html`
@@ -271,6 +298,7 @@ See [docs/ARCHITECTURE_PATTERNS.md](docs/ARCHITECTURE_PATTERNS.md#component-comp
 ## Key Development Principles
 
 ### ALWAYS Do
+
 ✅ Follow Script Tag Pattern for USWDS loading
 ✅ Use official USWDS CSS classes directly
 ✅ Import `@uswds-wc/core/styles.css` (compiled USWDS CSS from core package)
@@ -283,6 +311,7 @@ See [docs/ARCHITECTURE_PATTERNS.md](docs/ARCHITECTURE_PATTERNS.md#component-comp
 ✅ **Add components to correct category package** - See monorepo structure below
 
 ### NEVER Do
+
 ❌ Remove or modify USWDS script tag in `.storybook/preview-head.html`
 ❌ Use ES module imports for USWDS global bundle
 ❌ Create custom CSS styles for USWDS components
@@ -296,6 +325,7 @@ See [docs/ARCHITECTURE_PATTERNS.md](docs/ARCHITECTURE_PATTERNS.md#component-comp
 ### CSS Standards
 
 **Priority Hierarchy:**
+
 1. USWDS Classes (first choice)
 2. USWDS Utilities (second choice)
 3. Functional CSS (essential web component functionality only)
@@ -303,11 +333,13 @@ See [docs/ARCHITECTURE_PATTERNS.md](docs/ARCHITECTURE_PATTERNS.md#component-comp
 5. Inline Styles (last resort with justification)
 
 **Prohibited:**
+
 - Unnecessary inline styles when USWDS classes exist
 - Cosmetic styles (colors, fonts, spacing) that deviate from USWDS
 - Duplicate USWDS functionality
 
 **Permitted:**
+
 - Web component performance optimizations
 - Dynamic values based on component state
 - Browser behavior control
@@ -318,11 +350,13 @@ See [docs/ARCHITECTURE_PATTERNS.md](docs/ARCHITECTURE_PATTERNS.md#component-comp
 ### Quick Start
 
 Use the component generator:
+
 ```bash
 pnpm run generate:component -- --interactive
 ```
 
 **Important**: Generated components should be moved to the appropriate package:
+
 - Forms → `packages/uswds-wc-forms/src/components/`
 - Actions → `packages/uswds-wc-actions/src/components/`
 - Navigation → `packages/uswds-wc-navigation/src/components/`
@@ -363,6 +397,7 @@ See [docs/COMPONENT_TEMPLATES.md](docs/COMPONENT_TEMPLATES.md) for complete temp
 See [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for complete documentation.
 
 ### Quick Testing
+
 ```bash
 pnpm test                              # Unit tests (all packages)
 pnpm run test:run -- --all            # All tests
@@ -373,6 +408,7 @@ pnpm run validate                      # All validations
 ### Test Requirements
 
 All changes must include:
+
 1. Unit tests (Vitest) - Component logic and properties
 2. Component tests (Cypress) - Interactive behavior (if applicable)
 3. Accessibility tests - axe-core validation
@@ -389,23 +425,25 @@ All changes must include:
 
 ```javascript
 import {
-  verifyPropertyBinding,         // Test property bindings create elements
-  verifyFlexLayoutParticipation,  // Test flex layout compatibility
-  verifyChildComponent,           // Test child component initialization
-  verifyHorizontalLayout,         // Test horizontal flex layouts
-  verifyUSWDSStructure,           // Test USWDS structure compliance
-  verifyNoComboBoxWrapper,        // Test combo-box opt-out
-  verifyCompactMode,              // Test compact mode rendering
+  verifyPropertyBinding, // Test property bindings create elements
+  verifyFlexLayoutParticipation, // Test flex layout compatibility
+  verifyChildComponent, // Test child component initialization
+  verifyHorizontalLayout, // Test horizontal flex layouts
+  verifyUSWDSStructure, // Test USWDS structure compliance
+  verifyNoComboBoxWrapper, // Test combo-box opt-out
+  verifyCompactMode, // Test compact mode rendering
 } from '@uswds-wc/test-utils/slot-testing-utils.js';
 ```
 
 **When to Use**:
+
 - Components that accept slotted content (select, textarea)
 - Components used in flex/grid layouts (form components, patterns)
 - Patterns that compose multiple child components (date-of-birth, address, phone)
 - Components with property-based rendering (`.options` property)
 
 **Example Tests**:
+
 ```javascript
 // Test property binding creates DOM elements
 await verifyPropertyBinding(select, 'select', 'option', expectedCount);
@@ -420,7 +458,7 @@ const monthSelect = await verifyChildComponent(pattern, 'usa-select[name="month"
 await verifyHorizontalLayout(pattern, [
   'usa-select[name="month"]',
   'usa-text-input[name="day"]',
-  'usa-text-input[name="year"]'
+  'usa-text-input[name="year"]',
 ]);
 ```
 
@@ -431,6 +469,7 @@ await verifyHorizontalLayout(pattern, [
 MANDATORY for all components:
 
 ### Requirements
+
 - Co-located at `packages/[category]/src/components/[component]/usa-[component].stories.ts`
 - Default story with default values
 - Stories for all variants and states
@@ -446,7 +485,9 @@ See [docs/COMPONENT_TEMPLATES.md](docs/COMPONENT_TEMPLATES.md#storybook-story-te
 ## Documentation
 
 ### Component READMEs
+
 Each component has comprehensive documentation at `packages/[category]/src/components/[component]/README.mdx`:
+
 - USWDS documentation links
 - Usage examples
 - Properties/attributes table
@@ -463,6 +504,7 @@ Example: `packages/uswds-wc-actions/src/components/button/README.mdx`
 **Problem Solved**: Prevents documentation accumulation through **fully automated** categorization, validation, and archival.
 
 **System** (FULLY AUTOMATED):
+
 1. **Pre-commit**: Blocks uncategorized documentation (enforced)
 2. **Post-commit**: Automatically archives docs when > 5 ready (configurable)
 3. **Weekly GitHub Actions**: Backup cleanup every Monday 9 AM UTC
@@ -471,6 +513,7 @@ Example: `packages/uswds-wc-actions/src/components/button/README.mdx`
 **Zero Manual Work Required** - System handles everything automatically!
 
 **Automation Details**:
+
 - Post-commit hook runs after every commit
 - Checks archivable doc count
 - If > 5 docs ready, runs cleanup automatically
@@ -478,17 +521,20 @@ Example: `packages/uswds-wc-actions/src/components/button/README.mdx`
 - Disable: `SKIP_DOC_CLEANUP=1 git commit`
 
 **When Creating Documentation**:
+
 1. Use SCREAMING_SNAKE_CASE naming
-2. Use recognized naming patterns for temporary docs (*_SUMMARY.md, *_ANALYSIS.md, *_INVESTIGATION.md, etc.)
+2. Use recognized naming patterns for temporary docs (_\_SUMMARY.md, _\_ANALYSIS.md, \*\_INVESTIGATION.md, etc.)
 3. OR add to PERMANENT_DOCS in cleanup-documentation.cjs for permanent guides
 4. Pre-commit blocks uncategorized docs (enforced)
 
 **Manual Commands** (rarely needed):
+
 - `npm run docs:analyze` - Check documentation health
 - `npm run docs:cleanup:dry-run` - Preview what will be archived
 - `npm run docs:cleanup` - Force manual cleanup
 
 **Files**:
+
 - `.husky/post-commit` - Automatic cleanup hook
 - `.github/workflows/docs-maintenance.yml` - Weekly cleanup workflow
 - `scripts/maintenance/cleanup-documentation.cjs` - Cleanup engine
@@ -503,6 +549,7 @@ See [docs/DOCUMENTATION_LIFECYCLE.md](docs/DOCUMENTATION_LIFECYCLE.md) for compl
 **NEW**: Pre-commit hook refactored into independently testable modules (Dec 2024).
 
 **Structure**:
+
 ```
 .husky/pre-commit                          # Lightweight orchestrator (~266 lines)
 scripts/validation/stages/
@@ -517,6 +564,7 @@ scripts/validation/stages/
 ```
 
 **Benefits**:
+
 - **Maintainability**: 8 focused modules instead of 741-line monolith
 - **Testability**: Run individual stages for debugging
   ```bash
@@ -529,7 +577,9 @@ scripts/validation/stages/
 **Orchestrator**: Handles environment setup, module execution, and performance reporting.
 
 ### Smart Commit Detection
+
 Automatically detects commit type and skips unnecessary validations:
+
 - **Docs-only commits**: Skips unit tests and Cypress tests (saves 15-30s)
 - **Component commits**: Runs full validation suite
 - **Core file commits**: Runs global validations
@@ -537,6 +587,7 @@ Automatically detects commit type and skips unnecessary validations:
 ### Validation Stages
 
 Automated checks run before every commit:
+
 1. **Smart commit type detection** (NEW)
 2. Repository organization cleanup
 3. Script organization
@@ -571,16 +622,19 @@ Automated checks run before every commit:
 ### Performance Optimizations
 
 **Unit Tests First** (NEW):
+
 - Runs unit tests before Cypress
 - Failure detection: 2s (unit) vs 15s (Cypress)
 - Better layered testing approach
 
 **Parallel Cypress** (IMPROVED):
+
 - Multiple components tested simultaneously
 - 3 components: 15s (parallel) vs 45s (serial)
 - 3x faster for multi-component commits
 
 **Smart Detection** (NEW):
+
 - Docs-only commits skip component tests
 - Saves 15-30s on documentation changes
 - Automatically enabled
@@ -588,11 +642,13 @@ Automated checks run before every commit:
 **Note**: AI code quality validation moved to post-commit (non-blocking) to prevent false positives from blocking valid commits.
 
 **Component Composition Validation** (included in #6):
+
 - Checks that components use web component tags (`<usa-search>`)
 - Detects inline HTML duplication (`class="usa-search"`)
 - Prevents architectural violations automatically
 
 **Custom CSS Validation** (stage 4b/9):
+
 - Enforces pure USWDS CSS compliance
 - Only allows :host styles for web component functionality
 - Blocks cosmetic CSS (colors, padding, margin, fonts)
@@ -604,6 +660,7 @@ Automated checks run before every commit:
 **NEW**: Real-time performance tracking for validation stages.
 
 **What It Shows**:
+
 ```bash
 ⏱️  Validation Performance:
 
@@ -617,6 +674,7 @@ Automated checks run before every commit:
 ```
 
 **Features**:
+
 - Millisecond-precision timing for each validation stage
 - Tracked time vs total wall time comparison
 - Automatic metrics logging to `.git/validation-metrics.json`
@@ -625,6 +683,7 @@ Automated checks run before every commit:
 - macOS compatible (Python-based timing)
 
 **Metrics File** (`.git/validation-metrics.json`):
+
 ```json
 {
   "timestamp": "2025-10-20 14:18:52",
@@ -642,6 +701,7 @@ Automated checks run before every commit:
 ```
 
 **Benefits**:
+
 - Identify slow validation stages
 - Data-driven performance optimization
 - Track performance improvements over time
@@ -665,6 +725,7 @@ git commit -m "feat(patterns): update address layout"
 ```
 
 **What it does:**
+
 - Only runs if pattern files (`packages/uswds-wc-patterns/src/patterns/**`) are modified
 - Automatically starts/stops Storybook if needed
 - Tests all 11 patterns across 3 viewports (mobile, tablet, desktop)
@@ -672,6 +733,7 @@ git commit -m "feat(patterns): update address layout"
 - Provides debug commands for fixing issues
 
 **When to use:**
+
 - Before committing pattern layout changes
 - After modifying pattern styles or structure
 - When updating USWDS classes on patterns
@@ -706,6 +768,7 @@ BUNDLE_SIZE_PRECOMMIT=1 git commit -m "feat: add feature"
 ```
 
 **Combine Multiple Checks:**
+
 ```bash
 # Run visual regression + smoke tests
 VISUAL_REGRESSION_PRECOMMIT=1 SMOKE_TESTS_PRECOMMIT=1 git commit -m "feat(patterns): comprehensive update"
@@ -739,6 +802,7 @@ npm run commit:fix-lint
 ```
 
 **What it does:**
+
 - Runs `eslint --fix` on modified TypeScript/JavaScript files
 - Only applies safe, auto-fixable changes
 - Creates automatic commit with fixes
@@ -758,6 +822,7 @@ npm run commit:format
 ```
 
 **What it does:**
+
 - Runs Prettier on all modified files
 - Ensures consistent code formatting
 - Creates automatic commit with formatting changes
@@ -777,6 +842,7 @@ npm run commit:clean-cache
 ```
 
 **What it does:**
+
 - Clears `node_modules/.cache`
 - Clears Storybook cache
 - Clears Vite cache
@@ -797,6 +863,7 @@ npm run commit:cleanup
 ```
 
 **What it does:**
+
 - Runs ESLint auto-fix
 - Runs Prettier auto-format
 - Clears all caches
@@ -817,11 +884,13 @@ npm run cleanup:cache         # Clear caches
 #### Configuration
 
 **Disable cleanup for one commit:**
+
 ```bash
 SKIP_AUTO_CLEANUP=1 git commit -m "feat: add feature"
 ```
 
 **Default behavior:**
+
 - Cleanup is **off by default** (opt-in)
 - Only runs when explicitly enabled
 - Creates separate commits for cleanup changes
@@ -832,9 +901,11 @@ SKIP_AUTO_CLEANUP=1 git commit -m "feat: add feature"
 **Ensures the cleanest, most efficient code possible by detecting common AI code generation anti-patterns.**
 
 ### Problem Solved
+
 AI code generation (Claude, GPT, Copilot) often creates patterns that work but are disliked by human developers. This system now runs **post-commit** to provide feedback without blocking valid commits.
 
 ### Validation Timing
+
 - **Post-commit (current)**: Non-blocking, provides feedback after commit
 - **Rationale**: Pre-existing code can trigger false positives, blocking valid commits
 - **Benefit**: Allows progress while still highlighting issues for cleanup
@@ -842,12 +913,14 @@ AI code generation (Claude, GPT, Copilot) often creates patterns that work but a
 ### Common AI Anti-Patterns Detected
 
 **Errors (highlighted for cleanup):**
+
 - ❌ console.log/debugger statements left in code
 - ❌ Event listeners without cleanup (memory leaks)
 - ❌ setInterval/setTimeout without cleanup
 - ❌ Generic error messages ("Error", "Something went wrong")
 
 **Warnings (suggestions):**
+
 - ⚠️ Over-commenting (obvious comments that restate code)
 - ⚠️ Overly verbose variable names (>20 chars)
 - ⚠️ Magic numbers without constants
@@ -861,12 +934,14 @@ AI code generation (Claude, GPT, Copilot) often creates patterns that work but a
 ### How It Works
 
 **1. Post-Commit Validation (Automatic)**
+
 - Runs automatically after every commit
 - Provides informational feedback
 - Does NOT block commits
 - Highlights issues for future cleanup
 
 **2. Manual Validation**
+
 ```bash
 npm run validate:ai-quality      # Check AI patterns
 npm run validate:refactoring     # Check refactoring opportunities
@@ -874,6 +949,7 @@ npm run validate:clean-code      # Run both
 ```
 
 **3. When to Act**
+
 - Review post-commit feedback
 - Fix highlighted issues in next commit
 - Use manual validation before committing for proactive checks
@@ -881,6 +957,7 @@ npm run validate:clean-code      # Run both
 ### Code Refactoring Analysis
 
 Analyzes code for refactoring opportunities:
+
 - **Cyclomatic Complexity**: Functions with >10 decision points
 - **Function Length**: Functions >50 lines
 - **Too Many Parameters**: Functions with >4 parameters
@@ -888,42 +965,50 @@ Analyzes code for refactoring opportunities:
 - **Code Duplication**: Repeated code blocks
 
 **Thresholds:**
+
 - **Warning**: Suggests refactoring (informational)
 - **Error**: Blocks commit (must fix)
 
 ### Best Practices Enforced
 
 **1. Write Code for Humans**
+
 - Use clear, concise names (not overly verbose)
 - Comment the "why", not the "what"
 - Keep functions small and focused
 
 **2. Clean Up Resources**
+
 - Always remove event listeners
 - Clear intervals/timeouts
 - Clean up in disconnectedCallback/useEffect cleanup
 
 **3. Handle Errors Properly**
+
 - Specific error messages with context
 - Don't silently catch and ignore
 - Re-throw or log appropriately
 
 **4. Avoid Over-Engineering**
+
 - Use simplest solution that works
 - Add abstractions only when needed (YAGNI)
 
 **5. Follow Existing Patterns**
+
 - Check how codebase handles similar situations
 - Be consistent with existing code style
 
 ### When to Use
 
 **Always:**
+
 - Before committing code
 - When reviewing AI-generated code
 - When refactoring existing code
 
 **Bypass Only When:**
+
 - Legitimate console.error/warn for user-facing errors
 - Temporary debugging (with TODO + issue reference)
 - False positives (rare)
@@ -932,26 +1017,29 @@ Analyzes code for refactoring opportunities:
 
 **Adjust Severity:**
 Edit `scripts/validate/ai-code-quality-validator.cjs`:
+
 ```javascript
 const AI_ANTI_PATTERNS = {
   debugStatements: {
-    severity: 'error',  // or 'warning'
-  }
-}
+    severity: 'error', // or 'warning'
+  },
+};
 ```
 
 **Adjust Thresholds:**
 Edit `scripts/validate/code-refactoring-analyzer.cjs`:
+
 ```javascript
 const THRESHOLDS = {
   cyclomaticComplexity: { warning: 10, error: 20 },
   functionLength: { warning: 50, error: 100 },
-}
+};
 ```
 
 ### Documentation
 
 See [docs/AI_CODE_QUALITY_GUIDE.md](docs/AI_CODE_QUALITY_GUIDE.md) for:
+
 - Complete list of detected patterns
 - Examples of bad vs good code
 - Detailed fixing instructions
@@ -972,12 +1060,14 @@ Beyond pre-commit and post-commit, the project uses additional Git hooks for wor
 **Purpose:** Final safety check before code reaches the remote repository
 
 **What it does:**
+
 - Prevents force push to protected branches (main/master/develop)
 - Runs full test suite
 - Verifies TypeScript compilation
 - Validates linting passes
 
 **Why it's important:**
+
 - Catches issues if pre-commit was bypassed with `--no-verify`
 - Prevents broken builds from reaching CI/CD
 - Saves 5-10 minutes waiting for CI to fail
@@ -992,6 +1082,7 @@ Beyond pre-commit and post-commit, the project uses additional Git hooks for wor
 **Purpose:** Ensures environment stays in sync after pulling changes
 
 **What it does:**
+
 - Detects `package.json` changes, prompts for `npm install`
 - Detects USWDS version changes
 - Checks for `.env.example` updates
@@ -999,6 +1090,7 @@ Beyond pre-commit and post-commit, the project uses additional Git hooks for wor
 - Suggests rebuild if many files changed
 
 **Why it's important:**
+
 - Never forget to run `npm install` after pulling
 - Prevents "works on my machine" issues
 - Smooth team collaboration
@@ -1012,12 +1104,14 @@ Beyond pre-commit and post-commit, the project uses additional Git hooks for wor
 **Purpose:** Auto-populates commit message with helpful context
 
 **What it does:**
+
 - Detects commit type from branch name (`feat/`, `fix/`, `docs/`, etc.)
 - Extracts component name from branch
 - Extracts issue number from branch name
 - Pre-fills commit message template
 
 **Why it's important:**
+
 - Saves time typing repetitive info
 - Ensures consistent commit message format
 - Auto-links to issues
@@ -1025,6 +1119,7 @@ Beyond pre-commit and post-commit, the project uses additional Git hooks for wor
 **Time:** <1 second
 
 **Example:**
+
 ```bash
 # Branch: feat/123-modal-redesign
 # Auto-generates:
@@ -1053,6 +1148,7 @@ npm run hooks:test:all               # Test all hooks
 ### Configuration
 
 **Disable hooks temporarily:**
+
 ```bash
 # Skip pre-push for emergency
 git push --no-verify
@@ -1068,6 +1164,7 @@ chmod +x .husky/pre-push
 ```
 
 **Environment variables:**
+
 ```bash
 # Auto-install dependencies after merge
 AUTO_INSTALL_DEPS=1 git pull
@@ -1081,6 +1178,7 @@ AUTO_INSTALL_DEPS=1 git pull
 ## Code Quality & Architecture Review
 
 Automated architectural analysis ensures clean code:
+
 - Verifies correct USWDS integration pattern
 - Detects over-engineering and custom implementations
 - Suggests simpler alternatives

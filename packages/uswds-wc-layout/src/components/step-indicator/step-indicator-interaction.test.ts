@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-step-indicator.ts';
 import type { USAStepIndicator } from './usa-step-indicator.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Step Indicator JavaScript Interaction Testing', () => {
   let element: USAStepIndicator;
@@ -148,7 +149,7 @@ describe('Step Indicator JavaScript Interaction Testing', () => {
     it('should handle counters display', async () => {
       // Test with counters enabled
       element.counters = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const stepSegments = element.querySelectorAll('.usa-step-indicator__segment');
 
@@ -225,7 +226,7 @@ describe('Step Indicator JavaScript Interaction Testing', () => {
         { label: 'Step 2', status: 'current' },
         { label: 'Step 3', status: 'incomplete' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const updatedSteps = element.querySelectorAll('.usa-step-indicator__segment');
       expect(updatedSteps.length).toBe(3);
@@ -255,7 +256,7 @@ describe('Step Indicator JavaScript Interaction Testing', () => {
 
     it('should handle small variant', async () => {
       element.small = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const stepIndicator = element.querySelector('.usa-step-indicator');
       if (stepIndicator) {
@@ -282,7 +283,7 @@ describe('Step Indicator JavaScript Interaction Testing', () => {
 
         const currentStep = element.querySelector('.usa-step-indicator__segment--current');
         if (currentStep) {
-          expect(currentStep.getAttribute('aria-current')).toBe('step');
+          expect(await waitForARIAAttribute(currentStep, 'aria-current')).toBe('step');
         }
       }
 

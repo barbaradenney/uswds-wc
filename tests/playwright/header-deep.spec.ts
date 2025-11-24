@@ -485,7 +485,7 @@ test.describe('Header Deep Testing', () => {
 
     test('should handle search integration', async ({ page }) => {
       // Try to find a story with search enabled
-      await page.goto('/iframe.html?id=navigation-header--with-search');
+      await page.goto('/iframe.html?id=navigation-header--with-megamenu');
       await page.waitForLoadState('networkidle');
 
       const component = page.locator(COMPONENT_SELECTOR).first();

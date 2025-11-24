@@ -25,8 +25,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import pkg from 'glob';
-const { glob } = pkg;
+import { glob } from 'glob';
 import { getAllComponentPaths, getAllComponentNames, getComponentPath } from '../utils/find-components.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -102,12 +101,16 @@ async function validateUSWDSCompliance(componentName) {
   const content = fs.readFileSync(componentPath, 'utf-8');
 
   // Check 1: Uses official USWDS CSS import
-  if (!content.includes("import '../../styles/styles.css'")) {
+  // Support both old path (../../styles/styles.css) and new monorepo path (@uswds-wc/core/styles.css)
+  const hasOldImport = content.includes("import '../../styles/styles.css'");
+  const hasMonorepoImport = content.includes("import '@uswds-wc/core/styles.css'");
+
+  if (!hasOldImport && !hasMonorepoImport) {
     results.failures.push(`${componentName}: Missing USWDS CSS import`);
 
     if (flags.fix) {
       // Auto-fix: Add import
-      const fixedContent = `import '../../styles/styles.css';\n${content}`;
+      const fixedContent = `import '@uswds-wc/core/styles.css';\n${content}`;
       fs.writeFileSync(componentPath, fixedContent);
       results.fixed.push(`${componentName}: Added USWDS CSS import`);
     }

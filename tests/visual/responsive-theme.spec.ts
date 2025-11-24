@@ -158,7 +158,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
         await page.setViewportSize({ width: width + 40, height: 800 }); // Add padding
 
         // Test form components that are width-sensitive
-        await page.goto('/iframe.html?id=components-text-input--default');
+        await page.goto('/iframe.html?id=forms-text-input--default');
         await page.waitForLoadState('networkidle');
 
         // Create a container with specific width
@@ -175,7 +175,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
     });
 
     test('should render grid components correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-collection--default');
+      await page.goto('/iframe.html?id=data-display-collection--default');
       await page.waitForLoadState('networkidle');
 
       const breakpoints = [
@@ -195,7 +195,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
   // Focus and Interactive State Tests
   test.describe('Interactive State Visual Tests', () => {
     test('should render focus states consistently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       const button = page.locator('.usa-button').first();
@@ -210,7 +210,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
     });
 
     test('should render form element states consistently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
       await page.waitForLoadState('networkidle');
 
       const input = page.locator('.usa-input').first();
@@ -242,7 +242,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
   test.describe('Component Density Tests', () => {
     test('should render compact component variations', async ({ page }) => {
       // Test table with compact spacing
-      await page.goto('/iframe.html?id=components-table--default');
+      await page.goto('/iframe.html?id=data-display-table--default');
       await page.waitForLoadState('networkidle');
 
       // Apply compact modifier if available
@@ -257,7 +257,7 @@ test.describe('Responsive Design and Theme Visual Tests', () => {
     });
 
     test('should render components with different spacing scales', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button-group--default');
+      await page.goto('/iframe.html?id=actions-button-group--default');
       await page.waitForLoadState('networkidle');
 
       // Default spacing

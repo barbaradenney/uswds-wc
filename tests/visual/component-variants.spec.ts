@@ -10,7 +10,7 @@ test.describe('Component Visual Regression Tests', () => {
   // Button Component Visual Tests
   test.describe('Button Component', () => {
     test('should render all button variants correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--primary');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       // Test primary button
@@ -28,21 +28,21 @@ test.describe('Component Visual Regression Tests', () => {
     });
 
     test('should render button variants correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--secondary');
+      await page.goto('/iframe.html?id=actions-button--secondary');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('button-secondary.png');
 
-      await page.goto('/iframe.html?id=components-button--accent-cool');
+      await page.goto('/iframe.html?id=actions-button--accent-cool');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('button-accent-cool.png');
 
-      await page.goto('/iframe.html?id=components-button--base');
+      await page.goto('/iframe.html?id=actions-button--base');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('button-base.png');
     });
 
     test('should render disabled button correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       // Set button to disabled state via controls
@@ -55,7 +55,7 @@ test.describe('Component Visual Regression Tests', () => {
   // Modal Component Visual Tests
   test.describe('Modal Component', () => {
     test('should render modal correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
       // Open modal
@@ -74,7 +74,7 @@ test.describe('Component Visual Regression Tests', () => {
     test('should render modal in different viewport sizes', async ({ page }) => {
       // Desktop view
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
       const openButton = page.locator('button:has-text("Open Modal")').first();
@@ -95,7 +95,7 @@ test.describe('Component Visual Regression Tests', () => {
   // Accordion Component Visual Tests
   test.describe('Accordion Component', () => {
     test('should render accordion states correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
       await page.waitForLoadState('networkidle');
 
       // Closed state
@@ -126,7 +126,7 @@ test.describe('Component Visual Regression Tests', () => {
   // Combo Box Component Visual Tests
   test.describe('Combo Box Component', () => {
     test('should render combo box states correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-combo-box--default');
+      await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
 
       // Closed state
@@ -152,7 +152,7 @@ test.describe('Component Visual Regression Tests', () => {
     test('should render combo box in different viewport sizes', async ({ page }) => {
       // Desktop
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('/iframe.html?id=components-combo-box--default');
+      await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
 
       const toggleButton = page.locator('.usa-combo-box__toggle-list');
@@ -169,29 +169,29 @@ test.describe('Component Visual Regression Tests', () => {
   // Alert Component Visual Tests
   test.describe('Alert Component', () => {
     test('should render all alert variants correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-alert--default');
+      await page.goto('/iframe.html?id=feedback-alert--default');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-default.png');
 
-      await page.goto('/iframe.html?id=components-alert--info');
+      await page.goto('/iframe.html?id=feedback-alert--info');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-info.png');
 
-      await page.goto('/iframe.html?id=components-alert--warning');
+      await page.goto('/iframe.html?id=feedback-alert--warning');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-warning.png');
 
-      await page.goto('/iframe.html?id=components-alert--error');
+      await page.goto('/iframe.html?id=feedback-alert--error');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-error.png');
 
-      await page.goto('/iframe.html?id=components-alert--success');
+      await page.goto('/iframe.html?id=feedback-alert--success');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-success.png');
     });
 
     test('should render alert with close button correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-alert--with-close-button');
+      await page.goto('/iframe.html?id=feedback-alert--with-close-button');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('alert-with-close.png');
 
@@ -205,21 +205,21 @@ test.describe('Component Visual Regression Tests', () => {
   // Card Component Visual Tests
   test.describe('Card Component', () => {
     test('should render card variants correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-card--default');
+      await page.goto('/iframe.html?id=data-display-card--default');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('card-default.png');
 
-      await page.goto('/iframe.html?id=components-card--with-media');
+      await page.goto('/iframe.html?id=data-display-card--with-media');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('card-with-media.png');
 
-      await page.goto('/iframe.html?id=components-card--header-first');
+      await page.goto('/iframe.html?id=data-display-card--header-first');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('card-header-first.png');
     });
 
     test('should render card responsively', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-card--default');
+      await page.goto('/iframe.html?id=data-display-card--default');
       await page.waitForLoadState('networkidle');
 
       // Desktop
@@ -239,7 +239,7 @@ test.describe('Component Visual Regression Tests', () => {
   // Banner Component Visual Tests
   test.describe('Banner Component', () => {
     test('should render banner correctly', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-banner--default');
+      await page.goto('/iframe.html?id=feedback-banner--default');
       await page.waitForLoadState('networkidle');
       await expect(page).toHaveScreenshot('banner-default.png');
 
@@ -251,7 +251,7 @@ test.describe('Component Visual Regression Tests', () => {
     });
 
     test('should render banner responsively', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-banner--default');
+      await page.goto('/iframe.html?id=feedback-banner--default');
       await page.waitForLoadState('networkidle');
 
       // Mobile view

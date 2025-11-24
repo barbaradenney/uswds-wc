@@ -17,20 +17,62 @@ export default defineConfig(({ mode }) => ({
       'lit-html': resolve(__dirname, 'node_modules/lit-html'),
       'lit-element': resolve(__dirname, 'node_modules/lit-element'),
       // USWDS module aliases for proper tree-shaking
-      '@uswds/uswds/js/usa-accordion': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-accordion/src/index.js'),
-      '@uswds/uswds/js/usa-modal': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-modal/src/index.js'),
-      '@uswds/uswds/js/usa-date-picker': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-date-picker/src/index.js'),
-      '@uswds/uswds/js/usa-combo-box': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-combo-box/src/index.js'),
-      '@uswds/uswds/js/usa-header': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-header/src/index.js'),
-      '@uswds/uswds/js/usa-time-picker': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-time-picker/src/index.js'),
-      '@uswds/uswds/js/usa-in-page-navigation': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-in-page-navigation/src/index.js'),
-      '@uswds/uswds/js/usa-tooltip': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-tooltip/src/index.js'),
-      '@uswds/uswds/js/usa-skipnav': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-skipnav/src/index.js'),
-      '@uswds/uswds/js/usa-table': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-table/src/index.js'),
-      '@uswds/uswds/js/usa-search': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-search/src/index.js'),
-      '@uswds/uswds/js/usa-character-count': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-character-count/src/index.js'),
-      '@uswds/uswds/js/usa-file-input': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-file-input/src/index.js'),
-      '@uswds/uswds/js/usa-date-range-picker': resolve(__dirname, 'node_modules/@uswds/uswds/packages/usa-date-range-picker/src/index.js'),
+      '@uswds/uswds/js/usa-accordion': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-accordion/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-modal': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-modal/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-date-picker': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-date-picker/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-combo-box': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-combo-box/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-header': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-header/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-time-picker': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-time-picker/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-in-page-navigation': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-in-page-navigation/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-tooltip': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-tooltip/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-skipnav': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-skipnav/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-table': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-table/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-search': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-search/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-character-count': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-character-count/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-file-input': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-file-input/src/index.js'
+      ),
+      '@uswds/uswds/js/usa-date-range-picker': resolve(
+        __dirname,
+        'node_modules/@uswds/uswds/packages/usa-date-range-picker/src/index.js'
+      ),
     },
     dedupe: [
       'lit',
@@ -117,12 +159,13 @@ export default defineConfig(({ mode }) => ({
       },
       plugins: [
         // Bundle visualization for analysis
-        mode === 'production' && visualizer({
-          filename: 'dist/stats.html',
-          gzipSize: true,
-          brotliSize: true,
-          template: 'treemap',
-        }),
+        mode === 'production' &&
+          visualizer({
+            filename: 'dist/stats.html',
+            gzipSize: true,
+            brotliSize: true,
+            template: 'treemap',
+          }),
       ].filter(Boolean),
     },
     sourcemap: true,
@@ -139,29 +182,29 @@ export default defineConfig(({ mode }) => ({
       },
     },
     commonjsOptions: {
-      include: [
-        /node_modules\/@uswds\/uswds/,
-        /node_modules/
-      ],
+      include: [/node_modules\/@uswds\/uswds/, /node_modules/],
     },
     // Set bundle size warnings
     chunkSizeWarningLimit: 500, // 500 KB warning threshold
   },
   // Add compression plugins for production
-  plugins: mode === 'production' ? [
-    // Gzip compression
-    viteCompression({
-      algorithm: 'gzip',
-      ext: '.gz',
-      threshold: 1024, // Only compress files > 1KB
-    }),
-    // Brotli compression
-    viteCompression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-      threshold: 1024,
-    }),
-  ] : [],
+  plugins:
+    mode === 'production'
+      ? [
+          // Gzip compression
+          viteCompression({
+            algorithm: 'gzip',
+            ext: '.gz',
+            threshold: 1024, // Only compress files > 1KB
+          }),
+          // Brotli compression
+          viteCompression({
+            algorithm: 'brotliCompress',
+            ext: '.br',
+            threshold: 1024,
+          }),
+        ]
+      : [],
   test: {
     globals: true,
     environment: 'jsdom',

@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-file-input.ts';
 import type { USAFileInput } from './usa-file-input.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('File Input JavaScript Interaction Testing', () => {
   let element: USAFileInput;
@@ -206,7 +207,7 @@ describe('File Input JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing accept attribute
       element.accept = '.jpg,.png,.gif';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="file"]') as HTMLInputElement;
       if (input) {
@@ -224,7 +225,7 @@ describe('File Input JavaScript Interaction Testing', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="file"]') as HTMLInputElement;
       const target = element.querySelector('.usa-file-input__target') as HTMLElement;

@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "endTime": 1763592164235,
+    "totalDuration": 637431,
+    "environment": {
+      "node": "v22.17.1",
+      "platform": "darwin",
+      "arch": "x64",
+      "ci": false
+    },
+    "configuration": {
+      "parallel": true,
+      "workers": 4
+    }
+  },
+  "performance": {
+    "memoryUsage": {
+      "rss": 137977856,
+      "heapTotal": 55046144,
+      "heapUsed": 51486216,
+      "external": 3811146,
+      "arrayBuffers": 102471
+    },
+    "uptime": 642.033965815,
+    "testFiles": [
+      {
+        "file": "performance-baseline.json",
+        "data": {
+          "baselineMetrics": {
+            "timestamp": 1763591530408,
+            "memoryUsage": {
+              "rss": 196104192,
+              "heapTotal": 79843328,
+              "heapUsed": 51334136,
+              "external": 3998544,
+              "arrayBuffers": 331723
+            },
+            "uptime": 8.207319523
+          }
+        }
+      }
+    ]
+  },
+  "coverage": {
+    "files": [],
+    "summary": null
+  },
+  "accessibility": {
+    "files": [],
+    "summary": {
+      "totalViolations": 0,
+      "criticalIssues": 0,
+      "warningIssues": 0
+    }
+  },
+  "security": {
+    "files": [
+      {
+        "file": "security-config.json",
+        "data": {
+          "timestamp": 1763591530408,
+          "environment": "test",
+          "securityHeaders": [
+            "X-Frame-Options",
+            "X-Content-Type-Options",
+            "X-XSS-Protection",
+            "Strict-Transport-Security",
+            "Content-Security-Policy"
+          ]
+        }
+      }
+    ],
+    "summary": {
+      "vulnerabilities": 0,
+      "warnings": 0,
+      "passed": 0
+    }
+  },
+  "recommendations": [
+    "Consider adding accessibility testing to your comprehensive test suite",
+    "Consider adding performance testing to your comprehensive test suite",
+    "Consider adding security testing to your comprehensive test suite",
+    "Review test results for patterns in failures across different environments",
+    "Consider adding visual regression testing if not already included",
+    "Ensure all test artifacts are properly archived for historical analysis"
+  ]
+}

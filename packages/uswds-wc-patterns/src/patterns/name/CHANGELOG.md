@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Overview
+
 **Data Collection Pattern for collecting names**
 
 #### Features
+
 - **Multiple Name Formats (full, first-middle-last, etc.)**
 - **Preferred Name Support**
 - **Honorific and Suffix Support**
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition: Uses `usa-text-input` components**
 
 #### Properties
+
 - `label` - Label for the name section
 - `required` - Whether the name is required
 - `format` - Name format (full, first-middle-last, etc.)
@@ -30,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `showPreferred` - Whether to show preferred name
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Standard data pattern APIs
@@ -39,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Pattern](https://designsystem.digital.gov/patterns/create-a-user-profile/name/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

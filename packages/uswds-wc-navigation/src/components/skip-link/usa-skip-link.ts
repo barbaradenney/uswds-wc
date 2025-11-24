@@ -268,11 +268,16 @@ export class USASkipLink extends USWDSBaseComponent {
     // Guard against accessing document when component is not connected
     if (!this.isConnected) return null;
 
+    // Guard against empty or just '#' selector (common edge case, not an error)
+    if (!this.href || this.href === '#') {
+      return null;
+    }
+
     // Guard against malformed selectors
     try {
       return document.querySelector(this.href);
     } catch (error) {
-      console.warn(`Skip link: Invalid selector "${this.href}"`, error);
+      console.warn(`Skip link: Invalid target selector "${this.href}"`, error);
       return null;
     }
   }

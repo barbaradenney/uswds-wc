@@ -115,25 +115,69 @@ describe('Pattern Contracts', () => {
     DATA_PATTERNS.forEach(({ name, class: PatternClass }) => {
       it(`${name} should have getData() method`, () => {
         const instance = new PatternClass() as any;
-        const hasGetData = typeof (instance.getAddressData || instance.getPhoneData || instance.getNameData || instance.getPreferencesData || instance.getEmailData || instance.getDateOfBirthData || instance.getSexData || instance.getSSNData || instance.getRaceEthnicityData) === 'function';
+        const hasGetData =
+          typeof (
+            instance.getAddressData ||
+            instance.getPhoneData ||
+            instance.getNameData ||
+            instance.getPreferencesData ||
+            instance.getEmailData ||
+            instance.getDateOfBirthData ||
+            instance.getSexData ||
+            instance.getSSNData ||
+            instance.getRaceEthnicityData
+          ) === 'function';
         expect(hasGetData).toBe(true);
       });
 
       it(`${name} should have setData() method`, () => {
         const instance = new PatternClass() as any;
-        const hasSetData = typeof (instance.setAddressData || instance.setPhoneData || instance.setNameData || instance.setPreferencesData || instance.setEmailData || instance.setDateOfBirthData || instance.setSexData || instance.setSSNData || instance.setRaceEthnicityData) === 'function';
+        const hasSetData =
+          typeof (
+            instance.setAddressData ||
+            instance.setPhoneData ||
+            instance.setNameData ||
+            instance.setPreferencesData ||
+            instance.setEmailData ||
+            instance.setDateOfBirthData ||
+            instance.setSexData ||
+            instance.setSSNData ||
+            instance.setRaceEthnicityData
+          ) === 'function';
         expect(hasSetData).toBe(true);
       });
 
       it(`${name} should have clear() method`, () => {
         const instance = new PatternClass() as any;
-        const hasClear = typeof (instance.clearAddress || instance.clearPhoneNumber || instance.clearName || instance.clearPreferences || instance.clearEmail || instance.clearDateOfBirth || instance.clearSex || instance.clearSSN || instance.clearRaceEthnicity) === 'function';
+        const hasClear =
+          typeof (
+            instance.clearAddress ||
+            instance.clearPhoneNumber ||
+            instance.clearName ||
+            instance.clearPreferences ||
+            instance.clearEmail ||
+            instance.clearDateOfBirth ||
+            instance.clearSex ||
+            instance.clearSSN ||
+            instance.clearRaceEthnicity
+          ) === 'function';
         expect(hasClear).toBe(true);
       });
 
       it(`${name} should have validate() method`, () => {
         const instance = new PatternClass() as any;
-        const hasValidate = typeof (instance.validateAddress || instance.validatePhoneNumber || instance.validateName || instance.validatePreferences || instance.validateEmail || instance.validateDateOfBirth || instance.validateSex || instance.validateSSN || instance.validateRaceEthnicity) === 'function';
+        const hasValidate =
+          typeof (
+            instance.validateAddress ||
+            instance.validatePhoneNumber ||
+            instance.validateName ||
+            instance.validatePreferences ||
+            instance.validateEmail ||
+            instance.validateDateOfBirth ||
+            instance.validateSex ||
+            instance.validateSSN ||
+            instance.validateRaceEthnicity
+          ) === 'function';
         expect(hasValidate).toBe(true);
       });
     });
@@ -343,7 +387,12 @@ describe('Pattern Contracts', () => {
       expect(typeof data).toBe('object');
       expect(data).not.toBeNull();
       // Set data and verify it returns with correct structure
-      instance.setAddressData({ street1: '123 Main St', city: 'Test', state: 'CA', zipCode: '12345' });
+      instance.setAddressData({
+        street1: '123 Main St',
+        city: 'Test',
+        state: 'CA',
+        zipCode: '12345',
+      });
       const filledData = instance.getAddressData();
       expect(filledData).toHaveProperty('street1');
       expect(filledData).toHaveProperty('city');
@@ -378,7 +427,12 @@ describe('Pattern Contracts', () => {
   describe('Pattern Immutability Contract', () => {
     it('getData() should return a copy, not a reference', () => {
       const instance = new USAAddressPattern();
-      instance.setAddressData({ street1: '123 Main St', city: 'Test', state: 'CA', zipCode: '12345' });
+      instance.setAddressData({
+        street1: '123 Main St',
+        city: 'Test',
+        state: 'CA',
+        zipCode: '12345',
+      });
 
       const data1 = instance.getAddressData();
       const data2 = instance.getAddressData();

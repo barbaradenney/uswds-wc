@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-character-count.ts';
 import type { USACharacterCount } from './usa-character-count.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Character Count JavaScript Interaction Testing', () => {
   let element: USACharacterCount;
@@ -82,7 +83,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
         }
 
         expect(textarea.getAttribute('maxlength')).toBe('100');
-        expect(textarea.getAttribute('aria-describedby')).toBeTruthy();
+        expect(await waitForARIAAttribute(textarea, 'aria-describedby')).toBeTruthy();
       }
     });
   });
@@ -205,7 +206,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
 
       // Check proper associations
       if (textarea && message && label) {
-        expect(textarea.getAttribute('aria-describedby')).toContain(message.id);
+        expect(await waitForARIAAttribute(textarea, 'aria-describedby')).toContain(message.id);
         expect(label.getAttribute('for')).toBe(textarea.id);
       }
 
@@ -216,7 +217,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing maxlength
       element.maxlength = 50;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       if (textarea) {
@@ -240,7 +241,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
 
     it('should handle required field validation', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       if (textarea) {
@@ -266,7 +267,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       if (textarea) {
@@ -279,7 +280,7 @@ describe('Character Count JavaScript Interaction Testing', () => {
 
     it('should handle error state and messaging', async () => {
       element.error = 'This field has an error';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const errorMessage = element.querySelector('.usa-error-message');
       if (errorMessage) {
@@ -302,11 +303,11 @@ describe('Character Count JavaScript Interaction Testing', () => {
 
       if (textarea && message && label) {
         // Check ARIA attributes
-        expect(textarea.getAttribute('aria-describedby')).toBeTruthy();
+        expect(await waitForARIAAttribute(textarea, 'aria-describedby')).toBeTruthy();
 
         // USWDS spec: message element should NOT have aria-live (removed for backwards compatibility)
         // See: node_modules/@uswds/uswds/packages/usa-character-count/src/index.js line 189
-        expect(message.getAttribute('aria-live')).toBeFalsy();
+        expect(await waitForARIAAttribute(message, 'aria-live')).toBeFalsy();
         expect(message.classList.contains('usa-sr-only')).toBe(true);
         expect(message.id).toBeTruthy();
 

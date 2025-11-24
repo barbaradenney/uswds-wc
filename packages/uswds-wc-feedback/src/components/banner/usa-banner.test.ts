@@ -11,6 +11,7 @@ import {
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
 import { quickUSWDSComplianceTest } from '@uswds-wc/test-utils/uswds-compliance-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USABanner', () => {
   let element: USABanner;
@@ -105,7 +106,7 @@ describe('USABanner', () => {
     it('should handle icon source changes', async () => {
       element.dotGovIconSrc = '/custom/dotgov.svg';
       element.httpsIconSrc = '/custom/https.svg';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dotGovIcon = element.querySelectorAll('.usa-banner__icon')[0] as HTMLImageElement;
       const httpsIcon = element.querySelectorAll('.usa-banner__icon')[1] as HTMLImageElement;
@@ -166,8 +167,8 @@ describe('USABanner', () => {
       expect(button).toBeTruthy();
       expect(button.classList.contains('usa-accordion__button')).toBe(true);
       expect(button.classList.contains('usa-banner__button')).toBe(true);
-      expect(button.getAttribute('aria-expanded')).toBe('false');
-      expect(button.getAttribute('aria-controls')).toBe('gov-banner-default');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-controls')).toBe('gov-banner-default');
     });
 
     it('should render content area with guidance sections', async () => {
@@ -233,24 +234,24 @@ describe('USABanner', () => {
   describe('Expanded State', () => {
     it('should show content when expanded', async () => {
       element.expanded = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const content = element.querySelector('.usa-banner__content') as HTMLElement;
       const button = element.querySelector('.usa-banner__button') as HTMLButtonElement;
 
       expect(content.hidden).toBe(false);
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
     });
 
     it('should hide content when collapsed', async () => {
       element.expanded = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const content = element.querySelector('.usa-banner__content') as HTMLElement;
       const button = element.querySelector('.usa-banner__button') as HTMLButtonElement;
 
       expect(content.hidden).toBe(true);
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
     });
   });
 
@@ -717,7 +718,7 @@ describe('USABanner', () => {
     describe('Accordion Expansion Structure', () => {
       it('should have proper banner structure in DOM', async () => {
         element.expanded = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const banner = element.querySelector('.usa-banner');
         const header = element.querySelector('.usa-banner__header');
@@ -733,19 +734,19 @@ describe('USABanner', () => {
 
       it('should display content when expanded', async () => {
         element.expanded = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const content = element.querySelector('.usa-banner__content') as HTMLElement;
         expect(content).toBeTruthy();
 
         // Content should not be hidden
         expect(content.hasAttribute('hidden')).toBe(false);
-        expect(content.getAttribute('aria-hidden')).not.toBe('true');
+        expect(await waitForARIAAttribute(content, 'aria-hidden')).not.toBe('true');
       });
 
       it('should hide content when collapsed', async () => {
         element.expanded = false;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const content = element.querySelector('.usa-banner__content') as HTMLElement;
         expect(content).toBeTruthy();
@@ -804,7 +805,7 @@ describe('USABanner', () => {
     describe('Visual Rendering Validation', () => {
       it('should render banner content without cutoff when expanded', async () => {
         element.expanded = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const content = element.querySelector('.usa-banner__content') as HTMLElement;
         expect(content).toBeTruthy();
@@ -836,14 +837,14 @@ describe('USABanner', () => {
       it('should render both collapsed and expanded states correctly', async () => {
         // Test collapsed
         element.expanded = false;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         let content = element.querySelector('.usa-banner__content');
         expect(content?.hasAttribute('hidden')).toBe(true);
 
         // Test expanded
         element.expanded = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         content = element.querySelector('.usa-banner__content');
         expect(content?.hasAttribute('hidden')).toBe(false);
@@ -856,7 +857,7 @@ describe('USABanner', () => {
     describe('ARIA Expansion State', () => {
       it('should have correct aria-expanded on button', async () => {
         element.expanded = false;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const button = element.querySelector('.usa-banner__button');
         expect(button?.getAttribute('aria-expanded')).toBe('false');

@@ -1,0 +1,47 @@
+# Page snapshot
+
+```yaml
+- list [ref=e4]:
+  - listitem [ref=e5]:
+    - generic [ref=e6]:
+      - heading "Gears of Government President's Award winners" [level=3] [ref=e7]:
+        - link "Gears of Government President's Award winners" [ref=e8]:
+          - /url: https://trumpadministration.archives.performance.gov/presidents-winners-press-release/
+      - paragraph [ref=e9]: Today, the Administration announces the winners of the Gears of Government President's Award. This program recognizes the contributions of individuals and teams across the federal workforce who make a profound difference in the lives of the American people.
+      - list "More information" [ref=e10]:
+        - listitem [ref=e11]: By Sondra Ainsworth and Constance Lu
+        - listitem [ref=e12]:
+          - time [ref=e13]: September 30, 2020
+      - list "Topics" [ref=e14]:
+        - listitem [ref=e15]: New
+        - listitem [ref=e16]: PMA
+        - listitem [ref=e17]: OMB
+  - listitem [ref=e18]:
+    - generic [ref=e19]:
+      - heading "Women-owned small business dashboard" [level=3] [ref=e20]:
+        - link "Women-owned small business dashboard" [ref=e21]:
+          - /url: https://trumpadministration.archives.performance.gov/sba-wosb-dashboard/
+      - paragraph [ref=e22]: In honor of National Women's Small Business Month, we've partnered with SBA's Office of Government Contracting and Business Development and Office of Program Performance, Analysis, and Evaluation to highlight the Women-Owned Small Businesses (WOSBs) data dashboard!
+      - list "More information" [ref=e23]:
+        - listitem [ref=e24]: By Constance Lu
+        - listitem [ref=e25]:
+          - time [ref=e26]: September 30, 2020
+      - list "Topics" [ref=e27]:
+        - listitem [ref=e28]: SBA
+  - listitem [ref=e29]:
+    - generic [ref=e30]:
+      - heading "September 2020 updates show progress on cross-agency and agency priority goals" [level=3] [ref=e31]:
+        - link "September 2020 updates show progress on cross-agency and agency priority goals" [ref=e32]:
+          - /url: https://trumpadministration.archives.performance.gov/September-2020-Updates-Show-Progress/
+      - paragraph [ref=e33]: Today, we published progress updates for both Cross-Agency Priority (CAP) Goals and Agency Priority Goals (APGs) for the third quarter of FY2020. These updates highlight recent milestones and accomplishments as well as related initiatives that support progress towards a more modern and effective government.
+      - list "More information" [ref=e34]:
+        - listitem [ref=e35]: By Eric L. Miller
+        - listitem [ref=e36]:
+          - time [ref=e37]: September 17, 2020
+      - list "Topics" [ref=e38]:
+        - listitem [ref=e39]: Quarterly update
+        - listitem [ref=e40]: CAP goal
+        - listitem [ref=e41]: APG
+        - listitem [ref=e42]: PMA
+        - listitem [ref=e43]: Success story
+```

@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './usa-contact-preferences-pattern.js';
-import type { ContactMethod, USAContactPreferencesPattern } from './usa-contact-preferences-pattern.js';
+import type {
+  ContactMethod,
+  USAContactPreferencesPattern,
+} from './usa-contact-preferences-pattern.js';
 
 const meta: Meta = {
   title: 'Patterns/User Profile/Contact Preferences',
@@ -20,9 +23,7 @@ type Story = StoryObj;
  * Allows users to select multiple preferred contact methods.
  */
 export const Default: Story = {
-  render: () => html`
-    <usa-contact-preferences-pattern></usa-contact-preferences-pattern>
-  `,
+  render: () => html` <usa-contact-preferences-pattern></usa-contact-preferences-pattern> `,
 };
 
 /**
@@ -80,7 +81,9 @@ export const CustomMethods: Story = {
       },
     ];
 
-    const pattern = document.createElement('usa-contact-preferences-pattern') as USAContactPreferencesPattern;
+    const pattern = document.createElement(
+      'usa-contact-preferences-pattern'
+    ) as USAContactPreferencesPattern;
     pattern.methods = customMethods;
     pattern.setAttribute('show-additional-info', '');
     pattern.setAttribute(

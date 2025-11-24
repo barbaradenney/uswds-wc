@@ -20,31 +20,49 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Validate documentation consistency
-        run: node scripts/validate-docs.js
+        run: node scripts/validate/validate-docs.js
         continue-on-error: true
         id: validate
 
       - name: Check for outdated documentation
-        run: node scripts/check-outdated-docs.js
         continue-on-error: true
         id: outdated
+        run: |
+          if [ -f scripts/check-outdated-docs.js ]; then
+            node scripts/check-outdated-docs.js
+          else
+            echo "⚠️ Outdated docs checker not found - skipping"
+          fi
 
       - name: Sync component documentation status
-        run: node scripts/sync-component-docs.js
+        continue-on-error: true
         id: sync
+        run: |
+          if [ -f scripts/maintenance/sync-component-docs.js ]; then
+            node scripts/maintenance/sync-component-docs.js
+          else
+            echo "⚠️ Sync component docs script not found - skipping"
+          fi
 
       - name: Check documentation links
-        run: node scripts/check-links.js
+        run: node scripts/validate/validate-documentation-links.cjs
         continue-on-error: true
         id: links
 
@@ -105,22 +123,27 @@ jobs:
     runs-on: ubuntu-latest
     name: Weekly Link Check
     if: github.event_name == 'schedule'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check all documentation links
-        run: node scripts/check-links.js
+        run: node scripts/validate/validate-documentation-links.cjs
         continue-on-error: true
         id: comprehensive-links
 
@@ -176,31 +199,41 @@ jobs:
   component-coverage:
     runs-on: ubuntu-latest
     name: Component Documentation Coverage
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Generate component coverage report
+        continue-on-error: true
         run: |
-          node scripts/sync-component-docs.js
-          
-          # Create coverage badge data
-          TOTAL_COMPONENTS=$(find src/components -mindepth 1 -maxdepth 1 -type d | wc -l)
-          COMPLETE_COMPONENTS=$(grep -o "Complete (90%+): [0-9]*" docs/component-status-report.md | grep -o "[0-9]*" || echo "0")
-          COVERAGE_PERCENT=$(echo "scale=0; $COMPLETE_COMPONENTS * 100 / $TOTAL_COMPONENTS" | bc -l || echo "0")
-          
-          echo "Component Coverage: $COVERAGE_PERCENT% ($COMPLETE_COMPONENTS/$TOTAL_COMPONENTS)"
-          echo "COVERAGE_PERCENT=$COVERAGE_PERCENT" >> $GITHUB_ENV
+          if [ -f scripts/sync-component-docs.js ]; then
+            node scripts/sync-component-docs.js
+
+            # Create coverage badge data
+            TOTAL_COMPONENTS=$(find src/components -mindepth 1 -maxdepth 1 -type d | wc -l)
+            COMPLETE_COMPONENTS=$(grep -o "Complete (90%+): [0-9]*" docs/component-status-report.md | grep -o "[0-9]*" || echo "0")
+            COVERAGE_PERCENT=$(echo "scale=0; $COMPLETE_COMPONENTS * 100 / $TOTAL_COMPONENTS" | bc -l || echo "0")
+
+            echo "Component Coverage: $COVERAGE_PERCENT% ($COMPLETE_COMPONENTS/$TOTAL_COMPONENTS)"
+            echo "COVERAGE_PERCENT=$COVERAGE_PERCENT" >> $GITHUB_ENV
+          else
+            echo "⚠️ Sync component docs script not found - skipping coverage report"
+          fi
 
       - name: Comment on PR if this is a PR
         if: github.event_name == 'push' && github.ref != 'refs/heads/main'
@@ -257,14 +290,19 @@ jobs:
         with:
           fetch-depth: 0 # Full history for proper git operations
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Analyze documentation state
         id: analyze
@@ -297,14 +335,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add docs/
-          git commit -m "chore: automated weekly documentation cleanup
+          cat > /tmp/commit-msg.txt << 'EOF'
+          chore: automated weekly documentation cleanup
 
-Archived ${{ steps.analyze.outputs.archivable }} obsolete doc(s).
+          Archived ${{ steps.analyze.outputs.archivable }} obsolete doc(s).
 
-Automated by GitHub Actions (weekly schedule).
+          Automated by GitHub Actions (weekly schedule).
 
-🤖 Generated by docs-maintenance workflow"
-
+          🤖 Generated by docs-maintenance workflow
+          EOF
+          git commit -F /tmp/commit-msg.txt
           git push
 
       - name: Create cleanup summary

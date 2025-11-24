@@ -42,9 +42,7 @@ describe('USADateOfBirthPattern', () => {
     });
 
     it('should fire pattern-ready event on first update', async () => {
-      const element2 = document.createElement(
-        'usa-date-of-birth-pattern'
-      ) as USADateOfBirthPattern;
+      const element2 = document.createElement('usa-date-of-birth-pattern') as USADateOfBirthPattern;
 
       const readyPromise = new Promise((resolve) => {
         element2.addEventListener('pattern-ready', (e: Event) => {
@@ -138,9 +136,7 @@ describe('USADateOfBirthPattern', () => {
     });
 
     it('should update data on month change', async () => {
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       const select = monthSelect?.querySelector('select') as HTMLSelectElement;
 
       select.value = '03';
@@ -158,9 +154,7 @@ describe('USADateOfBirthPattern', () => {
         });
       });
 
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       const select = monthSelect?.querySelector('select') as HTMLSelectElement;
 
       select.value = '05';
@@ -216,9 +210,7 @@ describe('USADateOfBirthPattern', () => {
     });
 
     it('should update data on year input', async () => {
-      const yearInput = element.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = element.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
       const input = yearInput?.querySelector('input') as HTMLInputElement;
 
       input.value = '1990';
@@ -239,9 +231,7 @@ describe('USADateOfBirthPattern', () => {
     });
 
     it('should return current date data', async () => {
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       const select = monthSelect?.querySelector('select') as HTMLSelectElement;
       select.value = '06';
       select.dispatchEvent(new Event('change', { bubbles: true }));
@@ -251,9 +241,7 @@ describe('USADateOfBirthPattern', () => {
       dayEl.value = '20';
       dayEl.dispatchEvent(new Event('input', { bubbles: true }));
 
-      const yearInput = element.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = element.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
       const yearEl = yearInput?.querySelector('input') as HTMLInputElement;
       yearEl.value = '1985';
       yearEl.dispatchEvent(new Event('input', { bubbles: true }));
@@ -298,9 +286,7 @@ describe('USADateOfBirthPattern', () => {
       await element.updateComplete;
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       expect(monthSelect?.value).toBe('07');
     });
 
@@ -318,9 +304,7 @@ describe('USADateOfBirthPattern', () => {
       await element.updateComplete;
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      const yearInput = element.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = element.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
       expect(yearInput?.value).toBe('1995');
     });
   });
@@ -344,13 +328,9 @@ describe('USADateOfBirthPattern', () => {
       await element.updateComplete;
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       const dayInput = element.querySelector('usa-text-input[name="date_of_birth_day"]') as any;
-      const yearInput = element.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = element.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
 
       const select = monthSelect?.querySelector('select') as HTMLSelectElement;
       const dayEl = dayInput?.querySelector('input') as HTMLInputElement;
@@ -555,9 +535,7 @@ describe('USADateOfBirthPattern', () => {
 
   describe('CRITICAL: NO Auto-Advance Focus', () => {
     it('should NOT auto-advance focus from month to day', async () => {
-      const monthSelect = element.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = element.querySelector('usa-select[name="date_of_birth_month"]') as any;
       const dayInput = element.querySelector('usa-text-input[name="date_of_birth_day"]') as any;
 
       const select = monthSelect?.querySelector('select') as HTMLSelectElement;
@@ -578,9 +556,7 @@ describe('USADateOfBirthPattern', () => {
 
     it('should NOT auto-advance focus from day to year', async () => {
       const dayInput = element.querySelector('usa-text-input[name="date_of_birth_day"]') as any;
-      const yearInput = element.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = element.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
 
       const dayEl = dayInput?.querySelector('input') as HTMLInputElement;
       const yearEl = yearInput?.querySelector('input') as HTMLInputElement;

@@ -6,6 +6,7 @@ import {
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
 import { waitForUpdate, validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAButtonGroup', () => {
   let element: USAButtonGroup;
@@ -70,7 +71,7 @@ describe('USAButtonGroup', () => {
   describe('Properties', () => {
     it('should handle type changes', async () => {
       element.type = 'segmented';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const group = element.querySelector('.usa-button-group');
       expect(group?.classList.contains('usa-button-group--segmented')).toBe(true);
@@ -78,7 +79,7 @@ describe('USAButtonGroup', () => {
 
     it('should handle buttons array changes', async () => {
       element.buttons = sampleButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
       expect(buttons.length).toBe(4);
@@ -89,7 +90,7 @@ describe('USAButtonGroup', () => {
 
     it('should render programmatic buttons instead of slot when buttons provided', async () => {
       element.buttons = sampleButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
       expect(buttons.length).toBe(4);
@@ -173,7 +174,7 @@ describe('USAButtonGroup', () => {
       ];
 
       element.buttons = typedButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
       expect((buttons[0] as HTMLButtonElement).type).toBe('button');
@@ -183,7 +184,7 @@ describe('USAButtonGroup', () => {
 
     it('should default to button type when not specified', async () => {
       element.buttons = [{ text: 'Default Type' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('button') as HTMLButtonElement;
       expect(button.type).toBe('button');
@@ -198,7 +199,7 @@ describe('USAButtonGroup', () => {
       ];
 
       element.buttons = variantButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
 
@@ -214,7 +215,7 @@ describe('USAButtonGroup', () => {
 
     it('should handle buttons without variant specified', async () => {
       element.buttons = [{ text: 'No Variant' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('button');
       expect(button?.classList.contains('usa-button')).toBe(true);
@@ -226,7 +227,7 @@ describe('USAButtonGroup', () => {
     it('should render default button group', async () => {
       element.type = 'default';
       element.buttons = sampleButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const group = element.querySelector('.usa-button-group');
       expect(group?.classList.contains('usa-button-group')).toBe(true);
@@ -236,7 +237,7 @@ describe('USAButtonGroup', () => {
     it('should render segmented button group', async () => {
       element.type = 'segmented';
       element.buttons = sampleButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const group = element.querySelector('.usa-button-group');
       expect(group?.classList.contains('usa-button-group')).toBe(true);
@@ -246,13 +247,13 @@ describe('USAButtonGroup', () => {
     it('should update group type dynamically', async () => {
       element.buttons = sampleButtons;
       element.type = 'default';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let group = element.querySelector('.usa-button-group');
       expect(group?.classList.contains('usa-button-group--segmented')).toBe(false);
 
       element.type = 'segmented';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       group = element.querySelector('.usa-button-group');
       expect(group?.classList.contains('usa-button-group--segmented')).toBe(true);
@@ -311,7 +312,7 @@ describe('USAButtonGroup', () => {
           onclick: onClickSpy,
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('button') as HTMLButtonElement;
       button.click();
@@ -357,7 +358,7 @@ describe('USAButtonGroup', () => {
   describe('Slot Usage', () => {
     it('should render slot when no buttons provided', async () => {
       element.buttons = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const group = element.querySelector('.usa-button-group');
       const slot = element.querySelector('slot');
@@ -435,7 +436,7 @@ describe('USAButtonGroup', () => {
       ];
 
       element.buttons = mixedButtons;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
 
@@ -483,7 +484,7 @@ describe('USAButtonGroup', () => {
     it('should handle empty and edge cases', async () => {
       // Empty buttons array
       element.buttons = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const group = element.querySelector('.usa-button-group');
       expect(group).toBeTruthy();
@@ -573,7 +574,7 @@ describe('USAButtonGroup', () => {
         { text: 'Reset', type: 'reset' },
         { text: 'Button', type: 'button' },
       ];
-      await waitForUpdate(formElement);
+      await waitForPropertyPropagation(element);
 
       const buttons = formElement.querySelectorAll('button');
       expect(buttons.length).toBe(3);
@@ -591,7 +592,7 @@ describe('USAButtonGroup', () => {
         { text: 'Submit Application', type: 'submit' },
         { text: 'Clear Form', type: 'reset' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
       const submitButton = Array.from(buttons).find(

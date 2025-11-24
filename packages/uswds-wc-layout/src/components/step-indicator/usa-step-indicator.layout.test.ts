@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '../step-indicator/index.ts';
 import type { USAStepIndicator } from './usa-step-indicator.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAStepIndicator Layout Tests', () => {
   let element: USAStepIndicator;
@@ -289,7 +290,7 @@ describe('USAStepIndicator Layout Tests', () => {
       const stepList = element.querySelector('.usa-step-indicator__segments');
 
       if (stepIndicator) {
-        expect(stepIndicator.getAttribute('aria-label')).toBeTruthy();
+        expect(await waitForARIAAttribute(stepIndicator, 'aria-label')).toBeTruthy();
       }
 
       if (stepList) {

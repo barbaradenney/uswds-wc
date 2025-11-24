@@ -5,7 +5,6 @@ import type { RaceEthnicityData } from './usa-race-ethnicity-pattern.js';
 import {
   verifyChildComponent,
   verifyUSWDSStructure,
-  verifyCompactMode,
 } from '@uswds-wc/test-utils/slot-testing-utils.js';
 
 // Register the component
@@ -157,9 +156,7 @@ describe('USARaceEthnicityPattern', () => {
     });
 
     it('should have American Indian or Alaska Native option', () => {
-      const checkbox = element.querySelector(
-        'usa-checkbox[value="american-indian-alaska-native"]'
-      );
+      const checkbox = element.querySelector('usa-checkbox[value="american-indian-alaska-native"]');
       expect(checkbox).toBeTruthy();
       expect(checkbox?.getAttribute('label')).toBe('American Indian or Alaska Native');
     });
@@ -311,9 +308,7 @@ describe('USARaceEthnicityPattern', () => {
 
   describe('Prefer Not to Share', () => {
     it('should update data when prefer not to share is checked', async () => {
-      const checkbox = element.querySelector(
-        'usa-checkbox[name="prefer-not-to-share"]'
-      ) as any;
+      const checkbox = element.querySelector('usa-checkbox[name="prefer-not-to-share"]') as any;
 
       checkbox.checked = true;
       checkbox.dispatchEvent(new CustomEvent('change', { detail: { checked: true } }));
@@ -468,9 +463,7 @@ describe('USARaceEthnicityPattern', () => {
       await element.updateComplete;
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      const checkbox = element.querySelector(
-        'usa-checkbox[name="prefer-not-to-share"]'
-      ) as any;
+      const checkbox = element.querySelector('usa-checkbox[name="prefer-not-to-share"]') as any;
       expect(checkbox?.checked).toBe(true);
     });
   });
@@ -537,9 +530,7 @@ describe('USARaceEthnicityPattern', () => {
     it('should return true if prefer not to share is selected', async () => {
       element.required = true;
 
-      const checkbox = element.querySelector(
-        'usa-checkbox[name="prefer-not-to-share"]'
-      ) as any;
+      const checkbox = element.querySelector('usa-checkbox[name="prefer-not-to-share"]') as any;
       checkbox.checked = true;
       checkbox.dispatchEvent(new CustomEvent('change', { detail: { checked: true } }));
       await element.updateComplete;
@@ -660,10 +651,7 @@ describe('USARaceEthnicityPattern', () => {
       });
 
       it('should initialize Asian checkbox component', async () => {
-        const checkbox = await verifyChildComponent(
-          element,
-          'usa-checkbox[value="asian"]'
-        );
+        const checkbox = await verifyChildComponent(element, 'usa-checkbox[value="asian"]');
         expect(checkbox).toBeTruthy();
 
         const input = checkbox.querySelector('input.usa-checkbox__input');
@@ -696,10 +684,7 @@ describe('USARaceEthnicityPattern', () => {
       });
 
       it('should initialize White checkbox component', async () => {
-        const checkbox = await verifyChildComponent(
-          element,
-          'usa-checkbox[value="white"]'
-        );
+        const checkbox = await verifyChildComponent(element, 'usa-checkbox[value="white"]');
         expect(checkbox).toBeTruthy();
 
         const input = checkbox.querySelector('input.usa-checkbox__input');
@@ -708,10 +693,7 @@ describe('USARaceEthnicityPattern', () => {
       });
 
       it('should initialize ethnicity text input component', async () => {
-        const textInput = await verifyChildComponent(
-          element,
-          'usa-text-input[name="ethnicity"]'
-        );
+        const textInput = await verifyChildComponent(element, 'usa-text-input[name="ethnicity"]');
         expect(textInput).toBeTruthy();
 
         const input = textInput.querySelector('input.usa-input');
@@ -828,8 +810,6 @@ describe('USARaceEthnicityPattern', () => {
       });
 
       it('should have label for ethnicity input component', async () => {
-        const textInput = element.querySelector('usa-text-input[name="ethnicity"]');
-
         // The ethnicity input doesn't have a label attribute in the pattern
         // It relies on the fieldset/legend for labeling (USWDS pattern)
         // Verify the fieldset structure instead
@@ -945,7 +925,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.race).toContain('american-indian-alaska-native');
@@ -962,7 +944,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.race).toContain('asian');
@@ -981,7 +965,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.race).toContain('black-african-american');
@@ -1000,7 +986,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.race).toContain('native-hawaiian-pacific-islander');
@@ -1017,7 +1005,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.race).toContain('white');
@@ -1051,7 +1041,9 @@ describe('USARaceEthnicityPattern', () => {
 
         const input = checkbox?.querySelector('input') as HTMLInputElement;
         input.checked = true;
-        input.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        input.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].raceEthnicityData.preferNotToShare).toBe(true);
@@ -1067,7 +1059,9 @@ describe('USARaceEthnicityPattern', () => {
         const asianCheckbox = element.querySelector('usa-checkbox[value="asian"]') as any;
         const asianInput = asianCheckbox?.querySelector('input') as HTMLInputElement;
         asianInput.checked = true;
-        asianInput.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        asianInput.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
         await element.updateComplete;
 
         // Set ethnicity
@@ -1093,14 +1087,18 @@ describe('USARaceEthnicityPattern', () => {
         const asianCheckbox = element.querySelector('usa-checkbox[value="asian"]') as any;
         const asianInput = asianCheckbox?.querySelector('input') as HTMLInputElement;
         asianInput.checked = true;
-        asianInput.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        asianInput.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
         await element.updateComplete;
 
         // Check White
         const whiteCheckbox = element.querySelector('usa-checkbox[value="white"]') as any;
         const whiteInput = whiteCheckbox?.querySelector('input') as HTMLInputElement;
         whiteInput.checked = true;
-        whiteInput.dispatchEvent(new CustomEvent('change', { detail: { checked: true }, bubbles: true }));
+        whiteInput.dispatchEvent(
+          new CustomEvent('change', { detail: { checked: true }, bubbles: true })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         const lastEvent = events[events.length - 1];

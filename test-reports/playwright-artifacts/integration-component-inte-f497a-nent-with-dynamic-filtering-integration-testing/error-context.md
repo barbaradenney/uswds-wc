@@ -1,0 +1,57 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - heading "Document Search" [level=1] [ref=e3]
+  - search [ref=e4]:
+    - generic [ref=e5]: Search documents
+    - searchbox "Search documents" [active] [ref=e6]: policy
+    - button "Search" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: Search
+  - generic [ref=e9]:
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Category
+        - combobox "Category" [ref=e13]:
+          - option "All categories" [selected]
+          - option "Policy"
+          - option "Procedure"
+          - option "Form"
+          - option "Report"
+      - generic [ref=e14]:
+        - generic [ref=e15]: Department
+        - combobox "Department" [ref=e16]:
+          - option "All departments" [selected]
+          - option "Human Resources"
+          - option "Finance"
+          - option "Legal"
+          - option "Operations"
+      - generic [ref=e17]:
+        - generic [ref=e18]: Date Range
+        - combobox "Date Range" [ref=e19]:
+          - option "Any time" [selected]
+          - option "Past week"
+          - option "Past month"
+          - option "Past year"
+    - region "Active filters" [ref=e20]:
+      - heading "Active Filters:" [level=3] [ref=e21]
+      - generic [ref=e22]:
+        - text: "Search: \"policy\""
+        - button "Remove search filter" [ref=e23] [cursor=pointer]: Remove
+  - generic [ref=e24]:
+    - status [ref=e25]:
+      - heading "Search Results (2 found)" [level=2] [ref=e26]
+    - list [ref=e28]:
+      - listitem [ref=e29]:
+        - heading "Security Policy Update" [level=3] [ref=e30]:
+          - link "Security Policy Update" [ref=e31] [cursor=pointer]:
+            - /url: /document/3
+        - generic [ref=e32]: policy legal 2024-03-10
+        - paragraph [ref=e33]: Updated security policies and compliance requirements
+      - listitem [ref=e34]:
+        - heading "Remote Work Policy" [level=3] [ref=e35]:
+          - link "Remote Work Policy" [ref=e36] [cursor=pointer]:
+            - /url: /document/6
+        - generic [ref=e37]: policy hr 2024-01-20
+        - paragraph [ref=e38]: Guidelines for remote work arrangements and expectations
+```

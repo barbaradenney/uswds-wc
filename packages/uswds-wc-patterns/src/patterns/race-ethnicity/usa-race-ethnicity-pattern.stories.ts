@@ -232,8 +232,7 @@ export const FederalProgramExample: Story = {
   args: {
     raceLabel: 'Which of the following race classifications best describe you?',
     ethnicityLabel: 'I identify my ethnicity as:',
-    raceHint:
-      'Select all that apply. Required for federal program eligibility determination.',
+    raceHint: 'Select all that apply. Required for federal program eligibility determination.',
     ethnicityHint: 'You may report more than one ethnicity',
     required: true,
     showWhyLink: true,
@@ -453,8 +452,8 @@ export const USWDSCompliance: Story = {
         <li>✅ Explains why information is collected</li>
       </ul>
       <p>
-        <strong>OMB Categories:</strong> American Indian or Alaska Native, Asian, Black or
-        African American, Native Hawaiian or Other Pacific Islander, White
+        <strong>OMB Categories:</strong> American Indian or Alaska Native, Asian, Black or African
+        American, Native Hawaiian or Other Pacific Islander, White
       </p>
     </div>
 

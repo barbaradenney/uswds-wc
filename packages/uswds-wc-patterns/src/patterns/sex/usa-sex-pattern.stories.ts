@@ -341,8 +341,8 @@ export const USWDSCompliance: Story = {
         <li>✅ Explains why information is collected</li>
       </ul>
       <p>
-        <strong>Why these restrictions?</strong> Per USWDS, if you're considering adding
-        "prefer not to answer", reconsider whether you need to ask the question at all.
+        <strong>Why these restrictions?</strong> Per USWDS, if you're considering adding "prefer not
+        to answer", reconsider whether you need to ask the question at all.
       </p>
     </div>
 

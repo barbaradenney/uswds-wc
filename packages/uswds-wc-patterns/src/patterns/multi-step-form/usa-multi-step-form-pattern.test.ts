@@ -13,6 +13,28 @@ describe('USAMultiStepFormPattern', () => {
     { id: 'review', label: 'Review' },
   ];
 
+  // Helper to wait for button to appear
+  const waitForButton = async (buttonText: string, maxWait = 2000): Promise<HTMLElement | null> => {
+    const startTime = Date.now();
+    while (Date.now() - startTime < maxWait) {
+      const buttons = pattern.querySelectorAll('usa-button');
+
+      // Wait for all buttons to complete their update cycle (so firstUpdated runs and content is moved)
+      await Promise.all(
+        Array.from(buttons).map((btn: any) => btn.updateComplete || Promise.resolve())
+      );
+
+      const button = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === buttonText
+      ) as HTMLElement;
+      if (button) {
+        return button;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    return null;
+  };
+
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
@@ -32,12 +54,12 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
     });
 
-    it('should create pattern element', () => {
+    it('should create pattern element', async () => {
       expect(pattern).toBeInstanceOf(HTMLElement);
       expect(pattern.tagName).toBe('USA-MULTI-STEP-FORM-PATTERN');
     });
 
-    it('should have default properties', () => {
+    it('should have default properties', async () => {
       expect(pattern.showNavigation).toBe(true);
       expect(pattern.backButtonLabel).toBe('Back');
       expect(pattern.nextButtonLabel).toBe('Next');
@@ -48,17 +70,19 @@ describe('USAMultiStepFormPattern', () => {
       expect(pattern.steps).toEqual(mockSteps);
     });
 
-    it('should use Light DOM for USWDS style compatibility', () => {
+    it('should use Light DOM for USWDS style compatibility', async () => {
       expect(pattern.shadowRoot).toBeNull();
     });
 
-    it('should start on first step', () => {
+    it('should start on first step', async () => {
       expect(pattern.getCurrentStepIndex()).toBe(0);
       expect(pattern.getCurrentStepData()).toEqual(mockSteps[0]);
     });
 
     it('should emit pattern-ready event on initialization', async () => {
-      const newPattern = document.createElement('usa-multi-step-form-pattern') as USAMultiStepFormPattern;
+      const newPattern = document.createElement(
+        'usa-multi-step-form-pattern'
+      ) as USAMultiStepFormPattern;
       newPattern.steps = mockSteps;
 
       const readyPromise = new Promise<CustomEvent>((resolve) => {
@@ -85,14 +109,14 @@ describe('USAMultiStepFormPattern', () => {
       await pattern.updateComplete;
     });
 
-    it('should display current step progress', () => {
+    it('should display current step progress', async () => {
       const progressText = pattern.querySelector('.text-base');
       expect(progressText?.textContent).toContain('Step 1 of 3');
       expect(progressText?.textContent).toContain('Personal Information');
     });
 
     it('should update progress text when navigating', async () => {
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       const progressText = pattern.querySelector('.text-base');
@@ -109,7 +133,7 @@ describe('USAMultiStepFormPattern', () => {
       await pattern.updateComplete;
     });
 
-    it('should show navigation buttons by default', () => {
+    it('should show navigation buttons by default', async () => {
       const buttonGroup = pattern.querySelector('.usa-button-group');
       expect(buttonGroup).toBeTruthy();
     });
@@ -122,14 +146,14 @@ describe('USAMultiStepFormPattern', () => {
       expect(buttonGroup).toBeNull();
     });
 
-    it('should not show back button on first step', () => {
+    it('should not show back button on first step', async () => {
       const buttons = pattern.querySelectorAll('usa-button');
       const backButton = Array.from(buttons).find((btn) => btn.textContent?.includes('Back'));
       expect(backButton).toBeFalsy();
     });
 
     it('should show back button on non-first steps', async () => {
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       const buttons = pattern.querySelectorAll('usa-button');
@@ -137,24 +161,24 @@ describe('USAMultiStepFormPattern', () => {
       expect(backButton).toBeTruthy();
     });
 
-    it('should show Next button on non-final steps', () => {
+    it('should show Next button on non-final steps', async () => {
       const buttons = pattern.querySelectorAll('usa-button');
       const nextButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Next');
       expect(nextButton).toBeTruthy();
     });
 
     it('should show Submit button on final step', async () => {
-      pattern.goToStep(2);
+      await pattern.goToStep(2);
       await pattern.updateComplete;
-      // Wait for child components to render
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      // Light DOM requires extra time for re-render, especially in full test suite
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const buttons = pattern.querySelectorAll('usa-button');
-      const submitButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Submit');
+      // Increase timeout for concurrent test execution
+      const submitButton = await waitForButton('Submit', 5000);
       expect(submitButton).toBeTruthy();
     });
 
-    it('should not show Skip button for required steps', () => {
+    it('should not show Skip button for required steps', async () => {
       const buttons = pattern.querySelectorAll('usa-button');
       const skipButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Skip');
       expect(skipButton).toBeFalsy();
@@ -165,7 +189,7 @@ describe('USAMultiStepFormPattern', () => {
         { id: 'step1', label: 'Step 1' },
         { id: 'step2', label: 'Step 2', optional: true },
       ];
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       const buttons = pattern.querySelectorAll('usa-button');
@@ -175,7 +199,10 @@ describe('USAMultiStepFormPattern', () => {
 
     it('should use custom button labels', async () => {
       // Create new pattern with custom labels set before rendering
-      const customPattern = document.createElement('usa-multi-step-form-pattern') as USAMultiStepFormPattern;
+      const customPattern = document.createElement(
+        'usa-multi-step-form-pattern'
+      ) as USAMultiStepFormPattern;
+      pattern = customPattern; // Set to outer scope for waitForButton helper
       customPattern.steps = mockSteps;
       customPattern.backButtonLabel = 'Previous';
       customPattern.nextButtonLabel = 'Continue';
@@ -183,12 +210,14 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(customPattern);
       await customPattern.updateComplete;
 
-      customPattern.goToStep(2);
+      await customPattern.goToStep(2);
       await customPattern.updateComplete;
+      // Light DOM requires extra time for re-render, especially in full test suite
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const buttons = customPattern.querySelectorAll('usa-button');
-      const backButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Previous');
-      const submitButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Finish');
+      // Increase timeout for concurrent test execution
+      const backButton = await waitForButton('Previous', 5000);
+      const submitButton = await waitForButton('Finish', 5000);
 
       expect(backButton).toBeTruthy();
       expect(submitButton).toBeTruthy();
@@ -209,7 +238,9 @@ describe('USAMultiStepFormPattern', () => {
       });
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const nextButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Next') as HTMLElement;
+      const nextButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Next'
+      ) as HTMLElement;
       nextButton?.click();
 
       const event = await stepChangePromise;
@@ -228,7 +259,9 @@ describe('USAMultiStepFormPattern', () => {
       await pattern.updateComplete;
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const nextButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Next') as HTMLElement;
+      const nextButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Next'
+      ) as HTMLElement;
       nextButton?.click();
 
       await pattern.updateComplete;
@@ -240,19 +273,27 @@ describe('USAMultiStepFormPattern', () => {
     it('should proceed if validation passes', async () => {
       const validate = vi.fn().mockReturnValue(true);
       // Create new pattern with validation set before rendering
-      const validationPattern = document.createElement('usa-multi-step-form-pattern') as USAMultiStepFormPattern;
+      const validationPattern = document.createElement(
+        'usa-multi-step-form-pattern'
+      ) as USAMultiStepFormPattern;
       validationPattern.steps = [
         { id: 'step1', label: 'Step 1', validate },
         { id: 'step2', label: 'Step 2' },
       ];
       container.appendChild(validationPattern);
       await validationPattern.updateComplete;
+      // Wait for child components to render (increased for concurrent execution)
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const buttons = validationPattern.querySelectorAll('usa-button');
-      const nextButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Next') as HTMLElement;
+      // Use helper to ensure button content is rendered (increased timeout)
+      pattern = validationPattern; // Update pattern reference for waitForButton helper
+      const nextButton = await waitForButton('Next', 5000);
+      expect(nextButton).toBeTruthy();
       nextButton?.click();
 
       await validationPattern.updateComplete;
+      // Wait for async navigation to complete (increased for concurrent execution)
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
       expect(validate).toHaveBeenCalled();
       expect(validationPattern.getCurrentStepIndex()).toBe(1); // Should advance
@@ -261,20 +302,27 @@ describe('USAMultiStepFormPattern', () => {
     it('should support async validation', async () => {
       const validate = vi.fn().mockResolvedValue(true);
       // Create new pattern with async validation set before rendering
-      const asyncPattern = document.createElement('usa-multi-step-form-pattern') as USAMultiStepFormPattern;
+      const asyncPattern = document.createElement(
+        'usa-multi-step-form-pattern'
+      ) as USAMultiStepFormPattern;
       asyncPattern.steps = [
         { id: 'step1', label: 'Step 1', validate },
         { id: 'step2', label: 'Step 2' },
       ];
       container.appendChild(asyncPattern);
       await asyncPattern.updateComplete;
+      // Wait for child components to render (increased for concurrent execution)
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const buttons = asyncPattern.querySelectorAll('usa-button');
-      const nextButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Next') as HTMLElement;
+      // Use helper to ensure button content is rendered (increased timeout)
+      pattern = asyncPattern; // Update pattern reference for waitForButton helper
+      const nextButton = await waitForButton('Next', 5000);
+      expect(nextButton).toBeTruthy();
       nextButton?.click();
 
       await asyncPattern.updateComplete;
-      await new Promise((resolve) => setTimeout(resolve, 50)); // Wait for async validation
+      // Wait for async validation (increased for concurrent execution)
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       expect(validate).toHaveBeenCalled();
       expect(asyncPattern.getCurrentStepIndex()).toBe(1);
@@ -288,7 +336,7 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
       // Navigate to second step
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
     });
 
@@ -298,7 +346,9 @@ describe('USAMultiStepFormPattern', () => {
       });
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const backButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Back') as HTMLElement;
+      const backButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Back'
+      ) as HTMLElement;
       backButton?.click();
 
       const event = await stepChangePromise;
@@ -312,7 +362,9 @@ describe('USAMultiStepFormPattern', () => {
       pattern.steps[1].validate = validate;
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const backButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Back') as HTMLElement;
+      const backButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Back'
+      ) as HTMLElement;
       backButton?.click();
 
       await pattern.updateComplete;
@@ -333,7 +385,7 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
       // Navigate to optional step
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
     });
 
@@ -343,7 +395,9 @@ describe('USAMultiStepFormPattern', () => {
       });
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const skipButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Skip') as HTMLElement;
+      const skipButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Skip'
+      ) as HTMLElement;
       skipButton?.click();
 
       const event = await stepChangePromise;
@@ -358,7 +412,9 @@ describe('USAMultiStepFormPattern', () => {
       await pattern.updateComplete;
 
       const buttons = pattern.querySelectorAll('usa-button');
-      const skipButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Skip') as HTMLElement;
+      const skipButton = Array.from(buttons).find(
+        (btn) => btn.textContent?.trim() === 'Skip'
+      ) as HTMLElement;
       skipButton?.click();
 
       await pattern.updateComplete;
@@ -375,8 +431,10 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
       // Navigate to final step
-      pattern.goToStep(2);
+      await pattern.goToStep(2);
       await pattern.updateComplete;
+      // Wait for child components to render after navigation
+      await new Promise((resolve) => setTimeout(resolve, 250));
     });
 
     it('should emit form-complete event when submitting final step', async () => {
@@ -384,8 +442,9 @@ describe('USAMultiStepFormPattern', () => {
         pattern.addEventListener('form-complete', (e) => resolve(e as CustomEvent));
       });
 
-      const buttons = pattern.querySelectorAll('usa-button');
-      const submitButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Submit') as HTMLElement;
+      // Use helper to ensure button content is rendered
+      const submitButton = await waitForButton('Submit');
+      expect(submitButton).toBeTruthy();
       submitButton?.click();
 
       const event = await completePromise;
@@ -395,24 +454,26 @@ describe('USAMultiStepFormPattern', () => {
     it('should validate final step before completion', async () => {
       const validate = vi.fn().mockReturnValue(false);
       // Create new pattern with validation set before rendering
-      const validationPattern = document.createElement('usa-multi-step-form-pattern') as USAMultiStepFormPattern;
-      validationPattern.steps = [
-        mockSteps[0],
-        mockSteps[1],
-        { ...mockSteps[2], validate },
-      ];
+      const validationPattern = document.createElement(
+        'usa-multi-step-form-pattern'
+      ) as USAMultiStepFormPattern;
+      validationPattern.steps = [mockSteps[0], mockSteps[1], { ...mockSteps[2], validate }];
       container.appendChild(validationPattern);
       await validationPattern.updateComplete;
 
       // Navigate to final step
-      validationPattern.goToStep(2);
+      await validationPattern.goToStep(2);
       await validationPattern.updateComplete;
+      // Wait for child components to render
+      await new Promise((resolve) => setTimeout(resolve, 250));
 
       const completeListener = vi.fn();
       validationPattern.addEventListener('form-complete', completeListener);
 
-      const buttons = validationPattern.querySelectorAll('usa-button');
-      const submitButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Submit') as HTMLElement;
+      // Use helper to ensure button content is rendered
+      pattern = validationPattern; // Update pattern reference for waitForButton helper
+      const submitButton = await waitForButton('Submit');
+      expect(submitButton).toBeTruthy();
       submitButton?.click();
 
       await validationPattern.updateComplete;
@@ -426,13 +487,15 @@ describe('USAMultiStepFormPattern', () => {
       pattern.storageKey = 'test-form-progress';
       localStorage.setItem('test-form-progress', JSON.stringify({ stepIndex: 2 }));
 
-      const buttons = pattern.querySelectorAll('usa-button');
-      const submitButton = Array.from(buttons).find((btn) => btn.textContent?.trim() === 'Submit') as HTMLElement;
+      // Use helper to ensure button content is rendered
+      const submitButton = await waitForButton('Submit');
+      expect(submitButton).toBeTruthy();
       submitButton?.click();
 
       await pattern.updateComplete;
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 250));
 
+      // localStorage should be cleared after form completion
       expect(localStorage.getItem('test-form-progress')).toBeNull();
     });
   });
@@ -445,7 +508,7 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
 
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       expect(localStorage.getItem('test-form-progress')).toBeNull();
@@ -461,7 +524,7 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
 
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       const stored = localStorage.getItem('test-form-progress');
@@ -509,7 +572,7 @@ describe('USAMultiStepFormPattern', () => {
       container.appendChild(pattern);
       await pattern.updateComplete;
 
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       await pattern.updateComplete;
 
       expect(localStorage.getItem('test-form-progress')).toBeTruthy();
@@ -541,14 +604,12 @@ describe('USAMultiStepFormPattern', () => {
     });
 
     it('should reset to first step when setSteps makes current index invalid', async () => {
-      pattern.goToStep(2);
+      await pattern.goToStep(2);
       await pattern.updateComplete;
 
       expect(pattern.getCurrentStepIndex()).toBe(2);
 
-      const newSteps: FormStep[] = [
-        { id: 'step-a', label: 'Step A' },
-      ];
+      const newSteps: FormStep[] = [{ id: 'step-a', label: 'Step A' }];
 
       pattern.setSteps(newSteps);
       await pattern.updateComplete;
@@ -561,7 +622,7 @@ describe('USAMultiStepFormPattern', () => {
         pattern.addEventListener('step-change', (e) => resolve(e as CustomEvent));
       });
 
-      pattern.goToStep(2);
+      await pattern.goToStep(2);
 
       const event = await stepChangePromise;
       expect(event.detail.currentStep).toBe(2);
@@ -569,28 +630,28 @@ describe('USAMultiStepFormPattern', () => {
       expect(pattern.getCurrentStepIndex()).toBe(2);
     });
 
-    it('should not navigate to invalid step index', () => {
-      pattern.goToStep(-1);
+    it('should not navigate to invalid step index', async () => {
+      await pattern.goToStep(-1);
       expect(pattern.getCurrentStepIndex()).toBe(0);
 
-      pattern.goToStep(999);
+      await pattern.goToStep(999);
       expect(pattern.getCurrentStepIndex()).toBe(0);
     });
 
-    it('should get current step index via getCurrentStepIndex()', () => {
+    it('should get current step index via getCurrentStepIndex()', async () => {
       expect(pattern.getCurrentStepIndex()).toBe(0);
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       expect(pattern.getCurrentStepIndex()).toBe(1);
     });
 
-    it('should get current step data via getCurrentStepData()', () => {
+    it('should get current step data via getCurrentStepData()', async () => {
       expect(pattern.getCurrentStepData()).toEqual(mockSteps[0]);
-      pattern.goToStep(1);
+      await pattern.goToStep(1);
       expect(pattern.getCurrentStepData()).toEqual(mockSteps[1]);
     });
 
     it('should reset to first step via reset()', async () => {
-      pattern.goToStep(2);
+      await pattern.goToStep(2);
       await pattern.updateComplete;
 
       expect(pattern.getCurrentStepIndex()).toBe(2);
@@ -640,7 +701,7 @@ describe('USAMultiStepFormPattern', () => {
       await pattern.updateComplete;
     });
 
-    it('should have descriptive button labels', () => {
+    it('should have descriptive button labels', async () => {
       const buttons = pattern.querySelectorAll('usa-button');
       buttons.forEach((button) => {
         expect(button.textContent?.trim().length).toBeGreaterThan(0);
@@ -648,9 +709,9 @@ describe('USAMultiStepFormPattern', () => {
     });
 
     it('should disable buttons during validation', async () => {
-      const validate = vi.fn().mockImplementation(
-        () => new Promise((resolve) => setTimeout(() => resolve(true), 100))
-      );
+      const validate = vi
+        .fn()
+        .mockImplementation(() => new Promise((resolve) => setTimeout(() => resolve(true), 100)));
       pattern.steps[0].validate = validate;
       await pattern.updateComplete;
 

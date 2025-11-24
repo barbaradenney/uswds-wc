@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-file-input.js';
 import type { USAFileInput } from './usa-file-input.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS File Input Behavior Contract', () => {
   let element: USAFileInput;
@@ -92,7 +93,7 @@ describe('USWDS File Input Behavior Contract', () => {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       const input = element.querySelector('.usa-file-input__input') as HTMLInputElement;
-      const ariaLabel = input.getAttribute('aria-label');
+      const ariaLabel = await waitForARIAAttribute(input, 'aria-label');
 
       expect(ariaLabel).toContain('Drag');
       expect(ariaLabel).toContain('choose from folder');

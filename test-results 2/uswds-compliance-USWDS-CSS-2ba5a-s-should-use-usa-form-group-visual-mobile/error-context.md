@@ -1,0 +1,53 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - toolbar "Mobile navigation controls" [ref=e5]:
+    - button "Open navigation menu" [ref=e6]:
+      - img [ref=e7]
+      - paragraph [ref=e9]: Forms/Text Input/Default
+    - button "Open addon panel" [ref=e10] [cursor=pointer]:
+      - img [ref=e11]
+  - main [ref=e15]:
+    - region "Toolbar" [ref=e16]:
+      - generic [ref=e17]: Toolbar
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - button "Remount component" [ref=e20] [cursor=pointer]:
+            - img [ref=e21]
+          - button "Zoom in" [ref=e23] [cursor=pointer]:
+            - img [ref=e24]
+          - button "Zoom out" [ref=e27] [cursor=pointer]:
+            - img [ref=e28]
+          - button "Reset zoom" [ref=e31] [cursor=pointer]:
+            - img [ref=e32]
+          - button "Apply a grid to the preview" [ref=e35] [cursor=pointer]:
+            - img [ref=e36]
+          - button "Change the background of the preview" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+          - button "Enable measure" [ref=e43] [cursor=pointer]:
+            - img [ref=e44]
+          - button "Apply outlines to the preview" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "Change the size of the preview" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Vision simulator" [ref=e57] [cursor=pointer]:
+            - img [ref=e58]
+          - generic:
+            - img
+          - button "light" [ref=e64] [cursor=pointer]:
+            - img [ref=e65]
+            - text: light
+        - generic [ref=e67]:
+          - link "Open canvas in new tab" [ref=e68] [cursor=pointer]:
+            - /url: iframe.html?globals=&id=forms-text-input--default
+            - img [ref=e69]
+          - button "Copy canvas link" [ref=e72] [cursor=pointer]:
+            - img [ref=e73]
+    - iframe [ref=e79]:
+      - generic [ref=f1e4]:
+        - generic [ref=f1e5]: Full Name
+        - generic [ref=f1e6]: Enter your complete legal name
+        - textbox "Full Name" [ref=f1e7]:
+          - /placeholder: ""
+```

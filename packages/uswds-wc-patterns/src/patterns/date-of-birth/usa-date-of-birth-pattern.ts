@@ -193,9 +193,7 @@ export class USADateOfBirthPattern extends LitElement {
     return html`
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">${this.label}</legend>
-        ${this.hint
-          ? html`<p class="usa-hint" id="${this.patternId}-hint">${this.hint}</p>`
-          : ''}
+        ${this.hint ? html`<p class="usa-hint" id="${this.patternId}-hint">${this.hint}</p>` : ''}
 
         <div class="usa-memorable-date">
           <!-- Month Select -->
@@ -224,13 +222,13 @@ export class USADateOfBirthPattern extends LitElement {
               label="Day"
               type="text"
               inputmode="numeric"
-            pattern="[0-9]*"
-            maxlength="2"
-            ?required="${this.required}"
-            compact
-            @input="${(e: Event) =>
-              this.handleFieldChange('day', (e.target as HTMLInputElement).value)}"
-          ></usa-text-input>
+              pattern="[0-9]*"
+              maxlength="2"
+              ?required="${this.required}"
+              compact
+              @input="${(e: Event) =>
+                this.handleFieldChange('day', (e.target as HTMLInputElement).value)}"
+            ></usa-text-input>
           </div>
 
           <!-- Year Input -->
@@ -270,19 +268,13 @@ export class USADateOfBirthPattern extends LitElement {
 
     // Manually update child component values (Light DOM pattern)
     Promise.resolve().then(() => {
-      const monthSelect = this.querySelector(
-        'usa-select[name="date_of_birth_month"]'
-      ) as any;
+      const monthSelect = this.querySelector('usa-select[name="date_of_birth_month"]') as any;
       if (monthSelect) monthSelect.value = data.month || '';
 
-      const dayInput = this.querySelector(
-        'usa-text-input[name="date_of_birth_day"]'
-      ) as any;
+      const dayInput = this.querySelector('usa-text-input[name="date_of_birth_day"]') as any;
       if (dayInput) dayInput.value = data.day || '';
 
-      const yearInput = this.querySelector(
-        'usa-text-input[name="date_of_birth_year"]'
-      ) as any;
+      const yearInput = this.querySelector('usa-text-input[name="date_of_birth_year"]') as any;
       if (yearInput) yearInput.value = data.year || '';
     });
   }
@@ -294,9 +286,7 @@ export class USADateOfBirthPattern extends LitElement {
     this.dobData = {};
 
     // Reset form components using their public APIs
-    const monthSelect = this.querySelector(
-      'usa-select[name="date_of_birth_month"]'
-    ) as any;
+    const monthSelect = this.querySelector('usa-select[name="date_of_birth_month"]') as any;
     if (monthSelect?.reset) {
       monthSelect.reset();
     }

@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/navigation",
-  "version": "2.1.1",
+  "version": "2.3.1",
   "description": "USWDS Navigation Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -31,6 +31,7 @@
   "dependencies": {
     "@uswds-wc/actions": "workspace:*",
     "@uswds-wc/core": "workspace:*",
+    "@uswds-wc/data-display": "workspace:*",
     "@uswds-wc/feedback": "workspace:*"
   },
   "peerDependencies": {

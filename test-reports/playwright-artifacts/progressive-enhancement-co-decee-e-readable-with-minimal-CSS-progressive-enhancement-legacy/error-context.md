@@ -1,0 +1,85 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - table [ref=e13]:
+    - rowgroup [ref=e14]:
+      - row [ref=e15]:
+        - cell [ref=e16]:
+          - generic [ref=e17]: Name
+        - cell [ref=e18]:
+          - generic [ref=e19]: Description
+        - cell [ref=e20]:
+          - generic [ref=e21]: Default
+        - cell [ref=e22]:
+          - generic [ref=e23]: Control
+    - rowgroup [ref=e24]:
+      - row [ref=e25]:
+        - cell [ref=e26]:
+          - generic [ref=e27]: propertyName
+          - generic [ref=e28]: "*"
+        - cell [ref=e29]:
+          - generic [ref=e31]: This is a short description
+          - generic [ref=e34]: summary
+        - cell [ref=e35]:
+          - generic [ref=e37]: defaultValue
+        - cell [ref=e38]:
+          - button [ref=e39]: Set string
+      - row [ref=e40]:
+        - cell [ref=e41]:
+          - generic [ref=e42]: propertyName
+          - generic [ref=e43]: "*"
+        - cell [ref=e44]:
+          - generic [ref=e46]: This is a short description
+          - generic [ref=e49]: summary
+        - cell [ref=e50]:
+          - generic [ref=e52]: defaultValue
+        - cell [ref=e53]:
+          - button [ref=e54]: Set string
+      - row [ref=e55]:
+        - cell [ref=e56]:
+          - generic [ref=e57]: propertyName
+          - generic [ref=e58]: "*"
+        - cell [ref=e59]:
+          - generic [ref=e61]: This is a short description
+          - generic [ref=e64]: summary
+        - cell [ref=e65]:
+          - generic [ref=e67]: defaultValue
+        - cell [ref=e68]:
+          - button [ref=e69]: Set string
+  - generic [ref=e71]:
+    - heading "No Preview" [level=1] [ref=e72]
+    - paragraph [ref=e73]: Sorry, but you either have no stories or none are selected somehow.
+    - list [ref=e74]:
+      - listitem [ref=e75]: Please check the Storybook config.
+      - listitem [ref=e76]: Try reloading the page.
+    - paragraph [ref=e77]: If the problem persists, check the browser console, or the terminal you've run Storybook from.
+  - generic [ref=e79]:
+    - heading [level=1] [ref=e80]
+    - paragraph [ref=e81]: "The component failed to render properly, likely due to a configuration issue in Storybook. Here are some common causes and how you can address them:"
+    - list [ref=e82]:
+      - listitem [ref=e83]:
+        - strong [ref=e84]: Missing Context/Providers
+        - text: ": You can use decorators to supply specific contexts or providers, which are sometimes necessary for components to render correctly. For detailed instructions on using decorators, please visit the"
+        - link "Decorators documentation" [ref=e85] [cursor=pointer]:
+          - /url: https://storybook.js.org/docs/writing-stories/decorators
+        - text: .
+      - listitem [ref=e86]:
+        - strong [ref=e87]: Misconfigured Webpack or Vite
+        - text: ": Verify that Storybook picks up all necessary settings for loaders, plugins, and other relevant parameters. You can find step-by-step guides for configuring"
+        - link "Webpack" [ref=e88] [cursor=pointer]:
+          - /url: https://storybook.js.org/docs/builders/webpack
+        - text: or
+        - link "Vite" [ref=e89] [cursor=pointer]:
+          - /url: https://storybook.js.org/docs/builders/vite
+        - text: with Storybook.
+      - listitem [ref=e90]:
+        - strong [ref=e91]: Missing Environment Variables
+        - text: ": Your Storybook may require specific environment variables to function as intended. You can set up custom environment variables as outlined in the"
+        - link "Environment Variables documentation" [ref=e92] [cursor=pointer]:
+          - /url: https://storybook.js.org/docs/configure/environment-variables
+        - text: .
+    - generic [ref=e93]:
+      - code
+  - generic [ref=e94]: "function __onViteAppLoadingError(event) { const hostname = globalThis.location.hostname; if (hostname !== 'localhost' && globalThis.CONFIG_TYPE === 'DEVELOPMENT') { const message = `Failed to load the Storybook preview file 'vite-app.js': It looks like you're visiting the Storybook development server on another hostname than localhost: '${hostname}', but you haven't configured the necessary security features to support this. Please re-run your Storybook development server with the '--host ${hostname}' flag, or manually configure your Vite allowedHosts configuration with viteFinal. See:`; const docs = [ 'https://storybook.js.org/docs/api/cli-options#dev', 'https://storybook.js.org/docs/api/main-config/main-config-vite-final', 'https://vite.dev/config/server-options.html#server-allowedhosts', ]; console.error(`${message}\\n${docs.map((doc) => `- ${doc}`).join('\\n')}`); document.getElementById('storybook-root').innerHTML = `<p style=\"color: red; max-width: 70ch\">${message.replaceAll( '\\n', '<br/>' )}<ul>${docs.map((doc) => `<li><a href='${doc}' target='_blank'>${doc}</a></li>`).join('')}<ul></p>`; return; } }"
+```

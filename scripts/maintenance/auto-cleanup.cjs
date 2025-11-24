@@ -45,7 +45,7 @@ rootFiles.forEach(file => {
   }
   
   // Move JSON test results
-  if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json'].includes(file) && !file.startsWith('tsconfig.') && !file.startsWith('.eslintrc')) {
+  if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'lighthouserc.json'].includes(file) && !file.startsWith('tsconfig.') && !file.startsWith('.eslintrc')) {
     moveFile(file, `reports/${file}`);
   }
   

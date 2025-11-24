@@ -145,16 +145,16 @@ export class USASexPattern extends LitElement {
   }
 
   override render() {
-    const hintText = this.showWhyLink && this.whyUrl
-      ? html`${this.hint} <a href="${this.whyUrl}" class="usa-link">Why do we ask for sex information?</a>`
-      : this.hint;
+    const hintText =
+      this.showWhyLink && this.whyUrl
+        ? html`${this.hint}
+            <a href="${this.whyUrl}" class="usa-link">Why do we ask for sex information?</a>`
+        : this.hint;
 
     return html`
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">${this.label}</legend>
-        ${this.hint
-          ? html`<p class="usa-hint" id="${this.patternId}-hint">${hintText}</p>`
-          : ''}
+        ${this.hint ? html`<p class="usa-hint" id="${this.patternId}-hint">${hintText}</p>` : ''}
 
         <!-- Male Radio Button -->
         <usa-radio

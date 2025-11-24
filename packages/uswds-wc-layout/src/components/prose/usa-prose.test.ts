@@ -10,6 +10,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAProse', () => {
   let element: USAProse;
@@ -65,7 +66,7 @@ describe('USAProse', () => {
 
     it('should apply variant classes correctly', async () => {
       element.variant = 'condensed';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const proseDiv = element.querySelector('.usa-prose');
       expect(proseDiv?.classList.contains('usa-prose--condensed')).toBe(true);
@@ -77,7 +78,7 @@ describe('USAProse', () => {
 
     it('should apply width classes correctly', async () => {
       element.width = 'narrow';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const proseDiv = element.querySelector('.usa-prose');
       expect(proseDiv?.classList.contains('usa-prose--narrow')).toBe(true);
@@ -90,7 +91,7 @@ describe('USAProse', () => {
     it('should combine variant and width classes', async () => {
       element.variant = 'condensed';
       element.width = 'narrow';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const proseDiv = element.querySelector('.usa-prose');
       expect(proseDiv?.classList.contains('usa-prose')).toBe(true);
@@ -109,7 +110,7 @@ describe('USAProse', () => {
 
     it('should render HTML content property', async () => {
       element.content = '<p>HTML content</p>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const contentDiv = element.querySelector('div:last-child');
       expect(contentDiv?.innerHTML).toContain('<p>HTML content</p>');
@@ -246,7 +247,7 @@ describe('USAProse', () => {
   describe('Content Handling', () => {
     it('should handle empty content gracefully', async () => {
       element.content = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const proseDiv = element.querySelector('.usa-prose');
       expect(proseDiv).toBeTruthy();
@@ -268,7 +269,7 @@ describe('USAProse', () => {
       `;
 
       element.content = complexContent;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const contentDiv = element.querySelector('div:last-child');
       expect(contentDiv?.innerHTML).toContain('<h2>Heading</h2>');
@@ -297,7 +298,7 @@ describe('USAProse', () => {
       `;
 
       element.content = tableContent;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const contentDiv = element.querySelector('div:last-child');
       expect(contentDiv?.innerHTML).toContain('<table>');
@@ -346,7 +347,7 @@ describe('USAProse', () => {
   describe('Accessibility', () => {
     it('should maintain semantic HTML structure', async () => {
       element.content = '<h2>Heading</h2><p>Content</p>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h2');
       const paragraph = element.querySelector('p');
@@ -359,7 +360,7 @@ describe('USAProse', () => {
     it('should preserve accessibility attributes in content', async () => {
       element.content =
         '<img src="test.jpg" alt="Test image"><a href="#" aria-label="Test link">Link</a>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const img = element.querySelector('img');
       const link = element.querySelector('a');
@@ -374,7 +375,7 @@ describe('USAProse', () => {
       const specialContent =
         '<p>&lt;script&gt;alert("test")&lt;/script&gt; &amp; special chars</p>';
       element.content = specialContent;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const contentDiv = element.querySelector('div:last-child');
       expect(contentDiv?.innerHTML).toContain('&lt;script&gt;');

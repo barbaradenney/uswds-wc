@@ -15,6 +15,7 @@ import {
   verifyKeyboardOnlyUsable,
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USABreadcrumb', () => {
   let element: USABreadcrumb;
@@ -51,7 +52,7 @@ describe('USABreadcrumb', () => {
       ];
 
       element.items = items;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       expect(listItems.length).toBe(3);
@@ -83,7 +84,7 @@ describe('USABreadcrumb', () => {
         { label: 'Home', href: '/' },
         { label: 'Current', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav.usa-breadcrumb');
       const list = element.querySelector('.usa-breadcrumb__list');
@@ -102,7 +103,7 @@ describe('USABreadcrumb', () => {
         { label: 'Section', href: '/section' },
         { label: 'Current Page' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('.usa-breadcrumb__link');
       expect(links.length).toBe(2);
@@ -121,7 +122,7 @@ describe('USABreadcrumb', () => {
         { label: 'Home', href: '/' },
         { label: 'Current Page', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentItem = element.querySelector('.usa-current');
       const currentSpan = currentItem?.querySelector('span');
@@ -138,7 +139,7 @@ describe('USABreadcrumb', () => {
         { label: 'Section', href: '/section' },
         { label: 'Last Item' }, // No current flag, but should be treated as current
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       const currentItems = element.querySelectorAll('.usa-current');
@@ -156,7 +157,7 @@ describe('USABreadcrumb', () => {
     it('should render with wrap class when wrap is true', async () => {
       element.wrap = true;
       element.items = [{ label: 'Home', href: '/' }, { label: 'Current' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
@@ -165,7 +166,7 @@ describe('USABreadcrumb', () => {
     it('should not render wrap class when wrap is false', async () => {
       element.wrap = false;
       element.items = [{ label: 'Home', href: '/' }, { label: 'Current' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(false);
@@ -185,7 +186,7 @@ describe('USABreadcrumb', () => {
     it('should apply usa-breadcrumb--wrap class when wrap=true', async () => {
       element.items = longBreadcrumbs;
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
@@ -194,7 +195,7 @@ describe('USABreadcrumb', () => {
     it('should not apply wrap class when wrap=false', async () => {
       element.items = longBreadcrumbs;
       element.wrap = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(false);
@@ -205,13 +206,13 @@ describe('USABreadcrumb', () => {
 
       // Test with wrap=false
       element.wrap = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       let listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       expect(listItems.length).toBe(longBreadcrumbs.length);
 
       // Test with wrap=true
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       expect(listItems.length).toBe(longBreadcrumbs.length);
     });
@@ -219,7 +220,7 @@ describe('USABreadcrumb', () => {
     it('should maintain proper list-item structure for wrapping', async () => {
       element.items = longBreadcrumbs;
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
 
@@ -245,21 +246,21 @@ describe('USABreadcrumb', () => {
 
       // Start with wrap=false
       element.wrap = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       let nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb')).toBe(true);
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(false);
 
       // Toggle to wrap=true
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb')).toBe(true);
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
 
       // Toggle back to wrap=false
       element.wrap = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb')).toBe(true);
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(false);
@@ -268,7 +269,7 @@ describe('USABreadcrumb', () => {
     it('should handle empty items array with wrap setting', async () => {
       element.items = [];
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
@@ -280,7 +281,7 @@ describe('USABreadcrumb', () => {
     it('should handle single item with wrap setting', async () => {
       element.items = [{ label: 'Single Page', current: true }];
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
@@ -351,14 +352,14 @@ describe('USABreadcrumb', () => {
 
       // First, verify wrap=false does NOT have wrap class
       element.wrap = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       let nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(false);
       expect(nav?.classList.contains('usa-breadcrumb')).toBe(true);
 
       // Then verify wrap=true DOES have wrap class
       element.wrap = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       nav = element.querySelector('.usa-breadcrumb');
       expect(nav?.classList.contains('usa-breadcrumb--wrap')).toBe(true);
       expect(nav?.classList.contains('usa-breadcrumb')).toBe(true);
@@ -395,7 +396,7 @@ describe('USABreadcrumb', () => {
         { label: 'Home', href: '/' },
         { label: 'Current', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const homeLink = element.querySelector('.usa-breadcrumb__link') as HTMLAnchorElement;
       homeLink.click();
@@ -443,7 +444,7 @@ describe('USABreadcrumb', () => {
   describe('Empty and Edge Cases', () => {
     it('should render empty breadcrumb when no items provided', async () => {
       element.items = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-breadcrumb');
       const list = element.querySelector('.usa-breadcrumb__list');
@@ -456,7 +457,7 @@ describe('USABreadcrumb', () => {
 
     it('should handle single item breadcrumb', async () => {
       element.items = [{ label: 'Only Item', href: '/only' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       const currentItems = element.querySelectorAll('.usa-current');
@@ -469,7 +470,7 @@ describe('USABreadcrumb', () => {
 
     it('should handle items without href', async () => {
       element.items = [{ label: 'No Href Item' }, { label: 'Another No Href', href: undefined }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('.usa-breadcrumb__link');
       expect(links.length).toBe(1); // First item gets a link (href defaults to '#')
@@ -491,7 +492,7 @@ describe('USABreadcrumb', () => {
       ];
 
       element.items = items;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-breadcrumb__list-item');
       const links = element.querySelectorAll('.usa-breadcrumb__link');
@@ -508,7 +509,7 @@ describe('USABreadcrumb', () => {
         { label: 'Middle Current', href: '/middle', current: true },
         { label: 'Last Item' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentItems = element.querySelectorAll('.usa-current');
       const links = element.querySelectorAll('.usa-breadcrumb__link');
@@ -525,7 +526,7 @@ describe('USABreadcrumb', () => {
         { label: 'Home', href: '/' },
         { label: 'Current Page', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav');
       const currentSpan = element.querySelector('.usa-current span');
@@ -553,7 +554,7 @@ describe('USABreadcrumb', () => {
         { label: 'Section', href: '/section' },
         { label: 'Current' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav.usa-breadcrumb');
       const list = nav?.querySelector('ol.usa-breadcrumb__list');
@@ -603,7 +604,7 @@ describe('USABreadcrumb', () => {
 
       // Since single item becomes current, we need to add another item to make the first clickable
       element.items = [{ label: 'Test Item', href: '/test-path' }, { label: 'Current' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('.usa-breadcrumb__link') as HTMLAnchorElement;
       link.click();
@@ -1039,7 +1040,7 @@ describe('USABreadcrumb', () => {
         { label: 'Third', href: '/third' },
         { label: 'Current' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBe(3);
@@ -1085,7 +1086,7 @@ describe('USABreadcrumb', () => {
 
     it('should handle Enter key activation on links', async () => {
       element.items = [{ label: 'Home', href: '/' }, { label: 'Current' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       expect(link).toBeTruthy();
@@ -1106,7 +1107,7 @@ describe('USABreadcrumb', () => {
         { label: 'Section', href: '/section' },
         { label: 'Current' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLElement;
       expect(link).toBeTruthy();

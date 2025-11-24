@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-character-count.ts';
 import type { USACharacterCount } from './usa-character-count.js';
 import { waitForUpdate, validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Regression Tests for Character Count Component Interactive Functionality
@@ -97,7 +98,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
   describe('Real-time Input Tracking', () => {
     it('should update count when user types in textarea', async () => {
       element.inputType = 'textarea';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       textarea.value = 'Hello';
@@ -110,7 +111,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
     it('should update count when user types in input field', async () => {
       element.inputType = 'input';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       input.value = 'Testing';
@@ -123,7 +124,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
     it('should trigger state changes during typing', async () => {
       element.maxlength = 10;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
 
@@ -149,7 +150,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should display correct message for unlimited count', async () => {
       element.maxlength = 0;
       element.value = 'Hello';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('5 characters');
@@ -158,7 +159,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should display correct message when under limit', async () => {
       element.maxlength = 100;
       element.value = 'Hello';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('95 characters remaining');
@@ -167,7 +168,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should display correct message when at limit', async () => {
       element.maxlength = 20;
       element.value = 'x'.repeat(20);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('Character limit reached');
@@ -176,7 +177,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should display correct message when over limit', async () => {
       element.maxlength = 10;
       element.value = 'x'.repeat(15);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('5 characters over limit');
@@ -187,13 +188,13 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
       // 1 character remaining
       element.value = 'x'.repeat(9);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       let statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('1 character remaining');
 
       // 2 characters remaining
       element.value = 'x'.repeat(8);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       statusElement = element.querySelector('.usa-character-count__status');
       expect(statusElement?.textContent?.trim()).toBe('2 characters remaining');
     });
@@ -201,7 +202,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should apply error CSS classes when over limit', async () => {
       element.maxlength = 5;
       element.value = 'x'.repeat(10);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const formGroup = element.querySelector('.usa-form-group');
       expect(formGroup?.classList.contains('usa-form-group--error')).toBe(true);
@@ -215,14 +216,14 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
       // First set over limit
       element.value = 'x'.repeat(10);
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let formGroup = element.querySelector('.usa-form-group');
       expect(formGroup?.classList.contains('usa-form-group--error')).toBe(true);
 
       // Then set back under limit
       element.value = 'abc';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       formGroup = element.querySelector('.usa-form-group');
       expect(formGroup?.classList.contains('usa-form-group--error')).toBe(false);
@@ -233,7 +234,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should render textarea correctly', async () => {
       element.inputType = 'textarea';
       element.rows = 8;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       expect(textarea).toBeTruthy();
@@ -244,7 +245,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
     it('should render input field correctly', async () => {
       element.inputType = 'input';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input).toBeTruthy();
@@ -256,7 +257,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should set maxlength attribute correctly', async () => {
       element.maxlength = 50;
       element.inputType = 'textarea';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       expect(textarea?.maxLength).toBe(50);
@@ -265,7 +266,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should not set maxlength attribute when unlimited', async () => {
       element.maxlength = 0;
       element.inputType = 'input';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.getAttribute('maxlength')).toBe('');
@@ -432,10 +433,10 @@ describe('USACharacterCount Interactive Regression Tests', () => {
   describe('Accessibility Features', () => {
     it('should have correct ARIA attributes', async () => {
       element.hint = 'Please enter your message';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
-      const ariaDescribedBy = textarea.getAttribute('aria-describedby');
+      const ariaDescribedBy = await waitForARIAAttribute(textarea, 'aria-describedby');
 
       // USWDS creates aria-describedby with status and hint IDs
       expect(ariaDescribedBy).toContain(`${element.name}-status`);
@@ -455,15 +456,20 @@ describe('USACharacterCount Interactive Regression Tests', () => {
       expect(ariaLiveElements.length).toBeGreaterThan(0);
 
       // Check that at least one element has the correct aria-live attribute
-      const hasAriaLivePolite = Array.from(ariaLiveElements).some(
-        (el) => el.getAttribute('aria-live') === 'polite'
-      );
+      let hasAriaLivePolite = false;
+      for (const el of Array.from(ariaLiveElements)) {
+        const ariaLive = await waitForARIAAttribute(el, 'aria-live');
+        if (ariaLive === 'polite') {
+          hasAriaLivePolite = true;
+          break;
+        }
+      }
       expect(hasAriaLivePolite).toBe(true);
     });
 
     it('should show required indicator when required', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const requiredIndicator = element.querySelector('.usa-hint--required');
       expect(requiredIndicator).toBeTruthy();
@@ -473,7 +479,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
     it('should set proper disabled and readonly states', async () => {
       element.disabled = true;
       element.readonly = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.disabled).toBe(true);
@@ -484,7 +490,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
   describe('USWDS Container Structure', () => {
     it('should render correct USWDS container structure', async () => {
       element.maxlength = 100;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const characterCountContainer = element.querySelector('.usa-character-count');
       expect(characterCountContainer).toBeTruthy();
@@ -499,7 +505,7 @@ describe('USACharacterCount Interactive Regression Tests', () => {
 
     it('should set data-maxlength attribute correctly', async () => {
       element.maxlength = 250;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const container = element.querySelector('.usa-character-count');
       expect(container?.getAttribute('data-maxlength')).toBe('250');

@@ -7,6 +7,7 @@ import {
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAPagination', () => {
   let element: USAPagination;
@@ -304,13 +305,13 @@ describe('USAPagination', () => {
       expect(currentButton?.getAttribute('aria-current')).toBe('page');
     });
 
-    it('should have descriptive aria-label for each page', () => {
+    it('should have descriptive aria-label for each page', async () => {
       const pageButtons = element.querySelectorAll('.usa-pagination__button');
 
-      pageButtons.forEach((button) => {
+      for (const button of pageButtons) {
         const pageNum = button.textContent?.trim();
-        expect(button.getAttribute('aria-label')).toBe(`Page ${pageNum}`);
-      });
+        expect(await waitForARIAAttribute(button, 'aria-label')).toBe(`Page ${pageNum}`);
+      }
     });
 
     it('should have proper ARIA labels for navigation arrows', async () => {

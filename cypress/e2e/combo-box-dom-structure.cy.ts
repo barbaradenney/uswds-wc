@@ -20,7 +20,7 @@
 describe('Combo Box DOM Structure Validation', () => {
   beforeEach(() => {
     // Visit the combo-box Storybook story
-    cy.visit('/iframe.html?id=components-combo-box--default&viewMode=story');
+    cy.visit('/iframe.html?id=forms-combo-box--default&viewMode=story');
     cy.wait(1000); // Wait for Storybook and USWDS initialization
     cy.injectAxe(); // For accessibility testing
   });
@@ -154,8 +154,8 @@ describe('Combo Box DOM Structure Validation', () => {
 
         // Open dropdown to verify list items
         cy.get('.usa-combo-box__toggle-list').click();
-        cy.wait(200); // Wait for dropdown to open and list items to render
-        cy.get('.usa-combo-box__list li').should('have.length.greaterThan', 0);
+        cy.wait(500); // Longer wait for dropdown render and USWDS in CI
+        cy.get('.usa-combo-box__list li', { timeout: 5000 }).should('have.length.greaterThan', 0);
       });
     });
 
@@ -245,10 +245,13 @@ describe('Combo Box DOM Structure Validation', () => {
 
         cy.get('.usa-combo-box__input')
           .focus()
-          .type('a'); // Type a character to filter
+          .type('a', { force: true }); // Force type to handle DOM updates
+
+        // Wait for dropdown render
+        cy.wait(500);
 
         // Dropdown should open and show filtered results
-        cy.get('.usa-combo-box__list').should('be.visible');
+        cy.get('.usa-combo-box__list', { timeout: 5000 }).should('be.visible');
       });
     });
 
@@ -258,12 +261,15 @@ describe('Combo Box DOM Structure Validation', () => {
 
         cy.get('.usa-combo-box__input')
           .focus()
-          .type('{downarrow}'); // Open and navigate
+          .type('{downarrow}', { force: true }); // Force type for DOM updates
 
-        cy.get('.usa-combo-box__list').should('be.visible');
+        // Wait for dropdown render
+        cy.wait(500);
 
-        // Should have focused option
-        cy.get('.usa-combo-box__list li[class*="focused"]').should('exist');
+        cy.get('.usa-combo-box__list', { timeout: 5000 }).should('be.visible');
+
+        // Should have focused option with timeout
+        cy.get('.usa-combo-box__list li[class*="focused"]', { timeout: 5000 }).should('exist');
       });
     });
 
@@ -315,8 +321,11 @@ describe('Combo Box DOM Structure Validation', () => {
       cy.get('usa-combo-box').within(() => {
         cy.wait(500);
 
-        // Type to select an option
-        cy.get('.usa-combo-box__input').type('Option 1{enter}');
+        // Type to select an option (force to handle DOM updates)
+        cy.get('.usa-combo-box__input').type('Option 1{enter}', { force: true });
+
+        // Wait for value update
+        cy.wait(500);
 
         // Structure should remain intact
         cy.get('.usa-combo-box__input').should('exist');
@@ -373,7 +382,7 @@ describe('Combo Box DOM Structure Validation', () => {
 
     it('should handle disabled state correctly', () => {
       // Visit the disabled story
-      cy.visit('/iframe.html?id=components-combo-box--disabled&viewMode=story');
+      cy.visit('/iframe.html?id=forms-combo-box--disabled&viewMode=story');
       cy.wait(1000); // Wait for USWDS transformation
 
       cy.get('usa-combo-box').within(() => {

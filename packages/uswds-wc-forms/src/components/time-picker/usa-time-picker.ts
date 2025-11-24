@@ -85,6 +85,9 @@ export class USATimePicker extends USWDSBaseComponent {
 
   // Store cleanup function from behavior
   private cleanup?: () => void;
+  private valueObserver?: MutationObserver;
+  private internalInput?: HTMLInputElement;
+  private valueChangeHandler?: () => void;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -109,11 +112,53 @@ export class USATimePicker extends USWDSBaseComponent {
 
     // Initialize using mirrored USWDS behavior
     this.cleanup = initializeTimePicker(this);
+
+    // Set up value synchronization from USWDS internal input
+    // USWDS transforms our input into a combo-box with internal select element
+    // We need to observe changes to sync back to our component property
+    this.setupValueObserver();
+  }
+
+  /**
+   * Set up observer to sync internal USWDS value changes back to component property
+   * USWDS combo-box updates the internal input/select without dispatching events we can catch
+   */
+  private setupValueObserver() {
+    // Find the USWDS-created input element
+    this.internalInput = this.querySelector('input[type="text"]') as HTMLInputElement;
+    if (!this.internalInput) return;
+
+    // Listen for change events on the internal input
+    this.valueChangeHandler = () => {
+      if (this.internalInput) {
+        this.value = this.internalInput.value;
+      }
+    };
+    this.internalInput.addEventListener('change', this.valueChangeHandler);
+
+    // Also observe value attribute changes via MutationObserver
+    // (Some USWDS updates might not trigger change events)
+    this.valueObserver = new MutationObserver(() => {
+      if (this.internalInput && this.internalInput.value !== this.value) {
+        this.value = this.internalInput.value;
+      }
+    });
+
+    this.valueObserver.observe(this.internalInput, {
+      attributes: true,
+      attributeFilter: ['value'],
+    });
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.cleanup?.();
+    this.valueObserver?.disconnect();
+
+    // Clean up value change listener
+    if (this.internalInput && this.valueChangeHandler) {
+      this.internalInput.removeEventListener('change', this.valueChangeHandler);
+    }
   }
 
   /**
@@ -226,9 +271,10 @@ export class USATimePicker extends USWDSBaseComponent {
         ${this.renderHint()}
         <div
           class="usa-time-picker"
-          data-min-time="${this.minTime || ''}"
-          data-max-time="${this.maxTime || ''}"
-          data-step="${this.step || '30'}"
+          data-min-time="${this.minTime ?? ''}"
+          data-max-time="${this.maxTime ?? ''}"
+          data-step="${this.step ?? '30'}"
+          data-default-value="${this.value ?? ''}"
           data-enhanced="false"
         >
           ${this.renderInput(inputClasses, ariaDescribedBy)}
@@ -239,17 +285,14 @@ export class USATimePicker extends USWDSBaseComponent {
 
   // Public API methods for imperative control
   show() {
-    console.log('Time Picker: Show triggered - delegating to USWDS');
     // USWDS time picker will handle dropdown showing via its event listeners
   }
 
   hide() {
-    console.log('Time Picker: Hide triggered - delegating to USWDS');
     // USWDS time picker will handle dropdown hiding via its event listeners
   }
 
   updateOptions() {
-    console.log('Time Picker: Update options triggered - delegating to USWDS');
     // USWDS time picker will handle option generation automatically
   }
 }

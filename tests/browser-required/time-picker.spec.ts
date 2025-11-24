@@ -14,7 +14,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Time Picker DOM Structure (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to Storybook story for time picker
-    await page.goto('http://localhost:6006/iframe.html?id=components-time-picker--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=forms-time-picker--default&viewMode=story');
     await page.waitForLoadState('networkidle');
 
     // Wait for USWDS to initialize
@@ -76,7 +76,7 @@ test.describe('Time Picker DOM Structure (Browser Required)', () => {
 
   test('should have disabled attribute on button when disabled', async ({ page }) => {
     // Navigate to disabled story
-    await page.goto('http://localhost:6006/iframe.html?id=components-time-picker--disabled&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=forms-time-picker--disabled&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 

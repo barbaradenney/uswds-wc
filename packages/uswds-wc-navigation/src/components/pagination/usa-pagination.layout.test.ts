@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '../pagination/index.ts';
 import type { USAPagination } from './usa-pagination.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAPagination Layout Tests', () => {
   let element: USAPagination;
@@ -365,26 +366,27 @@ describe('USAPagination Layout Tests', () => {
 
       expect(nav!.getAttribute('aria-label'), 'Nav should have aria-label').toBe('Test Pagination');
       expect(
-        currentButton.getAttribute('aria-current'),
+        await waitForARIAAttribute(currentButton, 'aria-current'),
         'Current button should have aria-current'
       ).toBe('page');
       expect(
-        previousButton.getAttribute('aria-label'),
+        await waitForARIAAttribute(previousButton, 'aria-label'),
         'Previous button should have aria-label'
       ).toBe('Previous page');
-      expect(nextButton.getAttribute('aria-label'), 'Next button should have aria-label').toBe(
-        'Next page'
-      );
+      expect(
+        await waitForARIAAttribute(nextButton, 'aria-label'),
+        'Next button should have aria-label'
+      ).toBe('Next page');
 
       // Page buttons should have descriptive labels
       const pageButtons = element.querySelectorAll('.usa-pagination__button');
-      pageButtons.forEach((button) => {
+      for (const button of pageButtons) {
         const page = button.getAttribute('data-page');
         expect(
-          button.getAttribute('aria-label'),
+          await waitForARIAAttribute(button, 'aria-label'),
           `Page button should have descriptive aria-label`
         ).toBe(`Page ${page}`);
-      });
+      }
     });
 
     it('should prevent invalid navigation correctly', async () => {

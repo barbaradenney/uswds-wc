@@ -1,0 +1,95 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - toolbar "Mobile navigation controls" [ref=e5]:
+    - button "Open navigation menu" [ref=e6]:
+      - img [ref=e7]
+      - paragraph [ref=e9]: Data Display/Table/Sorting Demo
+    - button "Open addon panel" [ref=e10] [cursor=pointer]:
+      - img [ref=e11]
+  - main [ref=e15]:
+    - region "Toolbar" [ref=e16]:
+      - generic [ref=e17]: Toolbar
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - button "Remount component" [ref=e20] [cursor=pointer]:
+            - img [ref=e21]
+          - button "Zoom in" [ref=e23] [cursor=pointer]:
+            - img [ref=e24]
+          - button "Zoom out" [ref=e27] [cursor=pointer]:
+            - img [ref=e28]
+          - button "Reset zoom" [ref=e31] [cursor=pointer]:
+            - img [ref=e32]
+          - button "Apply a grid to the preview" [ref=e35] [cursor=pointer]:
+            - img [ref=e36]
+          - button "Change the background of the preview" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+          - button "Enable measure" [ref=e43] [cursor=pointer]:
+            - img [ref=e44]
+          - button "Apply outlines to the preview" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "Change the size of the preview" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Vision simulator" [ref=e57] [cursor=pointer]:
+            - img [ref=e58]
+          - generic:
+            - img
+          - button "light" [ref=e64] [cursor=pointer]:
+            - img [ref=e65]
+            - text: light
+        - generic [ref=e67]:
+          - link "Open canvas in new tab" [ref=e68] [cursor=pointer]:
+            - /url: iframe.html?globals=&id=data-display-table--sorting-demo
+            - img [ref=e69]
+          - button "Copy canvas link" [ref=e72] [cursor=pointer]:
+            - img [ref=e73]
+    - iframe [ref=e79]:
+      - generic [ref=f1e3]:
+        - table "Sortable Data Demonstration" [ref=f1e6]:
+          - caption [ref=f1e7]: Sortable Data Demonstration
+          - rowgroup [ref=f1e8]:
+            - row "Name , sortable column, currently unsorted Score , sortable column, currently unsorted Completion , sortable column, currently unsorted Due Date , sortable column, currently unsorted" [ref=f1e9]:
+              - columnheader "Name , sortable column, currently unsorted" [ref=f1e10]:
+                - text: Name
+                - button "Click to sort by Name in ascending order." [ref=f1e11] [cursor=pointer]:
+                  - img [ref=f1e12]
+              - columnheader "Score , sortable column, currently unsorted" [ref=f1e19]:
+                - text: Score
+                - button "Click to sort by Score in ascending order." [ref=f1e20] [cursor=pointer]:
+                  - img [ref=f1e21]
+              - columnheader "Completion , sortable column, currently unsorted" [ref=f1e28]:
+                - text: Completion
+                - button "Click to sort by Completion in ascending order." [ref=f1e29] [cursor=pointer]:
+                  - img [ref=f1e30]
+              - columnheader "Due Date , sortable column, currently unsorted" [ref=f1e37]:
+                - text: Due Date
+                - button "Click to sort by Due Date in ascending order." [ref=f1e38] [cursor=pointer]:
+                  - img [ref=f1e39]
+          - rowgroup [ref=f1e46]:
+            - row "Project Alpha 85 92.5% 6/14/2024" [ref=f1e47]:
+              - rowheader "Project Alpha" [ref=f1e48]
+              - cell "85" [ref=f1e49]
+              - cell "92.5%" [ref=f1e50]
+              - cell "6/14/2024" [ref=f1e51]
+            - row "Project Beta 78 88.2% 5/21/2024" [ref=f1e52]:
+              - rowheader "Project Beta" [ref=f1e53]
+              - cell "78" [ref=f1e54]
+              - cell "88.2%" [ref=f1e55]
+              - cell "5/21/2024" [ref=f1e56]
+            - row "Project Gamma 91 95.7% 7/2/2024" [ref=f1e57]:
+              - rowheader "Project Gamma" [ref=f1e58]
+              - cell "91" [ref=f1e59]
+              - cell "95.7%" [ref=f1e60]
+              - cell "7/2/2024" [ref=f1e61]
+            - row "Project Delta 73 81.4% 4/17/2024" [ref=f1e62]:
+              - rowheader "Project Delta" [ref=f1e63]
+              - cell "73" [ref=f1e64]
+              - cell "81.4%" [ref=f1e65]
+              - cell "4/17/2024" [ref=f1e66]
+        - generic [ref=f1e67]:
+          - heading "Sorting Instructions" [level=3] [ref=f1e68]
+          - text: Click any column header to sort the data. Click again to reverse the sort order.
+          - strong [ref=f1e69]: "Last Sort:"
+          - text: None
+```

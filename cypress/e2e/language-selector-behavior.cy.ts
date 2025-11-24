@@ -19,7 +19,7 @@
 describe('Language Selector - USWDS Behavior Contract', () => {
   beforeEach(() => {
     // Visit the DROPDOWN language selector story (has the menu behavior we're testing)
-    cy.visit('/iframe.html?id=components-language-selector--dropdown&viewMode=story');
+    cy.visit('/iframe.html?id=navigation-language-selector--dropdown&viewMode=story');
     cy.wait(1000); // Wait for USWDS initialization
   });
 

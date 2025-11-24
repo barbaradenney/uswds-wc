@@ -1,0 +1,54 @@
+{
+  "name": "@uswds-wc/navigation",
+  "version": "2.0.0",
+  "description": "USWDS Navigation Components - Web Components",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/components/*.js",
+      "types": "./dist/components/*.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@uswds-wc/core": "workspace:*",
+    "@uswds-wc/actions": "workspace:*"
+  },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "uswds",
+    "web-components",
+    "navigation",
+    "header",
+    "footer",
+    "breadcrumb"
+  ],
+  "author": "Barbara Miles",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barbaradenney/USWDS-webcomponents.git",
+    "directory": "packages/uswds-wc-navigation"
+  }
+}

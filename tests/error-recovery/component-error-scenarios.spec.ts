@@ -45,7 +45,7 @@ test.describe('Component Error Recovery Tests', () => {
 
   test.describe('Malformed Props Handling', () => {
     test('Button should handle invalid variant gracefully', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Test with malformed variant prop
       await page.evaluate(() => {
@@ -72,7 +72,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Combo Box should handle malformed options', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-combo-box--default');
+      await page.goto('/iframe.html?id=forms-combo-box--default');
 
       // Set malformed options data
       await page.evaluate(() => {
@@ -107,7 +107,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Date Picker should handle invalid date formats', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-date-picker--default');
+      await page.goto('/iframe.html?id=forms-date-picker--default');
 
       // Test various invalid date formats
       const invalidDates = [
@@ -149,7 +149,7 @@ test.describe('Component Error Recovery Tests', () => {
         }
       });
 
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Simulate component making network request
       await page.evaluate(() => {
@@ -178,7 +178,7 @@ test.describe('Component Error Recovery Tests', () => {
 
   test.describe('External DOM Manipulation Resistance', () => {
     test('Components should survive external innerHTML modification', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
 
       // Externally modify component's innerHTML
       await page.evaluate(() => {
@@ -205,7 +205,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Components should handle direct child removal', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-card--default');
+      await page.goto('/iframe.html?id=data-display-card--default');
 
       // Remove child elements directly
       await page.evaluate(() => {
@@ -228,7 +228,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Components should handle attribute manipulation', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-alert--default');
+      await page.goto('/iframe.html?id=feedback-alert--default');
 
       // Externally manipulate critical attributes
       await page.evaluate(() => {
@@ -263,7 +263,7 @@ test.describe('Component Error Recovery Tests', () => {
         });
       });
 
-      await page.goto('/iframe.html?id=components-date-picker--default');
+      await page.goto('/iframe.html?id=forms-date-picker--default');
 
       // Component should still function without localStorage
       const datePicker = page.locator('usa-date-picker').first();
@@ -299,7 +299,7 @@ test.describe('Component Error Recovery Tests', () => {
         };
       });
 
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
 
       // Component should still render without ResizeObserver
       const modal = page.locator('usa-modal').first();
@@ -328,7 +328,7 @@ test.describe('Component Error Recovery Tests', () => {
         };
       });
 
-      await page.goto('/iframe.html?id=components-in-page-navigation--default');
+      await page.goto('/iframe.html?id=navigation-in-page-navigation--default');
 
       // Component should still render
       const nav = page.locator('usa-in-page-navigation').first();
@@ -346,7 +346,7 @@ test.describe('Component Error Recovery Tests', () => {
 
   test.describe('Memory Pressure and Performance Degradation', () => {
     test('Components should handle memory pressure', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-table--default');
+      await page.goto('/iframe.html?id=data-display-table--default');
 
       // Simulate memory pressure by creating many objects
       await page.evaluate(() => {
@@ -374,7 +374,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Components should handle excessive update cycles', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Trigger excessive updates
       await page.evaluate(() => {
@@ -404,7 +404,7 @@ test.describe('Component Error Recovery Tests', () => {
 
   test.describe('Form Integration Error Recovery', () => {
     test('Form components should handle invalid form contexts', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
 
       // Remove form context
       await page.evaluate(() => {
@@ -429,7 +429,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Validation should handle corrupted validation state', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
 
       // Corrupt validation state
       await page.evaluate(() => {
@@ -456,7 +456,7 @@ test.describe('Component Error Recovery Tests', () => {
 
   test.describe('Accessibility Feature Resilience', () => {
     test('Components should handle ARIA attribute corruption', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
 
       // Corrupt ARIA attributes
       await page.evaluate(() => {
@@ -478,7 +478,7 @@ test.describe('Component Error Recovery Tests', () => {
     });
 
     test('Components should handle focus management errors', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
 
       // Mock focus method to throw errors
       await page.evaluate(() => {
@@ -511,7 +511,7 @@ test.describe('Component Error Recovery Tests', () => {
         delete Element.prototype.matches;
       });
 
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Basic HTML should still be present
       const button = page.locator('button, [role="button"]').first();
@@ -536,7 +536,7 @@ test.describe('Component Error Recovery Tests', () => {
         document.head.appendChild(style);
       });
 
-      await page.goto('/iframe.html?id=components-alert--default');
+      await page.goto('/iframe.html?id=feedback-alert--default');
 
       // Component should still be visible and readable
       const alert = page.locator('usa-alert').first();

@@ -164,11 +164,11 @@ export class USASSNPattern extends LitElement {
     const serial = parseInt(normalized.substring(5, 9), 10);
 
     // Invalid SSN patterns per SSA
-    if (area === 0) return false;           // Area cannot be 000
-    if (area === 666) return false;         // 666 is not valid
-    if (area >= 900) return false;          // 900-999 reserved for TINs
-    if (group === 0) return false;          // Group cannot be 00
-    if (serial === 0) return false;         // Serial cannot be 0000
+    if (area === 0) return false; // Area cannot be 000
+    if (area === 666) return false; // 666 is not valid
+    if (area >= 900) return false; // 900-999 reserved for TINs
+    if (group === 0) return false; // Group cannot be 00
+    if (serial === 0) return false; // Serial cannot be 0000
 
     return true;
   }
@@ -189,20 +189,19 @@ export class USASSNPattern extends LitElement {
   }
 
   override render() {
-    const hintText = this.showWhyLink && this.whyUrl
-      ? html`${this.hint} <a href="${this.whyUrl}" class="usa-link">Why do we ask for this?</a>`
-      : this.hint;
+    const hintText =
+      this.showWhyLink && this.whyUrl
+        ? html`${this.hint} <a href="${this.whyUrl}" class="usa-link">Why do we ask for this?</a>`
+        : this.hint;
 
     return html`
       <fieldset class="usa-fieldset">
         <legend class="usa-legend usa-legend--large">${this.label}</legend>
-        ${this.hint
-          ? html`<p class="usa-hint" id="${this.patternId}-hint">${hintText}</p>`
-          : ''}
+        ${this.hint ? html`<p class="usa-hint" id="${this.patternId}-hint">${hintText}</p>` : ''}
 
         <usa-text-input
           id="${this.patternId}-input"
-          name="ssn"
+          name="social-security-no"
           type="text"
           inputmode="numeric"
           class="usa-input--xl"

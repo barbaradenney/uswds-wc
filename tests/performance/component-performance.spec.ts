@@ -58,7 +58,7 @@ test.describe('Component Performance Tests', () => {
 
   test.describe('Button Component Performance', () => {
     test('should render within performance budget', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--primary');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       // Measure initial render performance
@@ -90,7 +90,7 @@ test.describe('Component Performance Tests', () => {
     });
 
     test('should handle multiple instances efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--primary');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       const results = await page.evaluate(async () => {
@@ -135,7 +135,7 @@ test.describe('Component Performance Tests', () => {
     });
 
     test('should not leak memory on removal', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--primary');
+      await page.goto('/iframe.html?id=actions-button--default');
       await page.waitForLoadState('networkidle');
 
       await page.evaluate(async () => {
@@ -204,7 +204,7 @@ test.describe('Component Performance Tests', () => {
 
   test.describe('Modal Component Performance', () => {
     test('should open and close efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
       const modalPerformance = await page.evaluate(async () => {
@@ -266,7 +266,7 @@ test.describe('Component Performance Tests', () => {
     });
 
     test('should handle focus management efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-modal--default');
+      await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
       const focusPerformance = await page.evaluate(async () => {
@@ -318,7 +318,7 @@ test.describe('Component Performance Tests', () => {
 
   test.describe('Combo Box Component Performance', () => {
     test('should handle large datasets efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-combo-box--default');
+      await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
 
       const comboBoxPerformance = await page.evaluate(async () => {
@@ -373,7 +373,7 @@ test.describe('Component Performance Tests', () => {
     });
 
     test('should handle rapid user input efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-combo-box--default');
+      await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
 
       const inputPerformance = await page.evaluate(async () => {
@@ -424,7 +424,7 @@ test.describe('Component Performance Tests', () => {
 
   test.describe('Accordion Component Performance', () => {
     test('should expand/collapse efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
       await page.waitForLoadState('networkidle');
 
       const accordionPerformance = await page.evaluate(async () => {
@@ -475,7 +475,7 @@ test.describe('Component Performance Tests', () => {
 
   test.describe('Table Component Performance', () => {
     test('should handle large datasets efficiently', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-table--sortable');
+      await page.goto('/iframe.html?id=data-display-table--sorting-demo');
       await page.waitForLoadState('networkidle');
 
       const tablePerformance = await page.evaluate(async () => {
@@ -526,12 +526,12 @@ test.describe('Component Performance Tests', () => {
   test.describe('Performance Regression Tests', () => {
     test('should maintain consistent performance across component variants', async ({ page }) => {
       const components = [
-        { name: 'Button Primary', url: '/iframe.html?id=components-button--primary' },
-        { name: 'Button Secondary', url: '/iframe.html?id=components-button--secondary' },
-        { name: 'Alert Info', url: '/iframe.html?id=components-alert--info' },
-        { name: 'Alert Warning', url: '/iframe.html?id=components-alert--warning' },
-        { name: 'Card Default', url: '/iframe.html?id=components-card--default' },
-        { name: 'Card With Media', url: '/iframe.html?id=components-card--with-media' }
+        { name: 'Button Primary', url: '/iframe.html?id=actions-button--default' },
+        { name: 'Button Secondary', url: '/iframe.html?id=actions-button--secondary' },
+        { name: 'Alert Info', url: '/iframe.html?id=feedback-alert--info' },
+        { name: 'Alert Warning', url: '/iframe.html?id=feedback-alert--warning' },
+        { name: 'Card Default', url: '/iframe.html?id=data-display-card--default' },
+        { name: 'Card With Media', url: '/iframe.html?id=data-display-card--with-media' }
       ];
 
       const performanceResults = [];

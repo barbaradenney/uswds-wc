@@ -6,7 +6,7 @@ export default defineConfig({
     supportFile: 'cypress/support/e2e.ts',
     specPattern: [
       'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
-      'src/**/*.e2e.cy.{js,jsx,ts,tsx}'  // Co-located E2E tests
+      'src/**/*.e2e.cy.{js,jsx,ts,tsx}', // Co-located E2E tests
     ],
     viewportWidth: 1280,
     viewportHeight: 720,
@@ -14,6 +14,12 @@ export default defineConfig({
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on('task', {
+        log(message) {
+          // Log task for test debugging - messages appear in terminal during test runs
+          return null;
+        },
+      });
     },
   },
   component: {
@@ -24,7 +30,7 @@ export default defineConfig({
     supportFile: 'cypress/support/component.ts',
     specPattern: [
       'cypress/component/**/*.cy.{js,jsx,ts,tsx}',
-      'src/**/*.component.cy.{js,jsx,ts,tsx}'  // Co-located component tests
+      'src/**/*.component.cy.{js,jsx,ts,tsx}', // Co-located component tests
     ],
   },
 });

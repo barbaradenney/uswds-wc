@@ -114,7 +114,7 @@ test.describe('USWDS Component Compliance Tests', () => {
     });
 
     test('should have correct accessibility attributes', async ({ page }) => {
-      await page.goto('http://localhost:6006/?path=/story/data-display-icon--with-label');
+      await page.goto('http://localhost:6006/?path=/story/data-display-icon--default');
       await page.waitForLoadState('networkidle');
 
       const icon = page.locator('usa-icon').first();
@@ -274,7 +274,7 @@ test.describe('USWDS Component Compliance Tests', () => {
    */
   test.describe('Table USWDS Compliance', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('http://localhost:6006/?path=/story/data-display-table--sortable');
+      await page.goto('http://localhost:6006/?path=/story/data-display-table--sorting-demo');
       await page.waitForLoadState('networkidle');
     });
 
@@ -282,7 +282,7 @@ test.describe('USWDS Component Compliance Tests', () => {
       const table = page.locator('usa-table').first();
 
       // Sortable headers should have aria-sort
-      const sortableHeaders = table.locator('th[data-sortable="true"], th.usa-table__header--sortable');
+      const sortableHeaders = table.locator('th[data-sortable="true"], th.usa-table__header--sorting-demo');
       const count = await sortableHeaders.count();
 
       if (count > 0) {

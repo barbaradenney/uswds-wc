@@ -255,8 +255,8 @@ export class USATextarea extends USWDSBaseComponent {
       .join(' ');
 
     const textareaTemplate = html`
-      ${this.renderLabel(textareaId)} ${this.renderHint(textareaId)}
-      ${this.renderError(textareaId)} ${this.renderSuccess()}
+      ${this.renderLabel(textareaId)} ${this.renderHint(textareaId)} ${this.renderError(textareaId)}
+      ${this.renderSuccess()}
       <textarea
         class="${this.getTextareaClasses()}"
         id="${textareaId}"

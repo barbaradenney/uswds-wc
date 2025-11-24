@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-table.js';
 import type { USATable } from './usa-table.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Table Behavior Contract', () => {
   let element: USATable;
@@ -136,7 +137,7 @@ describe('USWDS Table Behavior Contract', () => {
       sortButton.click();
       await waitForBehaviorInit(element);
 
-      const ariaLabel = header.getAttribute('aria-label');
+      const ariaLabel = await waitForARIAAttribute(header, 'aria-label');
       expect(ariaLabel).toMatch(/sorted (ascending|descending)/i);
     });
 
@@ -153,7 +154,9 @@ describe('USWDS Table Behavior Contract', () => {
       await waitForBehaviorInit(element);
 
       expect(header.hasAttribute('aria-sort')).toBe(true);
-      expect(['ascending', 'descending']).toContain(header.getAttribute('aria-sort'));
+      expect(['ascending', 'descending']).toContain(
+        await waitForARIAAttribute(header, 'aria-sort')
+      );
     });
   });
 
@@ -170,7 +173,7 @@ describe('USWDS Table Behavior Contract', () => {
 
       // USWDS source (line 108): isAscending === true ? DESCENDING : ASCENDING
       // First click passes false (no current sort), so sets ASCENDING
-      expect(header.getAttribute('aria-sort')).toBe('ascending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('ascending');
     });
 
     it('should sort descending on second click', async () => {
@@ -184,13 +187,13 @@ describe('USWDS Table Behavior Contract', () => {
       sortButton.click();
       await waitForBehaviorInit(element);
 
-      expect(header.getAttribute('aria-sort')).toBe('ascending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('ascending');
 
       // Second click - descending (toggles)
       sortButton.click();
       await waitForBehaviorInit(element);
 
-      expect(header.getAttribute('aria-sort')).toBe('descending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('descending');
     });
 
     it('should toggle between ascending and descending', async () => {
@@ -203,17 +206,17 @@ describe('USWDS Table Behavior Contract', () => {
       // Click 1: ascending (USWDS default first sort)
       sortButton.click();
       await waitForBehaviorInit(element);
-      expect(header.getAttribute('aria-sort')).toBe('ascending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('ascending');
 
       // Click 2: descending (toggle)
       sortButton.click();
       await waitForBehaviorInit(element);
-      expect(header.getAttribute('aria-sort')).toBe('descending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('descending');
 
       // Click 3: ascending again (toggle back)
       sortButton.click();
       await waitForBehaviorInit(element);
-      expect(header.getAttribute('aria-sort')).toBe('ascending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('ascending');
     });
 
     it('should prevent default on button click', async () => {
@@ -296,7 +299,7 @@ describe('USWDS Table Behavior Contract', () => {
 
       // Also verify aria-sort attribute was set
       const header = sortButton.closest('th') as HTMLElement;
-      expect(header.getAttribute('aria-sort')).toBe('ascending');
+      expect(await waitForARIAAttribute(header, 'aria-sort')).toBe('ascending');
     });
 
     it('should sort numerically when column contains numbers', async () => {
@@ -460,7 +463,9 @@ describe('USWDS Table Behavior Contract', () => {
       const header = customElement.querySelector('th[aria-sort]');
 
       if (header) {
-        expect(['ascending', 'descending']).toContain(header.getAttribute('aria-sort'));
+        expect(['ascending', 'descending']).toContain(
+          await waitForARIAAttribute(header, 'aria-sort')
+        );
       }
 
       customElement.remove();

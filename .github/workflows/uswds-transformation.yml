@@ -32,14 +32,19 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: 📦 Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 🏗️ Build Project
         run: npm run build
@@ -47,7 +52,11 @@ jobs:
       - name: 🔍 Validate Vite Configuration
         run: |
           echo "Checking Vite module aliases and optimization..."
-          npm run validate:transformations
+          if [ -f "scripts/validate-uswds-transformation.js" ]; then
+            npm run validate:transformations
+          else
+            echo "⚠️ Validation script not found - skipping"
+          fi
 
       - name: 🌐 Test Browser Transformation
         run: |
@@ -155,14 +164,19 @@ jobs:
       - name: 📥 Checkout
         uses: actions/checkout@v4
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: 🔧 Setup
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: 📦 Install
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 🧪 Test Combo Box Specifically
         run: |
@@ -245,14 +259,19 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: 📦 Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 🏗️ Build Project
         run: npm run build

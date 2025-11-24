@@ -13,7 +13,7 @@
 describe('Alert - Screen Reader Announcements', () => {
   beforeEach(() => {
     // Visit the alert Storybook story
-    cy.visit('/iframe.html?id=components-alert--default&viewMode=story');
+    cy.visit('/iframe.html?id=feedback-alert--default&viewMode=story');
 
     // Wait for USWDS JavaScript to initialize
     cy.wait(1000);
@@ -25,7 +25,7 @@ describe('Alert - Screen Reader Announcements', () => {
   describe('ARIA Role Functionality', () => {
     it('should have proper ARIA role for accessibility', () => {
       // Visit the info alert story
-      cy.visit('/iframe.html?id=components-alert--info');
+      cy.visit('/iframe.html?id=feedback-alert--info');
       cy.wait(1000);
 
       cy.get('usa-alert').as('infoAlert');
@@ -56,7 +56,7 @@ describe('Alert - Screen Reader Announcements', () => {
       ];
 
       variants.forEach(variant => {
-        cy.visit(`/iframe.html?id=components-alert--${variant.name}`);
+        cy.visit(`/iframe.html?id=feedback-alert--${variant.name}`);
         cy.wait(500);
 
         // USWDS sets role on the wrapper element
@@ -69,7 +69,7 @@ describe('Alert - Screen Reader Announcements', () => {
   describe('Error Alert Accessibility', () => {
     it('should have proper ARIA role for error alerts', () => {
       // Visit error alert story
-      cy.visit('/iframe.html?id=components-alert--error');
+      cy.visit('/iframe.html?id=feedback-alert--error');
       cy.wait(1000);
 
       cy.get('usa-alert').as('errorAlert');
@@ -101,7 +101,7 @@ describe('Alert - Screen Reader Announcements', () => {
     });
 
     it('should have error variant with proper structure', () => {
-      cy.visit('/iframe.html?id=components-alert--error');
+      cy.visit('/iframe.html?id=feedback-alert--error');
       cy.wait(1000);
 
       cy.get('usa-alert').as('errorAlert');
@@ -151,7 +151,7 @@ describe('Alert - Screen Reader Announcements', () => {
       variantTests.forEach(test => {
         cy.log(`Testing ${test.variant} variant for ${test.description}`);
 
-        cy.visit(`/iframe.html?id=components-alert--${test.variant}`);
+        cy.visit(`/iframe.html?id=feedback-alert--${test.variant}`);
         cy.wait(500);
 
         cy.get('usa-alert').as('alert');
@@ -179,7 +179,7 @@ describe('Alert - Screen Reader Announcements', () => {
     });
 
     it('should maintain ARIA role attribute', () => {
-      cy.visit('/iframe.html?id=components-alert--info');
+      cy.visit('/iframe.html?id=feedback-alert--info');
       cy.wait(1000);
 
       cy.get('usa-alert').as('alert');
@@ -202,7 +202,7 @@ describe('Alert - Screen Reader Announcements', () => {
 
   describe('Slim Variant Accessibility', () => {
     it('should have proper ARIA role for slim variants', () => {
-      cy.visit('/iframe.html?id=components-alert--slim-alert');
+      cy.visit('/iframe.html?id=feedback-alert--slim-alert');
       cy.wait(1000);
 
       cy.get('usa-alert').as('slimAlert');
@@ -226,7 +226,7 @@ describe('Alert - Screen Reader Announcements', () => {
 
   describe('No Icon Variant Accessibility', () => {
     it('should have proper ARIA role for no-icon variants', () => {
-      cy.visit('/iframe.html?id=components-alert--no-icon');
+      cy.visit('/iframe.html?id=feedback-alert--no-icon');
       cy.wait(1000);
 
       cy.get('usa-alert').as('noIconAlert');
@@ -255,7 +255,7 @@ describe('Alert - Screen Reader Announcements', () => {
 
   describe('Emergency Alert Accessibility', () => {
     it('should have proper ARIA role for emergency alerts', () => {
-      cy.visit('/iframe.html?id=components-alert--emergency');
+      cy.visit('/iframe.html?id=feedback-alert--emergency');
       cy.wait(1000);
 
       cy.get('usa-alert').as('emergencyAlert');
@@ -284,7 +284,7 @@ describe('Alert - Screen Reader Announcements', () => {
 
   describe('Accessibility Compliance', () => {
     it('should pass axe accessibility audit', () => {
-      cy.visit('/iframe.html?id=components-alert--default');
+      cy.visit('/iframe.html?id=feedback-alert--default');
       cy.wait(1000);
 
       // Inject axe if not already present
@@ -306,7 +306,7 @@ describe('Alert - Screen Reader Announcements', () => {
       const variants = ['info', 'warning', 'error', 'success'];
 
       variants.forEach(variant => {
-        cy.visit(`/iframe.html?id=components-alert--${variant}`);
+        cy.visit(`/iframe.html?id=feedback-alert--${variant}`);
         cy.wait(500);
 
         // Verify heading provides accessible name

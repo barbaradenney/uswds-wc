@@ -1,0 +1,1027 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - toolbar "Mobile navigation controls" [ref=e5]:
+    - button "Open navigation menu" [ref=e6]:
+      - img [ref=e7]
+      - paragraph [ref=e9]: All USWDS Icons (241 Total)
+    - button "Open addon panel" [ref=e10] [cursor=pointer]:
+      - img [ref=e11]
+  - main [ref=e15]:
+    - region "Toolbar" [ref=e16]:
+      - generic [ref=e17]: Toolbar
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - button "Remount component" [ref=e20] [cursor=pointer]:
+            - img [ref=e21]
+          - button "Zoom in" [ref=e23] [cursor=pointer]:
+            - img [ref=e24]
+          - button "Zoom out" [ref=e27] [cursor=pointer]:
+            - img [ref=e28]
+          - button "Reset zoom" [ref=e31] [cursor=pointer]:
+            - img [ref=e32]
+          - button "Apply a grid to the preview" [ref=e35] [cursor=pointer]:
+            - img [ref=e36]
+          - button "Change the background of the preview" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+          - button "Enable measure" [ref=e43] [cursor=pointer]:
+            - img [ref=e44]
+          - button "Apply outlines to the preview" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "Change the size of the preview" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Vision simulator" [ref=e57] [cursor=pointer]:
+            - img [ref=e58]
+          - generic:
+            - img
+          - button "light" [ref=e64] [cursor=pointer]:
+            - img [ref=e65]
+            - text: light
+        - generic [ref=e67]:
+          - link "Open canvas in new tab" [ref=e68] [cursor=pointer]:
+            - /url: iframe.html?globals=&id=data-display-icon--icon-gallery
+            - img [ref=e69]
+          - button "Copy canvas link" [ref=e72] [cursor=pointer]:
+            - img [ref=e73]
+    - iframe [ref=e79]:
+      - generic [ref=f1e3]:
+        - paragraph [ref=f1e5]:
+          - strong [ref=f1e6]: "💡 Tip:"
+          - text: Click any icon to copy its name to your clipboard.
+          - strong [ref=f1e7]: "Total USWDS icons:"
+          - text: 241 icons from official sprite file
+          - strong [ref=f1e8]: "Performance:"
+          - text: All icons load from a single cached sprite file (83KB)
+        - paragraph [ref=f1e11]:
+          - strong [ref=f1e12]: "Sprite-First Architecture:"
+          - text: All 241 USWDS icons are now available using the official sprite file. This provides better performance than inline SVGs - the sprite loads once and is cached by your browser. See the
+          - link "USWDS Icon Documentation" [ref=f1e13]:
+            - /url: https://designsystem.digital.gov/components/icon/
+          - text: for usage guidelines.
+        - generic [ref=f1e14]:
+          - generic "Click to copy 'accessibility_new'" [ref=f1e15] [cursor=pointer]:
+            - generic "accessibility_new" [ref=f1e16]:
+              - img "accessibility_new" [ref=f1e17]
+            - generic [ref=f1e19]: accessibility_new
+          - generic "Click to copy 'accessible_forward'" [ref=f1e20] [cursor=pointer]:
+            - generic "accessible_forward" [ref=f1e21]:
+              - img "accessible_forward" [ref=f1e22]
+            - generic [ref=f1e24]: accessible_forward
+          - generic "Click to copy 'account_balance'" [ref=f1e25] [cursor=pointer]:
+            - generic "account_balance" [ref=f1e26]:
+              - img "account_balance" [ref=f1e27]
+            - generic [ref=f1e29]: account_balance
+          - generic "Click to copy 'account_box'" [ref=f1e30] [cursor=pointer]:
+            - generic "account_box" [ref=f1e31]:
+              - img "account_box" [ref=f1e32]
+            - generic [ref=f1e34]: account_box
+          - generic "Click to copy 'account_circle'" [ref=f1e35] [cursor=pointer]:
+            - generic "account_circle" [ref=f1e36]:
+              - img "account_circle" [ref=f1e37]
+            - generic [ref=f1e39]: account_circle
+          - generic "Click to copy 'add'" [ref=f1e40] [cursor=pointer]:
+            - generic "add" [ref=f1e41]:
+              - img "add" [ref=f1e42]
+            - generic [ref=f1e44]: add
+          - generic "Click to copy 'add_circle'" [ref=f1e45] [cursor=pointer]:
+            - generic "add_circle" [ref=f1e46]:
+              - img "add_circle" [ref=f1e47]
+            - generic [ref=f1e49]: add_circle
+          - generic "Click to copy 'add_circle_outline'" [ref=f1e50] [cursor=pointer]:
+            - generic "add_circle_outline" [ref=f1e51]:
+              - img "add_circle_outline" [ref=f1e52]
+            - generic [ref=f1e54]: add_circle_outline
+          - generic "Click to copy 'alarm'" [ref=f1e55] [cursor=pointer]:
+            - generic "alarm" [ref=f1e56]:
+              - img "alarm" [ref=f1e57]
+            - generic [ref=f1e59]: alarm
+          - generic "Click to copy 'alternate_email'" [ref=f1e60] [cursor=pointer]:
+            - generic "alternate_email" [ref=f1e61]:
+              - img "alternate_email" [ref=f1e62]
+            - generic [ref=f1e64]: alternate_email
+          - generic "Click to copy 'announcement'" [ref=f1e65] [cursor=pointer]:
+            - generic "announcement" [ref=f1e66]:
+              - img "announcement" [ref=f1e67]
+            - generic [ref=f1e69]: announcement
+          - generic "Click to copy 'api'" [ref=f1e70] [cursor=pointer]:
+            - generic "api" [ref=f1e71]:
+              - img "api" [ref=f1e72]
+            - generic [ref=f1e74]: api
+          - generic "Click to copy 'arrow_back'" [ref=f1e75] [cursor=pointer]:
+            - generic "arrow_back" [ref=f1e76]:
+              - img "arrow_back" [ref=f1e77]
+            - generic [ref=f1e79]: arrow_back
+          - generic "Click to copy 'arrow_downward'" [ref=f1e80] [cursor=pointer]:
+            - generic "arrow_downward" [ref=f1e81]:
+              - img "arrow_downward" [ref=f1e82]
+            - generic [ref=f1e84]: arrow_downward
+          - generic "Click to copy 'arrow_drop_down'" [ref=f1e85] [cursor=pointer]:
+            - generic "arrow_drop_down" [ref=f1e86]:
+              - img "arrow_drop_down" [ref=f1e87]
+            - generic [ref=f1e89]: arrow_drop_down
+          - generic "Click to copy 'arrow_drop_up'" [ref=f1e90] [cursor=pointer]:
+            - generic "arrow_drop_up" [ref=f1e91]:
+              - img "arrow_drop_up" [ref=f1e92]
+            - generic [ref=f1e94]: arrow_drop_up
+          - generic "Click to copy 'arrow_forward'" [ref=f1e95] [cursor=pointer]:
+            - generic "arrow_forward" [ref=f1e96]:
+              - img "arrow_forward" [ref=f1e97]
+            - generic [ref=f1e99]: arrow_forward
+          - generic "Click to copy 'arrow_upward'" [ref=f1e100] [cursor=pointer]:
+            - generic "arrow_upward" [ref=f1e101]:
+              - img "arrow_upward" [ref=f1e102]
+            - generic [ref=f1e104]: arrow_upward
+          - generic "Click to copy 'assessment'" [ref=f1e105] [cursor=pointer]:
+            - generic "assessment" [ref=f1e106]:
+              - img "assessment" [ref=f1e107]
+            - generic [ref=f1e109]: assessment
+          - generic "Click to copy 'attach_file'" [ref=f1e110] [cursor=pointer]:
+            - generic "attach_file" [ref=f1e111]:
+              - img "attach_file" [ref=f1e112]
+            - generic [ref=f1e114]: attach_file
+          - generic "Click to copy 'attach_money'" [ref=f1e115] [cursor=pointer]:
+            - generic "attach_money" [ref=f1e116]:
+              - img "attach_money" [ref=f1e117]
+            - generic [ref=f1e119]: attach_money
+          - generic "Click to copy 'autorenew'" [ref=f1e120] [cursor=pointer]:
+            - generic "autorenew" [ref=f1e121]:
+              - img "autorenew" [ref=f1e122]
+            - generic [ref=f1e124]: autorenew
+          - generic "Click to copy 'backpack'" [ref=f1e125] [cursor=pointer]:
+            - generic "backpack" [ref=f1e126]:
+              - img "backpack" [ref=f1e127]
+            - generic [ref=f1e129]: backpack
+          - generic "Click to copy 'bathtub'" [ref=f1e130] [cursor=pointer]:
+            - generic "bathtub" [ref=f1e131]:
+              - img "bathtub" [ref=f1e132]
+            - generic [ref=f1e134]: bathtub
+          - generic "Click to copy 'bedding'" [ref=f1e135] [cursor=pointer]:
+            - generic "bedding" [ref=f1e136]:
+              - img "bedding" [ref=f1e137]
+            - generic [ref=f1e139]: bedding
+          - generic "Click to copy 'bookmark'" [ref=f1e140] [cursor=pointer]:
+            - generic "bookmark" [ref=f1e141]:
+              - img "bookmark" [ref=f1e142]
+            - generic [ref=f1e144]: bookmark
+          - generic "Click to copy 'bug_report'" [ref=f1e145] [cursor=pointer]:
+            - generic "bug_report" [ref=f1e146]:
+              - img "bug_report" [ref=f1e147]
+            - generic [ref=f1e149]: bug_report
+          - generic "Click to copy 'build'" [ref=f1e150] [cursor=pointer]:
+            - generic "build" [ref=f1e151]:
+              - img "build" [ref=f1e152]
+            - generic [ref=f1e154]: build
+          - generic "Click to copy 'calendar_today'" [ref=f1e155] [cursor=pointer]:
+            - generic "calendar_today" [ref=f1e156]:
+              - img "calendar_today" [ref=f1e157]
+            - generic [ref=f1e159]: calendar_today
+          - generic "Click to copy 'campaign'" [ref=f1e160] [cursor=pointer]:
+            - generic "campaign" [ref=f1e161]:
+              - img "campaign" [ref=f1e162]
+            - generic [ref=f1e164]: campaign
+          - generic "Click to copy 'camping'" [ref=f1e165] [cursor=pointer]:
+            - generic "camping" [ref=f1e166]:
+              - img "camping" [ref=f1e167]
+            - generic [ref=f1e169]: camping
+          - generic "Click to copy 'cancel'" [ref=f1e170] [cursor=pointer]:
+            - generic "cancel" [ref=f1e171]:
+              - img "cancel" [ref=f1e172]
+            - generic [ref=f1e174]: cancel
+          - generic "Click to copy 'chat'" [ref=f1e175] [cursor=pointer]:
+            - generic "chat" [ref=f1e176]:
+              - img "chat" [ref=f1e177]
+            - generic [ref=f1e179]: chat
+          - generic "Click to copy 'check'" [ref=f1e180] [cursor=pointer]:
+            - generic "check" [ref=f1e181]:
+              - img "check" [ref=f1e182]
+            - generic [ref=f1e184]: check
+          - generic "Click to copy 'check_box_outline_blank'" [ref=f1e185] [cursor=pointer]:
+            - generic "check_box_outline_blank" [ref=f1e186]:
+              - img "check_box_outline_blank" [ref=f1e187]
+            - generic [ref=f1e189]: check_box_outline_blank
+          - generic "Click to copy 'check_circle'" [ref=f1e190] [cursor=pointer]:
+            - generic "check_circle" [ref=f1e191]:
+              - img "check_circle" [ref=f1e192]
+            - generic [ref=f1e194]: check_circle
+          - generic "Click to copy 'check_circle_outline'" [ref=f1e195] [cursor=pointer]:
+            - generic "check_circle_outline" [ref=f1e196]:
+              - img "check_circle_outline" [ref=f1e197]
+            - generic [ref=f1e199]: check_circle_outline
+          - generic "Click to copy 'checkroom'" [ref=f1e200] [cursor=pointer]:
+            - generic "checkroom" [ref=f1e201]:
+              - img "checkroom" [ref=f1e202]
+            - generic [ref=f1e204]: checkroom
+          - generic "Click to copy 'chevron_left'" [ref=f1e205] [cursor=pointer]:
+            - generic "chevron_left" [ref=f1e206]:
+              - img "chevron_left" [ref=f1e207]
+            - generic [ref=f1e209]: chevron_left
+          - generic "Click to copy 'chevron_right'" [ref=f1e210] [cursor=pointer]:
+            - generic "chevron_right" [ref=f1e211]:
+              - img "chevron_right" [ref=f1e212]
+            - generic [ref=f1e214]: chevron_right
+          - generic "Click to copy 'clean_hands'" [ref=f1e215] [cursor=pointer]:
+            - generic "clean_hands" [ref=f1e216]:
+              - img "clean_hands" [ref=f1e217]
+            - generic [ref=f1e219]: clean_hands
+          - generic "Click to copy 'close'" [ref=f1e220] [cursor=pointer]:
+            - generic "close" [ref=f1e221]:
+              - img "close" [ref=f1e222]
+            - generic [ref=f1e224]: close
+          - generic "Click to copy 'closed_caption'" [ref=f1e225] [cursor=pointer]:
+            - generic "closed_caption" [ref=f1e226]:
+              - img "closed_caption" [ref=f1e227]
+            - generic [ref=f1e229]: closed_caption
+          - generic "Click to copy 'clothes'" [ref=f1e230] [cursor=pointer]:
+            - generic "clothes" [ref=f1e231]:
+              - img "clothes" [ref=f1e232]
+            - generic [ref=f1e234]: clothes
+          - generic "Click to copy 'cloud'" [ref=f1e235] [cursor=pointer]:
+            - generic "cloud" [ref=f1e236]:
+              - img "cloud" [ref=f1e237]
+            - generic [ref=f1e239]: cloud
+          - generic "Click to copy 'code'" [ref=f1e240] [cursor=pointer]:
+            - generic "code" [ref=f1e241]:
+              - img "code" [ref=f1e242]
+            - generic [ref=f1e244]: code
+          - generic "Click to copy 'comment'" [ref=f1e245] [cursor=pointer]:
+            - generic "comment" [ref=f1e246]:
+              - img "comment" [ref=f1e247]
+            - generic [ref=f1e249]: comment
+          - generic "Click to copy 'connect_without_contact'" [ref=f1e250] [cursor=pointer]:
+            - generic "connect_without_contact" [ref=f1e251]:
+              - img "connect_without_contact" [ref=f1e252]
+            - generic [ref=f1e254]: connect_without_contact
+          - generic "Click to copy 'construction'" [ref=f1e255] [cursor=pointer]:
+            - generic "construction" [ref=f1e256]:
+              - img "construction" [ref=f1e257]
+            - generic [ref=f1e259]: construction
+          - generic "Click to copy 'construction_worker'" [ref=f1e260] [cursor=pointer]:
+            - generic "construction_worker" [ref=f1e261]:
+              - img "construction_worker" [ref=f1e262]
+            - generic [ref=f1e264]: construction_worker
+          - generic "Click to copy 'contact_page'" [ref=f1e265] [cursor=pointer]:
+            - generic "contact_page" [ref=f1e266]:
+              - img "contact_page" [ref=f1e267]
+            - generic [ref=f1e269]: contact_page
+          - generic "Click to copy 'content_copy'" [ref=f1e270] [cursor=pointer]:
+            - generic "content_copy" [ref=f1e271]:
+              - img "content_copy" [ref=f1e272]
+            - generic [ref=f1e274]: content_copy
+          - generic "Click to copy 'coronavirus'" [ref=f1e275] [cursor=pointer]:
+            - generic "coronavirus" [ref=f1e276]:
+              - img "coronavirus" [ref=f1e277]
+            - generic [ref=f1e279]: coronavirus
+          - generic "Click to copy 'credit_card'" [ref=f1e280] [cursor=pointer]:
+            - generic "credit_card" [ref=f1e281]:
+              - img "credit_card" [ref=f1e282]
+            - generic [ref=f1e284]: credit_card
+          - generic "Click to copy 'deck'" [ref=f1e285] [cursor=pointer]:
+            - generic "deck" [ref=f1e286]:
+              - img "deck" [ref=f1e287]
+            - generic [ref=f1e289]: deck
+          - generic "Click to copy 'delete'" [ref=f1e290] [cursor=pointer]:
+            - generic "delete" [ref=f1e291]:
+              - img "delete" [ref=f1e292]
+            - generic [ref=f1e294]: delete
+          - generic "Click to copy 'device_thermostat'" [ref=f1e295] [cursor=pointer]:
+            - generic "device_thermostat" [ref=f1e296]:
+              - img "device_thermostat" [ref=f1e297]
+            - generic [ref=f1e299]: device_thermostat
+          - generic "Click to copy 'directions'" [ref=f1e300] [cursor=pointer]:
+            - generic "directions" [ref=f1e301]:
+              - img "directions" [ref=f1e302]
+            - generic [ref=f1e304]: directions
+          - generic "Click to copy 'directions_bike'" [ref=f1e305] [cursor=pointer]:
+            - generic "directions_bike" [ref=f1e306]:
+              - img "directions_bike" [ref=f1e307]
+            - generic [ref=f1e309]: directions_bike
+          - generic "Click to copy 'directions_bus'" [ref=f1e310] [cursor=pointer]:
+            - generic "directions_bus" [ref=f1e311]:
+              - img "directions_bus" [ref=f1e312]
+            - generic [ref=f1e314]: directions_bus
+          - generic "Click to copy 'directions_car'" [ref=f1e315] [cursor=pointer]:
+            - generic "directions_car" [ref=f1e316]:
+              - img "directions_car" [ref=f1e317]
+            - generic [ref=f1e319]: directions_car
+          - generic "Click to copy 'directions_walk'" [ref=f1e320] [cursor=pointer]:
+            - generic "directions_walk" [ref=f1e321]:
+              - img "directions_walk" [ref=f1e322]
+            - generic [ref=f1e324]: directions_walk
+          - generic "Click to copy 'do_not_disturb'" [ref=f1e325] [cursor=pointer]:
+            - generic "do_not_disturb" [ref=f1e326]:
+              - img "do_not_disturb" [ref=f1e327]
+            - generic [ref=f1e329]: do_not_disturb
+          - generic "Click to copy 'do_not_touch'" [ref=f1e330] [cursor=pointer]:
+            - generic "do_not_touch" [ref=f1e331]:
+              - img "do_not_touch" [ref=f1e332]
+            - generic [ref=f1e334]: do_not_touch
+          - generic "Click to copy 'drag_handle'" [ref=f1e335] [cursor=pointer]:
+            - generic "drag_handle" [ref=f1e336]:
+              - img "drag_handle" [ref=f1e337]
+            - generic [ref=f1e339]: drag_handle
+          - generic "Click to copy 'eco'" [ref=f1e340] [cursor=pointer]:
+            - generic "eco" [ref=f1e341]:
+              - img "eco" [ref=f1e342]
+            - generic [ref=f1e344]: eco
+          - generic "Click to copy 'edit'" [ref=f1e345] [cursor=pointer]:
+            - generic "edit" [ref=f1e346]:
+              - img "edit" [ref=f1e347]
+            - generic [ref=f1e349]: edit
+          - generic "Click to copy 'electrical_services'" [ref=f1e350] [cursor=pointer]:
+            - generic "electrical_services" [ref=f1e351]:
+              - img "electrical_services" [ref=f1e352]
+            - generic [ref=f1e354]: electrical_services
+          - generic "Click to copy 'emoji_events'" [ref=f1e355] [cursor=pointer]:
+            - generic "emoji_events" [ref=f1e356]:
+              - img "emoji_events" [ref=f1e357]
+            - generic [ref=f1e359]: emoji_events
+          - generic "Click to copy 'error'" [ref=f1e360] [cursor=pointer]:
+            - generic "error" [ref=f1e361]:
+              - img "error" [ref=f1e362]
+            - generic [ref=f1e364]: error
+          - generic "Click to copy 'error_outline'" [ref=f1e365] [cursor=pointer]:
+            - generic "error_outline" [ref=f1e366]:
+              - img "error_outline" [ref=f1e367]
+            - generic [ref=f1e369]: error_outline
+          - generic "Click to copy 'event'" [ref=f1e370] [cursor=pointer]:
+            - generic "event" [ref=f1e371]:
+              - img "event" [ref=f1e372]
+            - generic [ref=f1e374]: event
+          - generic "Click to copy 'expand_less'" [ref=f1e375] [cursor=pointer]:
+            - generic "expand_less" [ref=f1e376]:
+              - img "expand_less" [ref=f1e377]
+            - generic [ref=f1e379]: expand_less
+          - generic "Click to copy 'expand_more'" [ref=f1e380] [cursor=pointer]:
+            - generic "expand_more" [ref=f1e381]:
+              - img "expand_more" [ref=f1e382]
+            - generic [ref=f1e384]: expand_more
+          - generic "Click to copy 'facebook'" [ref=f1e385] [cursor=pointer]:
+            - generic "facebook" [ref=f1e386]:
+              - img "facebook" [ref=f1e387]
+            - generic [ref=f1e389]: facebook
+          - generic "Click to copy 'fast_forward'" [ref=f1e390] [cursor=pointer]:
+            - generic "fast_forward" [ref=f1e391]:
+              - img "fast_forward" [ref=f1e392]
+            - generic [ref=f1e394]: fast_forward
+          - generic "Click to copy 'fast_rewind'" [ref=f1e395] [cursor=pointer]:
+            - generic "fast_rewind" [ref=f1e396]:
+              - img "fast_rewind" [ref=f1e397]
+            - generic [ref=f1e399]: fast_rewind
+          - generic "Click to copy 'favorite'" [ref=f1e400] [cursor=pointer]:
+            - generic "favorite" [ref=f1e401]:
+              - img "favorite" [ref=f1e402]
+            - generic [ref=f1e404]: favorite
+          - generic "Click to copy 'favorite_border'" [ref=f1e405] [cursor=pointer]:
+            - generic "favorite_border" [ref=f1e406]:
+              - img "favorite_border" [ref=f1e407]
+            - generic [ref=f1e409]: favorite_border
+          - generic "Click to copy 'file_download'" [ref=f1e410] [cursor=pointer]:
+            - generic "file_download" [ref=f1e411]:
+              - img "file_download" [ref=f1e412]
+            - generic [ref=f1e414]: file_download
+          - generic "Click to copy 'file_present'" [ref=f1e415] [cursor=pointer]:
+            - generic "file_present" [ref=f1e416]:
+              - img "file_present" [ref=f1e417]
+            - generic [ref=f1e419]: file_present
+          - generic "Click to copy 'file_upload'" [ref=f1e420] [cursor=pointer]:
+            - generic "file_upload" [ref=f1e421]:
+              - img "file_upload" [ref=f1e422]
+            - generic [ref=f1e424]: file_upload
+          - generic "Click to copy 'filter_alt'" [ref=f1e425] [cursor=pointer]:
+            - generic "filter_alt" [ref=f1e426]:
+              - img "filter_alt" [ref=f1e427]
+            - generic [ref=f1e429]: filter_alt
+          - generic "Click to copy 'filter_list'" [ref=f1e430] [cursor=pointer]:
+            - generic "filter_list" [ref=f1e431]:
+              - img "filter_list" [ref=f1e432]
+            - generic [ref=f1e434]: filter_list
+          - generic "Click to copy 'fingerprint'" [ref=f1e435] [cursor=pointer]:
+            - generic "fingerprint" [ref=f1e436]:
+              - img "fingerprint" [ref=f1e437]
+            - generic [ref=f1e439]: fingerprint
+          - generic "Click to copy 'first_page'" [ref=f1e440] [cursor=pointer]:
+            - generic "first_page" [ref=f1e441]:
+              - img "first_page" [ref=f1e442]
+            - generic [ref=f1e444]: first_page
+          - generic "Click to copy 'flag'" [ref=f1e445] [cursor=pointer]:
+            - generic "flag" [ref=f1e446]:
+              - img "flag" [ref=f1e447]
+            - generic [ref=f1e449]: flag
+          - generic "Click to copy 'flickr'" [ref=f1e450] [cursor=pointer]:
+            - generic "flickr" [ref=f1e451]:
+              - img "flickr" [ref=f1e452]
+            - generic [ref=f1e454]: flickr
+          - generic "Click to copy 'flight'" [ref=f1e455] [cursor=pointer]:
+            - generic "flight" [ref=f1e456]:
+              - img "flight" [ref=f1e457]
+            - generic [ref=f1e459]: flight
+          - generic "Click to copy 'flooding'" [ref=f1e460] [cursor=pointer]:
+            - generic "flooding" [ref=f1e461]:
+              - img "flooding" [ref=f1e462]
+            - generic [ref=f1e464]: flooding
+          - generic "Click to copy 'folder'" [ref=f1e465] [cursor=pointer]:
+            - generic "folder" [ref=f1e466]:
+              - img "folder" [ref=f1e467]
+            - generic [ref=f1e469]: folder
+          - generic "Click to copy 'folder_open'" [ref=f1e470] [cursor=pointer]:
+            - generic "folder_open" [ref=f1e471]:
+              - img "folder_open" [ref=f1e472]
+            - generic [ref=f1e474]: folder_open
+          - generic "Click to copy 'format_quote'" [ref=f1e475] [cursor=pointer]:
+            - generic "format_quote" [ref=f1e476]:
+              - img "format_quote" [ref=f1e477]
+            - generic [ref=f1e479]: format_quote
+          - generic "Click to copy 'format_size'" [ref=f1e480] [cursor=pointer]:
+            - generic "format_size" [ref=f1e481]:
+              - img "format_size" [ref=f1e482]
+            - generic [ref=f1e484]: format_size
+          - generic "Click to copy 'forum'" [ref=f1e485] [cursor=pointer]:
+            - generic "forum" [ref=f1e486]:
+              - img "forum" [ref=f1e487]
+            - generic [ref=f1e489]: forum
+          - generic "Click to copy 'github'" [ref=f1e490] [cursor=pointer]:
+            - generic "github" [ref=f1e491]:
+              - img "github" [ref=f1e492]
+            - generic [ref=f1e494]: github
+          - generic "Click to copy 'grid_view'" [ref=f1e495] [cursor=pointer]:
+            - generic "grid_view" [ref=f1e496]:
+              - img "grid_view" [ref=f1e497]
+            - generic [ref=f1e499]: grid_view
+          - generic "Click to copy 'group_add'" [ref=f1e500] [cursor=pointer]:
+            - generic "group_add" [ref=f1e501]:
+              - img "group_add" [ref=f1e502]
+            - generic [ref=f1e504]: group_add
+          - generic "Click to copy 'groups'" [ref=f1e505] [cursor=pointer]:
+            - generic "groups" [ref=f1e506]:
+              - img "groups" [ref=f1e507]
+            - generic [ref=f1e509]: groups
+          - generic "Click to copy 'hearing'" [ref=f1e510] [cursor=pointer]:
+            - generic "hearing" [ref=f1e511]:
+              - img "hearing" [ref=f1e512]
+            - generic [ref=f1e514]: hearing
+          - generic "Click to copy 'help'" [ref=f1e515] [cursor=pointer]:
+            - generic "help" [ref=f1e516]:
+              - img "help" [ref=f1e517]
+            - generic [ref=f1e519]: help
+          - generic "Click to copy 'help_outline'" [ref=f1e520] [cursor=pointer]:
+            - generic "help_outline" [ref=f1e521]:
+              - img "help_outline" [ref=f1e522]
+            - generic [ref=f1e524]: help_outline
+          - generic "Click to copy 'highlight_off'" [ref=f1e525] [cursor=pointer]:
+            - generic "highlight_off" [ref=f1e526]:
+              - img "highlight_off" [ref=f1e527]
+            - generic [ref=f1e529]: highlight_off
+          - generic "Click to copy 'history'" [ref=f1e530] [cursor=pointer]:
+            - generic "history" [ref=f1e531]:
+              - img "history" [ref=f1e532]
+            - generic [ref=f1e534]: history
+          - generic "Click to copy 'home'" [ref=f1e535] [cursor=pointer]:
+            - generic "home" [ref=f1e536]:
+              - img "home" [ref=f1e537]
+            - generic [ref=f1e539]: home
+          - generic "Click to copy 'hospital'" [ref=f1e540] [cursor=pointer]:
+            - generic "hospital" [ref=f1e541]:
+              - img "hospital" [ref=f1e542]
+            - generic [ref=f1e544]: hospital
+          - generic "Click to copy 'hotel'" [ref=f1e545] [cursor=pointer]:
+            - generic "hotel" [ref=f1e546]:
+              - img "hotel" [ref=f1e547]
+            - generic [ref=f1e549]: hotel
+          - generic "Click to copy 'hourglass_empty'" [ref=f1e550] [cursor=pointer]:
+            - generic "hourglass_empty" [ref=f1e551]:
+              - img "hourglass_empty" [ref=f1e552]
+            - generic [ref=f1e554]: hourglass_empty
+          - generic "Click to copy 'hurricane'" [ref=f1e555] [cursor=pointer]:
+            - generic "hurricane" [ref=f1e556]:
+              - img "hurricane" [ref=f1e557]
+            - generic [ref=f1e559]: hurricane
+          - generic "Click to copy 'identification'" [ref=f1e560] [cursor=pointer]:
+            - generic "identification" [ref=f1e561]:
+              - img "identification" [ref=f1e562]
+            - generic [ref=f1e564]: identification
+          - generic "Click to copy 'image'" [ref=f1e565] [cursor=pointer]:
+            - generic "image" [ref=f1e566]:
+              - img "image" [ref=f1e567]
+            - generic [ref=f1e569]: image
+          - generic "Click to copy 'info'" [ref=f1e570] [cursor=pointer]:
+            - generic "info" [ref=f1e571]:
+              - img "info" [ref=f1e572]
+            - generic [ref=f1e574]: info
+          - generic "Click to copy 'info_outline'" [ref=f1e575] [cursor=pointer]:
+            - generic "info_outline" [ref=f1e576]:
+              - img "info_outline" [ref=f1e577]
+            - generic [ref=f1e579]: info_outline
+          - generic "Click to copy 'insights'" [ref=f1e580] [cursor=pointer]:
+            - generic "insights" [ref=f1e581]:
+              - img "insights" [ref=f1e582]
+            - generic [ref=f1e584]: insights
+          - generic "Click to copy 'instagram'" [ref=f1e585] [cursor=pointer]:
+            - generic "instagram" [ref=f1e586]:
+              - img "instagram" [ref=f1e587]
+            - generic [ref=f1e589]: instagram
+          - generic "Click to copy 'keyboard'" [ref=f1e590] [cursor=pointer]:
+            - generic "keyboard" [ref=f1e591]:
+              - img "keyboard" [ref=f1e592]
+            - generic [ref=f1e594]: keyboard
+          - generic "Click to copy 'label'" [ref=f1e595] [cursor=pointer]:
+            - generic "label" [ref=f1e596]:
+              - img "label" [ref=f1e597]
+            - generic [ref=f1e599]: label
+          - generic "Click to copy 'language'" [ref=f1e600] [cursor=pointer]:
+            - generic "language" [ref=f1e601]:
+              - img "language" [ref=f1e602]
+            - generic [ref=f1e604]: language
+          - generic "Click to copy 'last_page'" [ref=f1e605] [cursor=pointer]:
+            - generic "last_page" [ref=f1e606]:
+              - img "last_page" [ref=f1e607]
+            - generic [ref=f1e609]: last_page
+          - generic "Click to copy 'launch'" [ref=f1e610] [cursor=pointer]:
+            - generic "launch" [ref=f1e611]:
+              - img "launch" [ref=f1e612]
+            - generic [ref=f1e614]: launch
+          - generic "Click to copy 'lightbulb'" [ref=f1e615] [cursor=pointer]:
+            - generic "lightbulb" [ref=f1e616]:
+              - img "lightbulb" [ref=f1e617]
+            - generic [ref=f1e619]: lightbulb
+          - generic "Click to copy 'lightbulb_outline'" [ref=f1e620] [cursor=pointer]:
+            - generic "lightbulb_outline" [ref=f1e621]:
+              - img "lightbulb_outline" [ref=f1e622]
+            - generic [ref=f1e624]: lightbulb_outline
+          - generic "Click to copy 'link'" [ref=f1e625] [cursor=pointer]:
+            - generic "link" [ref=f1e626]:
+              - img "link" [ref=f1e627]
+            - generic [ref=f1e629]: link
+          - generic "Click to copy 'link_off'" [ref=f1e630] [cursor=pointer]:
+            - generic "link_off" [ref=f1e631]:
+              - img "link_off" [ref=f1e632]
+            - generic [ref=f1e634]: link_off
+          - generic "Click to copy 'list'" [ref=f1e635] [cursor=pointer]:
+            - generic "list" [ref=f1e636]:
+              - img "list" [ref=f1e637]
+            - generic [ref=f1e639]: list
+          - generic "Click to copy 'local_cafe'" [ref=f1e640] [cursor=pointer]:
+            - generic "local_cafe" [ref=f1e641]:
+              - img "local_cafe" [ref=f1e642]
+            - generic [ref=f1e644]: local_cafe
+          - generic "Click to copy 'local_fire_department'" [ref=f1e645] [cursor=pointer]:
+            - generic "local_fire_department" [ref=f1e646]:
+              - img "local_fire_department" [ref=f1e647]
+            - generic [ref=f1e649]: local_fire_department
+          - generic "Click to copy 'local_gas_station'" [ref=f1e650] [cursor=pointer]:
+            - generic "local_gas_station" [ref=f1e651]:
+              - img "local_gas_station" [ref=f1e652]
+            - generic [ref=f1e654]: local_gas_station
+          - generic "Click to copy 'local_grocery_store'" [ref=f1e655] [cursor=pointer]:
+            - generic "local_grocery_store" [ref=f1e656]:
+              - img "local_grocery_store" [ref=f1e657]
+            - generic [ref=f1e659]: local_grocery_store
+          - generic "Click to copy 'local_hospital'" [ref=f1e660] [cursor=pointer]:
+            - generic "local_hospital" [ref=f1e661]:
+              - img "local_hospital" [ref=f1e662]
+            - generic [ref=f1e664]: local_hospital
+          - generic "Click to copy 'local_laundry_service'" [ref=f1e665] [cursor=pointer]:
+            - generic "local_laundry_service" [ref=f1e666]:
+              - img "local_laundry_service" [ref=f1e667]
+            - generic [ref=f1e669]: local_laundry_service
+          - generic "Click to copy 'local_library'" [ref=f1e670] [cursor=pointer]:
+            - generic "local_library" [ref=f1e671]:
+              - img "local_library" [ref=f1e672]
+            - generic [ref=f1e674]: local_library
+          - generic "Click to copy 'local_offer'" [ref=f1e675] [cursor=pointer]:
+            - generic "local_offer" [ref=f1e676]:
+              - img "local_offer" [ref=f1e677]
+            - generic [ref=f1e679]: local_offer
+          - generic "Click to copy 'local_parking'" [ref=f1e680] [cursor=pointer]:
+            - generic "local_parking" [ref=f1e681]:
+              - img "local_parking" [ref=f1e682]
+            - generic [ref=f1e684]: local_parking
+          - generic "Click to copy 'local_pharmacy'" [ref=f1e685] [cursor=pointer]:
+            - generic "local_pharmacy" [ref=f1e686]:
+              - img "local_pharmacy" [ref=f1e687]
+            - generic [ref=f1e689]: local_pharmacy
+          - generic "Click to copy 'local_police'" [ref=f1e690] [cursor=pointer]:
+            - generic "local_police" [ref=f1e691]:
+              - img "local_police" [ref=f1e692]
+            - generic [ref=f1e694]: local_police
+          - generic "Click to copy 'local_taxi'" [ref=f1e695] [cursor=pointer]:
+            - generic "local_taxi" [ref=f1e696]:
+              - img "local_taxi" [ref=f1e697]
+            - generic [ref=f1e699]: local_taxi
+          - generic "Click to copy 'location_city'" [ref=f1e700] [cursor=pointer]:
+            - generic "location_city" [ref=f1e701]:
+              - img "location_city" [ref=f1e702]
+            - generic [ref=f1e704]: location_city
+          - generic "Click to copy 'location_on'" [ref=f1e705] [cursor=pointer]:
+            - generic "location_on" [ref=f1e706]:
+              - img "location_on" [ref=f1e707]
+            - generic [ref=f1e709]: location_on
+          - generic "Click to copy 'lock'" [ref=f1e710] [cursor=pointer]:
+            - generic "lock" [ref=f1e711]:
+              - img "lock" [ref=f1e712]
+            - generic [ref=f1e714]: lock
+          - generic "Click to copy 'lock_open'" [ref=f1e715] [cursor=pointer]:
+            - generic "lock_open" [ref=f1e716]:
+              - img "lock_open" [ref=f1e717]
+            - generic [ref=f1e719]: lock_open
+          - generic "Click to copy 'lock_outline'" [ref=f1e720] [cursor=pointer]:
+            - generic "lock_outline" [ref=f1e721]:
+              - img "lock_outline" [ref=f1e722]
+            - generic [ref=f1e724]: lock_outline
+          - generic "Click to copy 'login'" [ref=f1e725] [cursor=pointer]:
+            - generic "login" [ref=f1e726]:
+              - img "login" [ref=f1e727]
+            - generic [ref=f1e729]: login
+          - generic "Click to copy 'logout'" [ref=f1e730] [cursor=pointer]:
+            - generic "logout" [ref=f1e731]:
+              - img "logout" [ref=f1e732]
+            - generic [ref=f1e734]: logout
+          - generic "Click to copy 'loop'" [ref=f1e735] [cursor=pointer]:
+            - generic "loop" [ref=f1e736]:
+              - img "loop" [ref=f1e737]
+            - generic [ref=f1e739]: loop
+          - generic "Click to copy 'mail'" [ref=f1e740] [cursor=pointer]:
+            - generic "mail" [ref=f1e741]:
+              - img "mail" [ref=f1e742]
+            - generic [ref=f1e744]: mail
+          - generic "Click to copy 'mail_outline'" [ref=f1e745] [cursor=pointer]:
+            - generic "mail_outline" [ref=f1e746]:
+              - img "mail_outline" [ref=f1e747]
+            - generic [ref=f1e749]: mail_outline
+          - generic "Click to copy 'map'" [ref=f1e750] [cursor=pointer]:
+            - generic "map" [ref=f1e751]:
+              - img "map" [ref=f1e752]
+            - generic [ref=f1e754]: map
+          - generic "Click to copy 'masks'" [ref=f1e755] [cursor=pointer]:
+            - generic "masks" [ref=f1e756]:
+              - img "masks" [ref=f1e757]
+            - generic [ref=f1e759]: masks
+          - generic "Click to copy 'medical_services'" [ref=f1e760] [cursor=pointer]:
+            - generic "medical_services" [ref=f1e761]:
+              - img "medical_services" [ref=f1e762]
+            - generic [ref=f1e764]: medical_services
+          - generic "Click to copy 'menu'" [ref=f1e765] [cursor=pointer]:
+            - generic "menu" [ref=f1e766]:
+              - img "menu" [ref=f1e767]
+            - generic [ref=f1e769]: menu
+          - generic "Click to copy 'military_tech'" [ref=f1e770] [cursor=pointer]:
+            - generic "military_tech" [ref=f1e771]:
+              - img "military_tech" [ref=f1e772]
+            - generic [ref=f1e774]: military_tech
+          - generic "Click to copy 'more_horiz'" [ref=f1e775] [cursor=pointer]:
+            - generic "more_horiz" [ref=f1e776]:
+              - img "more_horiz" [ref=f1e777]
+            - generic [ref=f1e779]: more_horiz
+          - generic "Click to copy 'more_vert'" [ref=f1e780] [cursor=pointer]:
+            - generic "more_vert" [ref=f1e781]:
+              - img "more_vert" [ref=f1e782]
+            - generic [ref=f1e784]: more_vert
+          - generic "Click to copy 'my_location'" [ref=f1e785] [cursor=pointer]:
+            - generic "my_location" [ref=f1e786]:
+              - img "my_location" [ref=f1e787]
+            - generic [ref=f1e789]: my_location
+          - generic "Click to copy 'navigate_before'" [ref=f1e790] [cursor=pointer]:
+            - generic "navigate_before" [ref=f1e791]:
+              - img "navigate_before" [ref=f1e792]
+            - generic [ref=f1e794]: navigate_before
+          - generic "Click to copy 'navigate_far_before'" [ref=f1e795] [cursor=pointer]:
+            - generic "navigate_far_before" [ref=f1e796]:
+              - img "navigate_far_before" [ref=f1e797]
+            - generic [ref=f1e799]: navigate_far_before
+          - generic "Click to copy 'navigate_far_next'" [ref=f1e800] [cursor=pointer]:
+            - generic "navigate_far_next" [ref=f1e801]:
+              - img "navigate_far_next" [ref=f1e802]
+            - generic [ref=f1e804]: navigate_far_next
+          - generic "Click to copy 'navigate_next'" [ref=f1e805] [cursor=pointer]:
+            - generic "navigate_next" [ref=f1e806]:
+              - img "navigate_next" [ref=f1e807]
+            - generic [ref=f1e809]: navigate_next
+          - generic "Click to copy 'near_me'" [ref=f1e810] [cursor=pointer]:
+            - generic "near_me" [ref=f1e811]:
+              - img "near_me" [ref=f1e812]
+            - generic [ref=f1e814]: near_me
+          - generic "Click to copy 'notifications'" [ref=f1e815] [cursor=pointer]:
+            - generic "notifications" [ref=f1e816]:
+              - img "notifications" [ref=f1e817]
+            - generic [ref=f1e819]: notifications
+          - generic "Click to copy 'notifications_active'" [ref=f1e820] [cursor=pointer]:
+            - generic "notifications_active" [ref=f1e821]:
+              - img "notifications_active" [ref=f1e822]
+            - generic [ref=f1e824]: notifications_active
+          - generic "Click to copy 'notifications_none'" [ref=f1e825] [cursor=pointer]:
+            - generic "notifications_none" [ref=f1e826]:
+              - img "notifications_none" [ref=f1e827]
+            - generic [ref=f1e829]: notifications_none
+          - generic "Click to copy 'notifications_off'" [ref=f1e830] [cursor=pointer]:
+            - generic "notifications_off" [ref=f1e831]:
+              - img "notifications_off" [ref=f1e832]
+            - generic [ref=f1e834]: notifications_off
+          - generic "Click to copy 'park'" [ref=f1e835] [cursor=pointer]:
+            - generic "park" [ref=f1e836]:
+              - img "park" [ref=f1e837]
+            - generic [ref=f1e839]: park
+          - generic "Click to copy 'people'" [ref=f1e840] [cursor=pointer]:
+            - generic "people" [ref=f1e841]:
+              - img "people" [ref=f1e842]
+            - generic [ref=f1e844]: people
+          - generic "Click to copy 'person'" [ref=f1e845] [cursor=pointer]:
+            - generic "person" [ref=f1e846]:
+              - img "person" [ref=f1e847]
+            - generic [ref=f1e849]: person
+          - generic "Click to copy 'pets'" [ref=f1e850] [cursor=pointer]:
+            - generic "pets" [ref=f1e851]:
+              - img "pets" [ref=f1e852]
+            - generic [ref=f1e854]: pets
+          - generic "Click to copy 'phone'" [ref=f1e855] [cursor=pointer]:
+            - generic "phone" [ref=f1e856]:
+              - img "phone" [ref=f1e857]
+            - generic [ref=f1e859]: phone
+          - generic "Click to copy 'photo_camera'" [ref=f1e860] [cursor=pointer]:
+            - generic "photo_camera" [ref=f1e861]:
+              - img "photo_camera" [ref=f1e862]
+            - generic [ref=f1e864]: photo_camera
+          - generic "Click to copy 'print'" [ref=f1e865] [cursor=pointer]:
+            - generic "print" [ref=f1e866]:
+              - img "print" [ref=f1e867]
+            - generic [ref=f1e869]: print
+          - generic "Click to copy 'priority_high'" [ref=f1e870] [cursor=pointer]:
+            - generic "priority_high" [ref=f1e871]:
+              - img "priority_high" [ref=f1e872]
+            - generic [ref=f1e874]: priority_high
+          - generic "Click to copy 'public'" [ref=f1e875] [cursor=pointer]:
+            - generic "public" [ref=f1e876]:
+              - img "public" [ref=f1e877]
+            - generic [ref=f1e879]: public
+          - generic "Click to copy 'push_pin'" [ref=f1e880] [cursor=pointer]:
+            - generic "push_pin" [ref=f1e881]:
+              - img "push_pin" [ref=f1e882]
+            - generic [ref=f1e884]: push_pin
+          - generic "Click to copy 'radio_button_unchecked'" [ref=f1e885] [cursor=pointer]:
+            - generic "radio_button_unchecked" [ref=f1e886]:
+              - img "radio_button_unchecked" [ref=f1e887]
+            - generic [ref=f1e889]: radio_button_unchecked
+          - generic "Click to copy 'rain'" [ref=f1e890] [cursor=pointer]:
+            - generic "rain" [ref=f1e891]:
+              - img "rain" [ref=f1e892]
+            - generic [ref=f1e894]: rain
+          - generic "Click to copy 'reduce_capacity'" [ref=f1e895] [cursor=pointer]:
+            - generic "reduce_capacity" [ref=f1e896]:
+              - img "reduce_capacity" [ref=f1e897]
+            - generic [ref=f1e899]: reduce_capacity
+          - generic "Click to copy 'remove'" [ref=f1e900] [cursor=pointer]:
+            - generic "remove" [ref=f1e901]:
+              - img "remove" [ref=f1e902]
+            - generic [ref=f1e904]: remove
+          - generic "Click to copy 'report'" [ref=f1e905] [cursor=pointer]:
+            - generic "report" [ref=f1e906]:
+              - img "report" [ref=f1e907]
+            - generic [ref=f1e909]: report
+          - generic "Click to copy 'restaurant'" [ref=f1e910] [cursor=pointer]:
+            - generic "restaurant" [ref=f1e911]:
+              - img "restaurant" [ref=f1e912]
+            - generic [ref=f1e914]: restaurant
+          - generic "Click to copy 'rss_feed'" [ref=f1e915] [cursor=pointer]:
+            - generic "rss_feed" [ref=f1e916]:
+              - img "rss_feed" [ref=f1e917]
+            - generic [ref=f1e919]: rss_feed
+          - generic "Click to copy 'safety_divider'" [ref=f1e920] [cursor=pointer]:
+            - generic "safety_divider" [ref=f1e921]:
+              - img "safety_divider" [ref=f1e922]
+            - generic [ref=f1e924]: safety_divider
+          - generic "Click to copy 'sanitizer'" [ref=f1e925] [cursor=pointer]:
+            - generic "sanitizer" [ref=f1e926]:
+              - img "sanitizer" [ref=f1e927]
+            - generic [ref=f1e929]: sanitizer
+          - generic "Click to copy 'save_alt'" [ref=f1e930] [cursor=pointer]:
+            - generic "save_alt" [ref=f1e931]:
+              - img "save_alt" [ref=f1e932]
+            - generic [ref=f1e934]: save_alt
+          - generic "Click to copy 'schedule'" [ref=f1e935] [cursor=pointer]:
+            - generic "schedule" [ref=f1e936]:
+              - img "schedule" [ref=f1e937]
+            - generic [ref=f1e939]: schedule
+          - generic "Click to copy 'school'" [ref=f1e940] [cursor=pointer]:
+            - generic "school" [ref=f1e941]:
+              - img "school" [ref=f1e942]
+            - generic [ref=f1e944]: school
+          - generic "Click to copy 'science'" [ref=f1e945] [cursor=pointer]:
+            - generic "science" [ref=f1e946]:
+              - img "science" [ref=f1e947]
+            - generic [ref=f1e949]: science
+          - generic "Click to copy 'search'" [ref=f1e950] [cursor=pointer]:
+            - generic "search" [ref=f1e951]:
+              - img "search" [ref=f1e952]
+            - generic [ref=f1e954]: search
+          - generic "Click to copy 'security'" [ref=f1e955] [cursor=pointer]:
+            - generic "security" [ref=f1e956]:
+              - img "security" [ref=f1e957]
+            - generic [ref=f1e959]: security
+          - generic "Click to copy 'send'" [ref=f1e960] [cursor=pointer]:
+            - generic "send" [ref=f1e961]:
+              - img "send" [ref=f1e962]
+            - generic [ref=f1e964]: send
+          - generic "Click to copy 'sentiment_dissatisfied'" [ref=f1e965] [cursor=pointer]:
+            - generic "sentiment_dissatisfied" [ref=f1e966]:
+              - img "sentiment_dissatisfied" [ref=f1e967]
+            - generic [ref=f1e969]: sentiment_dissatisfied
+          - generic "Click to copy 'sentiment_neutral'" [ref=f1e970] [cursor=pointer]:
+            - generic "sentiment_neutral" [ref=f1e971]:
+              - img "sentiment_neutral" [ref=f1e972]
+            - generic [ref=f1e974]: sentiment_neutral
+          - generic "Click to copy 'sentiment_satisfied'" [ref=f1e975] [cursor=pointer]:
+            - generic "sentiment_satisfied" [ref=f1e976]:
+              - img "sentiment_satisfied" [ref=f1e977]
+            - generic [ref=f1e979]: sentiment_satisfied
+          - generic "Click to copy 'sentiment_satisfied_alt'" [ref=f1e980] [cursor=pointer]:
+            - generic "sentiment_satisfied_alt" [ref=f1e981]:
+              - img "sentiment_satisfied_alt" [ref=f1e982]
+            - generic [ref=f1e984]: sentiment_satisfied_alt
+          - generic "Click to copy 'sentiment_very_dissatisfied'" [ref=f1e985] [cursor=pointer]:
+            - generic "sentiment_very_dissatisfied" [ref=f1e986]:
+              - img "sentiment_very_dissatisfied" [ref=f1e987]
+            - generic [ref=f1e989]: sentiment_very_dissatisfied
+          - generic "Click to copy 'settings'" [ref=f1e990] [cursor=pointer]:
+            - generic "settings" [ref=f1e991]:
+              - img "settings" [ref=f1e992]
+            - generic [ref=f1e994]: settings
+          - generic "Click to copy 'severe_weather'" [ref=f1e995] [cursor=pointer]:
+            - generic "severe_weather" [ref=f1e996]:
+              - img "severe_weather" [ref=f1e997]
+            - generic [ref=f1e999]: severe_weather
+          - generic "Click to copy 'share'" [ref=f1e1000] [cursor=pointer]:
+            - generic "share" [ref=f1e1001]:
+              - img "share" [ref=f1e1002]
+            - generic [ref=f1e1004]: share
+          - generic "Click to copy 'shield'" [ref=f1e1005] [cursor=pointer]:
+            - generic "shield" [ref=f1e1006]:
+              - img "shield" [ref=f1e1007]
+            - generic [ref=f1e1009]: shield
+          - generic "Click to copy 'shopping_basket'" [ref=f1e1010] [cursor=pointer]:
+            - generic "shopping_basket" [ref=f1e1011]:
+              - img "shopping_basket" [ref=f1e1012]
+            - generic [ref=f1e1014]: shopping_basket
+          - generic "Click to copy 'snow'" [ref=f1e1015] [cursor=pointer]:
+            - generic "snow" [ref=f1e1016]:
+              - img "snow" [ref=f1e1017]
+            - generic [ref=f1e1019]: snow
+          - generic "Click to copy 'soap'" [ref=f1e1020] [cursor=pointer]:
+            - generic "soap" [ref=f1e1021]:
+              - img "soap" [ref=f1e1022]
+            - generic [ref=f1e1024]: soap
+          - generic "Click to copy 'social_distance'" [ref=f1e1025] [cursor=pointer]:
+            - generic "social_distance" [ref=f1e1026]:
+              - img "social_distance" [ref=f1e1027]
+            - generic [ref=f1e1029]: social_distance
+          - generic "Click to copy 'sort_arrow'" [ref=f1e1030] [cursor=pointer]:
+            - generic "sort_arrow" [ref=f1e1031]:
+              - img "sort_arrow" [ref=f1e1032]
+            - generic [ref=f1e1034]: sort_arrow
+          - generic "Click to copy 'spellcheck'" [ref=f1e1035] [cursor=pointer]:
+            - generic "spellcheck" [ref=f1e1036]:
+              - img "spellcheck" [ref=f1e1037]
+            - generic [ref=f1e1039]: spellcheck
+          - generic "Click to copy 'star'" [ref=f1e1040] [cursor=pointer]:
+            - generic "star" [ref=f1e1041]:
+              - img "star" [ref=f1e1042]
+            - generic [ref=f1e1044]: star
+          - generic "Click to copy 'star_half'" [ref=f1e1045] [cursor=pointer]:
+            - generic "star_half" [ref=f1e1046]:
+              - img "star_half" [ref=f1e1047]
+            - generic [ref=f1e1049]: star_half
+          - generic "Click to copy 'star_outline'" [ref=f1e1050] [cursor=pointer]:
+            - generic "star_outline" [ref=f1e1051]:
+              - img "star_outline" [ref=f1e1052]
+            - generic [ref=f1e1054]: star_outline
+          - generic "Click to copy 'store'" [ref=f1e1055] [cursor=pointer]:
+            - generic "store" [ref=f1e1056]:
+              - img "store" [ref=f1e1057]
+            - generic [ref=f1e1059]: store
+          - generic "Click to copy 'support'" [ref=f1e1060] [cursor=pointer]:
+            - generic "support" [ref=f1e1061]:
+              - img "support" [ref=f1e1062]
+            - generic [ref=f1e1064]: support
+          - generic "Click to copy 'support_agent'" [ref=f1e1065] [cursor=pointer]:
+            - generic "support_agent" [ref=f1e1066]:
+              - img "support_agent" [ref=f1e1067]
+            - generic [ref=f1e1069]: support_agent
+          - generic "Click to copy 'text_fields'" [ref=f1e1070] [cursor=pointer]:
+            - generic "text_fields" [ref=f1e1071]:
+              - img "text_fields" [ref=f1e1072]
+            - generic [ref=f1e1074]: text_fields
+          - generic "Click to copy 'thumb_down_alt'" [ref=f1e1075] [cursor=pointer]:
+            - generic "thumb_down_alt" [ref=f1e1076]:
+              - img "thumb_down_alt" [ref=f1e1077]
+            - generic [ref=f1e1079]: thumb_down_alt
+          - generic "Click to copy 'thumb_up_alt'" [ref=f1e1080] [cursor=pointer]:
+            - generic "thumb_up_alt" [ref=f1e1081]:
+              - img "thumb_up_alt" [ref=f1e1082]
+            - generic [ref=f1e1084]: thumb_up_alt
+          - generic "Click to copy 'timer'" [ref=f1e1085] [cursor=pointer]:
+            - generic "timer" [ref=f1e1086]:
+              - img "timer" [ref=f1e1087]
+            - generic [ref=f1e1089]: timer
+          - generic "Click to copy 'toggle_off'" [ref=f1e1090] [cursor=pointer]:
+            - generic "toggle_off" [ref=f1e1091]:
+              - img "toggle_off" [ref=f1e1092]
+            - generic [ref=f1e1094]: toggle_off
+          - generic "Click to copy 'toggle_on'" [ref=f1e1095] [cursor=pointer]:
+            - generic "toggle_on" [ref=f1e1096]:
+              - img "toggle_on" [ref=f1e1097]
+            - generic [ref=f1e1099]: toggle_on
+          - generic "Click to copy 'topic'" [ref=f1e1100] [cursor=pointer]:
+            - generic "topic" [ref=f1e1101]:
+              - img "topic" [ref=f1e1102]
+            - generic [ref=f1e1104]: topic
+          - generic "Click to copy 'tornado'" [ref=f1e1105] [cursor=pointer]:
+            - generic "tornado" [ref=f1e1106]:
+              - img "tornado" [ref=f1e1107]
+            - generic [ref=f1e1109]: tornado
+          - generic "Click to copy 'translate'" [ref=f1e1110] [cursor=pointer]:
+            - generic "translate" [ref=f1e1111]:
+              - img "translate" [ref=f1e1112]
+            - generic [ref=f1e1114]: translate
+          - generic "Click to copy 'trending_down'" [ref=f1e1115] [cursor=pointer]:
+            - generic "trending_down" [ref=f1e1116]:
+              - img "trending_down" [ref=f1e1117]
+            - generic [ref=f1e1119]: trending_down
+          - generic "Click to copy 'trending_up'" [ref=f1e1120] [cursor=pointer]:
+            - generic "trending_up" [ref=f1e1121]:
+              - img "trending_up" [ref=f1e1122]
+            - generic [ref=f1e1124]: trending_up
+          - generic "Click to copy 'twitter'" [ref=f1e1125] [cursor=pointer]:
+            - generic "twitter" [ref=f1e1126]:
+              - img "twitter" [ref=f1e1127]
+            - generic [ref=f1e1129]: twitter
+          - generic "Click to copy 'undo'" [ref=f1e1130] [cursor=pointer]:
+            - generic "undo" [ref=f1e1131]:
+              - img "undo" [ref=f1e1132]
+            - generic [ref=f1e1134]: undo
+          - generic "Click to copy 'unfold_less'" [ref=f1e1135] [cursor=pointer]:
+            - generic "unfold_less" [ref=f1e1136]:
+              - img "unfold_less" [ref=f1e1137]
+            - generic [ref=f1e1139]: unfold_less
+          - generic "Click to copy 'unfold_more'" [ref=f1e1140] [cursor=pointer]:
+            - generic "unfold_more" [ref=f1e1141]:
+              - img "unfold_more" [ref=f1e1142]
+            - generic [ref=f1e1144]: unfold_more
+          - generic "Click to copy 'update'" [ref=f1e1145] [cursor=pointer]:
+            - generic "update" [ref=f1e1146]:
+              - img "update" [ref=f1e1147]
+            - generic [ref=f1e1149]: update
+          - generic "Click to copy 'upload_file'" [ref=f1e1150] [cursor=pointer]:
+            - generic "upload_file" [ref=f1e1151]:
+              - img "upload_file" [ref=f1e1152]
+            - generic [ref=f1e1154]: upload_file
+          - generic "Click to copy 'verified'" [ref=f1e1155] [cursor=pointer]:
+            - generic "verified" [ref=f1e1156]:
+              - img "verified" [ref=f1e1157]
+            - generic [ref=f1e1159]: verified
+          - generic "Click to copy 'verified_user'" [ref=f1e1160] [cursor=pointer]:
+            - generic "verified_user" [ref=f1e1161]:
+              - img "verified_user" [ref=f1e1162]
+            - generic [ref=f1e1164]: verified_user
+          - generic "Click to copy 'visibility'" [ref=f1e1165] [cursor=pointer]:
+            - generic "visibility" [ref=f1e1166]:
+              - img "visibility" [ref=f1e1167]
+            - generic [ref=f1e1169]: visibility
+          - generic "Click to copy 'visibility_off'" [ref=f1e1170] [cursor=pointer]:
+            - generic "visibility_off" [ref=f1e1171]:
+              - img "visibility_off" [ref=f1e1172]
+            - generic [ref=f1e1174]: visibility_off
+          - generic "Click to copy 'volume_off'" [ref=f1e1175] [cursor=pointer]:
+            - generic "volume_off" [ref=f1e1176]:
+              - img "volume_off" [ref=f1e1177]
+            - generic [ref=f1e1179]: volume_off
+          - generic "Click to copy 'warning'" [ref=f1e1180] [cursor=pointer]:
+            - generic "warning" [ref=f1e1181]:
+              - img "warning" [ref=f1e1182]
+            - generic [ref=f1e1184]: warning
+          - generic "Click to copy 'wash'" [ref=f1e1185] [cursor=pointer]:
+            - generic "wash" [ref=f1e1186]:
+              - img "wash" [ref=f1e1187]
+            - generic [ref=f1e1189]: wash
+          - generic "Click to copy 'wifi'" [ref=f1e1190] [cursor=pointer]:
+            - generic "wifi" [ref=f1e1191]:
+              - img "wifi" [ref=f1e1192]
+            - generic [ref=f1e1194]: wifi
+          - generic "Click to copy 'work'" [ref=f1e1195] [cursor=pointer]:
+            - generic "work" [ref=f1e1196]:
+              - img "work" [ref=f1e1197]
+            - generic [ref=f1e1199]: work
+          - generic "Click to copy 'youtube'" [ref=f1e1200] [cursor=pointer]:
+            - generic "youtube" [ref=f1e1201]:
+              - img "youtube" [ref=f1e1202]
+            - generic [ref=f1e1204]: youtube
+          - generic "Click to copy 'zoom_in'" [ref=f1e1205] [cursor=pointer]:
+            - generic "zoom_in" [ref=f1e1206]:
+              - img "zoom_in" [ref=f1e1207]
+            - generic [ref=f1e1209]: zoom_in
+          - generic "Click to copy 'zoom_out'" [ref=f1e1210] [cursor=pointer]:
+            - generic "zoom_out" [ref=f1e1211]:
+              - img "zoom_out" [ref=f1e1212]
+            - generic [ref=f1e1214]: zoom_out
+          - generic "Click to copy 'zoom_out_map'" [ref=f1e1215] [cursor=pointer]:
+            - generic "zoom_out_map" [ref=f1e1216]:
+              - img "zoom_out_map" [ref=f1e1217]
+            - generic [ref=f1e1219]: zoom_out_map
+```

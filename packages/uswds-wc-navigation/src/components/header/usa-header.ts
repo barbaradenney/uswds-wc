@@ -15,7 +15,7 @@ import '@uswds-wc/actions';
 import '../language-selector/index.js';
 
 // Import usa-icon component for close icon
-import '@uswds-wc/data-display/components/icon';
+import '@uswds-wc/data-display';
 
 export interface NavItem {
   label: string;

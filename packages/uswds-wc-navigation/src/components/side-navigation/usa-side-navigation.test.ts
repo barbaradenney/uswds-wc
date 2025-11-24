@@ -10,6 +10,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USASideNavigation', () => {
   let element: USASideNavigation;
@@ -49,7 +50,7 @@ describe('USASideNavigation', () => {
       ];
 
       element.items = items;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const listItems = element.querySelectorAll('.usa-sidenav__item');
       expect(listItems.length).toBe(3);
@@ -64,19 +65,19 @@ describe('USASideNavigation', () => {
     it('should handle ariaLabel changes', async () => {
       element.ariaLabel = 'Main navigation';
       element.items = [{ label: 'Test', href: '/' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let nav = element.querySelector('nav');
       expect(nav?.getAttribute('aria-label')).toBe('Main navigation');
 
       element.ariaLabel = 'Primary menu';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       nav = element.querySelector('nav');
       expect(nav?.getAttribute('aria-label')).toBe('Primary menu');
 
       element.ariaLabel = 'Site navigation';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       nav = element.querySelector('nav');
       expect(nav?.getAttribute('aria-label')).toBe('Site navigation');
@@ -89,7 +90,7 @@ describe('USASideNavigation', () => {
         { label: 'Home', href: '/' },
         { label: 'About', href: '/about' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav');
       const list = element.querySelector('.usa-sidenav');
@@ -108,7 +109,7 @@ describe('USASideNavigation', () => {
         { label: 'About', href: '/about' },
         { label: 'Contact', href: '/contact' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBe(3);
@@ -127,7 +128,7 @@ describe('USASideNavigation', () => {
         { label: 'Home', href: '/' },
         { label: 'Current Page', href: '/current', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentLink = element.querySelector('.usa-current');
       const currentItem = currentLink?.closest('.usa-sidenav__item');
@@ -142,7 +143,7 @@ describe('USASideNavigation', () => {
 
     it('should handle items without href', async () => {
       element.items = [{ label: 'No Href Item' }, { label: 'With Href', href: '/with-href' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBe(2);
@@ -166,7 +167,7 @@ describe('USASideNavigation', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const mainItem = element.querySelector('.usa-sidenav__item');
       const sublist = element.querySelector('.usa-sidenav__sublist');
@@ -192,7 +193,7 @@ describe('USASideNavigation', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const sublists = element.querySelectorAll('.usa-sidenav__sublist');
       const allItems = element.querySelectorAll('.usa-sidenav__item');
@@ -203,7 +204,7 @@ describe('USASideNavigation', () => {
 
     it('should render slot content when no items provided', async () => {
       element.items = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const slot = element.querySelector('slot');
       expect(slot).toBeTruthy();
@@ -223,7 +224,7 @@ describe('USASideNavigation', () => {
       });
 
       element.items = [{ label: 'Test Item', href: '/test' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       link.click();
@@ -249,7 +250,7 @@ describe('USASideNavigation', () => {
           subnav: [{ label: 'Child Item', href: '/parent/child' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const childLink = element.querySelectorAll('a')[1] as HTMLAnchorElement;
       childLink.click();
@@ -313,7 +314,7 @@ describe('USASideNavigation', () => {
       ];
 
       element.items = complexItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const allItems = element.querySelectorAll('.usa-sidenav__item');
       const sublists = element.querySelectorAll('.usa-sidenav__sublist');
@@ -338,7 +339,7 @@ describe('USASideNavigation', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentItems = element.querySelectorAll('.usa-current');
       expect(currentItems.length).toBe(2); // Both parent and child marked as current
@@ -348,7 +349,7 @@ describe('USASideNavigation', () => {
   describe('Empty and Edge Cases', () => {
     it('should handle empty items array', async () => {
       element.items = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav');
       const slot = element.querySelector('slot');
@@ -359,7 +360,7 @@ describe('USASideNavigation', () => {
 
     it('should handle items with empty subnav arrays', async () => {
       element.items = [{ label: 'Item with Empty Subnav', href: '/item', subnav: [] }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const sublists = element.querySelectorAll('.usa-sidenav__sublist');
       expect(sublists.length).toBe(0); // Empty subnav should not render sublist
@@ -395,7 +396,7 @@ describe('USASideNavigation', () => {
         { label: 'Home', href: '/' },
         { label: 'Current', href: '/current', current: true },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav');
       const currentLink = element.querySelector('.usa-current');
@@ -412,7 +413,7 @@ describe('USASideNavigation', () => {
           subnav: [{ label: 'Sub Item', href: '/section/sub' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav');
       const mainList = nav?.querySelector('.usa-sidenav');
@@ -430,7 +431,7 @@ describe('USASideNavigation', () => {
     it('should support screen reader navigation', async () => {
       element.ariaLabel = 'Site sections';
       element.items = [{ label: 'Accessible Section', href: '/accessible', current: true }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('nav[aria-label="Site sections"]');
       const currentItem = element.querySelector('a[aria-current="page"]');
@@ -451,7 +452,7 @@ describe('USASideNavigation', () => {
 
       const testItem = { label: 'Test Item', href: '/test-path' };
       element.items = [testItem];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       link.click();

@@ -6,6 +6,7 @@ import {
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
 import { validateComponentJavaScript, waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USADateRangePicker', () => {
   let element: USADateRangePicker;
@@ -917,7 +918,7 @@ describe('USADateRangePicker', () => {
       element.validateRange = true;
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 30000); // Increased timeout for multiple accessibility checks (canvas operations in jsdom can be slow)
 
     it('should maintain accessibility during date selection', async () => {
       element.legend = 'Event Dates';
@@ -987,7 +988,7 @@ describe('USADateRangePicker', () => {
   describe('USWDS Integration Requirements', () => {
     it('should include data-default-value attribute on start date wrapper', async () => {
       element.startDate = '2024-01-01';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       await (startPicker as any)?.updateComplete;
@@ -1000,7 +1001,7 @@ describe('USADateRangePicker', () => {
 
     it('should include data-default-value attribute on end date wrapper', async () => {
       element.endDate = '2024-12-31';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');
       await (endPicker as any)?.updateComplete;
@@ -1014,7 +1015,7 @@ describe('USADateRangePicker', () => {
     it('should include data-default-value empty string when no value', async () => {
       element.startDate = '';
       element.endDate = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       const endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');
@@ -1049,7 +1050,7 @@ describe('USADateRangePicker', () => {
 
     it('should render placeholders when set', async () => {
       element.placeholder = 'mm/dd/yyyy';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       const endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');
@@ -1069,7 +1070,7 @@ describe('USADateRangePicker', () => {
       element.placeholder = 'mm/dd/yyyy';
       element.startDate = '';
       element.endDate = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       const endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');
@@ -1088,7 +1089,7 @@ describe('USADateRangePicker', () => {
     it('should maintain data-default-value when values change', async () => {
       element.startDate = '2024-01-01';
       element.endDate = '2024-01-31';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       let endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');
@@ -1103,7 +1104,7 @@ describe('USADateRangePicker', () => {
 
       element.startDate = '2024-06-01';
       element.endDate = '2024-06-30';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       startPicker = element.querySelector('usa-date-picker[data-range-start="true"]');
       endPicker = element.querySelector('usa-date-picker[data-range-end="true"]');

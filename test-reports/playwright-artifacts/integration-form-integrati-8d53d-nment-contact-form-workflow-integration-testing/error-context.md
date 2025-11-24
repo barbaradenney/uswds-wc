@@ -1,0 +1,86 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - heading "Contact Your Representative" [level=1] [ref=e4]
+  - generic [ref=e5]:
+    - group "Personal Information" [ref=e6]:
+      - generic [ref=e7]: Personal Information
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: First name *
+          - textbox "First name *" [ref=e11]: John
+          - generic [ref=e12]: Enter your legal first name
+        - generic [ref=e13]:
+          - generic [ref=e14]: Last name *
+          - textbox "Last name *" [ref=e15]: Doe
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: Email address *
+          - textbox "Email address *" [ref=e19]: john.doe@example.com
+        - generic [ref=e20]:
+          - generic [ref=e21]: Phone number
+          - textbox "Phone number" [ref=e22]: (555) 123-4567
+    - group "Address" [ref=e23]:
+      - generic [ref=e24]: Address
+      - generic [ref=e26]:
+        - generic [ref=e27]: Street address
+        - textbox "Street address" [ref=e28]: 123 Main Street
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]: City
+          - textbox "City" [ref=e32]: Anytown
+        - generic [ref=e33]:
+          - generic [ref=e34]: State
+          - combobox "State" [ref=e35]:
+            - option "Select a state"
+            - option "Alabama"
+            - option "Alaska"
+            - option "California" [selected]
+            - option "Florida"
+            - option "New York"
+            - option "Texas"
+        - generic [ref=e36]:
+          - generic [ref=e37]: ZIP code
+          - textbox "ZIP code" [active] [ref=e38]: "90210"
+    - group "Contact Preferences" [ref=e39]:
+      - generic [ref=e40]: Contact Preferences
+      - generic [ref=e41]:
+        - checkbox "Email updates" [checked] [ref=e42]
+        - generic [ref=e43] [cursor=pointer]: Email updates
+      - generic [ref=e44]:
+        - checkbox "Phone calls" [ref=e45]
+        - generic [ref=e46] [cursor=pointer]: Phone calls
+      - generic [ref=e47]:
+        - checkbox "Postal mail" [ref=e48]
+        - generic [ref=e49] [cursor=pointer]: Postal mail
+    - group "Issue Category *" [ref=e50]:
+      - generic [ref=e51]: Issue Category *
+      - generic [ref=e52]:
+        - radio "Healthcare" [ref=e53]
+        - generic [ref=e54] [cursor=pointer]: Healthcare
+      - generic [ref=e55]:
+        - radio "Education" [ref=e56]
+        - generic [ref=e57] [cursor=pointer]: Education
+      - generic [ref=e58]:
+        - radio "Economy" [ref=e59]
+        - generic [ref=e60] [cursor=pointer]: Economy
+      - generic [ref=e61]:
+        - radio "Environment" [ref=e62]
+        - generic [ref=e63] [cursor=pointer]: Environment
+      - generic [ref=e64]:
+        - radio "Other" [ref=e65]
+        - generic [ref=e66] [cursor=pointer]: Other
+    - generic [ref=e68]:
+      - generic [ref=e69]: Your message *
+      - generic [ref=e70]: Please provide specific details about your concern or request
+      - textbox "Your message *" [ref=e71]
+      - generic [ref=e72]: 1000 characters allowed
+    - generic [ref=e73]:
+      - checkbox "I verify that the information provided is accurate and I am a constituent of this representative *" [ref=e74]
+      - generic [ref=e75] [cursor=pointer]: I verify that the information provided is accurate and I am a constituent of this representative *
+    - generic [ref=e76]:
+      - button "Submit Message" [ref=e77] [cursor=pointer]
+      - button "Clear Form" [ref=e78] [cursor=pointer]
+    - status
+```

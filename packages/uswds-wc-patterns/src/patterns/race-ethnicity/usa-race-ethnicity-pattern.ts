@@ -317,9 +317,7 @@ export class USARaceEthnicityPattern extends LitElement {
     }
 
     // Update prefer not to share checkbox
-    const preferCheckbox = this.querySelector(
-      'usa-checkbox[name="prefer-not-to-share"]'
-    ) as any;
+    const preferCheckbox = this.querySelector('usa-checkbox[name="prefer-not-to-share"]') as any;
     if (preferCheckbox) {
       preferCheckbox.checked = this.raceEthnicityData.preferNotToShare || false;
     }

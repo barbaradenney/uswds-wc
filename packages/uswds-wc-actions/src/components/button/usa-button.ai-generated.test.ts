@@ -6,6 +6,7 @@ import {
 import './usa-button.js';
 import { USAButton } from './usa-button.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * 🤖 AI-Generated Test Suite
@@ -83,7 +84,7 @@ describe('UsaButton - AI Generated Tests', () => {
     const button = element.querySelector('button');
     const hasAccessibleContent =
       element.textContent?.trim() ||
-      element.getAttribute('aria-label') ||
+      (await waitForARIAAttribute(element, 'aria-label')) ||
       button?.getAttribute('aria-label');
     expect(hasAccessibleContent).toBeTruthy();
 

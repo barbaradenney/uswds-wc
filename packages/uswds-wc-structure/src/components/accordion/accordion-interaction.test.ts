@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-accordion.ts';
 import type { USAAccordion } from './usa-accordion.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Accordion JavaScript Interaction Testing', () => {
   let element: USAAccordion;
@@ -92,10 +93,10 @@ describe('Accordion JavaScript Interaction Testing', () => {
       expect(contents.length).toBe(2);
 
       // Verify ARIA attributes required by USWDS
-      buttons.forEach((button) => {
-        expect(button.getAttribute('aria-expanded')).toBeTruthy();
-        expect(button.getAttribute('aria-controls')).toBeTruthy();
-      });
+      for (const button of buttons) {
+        expect(await waitForARIAAttribute(button, 'aria-expanded')).toBeTruthy();
+        expect(await waitForARIAAttribute(button, 'aria-controls')).toBeTruthy();
+      }
     });
   });
 
@@ -129,19 +130,22 @@ describe('Accordion JavaScript Interaction Testing', () => {
 
       // Check for USWDS event handling signatures
       let hasEventHandlers = false;
-      buttons.forEach((button) => {
+      for (const button of buttons) {
         // Click the button and check if it has event handling
-        const beforeClick = button.getAttribute('aria-expanded');
+        const beforeClick = await waitForARIAAttribute(button, 'aria-expanded');
         button.click();
 
         // Check after a delay
-        setTimeout(() => {
-          const afterClick = button.getAttribute('aria-expanded');
-          if (beforeClick !== afterClick) {
-            hasEventHandlers = true;
-          }
-        }, 50);
-      });
+        await new Promise<void>((resolve) => {
+          setTimeout(async () => {
+            const afterClick = await waitForARIAAttribute(button, 'aria-expanded');
+            if (beforeClick !== afterClick) {
+              hasEventHandlers = true;
+            }
+            resolve();
+          }, 50);
+        });
+      }
 
       await new Promise((resolve) => setTimeout(resolve, 100));
 

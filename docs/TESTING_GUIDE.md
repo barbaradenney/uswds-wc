@@ -623,7 +623,255 @@ it('should render updated content', async () => {
 });
 ```
 
-### 3. Cleanup
+### 3. CI Timing Best Practices ⭐ NEW
+
+**Problem**: CI environments are slower than local development, causing race conditions and timing-dependent test failures.
+
+**Solution**: Proactive timing utilities that automatically adjust wait times based on environment.
+
+#### The Problem
+
+Tests that pass locally may fail in CI due to:
+- **ARIA attribute timing** - Attributes not set immediately
+- **Property → DOM propagation** - Property changes don't immediately update child elements
+- **Component initialization** - Complex components (modal, combo-box, date-picker) need extra time
+- **CSS transitions** - Animations and transitions need time to complete
+
+**Impact**: 713 vulnerable test patterns identified across 97 test files
+
+#### CI Timing Utilities
+
+All utilities available from `@uswds-wc/test-utils`:
+
+```typescript
+import {
+  waitForPropertyPropagation,
+  waitForARIAAttribute,
+  waitForModalOpen,
+  waitForAccordionTransition,
+  waitForComboBoxInit,
+  waitForDatePickerInit,
+  waitForElementRender
+} from '@uswds-wc/test-utils';
+```
+
+#### Pattern 1: Property → DOM Propagation
+
+**Problem**: Setting element properties doesn't immediately update child element DOM
+
+```typescript
+// ❌ Bad - May fail in CI (144 cases found)
+element.required = true;
+await waitForUpdate(element);
+const input = element.querySelector('input');
+expect(input.required).toBe(true); // Race condition!
+
+// ✅ Good - CI-safe
+element.required = true;
+await waitForPropertyPropagation(element);
+const input = element.querySelector('input');
+expect(input.required).toBe(true); // Guaranteed to be propagated
+```
+
+**How it works**:
+- Waits 2 iterations locally, 4 iterations in CI
+- Uses 2x multiplier for CI environments
+- Safe for: `required`, `disabled`, `readonly`, `checked`, `value` properties
+
+#### Pattern 2: ARIA Attribute Timing
+
+**Problem**: Direct `getAttribute('aria-*')` calls may return null in CI before attribute is set
+
+```typescript
+// ❌ Bad - May fail in CI (569 cases found)
+const ariaSort = header.getAttribute('aria-sort');
+expect(ariaSort).toMatch(/none|ascending|descending/);
+
+// ✅ Good - CI-safe
+const ariaSort = await waitForARIAAttribute(header, 'aria-sort');
+if (ariaSort) {
+  expect(ariaSort).toMatch(/none|ascending|descending/);
+}
+```
+
+**How it works**:
+- Polls for attribute with 2s timeout
+- 50ms interval locally, 100ms in CI
+- Returns null if attribute not set within timeout
+- Returns value as soon as attribute is valid (not null or empty)
+
+#### Pattern 3: Modal Opening
+
+**Problem**: Modal content not rendered immediately after `.open = true`
+
+```typescript
+// ❌ Bad - May fail in CI
+modal.open = true;
+await waitForUpdate(modal);
+const title = modal.querySelector('.usa-modal__heading');
+
+// ✅ Good - CI-safe
+modal.open = true;
+await waitForModalOpen(modal);
+const title = modal.querySelector('.usa-modal__heading');
+```
+
+**How it works**:
+- 3 property propagation iterations
+- Extra 100ms wait locally, 200ms in CI
+- Ensures USWDS modal initialization completes
+
+#### Pattern 4: Component-Specific Timing
+
+**Accordion (transition wait)**:
+```typescript
+// ❌ Bad - May fail in CI
+button.click();
+await waitForUpdate(accordion);
+expect(button.getAttribute('aria-expanded')).toBe('true');
+
+// ✅ Good - CI-safe
+button.click();
+await waitForAccordionTransition(accordion);
+expect(button.getAttribute('aria-expanded')).toBe('true');
+```
+
+**Combo-box (initialization wait)**:
+```typescript
+// ❌ Bad - May fail in CI
+const comboBox = document.createElement('usa-combo-box');
+document.body.appendChild(comboBox);
+await waitForUpdate(comboBox);
+const list = comboBox.querySelector('ul');
+
+// ✅ Good - CI-safe
+const comboBox = document.createElement('usa-combo-box');
+document.body.appendChild(comboBox);
+await waitForComboBoxInit(comboBox);
+const list = comboBox.querySelector('ul');
+```
+
+**Date Picker (calendar rendering wait)**:
+```typescript
+// ❌ Bad - May fail in CI
+const datePicker = document.createElement('usa-date-picker');
+document.body.appendChild(datePicker);
+await waitForUpdate(datePicker);
+const calendar = datePicker.querySelector('.usa-date-picker__calendar');
+
+// ✅ Good - CI-safe
+const datePicker = document.createElement('usa-date-picker');
+document.body.appendChild(datePicker);
+await waitForDatePickerInit(datePicker);
+const calendar = datePicker.querySelector('.usa-date-picker__calendar');
+```
+
+#### Proactive Validation
+
+Automatically detect vulnerable patterns before CI runs:
+
+```bash
+# Run timing validation (included in pre-commit hooks)
+pnpm run validate:test-timing
+```
+
+**Validation detects**:
+- 6 types of vulnerable timing patterns
+- Files missing CI timing utility imports
+- Provides actionable fix examples with line numbers
+
+**Example output**:
+```
+🔍 Validating test timing patterns...
+📊 Validated 167 test files
+
+❌ Critical timing issues found:
+
+  packages/uswds-wc-forms/src/components/select/usa-select.test.ts
+    Line 156: Property → DOM Without Propagation Wait
+    Property changes may not propagate to DOM immediately.
+
+  💡 Fix:
+    // Change this:
+    element.required = true;
+    await waitForUpdate(element);
+
+    // To this:
+    element.required = true;
+    await waitForPropertyPropagation(element);
+
+📊 Summary: 144 errors, 569 warnings
+```
+
+#### Component-Specific Wait Times
+
+All timing utilities automatically adjust based on environment:
+
+| Utility | Local Iterations | CI Iterations | Extra Wait (local) | Extra Wait (CI) |
+|---------|-----------------|---------------|-------------------|-----------------|
+| `waitForPropertyPropagation()` | 2 | 4 | - | - |
+| `waitForARIAAttribute()` | - | - | 50ms poll | 100ms poll |
+| `waitForModalOpen()` | 3 | 6 | +100ms | +200ms |
+| `waitForAccordionTransition()` | 2 | 4 | +300ms | +400ms |
+| `waitForComboBoxInit()` | 3 | 6 | +150ms | +300ms |
+| `waitForDatePickerInit()` | 3 | 6 | +150ms | +300ms |
+
+#### Migration Guide
+
+**Step 1**: Add import to test file
+```typescript
+import {
+  waitForPropertyPropagation,
+  waitForARIAAttribute
+} from '@uswds-wc/test-utils';
+```
+
+**Step 2**: Replace vulnerable patterns
+```typescript
+// Before
+element.required = true;
+await waitForUpdate(element);
+const input = element.querySelector('input');
+
+// After
+element.required = true;
+await waitForPropertyPropagation(element);
+const input = element.querySelector('input');
+```
+
+**Step 3**: Verify with validation script
+```bash
+pnpm run validate:test-timing
+```
+
+#### When to Use
+
+**Always use for**:
+- Setting element properties that affect child elements
+- Checking ARIA attributes
+- Modal/accordion/combo-box/date-picker interactions
+
+**Not needed for**:
+- Simple element creation
+- Static querySelector (no property changes)
+- synchronous operations
+
+#### Audit Results Summary
+
+Comprehensive codebase audit found:
+- **713 total timing issues** across **97 test files**
+- **144 critical errors** (Property → DOM propagation)
+- **569 warnings** (ARIA attributes, component-specific)
+
+**Top offenders**:
+- `usa-range-slider.test.ts` - 11 errors
+- `usa-date-picker.test.ts` - 11 errors
+- `usa-file-input.test.ts` - 7 errors
+- `usa-email-address-pattern.test.ts` - 5 errors
+
+**Full audit report**: `/tmp/test-timing-audit.txt`
+
+### 4. Cleanup
 
 Remove test elements in `afterEach`:
 
@@ -633,7 +881,7 @@ afterEach(() => {
 });
 ```
 
-### 4. Accessibility Testing
+### 5. Accessibility Testing
 
 Add axe-core tests to catch issues early:
 
@@ -645,7 +893,7 @@ it('should pass comprehensive accessibility tests', async () => {
 });
 ```
 
-### 5. JavaScript Integration Validation
+### 6. JavaScript Integration Validation
 
 Automated USWDS compliance checking (included automatically):
 

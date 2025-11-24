@@ -68,23 +68,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Puppeteer browsers
         run: npx puppeteer browsers install chrome
 
       - name: Build components
-        run: npm run build
+        run: pnpm run build
 
       - name: Start dev server for Puppeteer tests
-        run: npm run dev &
+        run: pnpm run dev &
         env:
           CI: true
 
@@ -94,30 +101,35 @@ jobs:
       - name: Run USWDS transformation validation
         run: |
           echo "🏛️ Running USWDS transformation validation..."
-          npm run validate:uswds-transformation
+          pnpm run validate:uswds-transformation
 
       - name: Run cross-browser validation
         if: needs.pr-analysis.outputs.validation-type == 'comprehensive'
         run: |
           echo "🌐 Running comprehensive cross-browser validation..."
-          npm run test:cross-browser
+          pnpm run test:cross-browser
 
       - name: Run performance monitoring
         if: needs.pr-analysis.outputs.validation-type == 'comprehensive'
         run: |
           echo "⚡ Running performance monitoring..."
-          npm run test:performance:monitor
+          pnpm run test:performance:monitor
 
       - name: Run visual regression testing
         if: needs.pr-analysis.outputs.validation-type == 'comprehensive'
         run: |
           echo "📸 Running visual regression testing..."
-          npm run test:visual:regression || echo "Visual regression baseline may need updating"
+          pnpm run test:visual:regression || echo "Visual regression baseline may need updating"
 
       - name: Generate validation report
+        continue-on-error: true
         run: |
           echo "📊 Generating comprehensive validation report..."
-          node scripts/generate-pr-validation-report.js
+          if [ -f scripts/generate-pr-validation-report.js ]; then
+            node scripts/generate-pr-validation-report.js
+          else
+            echo "⚠️ Validation report generator not found - skipping"
+          fi
         env:
           CRITICAL_COMPONENTS: ${{ needs.pr-analysis.outputs.critical-components }}
           ALL_COMPONENTS: ${{ needs.pr-analysis.outputs.all-components }}
@@ -144,14 +156,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Download validation artifacts
         uses: actions/download-artifact@v4
@@ -160,9 +177,14 @@ jobs:
           path: __tests__/
 
       - name: Generate PR comment
+        continue-on-error: true
         run: |
           echo "💬 Generating PR comment..."
-          node scripts/generate-pr-comment.js
+          if [ -f scripts/generate-pr-comment.js ]; then
+            node scripts/generate-pr-comment.js
+          else
+            echo "⚠️ PR comment generator not found - skipping"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}

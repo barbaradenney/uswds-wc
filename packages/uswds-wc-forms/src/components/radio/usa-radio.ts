@@ -94,16 +94,6 @@ export class USARadio extends LitElement {
 
       // Listen to the native input element's change event
       this.radioElement.addEventListener('change', this.handleChange);
-
-      // Light DOM workaround: The native <label for="..."> mechanism doesn't always
-      // work reliably in Light DOM web components. Add a direct click listener on the
-      // label to manually toggle the radio as a fallback.
-      label.addEventListener('click', (e) => {
-        if (this.radioElement && !e.defaultPrevented && !this.disabled) {
-          this.radioElement.checked = true;
-          this.radioElement.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-      });
     }
   }
 
@@ -188,7 +178,13 @@ export class USARadio extends LitElement {
       return this.id;
     }
     if (!this._radioId) {
-      this._radioId = `radio-${Math.random().toString(36).substring(2, 11)}`;
+      // Generate exactly 9 random characters to ensure consistent ID length
+      // Math.random().toString(36) can produce varying lengths, so we pad if needed
+      let randomPart = Math.random().toString(36).substring(2, 11);
+      while (randomPart.length < 9) {
+        randomPart += Math.random().toString(36).substring(2, 3);
+      }
+      this._radioId = `radio-${randomPart.substring(0, 9)}`;
     }
     return this._radioId;
   }
@@ -224,11 +220,6 @@ export class USARadio extends LitElement {
     // Clean up event listeners
     if (this.radioElement) {
       this.radioElement.removeEventListener('change', this.handleChange);
-    }
-    const label = this.querySelector('label');
-    if (label) {
-      // Note: We can't remove the anonymous function, but it will be garbage collected
-      // when the element is removed from the DOM
     }
     super.disconnectedCallback();
     this.cleanupUSWDS();

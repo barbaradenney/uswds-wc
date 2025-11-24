@@ -253,12 +253,16 @@ export const Interactive: Story = {
           if (output) {
             const { ssnData } = e.detail;
             const pattern = document.getElementById('interactive-pattern') as USASSNPattern;
-            output.textContent = JSON.stringify({
-              ssn: ssnData.ssn,
-              normalized: pattern.getNormalizedSSN(),
-              formatted: pattern.getFormattedSSN(),
-              valid: pattern.validateSSN(),
-            }, null, 2);
+            output.textContent = JSON.stringify(
+              {
+                ssn: ssnData.ssn,
+                normalized: pattern.getNormalizedSSN(),
+                formatted: pattern.getFormattedSSN(),
+                valid: pattern.validateSSN(),
+              },
+              null,
+              2
+            );
           }
         }}"
       ></usa-ssn-pattern>
@@ -273,12 +277,16 @@ export const Interactive: Story = {
               pattern.setSSNData({ ssn: '123-45-6789' });
               const output = document.getElementById('ssn-output');
               if (output) {
-                output.textContent = JSON.stringify({
-                  ssn: pattern.getSSN(),
-                  normalized: pattern.getNormalizedSSN(),
-                  formatted: pattern.getFormattedSSN(),
-                  valid: pattern.validateSSN(),
-                }, null, 2);
+                output.textContent = JSON.stringify(
+                  {
+                    ssn: pattern.getSSN(),
+                    normalized: pattern.getNormalizedSSN(),
+                    formatted: pattern.getFormattedSSN(),
+                    valid: pattern.validateSSN(),
+                  },
+                  null,
+                  2
+                );
               }
             }}"
           >
@@ -291,12 +299,16 @@ export const Interactive: Story = {
               pattern.setSSNData({ ssn: '000-45-6789' });
               const output = document.getElementById('ssn-output');
               if (output) {
-                output.textContent = JSON.stringify({
-                  ssn: pattern.getSSN(),
-                  normalized: pattern.getNormalizedSSN(),
-                  formatted: pattern.getFormattedSSN(),
-                  valid: pattern.validateSSN(),
-                }, null, 2);
+                output.textContent = JSON.stringify(
+                  {
+                    ssn: pattern.getSSN(),
+                    normalized: pattern.getNormalizedSSN(),
+                    formatted: pattern.getFormattedSSN(),
+                    valid: pattern.validateSSN(),
+                  },
+                  null,
+                  2
+                );
               }
             }}"
           >
@@ -331,12 +343,16 @@ export const Interactive: Story = {
               const pattern = document.getElementById('interactive-pattern') as USASSNPattern;
               const output = document.getElementById('ssn-output');
               if (output) {
-                output.textContent = JSON.stringify({
-                  ssn: pattern.getSSN(),
-                  normalized: pattern.getNormalizedSSN(),
-                  formatted: pattern.getFormattedSSN(),
-                  valid: pattern.validateSSN(),
-                }, null, 2);
+                output.textContent = JSON.stringify(
+                  {
+                    ssn: pattern.getSSN(),
+                    normalized: pattern.getNormalizedSSN(),
+                    formatted: pattern.getFormattedSSN(),
+                    valid: pattern.validateSSN(),
+                  },
+                  null,
+                  2
+                );
               }
             }}"
           >
@@ -386,9 +402,9 @@ export const USWDSCompliance: Story = {
         <li>✅ Explains why information is collected</li>
       </ul>
       <p>
-        <strong>Why single field?</strong> Per USWDS, splitting SSN into three fields
-        creates unnecessary friction and accessibility issues. A single field with
-        fault tolerance for hyphens/spaces is the recommended approach.
+        <strong>Why single field?</strong> Per USWDS, splitting SSN into three fields creates
+        unnecessary friction and accessibility issues. A single field with fault tolerance for
+        hyphens/spaces is the recommended approach.
       </p>
     </div>
 

@@ -144,7 +144,9 @@ describe('USAAddressPattern', () => {
 
     it('should emit address-change event when field changes', async () => {
       const changePromise = new Promise<CustomEvent>((resolve) => {
-        pattern.addEventListener('address-change', (e) => resolve(e as CustomEvent), { once: true });
+        pattern.addEventListener('address-change', (e) => resolve(e as CustomEvent), {
+          once: true,
+        });
       });
 
       const street1 = pattern.querySelector('usa-text-input[name="street1"]') as any;
@@ -423,10 +425,7 @@ describe('USAAddressPattern', () => {
       });
 
       it('should initialize street1 text input component', async () => {
-        const street1 = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="street1"]'
-        );
+        const street1 = await verifyChildComponent(pattern, 'usa-text-input[name="street1"]');
         expect(street1).toBeTruthy();
 
         // Verify internal structure rendered
@@ -435,10 +434,7 @@ describe('USAAddressPattern', () => {
       });
 
       it('should initialize street2 text input component', async () => {
-        const street2 = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="street2"]'
-        );
+        const street2 = await verifyChildComponent(pattern, 'usa-text-input[name="street2"]');
         expect(street2).toBeTruthy();
 
         const input = street2.querySelector('input.usa-input');
@@ -446,10 +442,7 @@ describe('USAAddressPattern', () => {
       });
 
       it('should initialize city text input component', async () => {
-        const city = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="city"]'
-        );
+        const city = await verifyChildComponent(pattern, 'usa-text-input[name="city"]');
         expect(city).toBeTruthy();
 
         const input = city.querySelector('input.usa-input');
@@ -465,10 +458,7 @@ describe('USAAddressPattern', () => {
       });
 
       it('should initialize zipCode text input component', async () => {
-        const zipCode = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="zipCode"]'
-        );
+        const zipCode = await verifyChildComponent(pattern, 'usa-text-input[name="zipCode"]');
         expect(zipCode).toBeTruthy();
 
         const input = zipCode.querySelector('input.usa-input');
@@ -487,10 +477,7 @@ describe('USAAddressPattern', () => {
       });
 
       it('should initialize plusCode text input component', async () => {
-        const plusCode = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="plusCode"]'
-        );
+        const plusCode = await verifyChildComponent(pattern, 'usa-text-input[name="plusCode"]');
         expect(plusCode).toBeTruthy();
 
         const input = plusCode.querySelector('input.usa-input');
@@ -720,9 +707,7 @@ describe('USAAddressPattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const urbanization = pattern.querySelector(
-          'usa-text-input[name="urbanization"]'
-        ) as any;
+        const urbanization = pattern.querySelector('usa-text-input[name="urbanization"]') as any;
         await urbanization?.updateComplete;
 
         const input = urbanization?.querySelector('input') as HTMLInputElement;

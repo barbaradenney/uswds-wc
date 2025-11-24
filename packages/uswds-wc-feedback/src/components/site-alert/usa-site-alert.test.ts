@@ -10,6 +10,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USASiteAlert', () => {
   let element: USASiteAlert;
@@ -101,7 +102,7 @@ describe('USASiteAlert', () => {
 
       // Test emergency type
       element.type = 'emergency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert?.classList.contains('usa-site-alert--emergency')).toBe(true);
       expect(siteAlert?.classList.contains('usa-site-alert--info')).toBe(false);
@@ -109,7 +110,7 @@ describe('USASiteAlert', () => {
 
     it('should apply slim modifier class', async () => {
       element.slim = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert?.classList.contains('usa-site-alert--slim')).toBe(true);
@@ -117,7 +118,7 @@ describe('USASiteAlert', () => {
 
     it('should apply no-icon modifier class', async () => {
       element.noIcon = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert?.classList.contains('usa-site-alert--no-icon')).toBe(true);
@@ -127,7 +128,7 @@ describe('USASiteAlert', () => {
       element.type = 'emergency';
       element.slim = true;
       element.noIcon = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert?.classList.contains('usa-site-alert')).toBe(true);
@@ -138,7 +139,7 @@ describe('USASiteAlert', () => {
 
     it('should render heading when provided', async () => {
       element.heading = 'Test Alert Heading';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-alert__heading');
       expect(heading).toBeTruthy();
@@ -148,7 +149,7 @@ describe('USASiteAlert', () => {
 
     it('should render empty heading when not provided', async () => {
       element.heading = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-alert__heading');
       expect(heading).toBeTruthy();
@@ -199,7 +200,7 @@ describe('USASiteAlert', () => {
 
     it('should not render close button when not closable', async () => {
       element.closable = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-site-alert__close');
       expect(closeButton).toBeFalsy();
@@ -250,7 +251,7 @@ describe('USASiteAlert', () => {
 
     it('should maintain proper DOM hierarchy', async () => {
       element.heading = 'Test';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const section = element.querySelector('section.usa-site-alert');
       const body = section?.querySelector('.usa-alert__body');
@@ -296,7 +297,7 @@ describe('USASiteAlert', () => {
 
     it('should not close alert on Escape key (not implemented)', async () => {
       element.closable = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const section = element.querySelector('section') as HTMLElement;
       const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
@@ -307,7 +308,7 @@ describe('USASiteAlert', () => {
 
     it('should not close on Escape key when not closable', async () => {
       element.closable = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const section = element.querySelector('section') as HTMLElement;
       const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
@@ -318,7 +319,7 @@ describe('USASiteAlert', () => {
 
     it('should not close on other key presses', async () => {
       element.closable = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const section = element.querySelector('section') as HTMLElement;
       const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
@@ -344,7 +345,7 @@ describe('USASiteAlert', () => {
 
     it('should hide alert using hide() method', async () => {
       element.visible = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert).toBeTruthy();
@@ -387,7 +388,7 @@ describe('USASiteAlert', () => {
     it('should not have accessible close button (not implemented)', async () => {
       element.closable = true;
       element.closeLabel = 'Dismiss notification';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-site-alert__close');
       expect(closeButton).toBeFalsy();
@@ -395,7 +396,7 @@ describe('USASiteAlert', () => {
 
     it('should maintain semantic heading structure', async () => {
       element.heading = 'Emergency Alert';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-alert__heading');
       expect(heading?.tagName.toLowerCase()).toBe('h3');
@@ -404,7 +405,7 @@ describe('USASiteAlert', () => {
 
     it('should not have keyboard navigation for close (not implemented)', async () => {
       element.closable = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-site-alert__close');
       expect(closeButton).toBeFalsy();
@@ -529,7 +530,7 @@ describe('USASiteAlert', () => {
 
     it('should handle invalid type values', async () => {
       element.type = 'invalid' as any;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const siteAlert = element.querySelector('.usa-site-alert');
       expect(siteAlert?.classList.contains('usa-site-alert--invalid')).toBe(true);

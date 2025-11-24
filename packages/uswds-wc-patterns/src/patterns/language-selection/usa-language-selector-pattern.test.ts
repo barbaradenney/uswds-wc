@@ -133,6 +133,11 @@ describe('USALanguageSelectorPattern', () => {
       pattern = document.createElement(
         'usa-language-selector-pattern'
       ) as USALanguageSelectorPattern;
+      pattern.setLanguages([
+        { code: 'en', name: 'English', nativeName: 'English' },
+        { code: 'es', name: 'Spanish', nativeName: 'Español' },
+        { code: 'fr', name: 'French', nativeName: 'Français' },
+      ]);
       pattern.persistPreference = true;
       container.appendChild(pattern);
       await pattern.updateComplete;
@@ -158,7 +163,19 @@ describe('USALanguageSelectorPattern', () => {
     });
 
     it('should use custom storage key', async () => {
+      // Create fresh pattern with custom storage key set before appending
+      pattern.remove();
+      pattern = document.createElement(
+        'usa-language-selector-pattern'
+      ) as USALanguageSelectorPattern;
+      pattern.setLanguages([
+        { code: 'en', name: 'English', nativeName: 'English' },
+        { code: 'es', name: 'Spanish', nativeName: 'Español' },
+        { code: 'fr', name: 'French', nativeName: 'Français' },
+      ]);
       pattern.storageKey = 'my-custom-key';
+      pattern.persistPreference = true;
+      container.appendChild(pattern);
       await pattern.updateComplete;
 
       pattern.changeLanguage('es');
@@ -187,6 +204,7 @@ describe('USALanguageSelectorPattern', () => {
     });
 
     it('should clear persisted preference', async () => {
+      // First ensure languages are set (already done in beforeEach)
       pattern.changeLanguage('es');
       await pattern.updateComplete;
 
@@ -472,6 +490,11 @@ describe('USALanguageSelectorPattern', () => {
       pattern = document.createElement(
         'usa-language-selector-pattern'
       ) as USALanguageSelectorPattern;
+      pattern.setLanguages([
+        { code: 'en', name: 'English', nativeName: 'English' },
+        { code: 'es', name: 'Spanish', nativeName: 'Español' },
+        { code: 'fr', name: 'French', nativeName: 'Français' },
+      ]);
       pattern.persistPreference = true;
 
       // Attach event listeners before appending

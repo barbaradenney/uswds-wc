@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-language-selector.ts';
 import type { USALanguageSelector, LanguageOption } from './usa-language-selector.js';
 import { waitForUpdate, validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Regression Tests for Language Selector Component Interactive Functionality
@@ -35,16 +36,16 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
   describe('Dropdown Functionality', () => {
     it('should open dropdown when button is clicked in dropdown variant', async () => {
       element.variant = 'dropdown';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
       expect(button).toBeTruthy();
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
 
       button.click();
       await waitForUpdate(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
       expect((element as any)._isOpen).toBe(true);
 
       const submenu = element.querySelector('.usa-language__submenu') as HTMLElement;
@@ -53,7 +54,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
 
     it('should close dropdown when button is clicked again', async () => {
       element.variant = 'dropdown';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
 
@@ -66,7 +67,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
       button.click();
       await waitForUpdate(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
       expect((element as any)._isOpen).toBe(false);
 
       const submenu = element.querySelector('.usa-language__submenu') as HTMLElement;
@@ -263,7 +264,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
       });
 
       element.variant = 'dropdown';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
       button.click();
@@ -424,14 +425,14 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
   describe('Accessibility Compliance', () => {
     it('should have correct ARIA attributes for dropdown variant', async () => {
       element.variant = 'dropdown';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
       const submenu = element.querySelector('.usa-language__submenu') as HTMLElement;
 
       expect(button.getAttribute('type')).toBe('button');
-      expect(button.getAttribute('aria-expanded')).toBe('false');
-      expect(button.getAttribute('aria-controls')).toBe('language-options');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-controls')).toBe('language-options');
       expect(submenu.getAttribute('id')).toBe('language-options');
     });
 
@@ -459,7 +460,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
     it('should have correct button text in dropdown variant', async () => {
       element.variant = 'dropdown';
       element.buttonText = 'Select Language';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
       expect(button.textContent?.trim()).toBe('Select Language');
@@ -489,7 +490,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
   describe('Edge Cases and Regression Prevention', () => {
     it('should handle rapid dropdown toggling without breaking state', async () => {
       element.variant = 'dropdown';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-language__link') as HTMLButtonElement;
 
@@ -501,7 +502,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
       await waitForUpdate(element);
 
       // Should end up closed (even number of clicks)
-      expect(button.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
       expect((element as any)._isOpen).toBe(false);
     });
 
@@ -557,7 +558,7 @@ describe('USALanguageSelector Interactive Regression Tests', () => {
     it('should handle small variant correctly', async () => {
       element.variant = 'dropdown';
       element.small = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const container = element.querySelector('.usa-language-container');
       expect(container?.classList.contains('usa-language--small')).toBe(true);

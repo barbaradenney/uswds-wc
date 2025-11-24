@@ -10,6 +10,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USATextarea', () => {
   let element: USATextarea;
@@ -55,7 +56,7 @@ describe('USATextarea', () => {
       element.minlength = 10;
       element.autocomplete = 'on';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.name).toBe('test-textarea');
@@ -76,7 +77,7 @@ describe('USATextarea', () => {
       element.maxlength = null;
       element.minlength = null;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.cols).toBe(20); // Browser default
@@ -89,7 +90,7 @@ describe('USATextarea', () => {
     it('should render textarea with correct structure', async () => {
       element.label = 'Test Label';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const textarea = element.querySelector('textarea');
@@ -104,7 +105,7 @@ describe('USATextarea', () => {
       element.label = 'Required Field';
       element.required = true;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const requiredSpan = label?.querySelector('.usa-hint--required');
@@ -116,7 +117,7 @@ describe('USATextarea', () => {
     it('should render hint text when provided', async () => {
       element.hint = 'This is helper text';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const hint = element.querySelector('.usa-hint');
       expect(hint).toBeTruthy();
@@ -126,7 +127,7 @@ describe('USATextarea', () => {
     it('should render error message when in error state', async () => {
       element.error = 'This field is required';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const errorMsg = element.querySelector('.usa-error-message');
       expect(errorMsg).toBeTruthy();
@@ -140,7 +141,7 @@ describe('USATextarea', () => {
     it('should render success message when in success state', async () => {
       element.success = 'Good job!';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const successMsg = element.querySelector('.usa-alert--success');
       expect(successMsg).toBeTruthy();
@@ -180,7 +181,7 @@ describe('USATextarea', () => {
       element.id = 'test-textarea';
       element.label = 'Test Label';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const textarea = element.querySelector('textarea');
@@ -193,7 +194,7 @@ describe('USATextarea', () => {
       element.id = 'test-textarea';
       element.hint = 'Helper text';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       const describedBy = textarea?.getAttribute('aria-describedby');
@@ -205,7 +206,7 @@ describe('USATextarea', () => {
       element.id = 'test-textarea';
       element.error = 'Error message';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       const describedBy = textarea?.getAttribute('aria-describedby');
@@ -221,7 +222,7 @@ describe('USATextarea', () => {
       element.error = 'Error message';
       element.success = 'Success message';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       const describedBy = textarea?.getAttribute('aria-describedby');
@@ -236,7 +237,7 @@ describe('USATextarea', () => {
       await waitForUpdate(element);
 
       element.error = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       expect(textarea?.hasAttribute('aria-invalid')).toBe(false);
@@ -247,7 +248,7 @@ describe('USATextarea', () => {
       await waitForUpdate(element);
 
       element.hint = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       expect(textarea?.hasAttribute('aria-describedby')).toBe(false);
@@ -389,7 +390,7 @@ describe('USATextarea', () => {
     it('should enforce maxlength', async () => {
       element.maxlength = 10;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.maxLength).toBe(10);
@@ -398,7 +399,7 @@ describe('USATextarea', () => {
     it('should enforce minlength', async () => {
       element.minlength = 5;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.minLength).toBe(5);
@@ -448,7 +449,7 @@ describe('USATextarea', () => {
       const largeText = 'A'.repeat(10000);
       element.value = largeText;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.value).toBe(largeText);
@@ -459,7 +460,7 @@ describe('USATextarea', () => {
       const specialText = '<script>alert("xss")</script>\n\t"quotes"\n&amp;';
       element.value = specialText;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea.value).toBe(specialText);

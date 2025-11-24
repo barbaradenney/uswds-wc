@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-accordion.ts';
 import type { USAAccordion } from './usa-accordion.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 /**
  * Accordion DOM Structure Validation Tests
  *
@@ -118,13 +119,13 @@ describe('Accordion DOM Structure Validation', () => {
       await element.updateComplete;
 
       const buttons = element.querySelectorAll('.usa-accordion__button');
-      buttons.forEach((button) => {
-        const controlsId = button.getAttribute('aria-controls');
+      for (const button of buttons) {
+        const controlsId = await waitForARIAAttribute(button, 'aria-controls');
         expect(controlsId).toBeTruthy();
 
         const content = element.querySelector(`#${controlsId}`);
         expect(content).toBeTruthy();
-      });
+      }
     });
   });
 
@@ -136,7 +137,7 @@ describe('Accordion DOM Structure Validation', () => {
 
       const button = element.querySelector('.usa-accordion__button[aria-expanded="true"]');
       if (button) {
-        const controlsId = button.getAttribute('aria-controls');
+        const controlsId = await waitForARIAAttribute(button, 'aria-controls');
         const content = element.querySelector(`#${controlsId}`);
         expect(content?.hasAttribute('hidden')).toBe(false);
       }
@@ -149,7 +150,7 @@ describe('Accordion DOM Structure Validation', () => {
 
       const button = element.querySelector('.usa-accordion__button[aria-expanded="false"]');
       if (button) {
-        const controlsId = button.getAttribute('aria-controls');
+        const controlsId = await waitForARIAAttribute(button, 'aria-controls');
         const content = element.querySelector(`#${controlsId}`);
         expect(content?.hasAttribute('hidden')).toBe(true);
       }

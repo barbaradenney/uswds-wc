@@ -54,6 +54,37 @@ Cypress.Commands.add('waitForStorybook', () => {
   });
 });
 
+/**
+ * Click a date picker calendar navigation button without triggering focusout
+ *
+ * USWDS date picker has a focusout handler that closes the calendar when focus
+ * leaves the date picker container. This command temporarily suppresses the
+ * focusout event during the click to prevent the calendar from closing.
+ *
+ * USWDS source: node_modules/@uswds/uswds/packages/usa-date-picker/src/index.js:2244-2248
+ */
+Cypress.Commands.add('clickDatePickerNav', (selector: string) => {
+  cy.get('usa-date-picker').then(($picker) => {
+    // Temporarily suppress focusout events
+    const preventFocusout = (e: FocusEvent) => {
+      e.stopImmediatePropagation();
+    };
+
+    // Add capturing event listener to intercept focusout
+    // Cleanup: removeEventListener called below after click completes
+    $picker[0].addEventListener('focusout', preventFocusout, true);
+
+    // Click the navigation button
+    cy.get(selector).click().then(() => {
+      // Remove the suppression after a short delay to let USWDS process the click
+      cy.wait(100).then(() => {
+        // Cleanup: Remove the event listener to restore normal focusout behavior
+        $picker[0].removeEventListener('focusout', preventFocusout, true);
+      });
+    });
+  });
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -68,6 +99,13 @@ declare global {
        * to ensure components are fully initialized before testing.
        */
       waitForStorybook(): Chainable<void>;
+      /**
+       * Click a date picker calendar navigation button without triggering focusout
+       *
+       * USWDS date picker closes calendar on focusout when focus leaves the container.
+       * This command dispatches mouse events without changing focus.
+       */
+      clickDatePickerNav(selector: string): Chainable<void>;
     }
   }
 }

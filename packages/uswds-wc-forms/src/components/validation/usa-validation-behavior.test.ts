@@ -18,6 +18,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-validation.js';
 import type { USAValidation } from './usa-validation.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Validation Behavior Contract', () => {
   let element: USAValidation;
@@ -191,13 +192,13 @@ describe('USWDS Validation Behavior Contract', () => {
       // itemStatus = `${listItem.textContent} ${currentStatus}`
       const items = element.querySelectorAll('.usa-checklist__item');
 
-      items.forEach((item) => {
-        const ariaLabel = item.getAttribute('aria-label');
+      for (const item of items) {
+        const ariaLabel = await waitForARIAAttribute(item, 'aria-label');
         // Should contain the text content plus status
         if (ariaLabel) {
           expect(ariaLabel).toContain(item.textContent || '');
         }
-      });
+      }
     });
 
     it('should use custom incomplete message from data attribute', async () => {

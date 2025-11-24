@@ -14,14 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check current USWDS version
         id: current-version
@@ -117,13 +124,13 @@ jobs:
           git checkout -b $BRANCH_NAME
 
           # Update package.json
-          npm install @uswds/uswds@$LATEST
+          pnpm add @uswds/uswds@$LATEST
 
           # Run build to check for immediate issues
-          npm run build || echo "Build failed - manual intervention required"
+          pnpm run build || echo "Build failed - manual intervention required"
 
           # Stage changes
-          git add package.json package-lock.json
+          git add package.json pnpm-lock.yaml
 
           # Commit if there are changes
           if ! git diff --staged --quiet; then
@@ -149,22 +156,22 @@ jobs:
           echo "Running compatibility tests..."
 
           # Run linting
-          npm run lint || echo "⚠️ Linting issues detected"
+          pnpm run lint || echo "⚠️ Linting issues detected"
 
           # Run type checking
-          npm run typecheck || echo "⚠️ Type checking issues detected"
+          pnpm run typecheck || echo "⚠️ Type checking issues detected"
 
           # Run unit tests
-          npm test || echo "⚠️ Unit test failures detected"
+          pnpm test || echo "⚠️ Unit test failures detected"
 
           # Check bundle size impact
-          npm run build
+          pnpm run build
 
           # Save test results
           echo "## 🧪 Compatibility Test Results" > test-results.md
-          echo "- Linting: $(npm run lint >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
-          echo "- Type Checking: $(npm run typecheck >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
-          echo "- Unit Tests: $(npm test >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
+          echo "- Linting: $(pnpm run lint >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
+          echo "- Type Checking: $(pnpm run typecheck >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
+          echo "- Unit Tests: $(pnpm test >/dev/null 2>&1 && echo '✅ Passed' || echo '❌ Failed')" >> test-results.md
 
       - name: Create issue for USWDS update
         if: steps.version-check.outputs.update-available == 'true'

@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-in-page-navigation.ts';
 import type { USAInPageNavigation } from './usa-in-page-navigation.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('In-Page Navigation JavaScript Interaction Testing', () => {
   let element: USAInPageNavigation;
@@ -242,7 +243,7 @@ describe('In-Page Navigation JavaScript Interaction Testing', () => {
     it('should handle current section updates', async () => {
       // Test programmatically setting current section
       element.currentSection = '#section2';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentLink = element.querySelector('.usa-current');
       if (currentLink) {

@@ -21,7 +21,7 @@
 describe('File Input - Drag & Drop Behavior', () => {
   beforeEach(() => {
     // Visit the file input Storybook story
-    cy.visit('/iframe.html?id=components-file-input--default&viewMode=story');
+    cy.visit('/iframe.html?id=forms-file-input--default&viewMode=story');
 
     // Wait for USWDS JavaScript to initialize
     cy.wait(1000);
@@ -140,7 +140,7 @@ describe('File Input - Drag & Drop Behavior', () => {
   describe('Multiple File Selection', () => {
     beforeEach(() => {
       // Visit the multiple files story
-      cy.visit('/iframe.html?id=components-file-input--multiple-files&viewMode=story');
+      cy.visit('/iframe.html?id=forms-file-input--multiple-files&viewMode=story');
       cy.wait(1000);
       cy.get('usa-file-input').as('fileInput');
     });
@@ -203,7 +203,7 @@ describe('File Input - Drag & Drop Behavior', () => {
   describe('File Type Validation', () => {
     beforeEach(() => {
       // Visit story with file type restrictions
-      cy.visit('/iframe.html?id=components-file-input--with-file-type-restrictions&viewMode=story');
+      cy.visit('/iframe.html?id=forms-file-input--with-file-type-restrictions&viewMode=story');
       cy.wait(1000);
       cy.get('usa-file-input').as('fileInput');
     });

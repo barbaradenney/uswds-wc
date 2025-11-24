@@ -27,7 +27,42 @@ async function globalTeardown(config: FullConfig) {
 
   console.log(`⏱️ Total testing duration: ${(totalDuration / 1000).toFixed(1)}s`);
 
-  // Stop Storybook if we started it
+  // Stop http-server if we started it in CI
+  const httpServerPidFile = '.storybook-server.pid';
+  if (fs.existsSync(httpServerPidFile)) {
+    try {
+      const pid = fs.readFileSync(httpServerPidFile, 'utf8').trim();
+      if (pid) {
+        console.log('🛑 Stopping http-server...');
+
+        // Kill the http-server process
+        try {
+          process.kill(parseInt(pid), 'SIGTERM');
+
+          // Wait a bit for graceful shutdown
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
+          // Force kill if still running
+          try {
+            process.kill(parseInt(pid), 'SIGKILL');
+          } catch (error) {
+            // Process already died, which is what we want
+          }
+
+          console.log('✅ http-server stopped');
+        } catch (error: any) {
+          console.warn('⚠️ Could not stop http-server process:', error.message);
+        }
+      }
+
+      // Remove PID file
+      fs.unlinkSync(httpServerPidFile);
+    } catch (error) {
+      console.warn('⚠️ Error cleaning up http-server:', error);
+    }
+  }
+
+  // Stop Storybook if we started it (legacy support)
   const pidFile = './test-reports/storybook.pid';
   if (fs.existsSync(pidFile)) {
     try {
@@ -50,7 +85,7 @@ async function globalTeardown(config: FullConfig) {
           }
 
           console.log('✅ Storybook stopped');
-        } catch (error) {
+        } catch (error: any) {
           console.warn('⚠️ Could not stop Storybook process:', error.message);
         }
       }

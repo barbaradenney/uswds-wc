@@ -157,6 +157,11 @@ export class USAMultiStepFormPattern extends LitElement {
   @state()
   private isValidating = false;
 
+  /**
+   * Whether we're currently navigating (prevents duplicate navigation)
+   */
+  private isNavigating = false;
+
   override connectedCallback() {
     super.connectedCallback();
     this.initializeFormState();
@@ -257,33 +262,45 @@ export class USAMultiStepFormPattern extends LitElement {
    * Navigate to next step
    */
   private async handleNext() {
-    if (this.isLastStep()) {
-      await this.handleSubmit();
+    // Prevent duplicate navigation
+    if (this.isNavigating) {
       return;
     }
 
-    // Validate current step
-    const isValid = await this.validateCurrentStep();
-    if (!isValid) {
-      return;
+    this.isNavigating = true;
+
+    try {
+      if (this.isLastStep()) {
+        await this.handleSubmit();
+        return;
+      }
+
+      // Validate current step
+      const isValid = await this.validateCurrentStep();
+      if (!isValid) {
+        return;
+      }
+
+      const previousStep = this.currentStepIndex;
+      this.currentStepIndex++;
+      this.saveState();
+
+      this.dispatchEvent(
+        new CustomEvent('step-change', {
+          detail: {
+            currentStep: this.currentStepIndex,
+            previousStep,
+            direction: 'forward',
+            step: this.getCurrentStep(),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    } finally {
+      // Clear navigation lock
+      this.isNavigating = false;
     }
-
-    const previousStep = this.currentStepIndex;
-    this.currentStepIndex++;
-    this.saveState();
-
-    this.dispatchEvent(
-      new CustomEvent('step-change', {
-        detail: {
-          currentStep: this.currentStepIndex,
-          previousStep,
-          direction: 'forward',
-          step: this.getCurrentStep(),
-        },
-        bubbles: true,
-        composed: true,
-      })
-    );
   }
 
   /**
@@ -366,6 +383,41 @@ export class USAMultiStepFormPattern extends LitElement {
   }
 
   /**
+   * After update, clean up duplicate button groups created by Light DOM rendering
+   * This is necessary because Lit doesn't automatically remove old elements in Light DOM
+   */
+  override updated(changedProperties: Map<string, any>) {
+    super.updated(changedProperties);
+
+    // If step changed, manually update button text content (Light DOM workaround)
+    // Because usa-button moves text content in firstUpdated() (which only runs once),
+    // we need to manually update the button's internal <button> element when step changes
+    if (changedProperties.has('currentStepIndex')) {
+      // Find all usa-button elements and their internal <button> elements
+      const buttons = this.querySelectorAll('usa-button');
+
+      buttons.forEach((usaButton) => {
+        const internalButton = usaButton.querySelector('button');
+        if (internalButton) {
+          const currentText = internalButton.textContent?.trim();
+
+          // Determine what the text SHOULD be based on the button's position
+          const isBackButton = currentText === this.backButtonLabel;
+          const isSkipButton = currentText === this.skipButtonLabel;
+
+          if (!isBackButton && !isSkipButton) {
+            // This is the Next/Submit button
+            const expectedText = this.isLastStep() ? this.submitButtonLabel : this.nextButtonLabel;
+            if (currentText !== expectedText) {
+              internalButton.textContent = expectedText;
+            }
+          }
+        }
+      });
+    }
+  }
+
+  /**
    * Render the pattern
    */
   override render() {
@@ -416,10 +468,7 @@ export class USAMultiStepFormPattern extends LitElement {
                       </usa-button>
                     `
                   : ''}
-                <usa-button
-                  @click="${this.handleNext}"
-                  ?disabled="${this.isValidating}"
-                >
+                <usa-button @click="${this.handleNext}" ?disabled="${this.isValidating}">
                   ${this.isLastStep() ? this.submitButtonLabel : this.nextButtonLabel}
                 </usa-button>
               </div>
@@ -444,11 +493,20 @@ export class USAMultiStepFormPattern extends LitElement {
   /**
    * Public API: Navigate to specific step by index
    */
-  goToStep(stepIndex: number) {
+  async goToStep(stepIndex: number) {
     if (stepIndex >= 0 && stepIndex < this.steps.length) {
       const previousStep = this.currentStepIndex;
       this.currentStepIndex = stepIndex;
       this.saveState();
+
+      // For Light DOM, explicitly request update with property name to ensure tracking
+      this.requestUpdate('currentStepIndex', previousStep);
+      await this.updateComplete;
+      // Wait for:
+      // 1. Child usa-button elements to complete their firstUpdated lifecycle
+      // 2. updated() cleanup to remove duplicate button groups
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Intentional delay for child component init
 
       this.dispatchEvent(
         new CustomEvent('step-change', {
@@ -493,6 +551,7 @@ export class USAMultiStepFormPattern extends LitElement {
    */
   reset() {
     this.currentStepIndex = 0;
+    this.isNavigating = false; // Clear navigation lock
     this.saveState();
   }
 }

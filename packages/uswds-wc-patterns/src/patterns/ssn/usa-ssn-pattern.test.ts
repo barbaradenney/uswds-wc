@@ -168,7 +168,7 @@ describe('USASSNPattern', () => {
 
   describe('SSN Input Field', () => {
     it('should render SSN input', () => {
-      const input = element.querySelector('usa-text-input[name="ssn"]');
+      const input = element.querySelector('usa-text-input[name="social-security-no"]');
       expect(input).toBeTruthy();
     });
 
@@ -511,7 +511,10 @@ describe('USASSNPattern', () => {
       it('should initialize SSN text input component', async () => {
         const { verifyChildComponent } = await import('@uswds-wc/test-utils/slot-testing-utils.js');
 
-        const ssnInput = await verifyChildComponent(element, 'usa-text-input[name="ssn"]');
+        const ssnInput = await verifyChildComponent(
+          element,
+          'usa-text-input[name="social-security-no"]'
+        );
         expect(ssnInput).toBeTruthy();
 
         // Verify internal structure rendered
@@ -525,7 +528,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should wait for child component to initialize', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         expect(ssnInput).toBeTruthy();
 
         // Should have updateComplete property (LitElement)
@@ -540,7 +543,7 @@ describe('USASSNPattern', () => {
 
     describe('Child Component DOM Structure', () => {
       it('should render child component with correct DOM structure', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         await ssnInput?.updateComplete;
 
         // Verify internal structure
@@ -549,7 +552,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should have correct USWDS classes on child component', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
 
         // Check web component has usa-input--xl class
         expect(ssnInput?.classList.contains('usa-input--xl')).toBe(true);
@@ -559,7 +562,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should have label for child component', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         await (ssnInput as any)?.updateComplete;
 
         // SSN pattern uses legend/fieldset instead of label per USWDS
@@ -569,7 +572,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should have proper attributes on native input', () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
 
         // Attributes are on the web component, not the native input
         expect(ssnInput?.getAttribute('type')).toBe('text');
@@ -586,7 +589,7 @@ describe('USASSNPattern', () => {
         await verifyUSWDSStructure(element, {
           fieldsetClass: 'usa-fieldset',
           legendClass: 'usa-legend usa-legend--large',
-          expectedChildren: ['usa-text-input[name="ssn"]'],
+          expectedChildren: ['usa-text-input[name="social-security-no"]'],
         });
       });
 
@@ -595,7 +598,7 @@ describe('USASSNPattern', () => {
         expect(fieldset).toBeTruthy();
 
         // SSN input should be inside fieldset
-        const ssnInput = fieldset?.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = fieldset?.querySelector('usa-text-input[name="social-security-no"]');
         expect(ssnInput).toBeTruthy();
       });
 
@@ -619,7 +622,7 @@ describe('USASSNPattern', () => {
         const hintId = hint?.id;
         expect(hintId).toBeTruthy();
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const describedBy = ssnInput?.getAttribute('aria-describedby');
         expect(describedBy).toContain(hintId!);
       });
@@ -632,7 +635,7 @@ describe('USASSNPattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         await ssnInput?.updateComplete;
 
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
@@ -649,7 +652,7 @@ describe('USASSNPattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
         input.value = '987654321';
         input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -660,7 +663,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should update internal state when child component changes', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '555112222';
@@ -677,7 +680,7 @@ describe('USASSNPattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '123-45-6789';
@@ -693,7 +696,7 @@ describe('USASSNPattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '123 45 6789';
@@ -706,7 +709,7 @@ describe('USASSNPattern', () => {
 
     describe('Masked Input Handling', () => {
       it('should accept and preserve hyphen formatting', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '123-45-6789';
@@ -718,7 +721,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should accept and preserve space formatting', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '123 45 6789';
@@ -730,7 +733,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should accept unformatted SSN', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
 
         input.value = '123456789';
@@ -742,21 +745,21 @@ describe('USASSNPattern', () => {
       });
 
       it('should enforce maxlength of 11 characters', () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const input = ssnInput?.querySelector('input');
 
         expect(input?.getAttribute('maxlength')).toBe('11');
       });
 
       it('should have inputmode="numeric" for mobile keyboards', () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
 
         // Attribute is on the web component, not the native input
         expect(ssnInput?.getAttribute('inputmode')).toBe('numeric');
       });
 
       it('should have autocomplete="off" for security', () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const input = ssnInput?.querySelector('input');
 
         expect(input?.getAttribute('autocomplete')).toBe('off');
@@ -765,12 +768,12 @@ describe('USASSNPattern', () => {
 
     describe('Compact Mode for Child Components', () => {
       it('should use usa-input--xl class for SSN input', () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         expect(ssnInput?.classList.contains('usa-input--xl')).toBe(true);
       });
 
       it('should render child component without form-group wrapper', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         await ssnInput?.updateComplete;
 
         // Note: usa-text-input may have a form-group wrapper internally
@@ -781,7 +784,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should have direct label and input as children', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         await (ssnInput as any)?.updateComplete;
 
         // Note: SSN pattern uses fieldset/legend instead of label
@@ -793,7 +796,7 @@ describe('USASSNPattern', () => {
 
     describe('Programmatic Access to Child Components', () => {
       it('should allow direct access to child component API', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         expect(ssnInput).toBeTruthy();
 
         // Verify child component has standard methods
@@ -801,7 +804,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should allow setting child component value programmatically', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         await ssnInput?.updateComplete;
 
         ssnInput.value = '111223333';
@@ -828,7 +831,7 @@ describe('USASSNPattern', () => {
         await new Promise((resolve) => setTimeout(resolve, 0));
 
         // Verify child component was reset
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
         expect(input?.value).toBe('');
       });
@@ -838,7 +841,7 @@ describe('USASSNPattern', () => {
         await element.updateComplete;
         await new Promise((resolve) => setTimeout(resolve, 0));
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         expect(ssnInput?.value).toBe('987-65-4321');
 
         const input = ssnInput?.querySelector('input') as HTMLInputElement;
@@ -851,7 +854,7 @@ describe('USASSNPattern', () => {
         element.required = true;
         await element.updateComplete;
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         expect(ssnInput?.hasAttribute('required')).toBe(true);
       });
 
@@ -862,7 +865,7 @@ describe('USASSNPattern', () => {
         element.required = false;
         await element.updateComplete;
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         expect(ssnInput?.hasAttribute('required')).toBe(false);
       });
 
@@ -870,7 +873,7 @@ describe('USASSNPattern', () => {
         element.required = true;
         await element.updateComplete;
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]') as any;
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]') as any;
         await ssnInput?.updateComplete;
 
         const input = ssnInput?.querySelector('input');
@@ -884,7 +887,7 @@ describe('USASSNPattern', () => {
         const hintId = hint?.id;
         expect(hintId).toBeTruthy();
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const describedBy = ssnInput?.getAttribute('aria-describedby');
         expect(describedBy).toContain(hintId!);
       });
@@ -896,7 +899,7 @@ describe('USASSNPattern', () => {
         const hint = element.querySelector('.usa-hint');
         const hintId = hint?.id;
 
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const describedBy = ssnInput?.getAttribute('aria-describedby');
         expect(describedBy).toContain(hintId!);
       });
@@ -917,7 +920,7 @@ describe('USASSNPattern', () => {
       });
 
       it('should allow USWDS styles to cascade to child components', async () => {
-        const ssnInput = element.querySelector('usa-text-input[name="ssn"]');
+        const ssnInput = element.querySelector('usa-text-input[name="social-security-no"]');
         const input = ssnInput?.querySelector('input');
 
         // Verify USWDS classes are applied to native input

@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-date-range-picker.ts';
 import type { USADateRangePicker } from './usa-date-range-picker.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('Date Range Picker JavaScript Interaction Testing', () => {
   let element: USADateRangePicker;
@@ -199,7 +200,7 @@ describe('Date Range Picker JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing start value
       element.startValue = '03/01/2024';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startInput = element.querySelector('input[name="start-date"]') as HTMLInputElement;
       if (startInput) {
@@ -208,7 +209,7 @@ describe('Date Range Picker JavaScript Interaction Testing', () => {
 
       // Test changing end value
       element.endValue = '03/31/2024';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const endInput = element.querySelector('input[name="end-date"]') as HTMLInputElement;
       if (endInput) {
@@ -218,7 +219,7 @@ describe('Date Range Picker JavaScript Interaction Testing', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const startInput = element.querySelector('input[name="start-date"]') as HTMLInputElement;
       const endInput = element.querySelector('input[name="end-date"]') as HTMLInputElement;

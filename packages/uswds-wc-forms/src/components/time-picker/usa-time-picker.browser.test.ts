@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './index.ts';
 import type { USATimePicker } from './usa-time-picker.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Browser-dependent tests for USATimePicker
@@ -330,8 +331,13 @@ describe('USATimePicker Browser Tests', () => {
       const list = element.querySelector('.usa-combo-box__list') as HTMLElement;
 
       expect(input.getAttribute('role'), 'Input should have combobox role').toBe('combobox');
-      expect(input.getAttribute('aria-expanded'), 'Should have aria-expanded').toBeTruthy();
-      expect(input.getAttribute('aria-controls'), 'Should control list').toBe(list.id);
+      expect(
+        await waitForARIAAttribute(input, 'aria-expanded'),
+        'Should have aria-expanded'
+      ).toBeTruthy();
+      expect(await waitForARIAAttribute(input, 'aria-controls'), 'Should control list').toBe(
+        list.id
+      );
     });
 
     it('should update aria-expanded when dropdown opens/closes', async () => {
@@ -341,12 +347,14 @@ describe('USATimePicker Browser Tests', () => {
       // Open
       toggle.click();
       await new Promise((resolve) => setTimeout(resolve, 100));
-      expect(input.getAttribute('aria-expanded'), 'Should be expanded').toBe('true');
+      expect(await waitForARIAAttribute(input, 'aria-expanded'), 'Should be expanded').toBe('true');
 
       // Close
       toggle.click();
       await new Promise((resolve) => setTimeout(resolve, 100));
-      expect(input.getAttribute('aria-expanded'), 'Should be collapsed').toBe('false');
+      expect(await waitForARIAAttribute(input, 'aria-expanded'), 'Should be collapsed').toBe(
+        'false'
+      );
     });
 
     it('should have correct ARIA attributes on list options', async () => {

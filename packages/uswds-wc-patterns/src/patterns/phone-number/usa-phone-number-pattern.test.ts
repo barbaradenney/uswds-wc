@@ -63,7 +63,9 @@ describe('USAPhoneNumberPattern', () => {
     });
 
     it('should emit pattern-ready event on initialization', async () => {
-      const newPattern = document.createElement('usa-phone-number-pattern') as USAPhoneNumberPattern;
+      const newPattern = document.createElement(
+        'usa-phone-number-pattern'
+      ) as USAPhoneNumberPattern;
 
       const readyPromise = new Promise<CustomEvent>((resolve) => {
         newPattern.addEventListener('pattern-ready', (e) => resolve(e as CustomEvent));
@@ -477,8 +479,9 @@ describe('USAPhoneNumberPattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const mobileOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'mobile');
+      const mobileOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'mobile'
+      );
 
       expect(mobileOption).toBeTruthy();
       expect(mobileOption?.textContent?.trim()).toBe('Mobile');
@@ -489,8 +492,9 @@ describe('USAPhoneNumberPattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const homeOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'home');
+      const homeOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'home'
+      );
 
       expect(homeOption).toBeTruthy();
       expect(homeOption?.textContent?.trim()).toBe('Home');
@@ -501,8 +505,9 @@ describe('USAPhoneNumberPattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const workOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'work');
+      const workOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'work'
+      );
 
       expect(workOption).toBeTruthy();
       expect(workOption?.textContent?.trim()).toBe('Work');
@@ -608,10 +613,7 @@ describe('USAPhoneNumberPattern', () => {
       });
 
       it('should initialize extension text input component', async () => {
-        const extension = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="extension"]'
-        );
+        const extension = await verifyChildComponent(pattern, 'usa-text-input[name="extension"]');
         expect(extension).toBeTruthy();
 
         const input = extension.querySelector('input.usa-input');

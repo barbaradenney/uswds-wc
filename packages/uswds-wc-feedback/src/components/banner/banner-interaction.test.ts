@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-banner.ts';
 import type { USABanner } from './usa-banner.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Banner JavaScript Interaction Testing', () => {
   let element: USABanner;
@@ -63,8 +64,8 @@ describe('Banner JavaScript Interaction Testing', () => {
 
       // Verify ARIA attributes required by USWDS
       if (toggleButton) {
-        expect(toggleButton.getAttribute('aria-expanded')).toBeTruthy();
-        expect(toggleButton.getAttribute('aria-controls')).toBeTruthy();
+        expect(await waitForARIAAttribute(toggleButton, 'aria-expanded')).toBeTruthy();
+        expect(await waitForARIAAttribute(toggleButton, 'aria-controls')).toBeTruthy();
       }
     });
   });
@@ -77,7 +78,7 @@ describe('Banner JavaScript Interaction Testing', () => {
 
       // Get initial state
       const initialExpanded = element.expanded;
-      const initialAriaExpanded = toggleButton.getAttribute('aria-expanded');
+      const initialAriaExpanded = await waitForARIAAttribute(toggleButton, 'aria-expanded');
 
       // Click the toggle button
       toggleButton.click();
@@ -85,7 +86,7 @@ describe('Banner JavaScript Interaction Testing', () => {
 
       // Check if state changed (either component property or ARIA attribute)
       const afterClickExpanded = element.expanded;
-      const afterClickAriaExpanded = toggleButton.getAttribute('aria-expanded');
+      const afterClickAriaExpanded = await waitForARIAAttribute(toggleButton, 'aria-expanded');
 
       const stateChanged =
         afterClickExpanded !== initialExpanded || afterClickAriaExpanded !== initialAriaExpanded;
@@ -142,7 +143,7 @@ describe('Banner JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing expanded property
       element.expanded = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('.usa-banner__button');
       expect(button?.getAttribute('aria-expanded')).toBe('true');

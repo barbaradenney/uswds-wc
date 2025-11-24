@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-footer.ts';
 import type { USAFooter } from './usa-footer.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Footer JavaScript Interaction Testing', () => {
   let element: USAFooter;
@@ -116,7 +117,8 @@ describe('Footer JavaScript Interaction Testing', () => {
 
       if (collapsibleButtons.length > 0) {
         const firstButton = collapsibleButtons[0] as HTMLButtonElement;
-        const initialExpanded = firstButton.getAttribute('aria-expanded') === 'true';
+        const initialExpanded =
+          (await waitForARIAAttribute(firstButton, 'aria-expanded')) === 'true';
 
         let eventFired = false;
         element.addEventListener('footer-section-toggle', () => {
@@ -127,7 +129,7 @@ describe('Footer JavaScript Interaction Testing', () => {
         firstButton.click();
         await waitForUpdate(element);
 
-        const newExpanded = firstButton.getAttribute('aria-expanded') === 'true';
+        const newExpanded = (await waitForARIAAttribute(firstButton, 'aria-expanded')) === 'true';
         const stateChanged = newExpanded !== initialExpanded || eventFired;
 
         if (!stateChanged) {
@@ -206,7 +208,7 @@ describe('Footer JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing footer variant
       element.variant = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       if (footer) {
@@ -219,7 +221,7 @@ describe('Footer JavaScript Interaction Testing', () => {
         { title: 'New Section 1', links: [{ text: 'New Link 1', href: '/new1' }] },
         { title: 'New Section 2', links: [{ text: 'New Link 2', href: '/new2' }] },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const updatedLinks = element.querySelectorAll('.usa-footer__primary-link');
       expect(updatedLinks.length).toBe(2);
@@ -229,7 +231,7 @@ describe('Footer JavaScript Interaction Testing', () => {
       // Test adding agency information
       element.agencyName = 'Test Agency';
       element.agencyUrl = 'https://test.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const agencyLink = element.querySelector('.usa-footer__logo-heading a');
       if (agencyLink) {
@@ -247,7 +249,7 @@ describe('Footer JavaScript Interaction Testing', () => {
         { text: 'Phone: (555) 123-4567', href: 'tel:+15551234567' },
         { text: 'Email: contact@test.gov', href: 'mailto:contact@test.gov' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const contactLinks = element.querySelectorAll('.usa-footer__contact-link');
       if (contactLinks.length > 0) {

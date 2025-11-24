@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-language-selector.ts';
 import type { USALanguageSelector } from './usa-language-selector.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Language Selector JavaScript Interaction Testing', () => {
   let element: USALanguageSelector;
@@ -79,7 +80,7 @@ describe('Language Selector JavaScript Interaction Testing', () => {
       const list = element.querySelector('.usa-language__submenu') as HTMLElement;
 
       if (button && list) {
-        const initialExpanded = button.getAttribute('aria-expanded') === 'true';
+        const initialExpanded = (await waitForARIAAttribute(button, 'aria-expanded')) === 'true';
 
         let eventFired = false;
         element.addEventListener('language-dropdown-toggle', () => {
@@ -90,7 +91,7 @@ describe('Language Selector JavaScript Interaction Testing', () => {
         button.click();
         await waitForUpdate(element);
 
-        const newExpanded = button.getAttribute('aria-expanded') === 'true';
+        const newExpanded = (await waitForARIAAttribute(button, 'aria-expanded')) === 'true';
         const dropdownToggled = newExpanded !== initialExpanded || eventFired;
 
         if (!dropdownToggled) {
@@ -157,7 +158,7 @@ describe('Language Selector JavaScript Interaction Testing', () => {
         await waitForUpdate(element);
 
         // Check if dropdown closed
-        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        const isExpanded = (await waitForARIAAttribute(button, 'aria-expanded')) === 'true';
         if (isExpanded) {
           console.warn('⚠️ Language selector may not be closing on outside clicks');
         }
@@ -273,8 +274,8 @@ describe('Language Selector JavaScript Interaction Testing', () => {
 
       if (button) {
         // Check ARIA attributes on button
-        expect(button.getAttribute('aria-expanded')).toBeTruthy();
-        expect(button.getAttribute('aria-haspopup')).toBe('true');
+        expect(await waitForARIAAttribute(button, 'aria-expanded')).toBeTruthy();
+        expect(await waitForARIAAttribute(button, 'aria-haspopup')).toBe('true');
       }
 
       // Check for language attributes on elements

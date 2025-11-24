@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '../date-picker/index.ts';
 import type { USADatePicker } from './usa-date-picker.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USADatePicker Layout Tests', () => {
   let element: USADatePicker;
@@ -250,7 +251,7 @@ describe('USADatePicker Layout Tests', () => {
       if (input && toggleButton) {
         // Button should control the input
         const inputId = input.getAttribute('id');
-        const buttonControls = toggleButton.getAttribute('aria-controls');
+        const buttonControls = await waitForARIAAttribute(toggleButton, 'aria-controls');
 
         if (inputId && buttonControls) {
           expect(buttonControls).toContain(inputId);

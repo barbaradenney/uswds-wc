@@ -64,7 +64,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm storybook --no-open',
+    command: process.env.CI ? 'npx serve storybook-static -l 6006' : 'pnpm storybook --no-open',
     url: 'http://localhost:6006',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // 2 minutes to start Storybook

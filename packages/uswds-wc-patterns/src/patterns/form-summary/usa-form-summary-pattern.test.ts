@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '@uswds-wc/test-utils/test-utils.js';
 import './usa-form-summary-pattern.js';
-import type { USAFormSummaryPattern, SummarySection, SummaryItem } from './usa-form-summary-pattern.js';
+import type { USAFormSummaryPattern, SummarySection } from './usa-form-summary-pattern.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAFormSummaryPattern', () => {
   let pattern: USAFormSummaryPattern;
@@ -72,7 +73,9 @@ describe('USAFormSummaryPattern', () => {
     });
 
     it('should emit pattern-ready event on initialization', async () => {
-      const newPattern = document.createElement('usa-form-summary-pattern') as USAFormSummaryPattern;
+      const newPattern = document.createElement(
+        'usa-form-summary-pattern'
+      ) as USAFormSummaryPattern;
 
       const readyPromise = new Promise<CustomEvent>((resolve) => {
         newPattern.addEventListener('pattern-ready', (e) => resolve(e as CustomEvent));
@@ -225,7 +228,9 @@ describe('USAFormSummaryPattern', () => {
 
     it('should use custom button labels', async () => {
       // Create new pattern with custom labels set before rendering
-      const customPattern = document.createElement('usa-form-summary-pattern') as USAFormSummaryPattern;
+      const customPattern = document.createElement(
+        'usa-form-summary-pattern'
+      ) as USAFormSummaryPattern;
       customPattern.sections = mockSections;
       customPattern.printButtonLabel = 'Print Summary';
       customPattern.downloadButtonLabel = 'Download PDF';
@@ -254,7 +259,9 @@ describe('USAFormSummaryPattern', () => {
     });
 
     it('should not show edit buttons by default', async () => {
-      const newPattern = document.createElement('usa-form-summary-pattern') as USAFormSummaryPattern;
+      const newPattern = document.createElement(
+        'usa-form-summary-pattern'
+      ) as USAFormSummaryPattern;
       newPattern.sections = mockSections;
       container.appendChild(newPattern);
       await newPattern.updateComplete;
@@ -493,12 +500,12 @@ describe('USAFormSummaryPattern', () => {
       expect(dl).toBeTruthy();
     });
 
-    it('should have descriptive aria-labels on edit buttons', () => {
+    it('should have descriptive aria-labels on edit buttons', async () => {
       const editButtons = pattern.querySelectorAll('.usa-button--unstyled');
-      editButtons.forEach((button) => {
-        expect(button.getAttribute('aria-label')).toBeTruthy();
-        expect(button.getAttribute('aria-label')).toMatch(/^Edit /);
-      });
+      for (const button of editButtons) {
+        expect(await waitForARIAAttribute(button, 'aria-label')).toBeTruthy();
+        expect(await waitForARIAAttribute(button, 'aria-label')).toMatch(/^Edit /);
+      }
     });
 
     it('should use USWDS alert component for confirmation', async () => {

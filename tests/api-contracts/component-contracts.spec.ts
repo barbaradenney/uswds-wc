@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Component API Contract Tests', () => {
   test.describe('Button Component API Contract', () => {
     test('should maintain expected property API', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Test button component property contracts
       const buttonContract = await page.evaluate(() => {
@@ -70,7 +70,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should maintain expected method API', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       const methodContract = await page.evaluate(() => {
         const button = document.querySelector('usa-button');
@@ -102,7 +102,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should dispatch expected events', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Set up event listeners
       const eventContract = await page.evaluate(() => {
@@ -164,7 +164,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should support expected CSS custom properties', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       const cssContract = await page.evaluate(() => {
         const button = document.querySelector('usa-button');
@@ -202,7 +202,7 @@ test.describe('Component API Contract Tests', () => {
 
   test.describe('Text Input Component API Contract', () => {
     test('should maintain form control API contract', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
 
       const formContract = await page.evaluate(() => {
         const textInput = document.querySelector('usa-text-input');
@@ -262,7 +262,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should dispatch form-related events', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
 
       const formEvents = await page.evaluate(() => {
         return new Promise((resolve) => {
@@ -312,7 +312,7 @@ test.describe('Component API Contract Tests', () => {
 
   test.describe('Accordion Component API Contract', () => {
     test('should maintain collapsible content API', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
 
       const accordionContract = await page.evaluate(() => {
         const accordion = document.querySelector('usa-accordion');
@@ -359,7 +359,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should dispatch accordion-specific events', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-accordion--default');
+      await page.goto('/iframe.html?id=structure-accordion--default');
 
       const accordionEvents = await page.evaluate(() => {
         return new Promise((resolve) => {
@@ -411,7 +411,7 @@ test.describe('Component API Contract Tests', () => {
 
   test.describe('Backward Compatibility', () => {
     test('should maintain deprecated API support', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Test that deprecated properties still work (if any)
       const backwardCompatibility = await page.evaluate(() => {
@@ -448,7 +448,7 @@ test.describe('Component API Contract Tests', () => {
     });
 
     test('should not break with old usage patterns', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-text-input--default');
+      await page.goto('/iframe.html?id=forms-text-input--default');
 
       // Test old-style property setting
       const oldStyleUsage = await page.evaluate(() => {
@@ -485,7 +485,7 @@ test.describe('Component API Contract Tests', () => {
 
   test.describe('TypeScript Interface Compliance', () => {
     test('should match TypeScript interface definitions', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-button--default');
+      await page.goto('/iframe.html?id=actions-button--default');
 
       // Test that runtime matches TypeScript interfaces
       const interfaceCompliance = await page.evaluate(() => {
@@ -517,7 +517,7 @@ test.describe('Component API Contract Tests', () => {
 
   test.describe('API Stability Across Updates', () => {
     test('should maintain stable API surface', async ({ page }) => {
-      await page.goto('/iframe.html?id=components-alert--default');
+      await page.goto('/iframe.html?id=feedback-alert--default');
 
       // Test that core APIs remain stable
       const apiSurface = await page.evaluate(() => {

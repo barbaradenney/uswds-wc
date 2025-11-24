@@ -34,61 +34,83 @@ async function globalSetup(config: FullConfig) {
     }
   }
 
-  // Check if Storybook is already running
-  let storybookRunning = false;
-  try {
-    const response = await fetch('http://localhost:6006/iframe.html');
-    storybookRunning = response.ok;
-  } catch (error) {
-    // Storybook is not running
+  // In CI, start http-server once for all test projects
+  // This is more efficient than starting it in each GitHub Actions job
+  if (process.env.CI && fs.existsSync('./storybook-static')) {
+    console.log('🚀 Starting http-server for storybook-static (CI environment)...');
+    try {
+      // Start http-server in background
+      const serverProcess = exec('npx http-server storybook-static -p 6006 --silent');
+
+      // Store PID for cleanup in global teardown
+      if (serverProcess.pid) {
+        fs.writeFileSync('.storybook-server.pid', serverProcess.pid.toString());
+        console.log(`   Server PID: ${serverProcess.pid}`);
+      }
+
+      console.log('✅ http-server started');
+    } catch (error) {
+      console.error('❌ Failed to start http-server:', error);
+      throw error;
+    }
   }
 
-  if (!storybookRunning) {
-    console.log('🔄 Starting Storybook for testing...');
+  // Note: In local development, Storybook is started by Playwright's webServer configuration
+  // In CI, we start http-server above and disable webServer to avoid timing issues
+  console.log('⏳ Waiting for Storybook to be ready...');
+  console.log(`   CI environment: ${process.env.CI === 'true' ? 'YES' : 'NO'}`);
+  console.log(`   Node version: ${process.version}`);
 
-    // Start Storybook in the background
-    const { spawn } = require('child_process');
-    const storybookProcess = spawn('npm', ['run', 'storybook'], {
-      stdio: 'pipe',
-      detached: true
-    });
+  let attempts = 0;
+  const maxAttempts = 60; // 2 minutes timeout
+  let storybookReady = false;
 
-    // Store process ID for cleanup
-    fs.writeFileSync('./test-reports/storybook.pid', storybookProcess.pid.toString());
-
-    // Wait for Storybook to be ready
-    let attempts = 0;
-    const maxAttempts = 60; // 2 minutes timeout
-
-    while (attempts < maxAttempts) {
-      try {
-        const response = await fetch('http://localhost:6006/iframe.html');
-        if (response.ok) {
-          console.log('✅ Storybook is ready');
-          break;
-        }
-      } catch (error) {
-        // Still starting up...
+  while (attempts < maxAttempts && !storybookReady) {
+    try {
+      const response = await fetch('http://localhost:6006/iframe.html');
+      if (response.ok) {
+        storybookReady = true;
+        console.log('✅ Storybook is ready');
+        console.log(`   Response status: ${response.status}`);
+        console.log(`   Response headers: ${JSON.stringify(Object.fromEntries(response.headers))}`);
+        break;
+      } else {
+        console.log(`   Attempt ${attempts + 1}/${maxAttempts}: Got ${response.status}`);
       }
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      attempts++;
-
-      if (attempts >= maxAttempts) {
-        throw new Error('Storybook failed to start within timeout period');
+    } catch (error: any) {
+      // Still waiting for Playwright webServer to start Storybook...
+      if (attempts % 10 === 0) {
+        console.log(`   Attempt ${attempts + 1}/${maxAttempts}: ${error.message}`);
       }
     }
-  } else {
-    console.log('✅ Storybook is already running');
+
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    attempts++;
+
+    if (attempts >= maxAttempts) {
+      console.error('❌ Storybook never became available');
+      console.error('   Playwright webServer should have started it automatically');
+      console.error('   Check that storybook-static build completed successfully');
+      throw new Error('Storybook failed to start within timeout period (started by Playwright webServer)');
+    }
   }
 
   // Verify Playwright browsers are installed
   try {
     await execAsync('npx playwright --version');
     console.log('✅ Playwright is available');
+
+    // Actually install browsers if not already installed
+    console.log('📥 Ensuring Playwright browsers are installed...');
+    try {
+      await execAsync('npx playwright install --with-deps chromium');
+      console.log('✅ Playwright browsers ready');
+    } catch (installError) {
+      console.warn('⚠️  Browser installation encountered an issue (may already be installed)');
+    }
   } catch (error) {
-    console.log('📥 Installing Playwright browsers...');
-    await execAsync('npx playwright install');
+    console.log('📥 Installing Playwright and browsers...');
+    await execAsync('npx playwright install --with-deps');
     console.log('✅ Playwright browsers installed');
   }
 
@@ -118,12 +140,88 @@ async function globalSetup(config: FullConfig) {
   const context = await browser.newContext();
   const page = await context.newPage();
 
+  // Set page default timeout to 120s for CI (Storybook build needs time to load/execute all JS)
+  page.setDefaultTimeout(120000);
+
   try {
-    await page.goto('http://localhost:6006/iframe.html?id=components-button--default');
-    await page.waitForSelector('usa-button', { timeout: 10000 });
+    console.log('🌐 Navigating to Storybook story...');
+    // Wait for navigation and all network requests to complete
+    await page.goto('http://localhost:6006/iframe.html?id=actions-button--default', {
+      waitUntil: 'networkidle',
+      timeout: 120000 // CI needs more time for asset loading and JS execution (120s for slow I/O + bundle parsing)
+    });
+    console.log('✅ Navigation complete (networkidle reached)');
+
+    // Capture initial page state for debugging
+    const pageTitle = await page.title();
+    const pageUrl = page.url();
+    console.log(`   Page title: "${pageTitle}"`);
+    console.log(`   Page URL: ${pageUrl}`);
+
+    // Check what's actually in the DOM
+    const hasStorybookRoot = await page.evaluate(() => {
+      const root = document.getElementById('storybook-root');
+      return {
+        exists: root !== null,
+        hasChildren: root?.children.length > 0,
+        childCount: root?.children.length || 0,
+        innerHTML: root?.innerHTML.substring(0, 200) || ''
+      };
+    });
+    console.log(`   Storybook root: ${JSON.stringify(hasStorybookRoot)}`);
+
+    // Check if custom elements are defined
+    const customElementStatus = await page.evaluate(() => {
+      return {
+        'usa-button': customElements.get('usa-button') !== undefined,
+        'usa-alert': customElements.get('usa-alert') !== undefined,
+        totalDefined: Array.from(document.querySelectorAll('*'))
+          .filter(el => el.tagName.includes('-'))
+          .map(el => el.tagName.toLowerCase())
+          .filter((v, i, a) => a.indexOf(v) === i).length
+      };
+    });
+    console.log(`   Custom elements: ${JSON.stringify(customElementStatus)}`);
+
+    // Wait for Storybook to render the story
+    // CI is VERY slow - need generous timeout for element registration
+    console.log('⏳ Waiting for usa-button element registration...');
+    await page.waitForFunction(
+      () => {
+        // Check that:
+        // 1. Custom element is registered
+        // 2. Storybook root has content
+        // 3. usa-button element exists in DOM
+        return customElements.get('usa-button') !== undefined &&
+               document.getElementById('storybook-root')?.children.length > 0 &&
+               document.querySelector('usa-button') !== null;
+      },
+      { timeout: 120000 } // CI needs 120s for bundle loading + custom element registration + rendering
+    );
+
     console.log('✅ Basic component accessibility verified');
   } catch (error) {
     console.error('❌ Component accessibility test failed:', error);
+
+    // Capture final page state for debugging
+    try {
+      const finalState = await page.evaluate(() => {
+        return {
+          url: window.location.href,
+          title: document.title,
+          bodyText: document.body?.textContent?.substring(0, 500),
+          scripts: Array.from(document.querySelectorAll('script')).map(s => s.src).filter(Boolean),
+          errors: (window as any).__errors || []
+        };
+      });
+      console.error('   Final page state:', JSON.stringify(finalState, null, 2));
+    } catch (e) {
+      console.error('   Could not capture final page state');
+    }
+
+    console.error('  - This usually means components are not loading in Storybook');
+    console.error('  - Check that storybook-static build completed successfully');
+    console.error('  - Verify custom elements are being registered');
     throw error;
   } finally {
     await browser.close();

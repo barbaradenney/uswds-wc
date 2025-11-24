@@ -6,7 +6,7 @@
 
 describe('Modal - Storybook Test', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--default&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--default&viewMode=story');
     cy.wait(2000); // Wait for component initialization and USWDS behavior setup
   });
 
@@ -148,7 +148,7 @@ describe('Modal - Storybook Test', () => {
 
 describe('Modal - Large Variant', () => {
   it('should render large modal correctly', () => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--large-modal&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--large-modal&viewMode=story');
     cy.wait(2000);
 
     cy.get('button[data-open-modal]').click();
@@ -158,7 +158,7 @@ describe('Modal - Large Variant', () => {
 
 describe('Modal - Force Action Variant', () => {
   it('should not have close button in force action mode', () => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--force-action-modal&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--force-action-modal&viewMode=story');
     cy.wait(2000);
 
     cy.get('button[data-open-modal]').click();
@@ -167,7 +167,7 @@ describe('Modal - Force Action Variant', () => {
   });
 
   it('should not close when overlay is clicked in force action mode', () => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--force-action-modal&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--force-action-modal&viewMode=story');
     cy.wait(2000);
 
     cy.get('button[data-open-modal]').click();
@@ -181,7 +181,7 @@ describe('Modal - Force Action Variant', () => {
   });
 
   it('should not close when Escape is pressed in force action mode', () => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--force-action-modal&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--force-action-modal&viewMode=story');
     cy.wait(2000);
 
     cy.get('button[data-open-modal]').click();
@@ -198,7 +198,7 @@ describe('Modal - Force Action Variant', () => {
 describe('Modal - Slot Content After USWDS Transformation', () => {
   beforeEach(() => {
     // Visit a story that uses slot content (FormExample story)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--form-example&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--form-example&viewMode=story');
     cy.wait(2000); // Wait for component initialization and USWDS behavior setup
   });
 
@@ -224,7 +224,7 @@ describe('Modal - Slot Content After USWDS Transformation', () => {
 
   it('should apply slot="footer" content after USWDS moves modal', () => {
     // Visit story with custom footer slot (MultiStepActions story)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--multi-step-actions&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--multi-step-actions&viewMode=story');
     cy.wait(2000);
 
     // Open the modal
@@ -247,7 +247,7 @@ describe('Modal - Slot Content After USWDS Transformation', () => {
 
   it('should apply slot="heading" content after USWDS moves modal', () => {
     // Visit story with custom heading slot (BrandedAnnouncement story)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--branded-announcement&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--branded-announcement&viewMode=story');
     cy.wait(2000);
 
     // Open the modal
@@ -270,7 +270,7 @@ describe('Modal - Slot Content After USWDS Transformation', () => {
 
   it('should apply slot="description" content after USWDS moves modal', () => {
     // Visit story with custom description slot (BrandedAnnouncement story has both)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--branded-announcement&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--branded-announcement&viewMode=story');
     cy.wait(2000);
 
     // Open the modal
@@ -295,7 +295,7 @@ describe('Modal - Slot Content After USWDS Transformation', () => {
 
   it('should handle multiple slots together', () => {
     // Visit a story that uses multiple slots (BrandedAnnouncement has heading, description, and body)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--branded-announcement&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--branded-announcement&viewMode=story');
     cy.wait(2000);
 
     // Open the modal
@@ -325,7 +325,7 @@ describe('Modal - Slot Content After USWDS Transformation', () => {
 
   it('should maintain functionality after slot content application', () => {
     // Visit story with custom footer buttons (MultiStepActions story)
-    cy.visit('http://localhost:6006/iframe.html?id=components-modal--multi-step-actions&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=feedback-modal--multi-step-actions&viewMode=story');
     cy.wait(2000);
 
     // Open the modal

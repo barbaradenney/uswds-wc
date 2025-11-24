@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '@uswds-wc/test-utils/test-utils.js';
 import './usa-name-pattern.js';
-import type { USANamePattern, NameData, NameFormat } from './usa-name-pattern.js';
+import type { USANamePattern, NameData } from './usa-name-pattern.js';
 import {
   verifyChildComponent,
   verifyPropertyBinding,
@@ -590,8 +590,9 @@ describe('USANamePattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const jrOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'Jr.');
+      const jrOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'Jr.'
+      );
 
       expect(jrOption).toBeTruthy();
     });
@@ -601,8 +602,9 @@ describe('USANamePattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const srOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'Sr.');
+      const srOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'Sr.'
+      );
 
       expect(srOption).toBeTruthy();
     });
@@ -612,10 +614,12 @@ describe('USANamePattern', () => {
       await selectComponent?.updateComplete; // Wait for select component to render
 
       // Options are rendered as Light DOM children of the pattern before <usa-select> projects them
-      const iiOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'II');
-      const iiiOption = Array.from(selectComponent?.querySelectorAll('option') || [])
-        .find(opt => (opt as HTMLOptionElement).value === 'III');
+      const iiOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'II'
+      );
+      const iiiOption = Array.from(selectComponent?.querySelectorAll('option') || []).find(
+        (opt) => (opt as HTMLOptionElement).value === 'III'
+      );
 
       expect(iiOption).toBeTruthy();
       expect(iiiOption).toBeTruthy();
@@ -708,10 +712,7 @@ describe('USANamePattern', () => {
         pattern.format = 'full';
         await pattern.updateComplete;
 
-        const fullName = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="fullName"]'
-        );
+        const fullName = await verifyChildComponent(pattern, 'usa-text-input[name="fullName"]');
         expect(fullName).toBeTruthy();
 
         // Verify internal structure rendered
@@ -720,10 +721,7 @@ describe('USANamePattern', () => {
       });
 
       it('should initialize given name text input component', async () => {
-        const givenName = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="givenName"]'
-        );
+        const givenName = await verifyChildComponent(pattern, 'usa-text-input[name="givenName"]');
         expect(givenName).toBeTruthy();
 
         const input = givenName.querySelector('input.usa-input');
@@ -731,10 +729,7 @@ describe('USANamePattern', () => {
       });
 
       it('should initialize middle name text input component', async () => {
-        const middleName = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="middleName"]'
-        );
+        const middleName = await verifyChildComponent(pattern, 'usa-text-input[name="middleName"]');
         expect(middleName).toBeTruthy();
 
         const input = middleName.querySelector('input.usa-input');
@@ -742,10 +737,7 @@ describe('USANamePattern', () => {
       });
 
       it('should initialize family name text input component', async () => {
-        const familyName = await verifyChildComponent(
-          pattern,
-          'usa-text-input[name="familyName"]'
-        );
+        const familyName = await verifyChildComponent(pattern, 'usa-text-input[name="familyName"]');
         expect(familyName).toBeTruthy();
 
         const input = familyName.querySelector('input.usa-input');
@@ -1058,9 +1050,7 @@ describe('USANamePattern', () => {
           events.push((e as CustomEvent).detail);
         });
 
-        const preferredName = pattern.querySelector(
-          'usa-text-input[name="preferredName"]'
-        ) as any;
+        const preferredName = pattern.querySelector('usa-text-input[name="preferredName"]') as any;
         await preferredName?.updateComplete;
 
         const input = preferredName?.querySelector('input') as HTMLInputElement;
@@ -1217,9 +1207,7 @@ describe('USANamePattern', () => {
         const middleName = pattern.querySelector('usa-text-input[name="middleName"]') as any;
         const familyName = pattern.querySelector('usa-text-input[name="familyName"]') as any;
         const suffix = pattern.querySelector('usa-select[name="suffix"]') as any;
-        const preferredName = pattern.querySelector(
-          'usa-text-input[name="preferredName"]'
-        ) as any;
+        const preferredName = pattern.querySelector('usa-text-input[name="preferredName"]') as any;
 
         const givenInput = givenName?.querySelector('input') as HTMLInputElement;
         const middleInput = middleName?.querySelector('input') as HTMLInputElement;

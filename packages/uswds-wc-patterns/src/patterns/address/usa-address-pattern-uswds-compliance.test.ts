@@ -83,9 +83,7 @@ describe('USAAddressPattern - USWDS Compliance', () => {
 
   describe('Field Order (Matches USWDS)', () => {
     it('should render fields in correct USWDS order', () => {
-      const allInputs = Array.from(
-        pattern.querySelectorAll('usa-text-input, usa-select')
-      );
+      const allInputs = Array.from(pattern.querySelectorAll('usa-text-input, usa-select'));
 
       const names = allInputs.map((input) => input.getAttribute('name'));
 
@@ -258,24 +256,19 @@ describe('USAAddressPattern - USWDS Compliance', () => {
 
     it('should have fields as direct children of fieldset', () => {
       const fieldset = pattern.querySelector('fieldset');
-      const legend = pattern.querySelector('legend');
 
       // All form components should be direct children (or siblings) within fieldset
       const formComponents = pattern.querySelectorAll('usa-text-input, usa-select');
       formComponents.forEach((component) => {
         // Check that parent is either fieldset or legend comes before it
-        expect(
-          component.parentElement === fieldset || fieldset?.contains(component)
-        ).toBe(true);
+        expect(component.parentElement === fieldset || fieldset?.contains(component)).toBe(true);
       });
     });
   });
 
   describe('Urbanization Field (Puerto Rico)', () => {
     it('should have urbanization field after ZIP code', () => {
-      const allInputs = Array.from(
-        pattern.querySelectorAll('usa-text-input, usa-select')
-      );
+      const allInputs = Array.from(pattern.querySelectorAll('usa-text-input, usa-select'));
       const names = allInputs.map((input) => input.getAttribute('name'));
 
       const zipIndex = names.indexOf('zipCode');

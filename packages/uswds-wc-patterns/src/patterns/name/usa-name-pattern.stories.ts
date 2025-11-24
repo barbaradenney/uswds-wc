@@ -18,18 +18,14 @@ type Story = StoryObj;
  * Default single full name field - recommended approach for most use cases.
  */
 export const Default: Story = {
-  render: () => html`
-    <usa-name-pattern></usa-name-pattern>
-  `,
+  render: () => html` <usa-name-pattern></usa-name-pattern> `,
 };
 
 /**
  * Required full name field with validation.
  */
 export const Required: Story = {
-  render: () => html`
-    <usa-name-pattern required></usa-name-pattern>
-  `,
+  render: () => html` <usa-name-pattern required></usa-name-pattern> `,
 };
 
 /**
@@ -37,12 +33,7 @@ export const Required: Story = {
  * Use when you need parsed name components for identity validation.
  */
 export const SeparateFields: Story = {
-  render: () => html`
-    <usa-name-pattern
-      format="separate"
-      label="Legal Name"
-    ></usa-name-pattern>
-  `,
+  render: () => html` <usa-name-pattern format="separate" label="Legal Name"></usa-name-pattern> `,
 };
 
 /**
@@ -66,12 +57,7 @@ export const WithMiddleAndSuffix: Story = {
  * Allows users to specify how they'd like to be addressed.
  */
 export const WithPreferredName: Story = {
-  render: () => html`
-    <usa-name-pattern
-      show-preferred
-      required
-    ></usa-name-pattern>
-  `,
+  render: () => html` <usa-name-pattern show-preferred required></usa-name-pattern> `,
 };
 
 /**
@@ -157,9 +143,7 @@ export const CulturalSensitivity: Story = {
   render: () => html`
     <div class="usa-prose">
       <h2>Name Collection with Cultural Sensitivity</h2>
-      <p>
-        This pattern supports diverse naming conventions including:
-      </p>
+      <p>This pattern supports diverse naming conventions including:</p>
       <ul>
         <li>Single names (Indonesian, Icelandic)</li>
         <li>Multiple family names (Spanish, Brazilian)</li>
@@ -169,10 +153,7 @@ export const CulturalSensitivity: Story = {
       </ul>
     </div>
 
-    <usa-name-pattern
-      format="full"
-      label="Name"
-    ></usa-name-pattern>
+    <usa-name-pattern format="full" label="Name"></usa-name-pattern>
 
     <div class="margin-top-4 usa-prose">
       <h3>Examples of Valid Names:</h3>

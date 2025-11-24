@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Overview
+
 **Data Collection Pattern for collecting communication channel preferences**
 
 #### Features
+
 - **Multiple Contact Method Selection (phone, text, email, mail)**
 - **Additional Information Field for special requests**
 - **Light DOM Architecture for USWDS style compatibility**
@@ -21,12 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition: Uses `usa-checkbox` and `usa-textarea` components**
 
 #### Properties
+
 - `label` - Label for the contact preferences section
 - `required` - Whether at least one method selection is required
 - `hint` - Hint text explaining contact expectations
 - `showAdditionalInfo` - Whether to show additional information textarea
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Standard data pattern APIs
@@ -36,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Pattern](https://designsystem.digital.gov/patterns/create-a-user-profile/contact-preferences/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

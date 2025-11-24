@@ -18,18 +18,14 @@ type Story = StoryObj;
  * Default address pattern for US mailing addresses.
  */
 export const Default: Story = {
-  render: () => html`
-    <usa-address-pattern></usa-address-pattern>
-  `,
+  render: () => html` <usa-address-pattern></usa-address-pattern> `,
 };
 
 /**
  * Required address fields (marked with asterisk).
  */
 export const Required: Story = {
-  render: () => html`
-    <usa-address-pattern required></usa-address-pattern>
-  `,
+  render: () => html` <usa-address-pattern required></usa-address-pattern> `,
 };
 
 /**
@@ -37,10 +33,7 @@ export const Required: Story = {
  */
 export const WithoutStreetLine2: Story = {
   render: () => html`
-    <usa-address-pattern
-      .showStreet2="${false}"
-      label="Shipping Address"
-    ></usa-address-pattern>
+    <usa-address-pattern .showStreet2="${false}" label="Shipping Address"></usa-address-pattern>
   `,
 };
 
@@ -49,11 +42,7 @@ export const WithoutStreetLine2: Story = {
  */
 export const WithEventHandling: Story = {
   render: () => html`
-    <usa-address-pattern
-      id="address"
-      label="Billing Address"
-      required
-    ></usa-address-pattern>
+    <usa-address-pattern id="address" label="Billing Address" required></usa-address-pattern>
 
     <div class="margin-top-2">
       <button
@@ -115,10 +104,7 @@ export const MultipleAddresses: Story = {
       <h2>Shipping and Billing Information</h2>
     </div>
 
-    <usa-address-pattern
-      label="Shipping Address"
-      required
-    ></usa-address-pattern>
+    <usa-address-pattern label="Shipping Address" required></usa-address-pattern>
 
     <div class="margin-top-4">
       <div class="usa-checkbox">
@@ -136,10 +122,7 @@ export const MultipleAddresses: Story = {
     </div>
 
     <div id="billing" class="margin-top-4">
-      <usa-address-pattern
-        label="Billing Address"
-        required
-      ></usa-address-pattern>
+      <usa-address-pattern label="Billing Address" required></usa-address-pattern>
     </div>
   `,
 };

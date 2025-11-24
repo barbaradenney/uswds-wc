@@ -13,7 +13,7 @@
 
 describe('Range Slider - USWDS DOM Structure', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--default&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--default&viewMode=story');
     cy.wait(2000); // Wait for component initialization and USWDS behavior setup
   });
 
@@ -61,7 +61,7 @@ describe('Range Slider - USWDS DOM Structure', () => {
 
 describe('Range Slider - Value Updates', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--default&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--default&viewMode=story');
     cy.wait(2000);
   });
 
@@ -113,7 +113,7 @@ describe('Range Slider - Value Updates', () => {
 
 describe('Range Slider - ARIA Attributes', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--default&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--default&viewMode=story');
     cy.wait(2000);
   });
 
@@ -144,7 +144,7 @@ describe('Range Slider - ARIA Attributes', () => {
 
 describe('Range Slider - Custom Units', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--percentage&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--percentage&viewMode=story');
     cy.wait(2000);
   });
 
@@ -165,7 +165,7 @@ describe('Range Slider - Custom Units', () => {
 
 describe('Range Slider - Temperature Story', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--with-units&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--with-units&viewMode=story');
     cy.wait(2000);
   });
 
@@ -191,7 +191,7 @@ describe('Range Slider - Temperature Story', () => {
 
 describe('Range Slider - Currency Story', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--currency&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--currency&viewMode=story');
     cy.wait(2000);
   });
 
@@ -217,7 +217,7 @@ describe('Range Slider - Currency Story', () => {
 
 describe('Range Slider - Interaction Stability', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--interactive-demo&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--interactive-demo&viewMode=story');
     cy.wait(2000);
   });
 
@@ -256,7 +256,7 @@ describe('Range Slider - Interaction Stability', () => {
 
 describe('Range Slider - Disabled State', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--disabled&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--disabled&viewMode=story');
     cy.wait(2000);
   });
 
@@ -272,7 +272,7 @@ describe('Range Slider - Disabled State', () => {
 
 describe('Range Slider - Form Integration', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-range-slider--form-integration&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=forms-range-slider--form-integration&viewMode=story');
     cy.wait(2000);
   });
 

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local", "tsconfig.json"],
+  "remoteCache": {
+    "enabled": true
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "cache": true
+    },
+    "build:css": {
+      "outputs": ["src/styles/styles.css"],
+      "cache": true
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "cache": true
+    },
+    "test:run": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "cache": true
+    },
+    "lint": {
+      "outputs": [],
+      "cache": true
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "cache": true
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["build:css"],
+      "outputs": ["storybook-static/**"],
+      "cache": true
+    },
+    "validate": {
+      "dependsOn": ["lint", "typecheck"],
+      "outputs": [],
+      "cache": true
+    },
+    "validate:uswds-compliance": {
+      "outputs": [],
+      "cache": true
+    }
+  },
+  "globalEnv": ["NODE_ENV", "CI"]
+}

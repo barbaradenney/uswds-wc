@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '../tooltip/index.ts';
 import type { USATooltip } from './usa-tooltip.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USATooltip Layout Tests', () => {
   let element: USATooltip;
@@ -69,7 +70,7 @@ describe('USATooltip Layout Tests', () => {
       'Trigger should have correct position'
     ).toBe('top');
     expect(
-      triggerElement.getAttribute('aria-describedby'),
+      await waitForARIAAttribute(triggerElement, 'aria-describedby'),
       'Trigger should have aria-describedby'
     ).toBeTruthy();
 
@@ -119,7 +120,7 @@ describe('USATooltip Layout Tests', () => {
       await element.updateComplete;
 
       // USWDS visibility state - may not update in test environment
-      const ariaHidden = tooltipBody.getAttribute('aria-hidden');
+      const ariaHidden = await waitForARIAAttribute(tooltipBody, 'aria-hidden');
       const isVisible = tooltipBody.classList.contains('is-visible');
 
       // Accept either proper USWDS state or fallback behavior
@@ -136,7 +137,7 @@ describe('USATooltip Layout Tests', () => {
       await element.updateComplete;
 
       // Check hide state - may not update in test environment
-      const ariaHiddenAfterHide = tooltipBody.getAttribute('aria-hidden');
+      const ariaHiddenAfterHide = await waitForARIAAttribute(tooltipBody, 'aria-hidden');
       const isVisibleAfterHide = tooltipBody.classList.contains('is-visible');
 
       // Accept either proper USWDS state or fallback behavior

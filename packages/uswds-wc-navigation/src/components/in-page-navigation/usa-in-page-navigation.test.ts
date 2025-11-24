@@ -6,6 +6,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAInPageNavigation', () => {
   let element: USAInPageNavigation;
@@ -64,7 +65,7 @@ describe('USAInPageNavigation', () => {
       element.threshold = '0.3';
       element.rootMargin = '10px 0px -30% 0px';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-title-text')).toBe('Custom Title');
@@ -108,7 +109,7 @@ describe('USAInPageNavigation', () => {
       element.threshold = '0.3';
       element.rootMargin = '15px 0px -35% 0px';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-threshold')).toBe('0.3');
@@ -131,7 +132,7 @@ describe('USAInPageNavigation', () => {
       await waitForUpdate(element);
 
       element.title = 'New Title';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-title-text')).toBe('New Title');
@@ -141,7 +142,7 @@ describe('USAInPageNavigation', () => {
       await waitForUpdate(element);
 
       element.titleHeadingLevel = '2';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-title-heading-level')).toBe('h2');
@@ -152,7 +153,7 @@ describe('USAInPageNavigation', () => {
 
       element.rootSelector = '.main-content';
       element.headingSelector = 'h1 h2';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-main-content-selector')).toBe('.main-content');
@@ -222,7 +223,7 @@ describe('USAInPageNavigation', () => {
     it('should handle missing content gracefully', async () => {
       // Component should still render even without target content
       element.rootSelector = '.non-existent';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav).toBeTruthy();
@@ -236,7 +237,7 @@ describe('USAInPageNavigation', () => {
       element.title = 'Title 2';
       element.title = 'Title 3';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-title-text')).toBe('Title 3');
@@ -299,7 +300,7 @@ describe('USAInPageNavigation', () => {
       // This test ensures the threshold property is properly passed to the behavior layer.
 
       element.threshold = '0.5';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-threshold')).toBe('0.5');
@@ -321,7 +322,7 @@ describe('USAInPageNavigation', () => {
       // - Negative bottom margin shrinks the detection area from the bottom
 
       element.rootMargin = '0px 0px -50% 0px';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-root-margin')).toBe('0px 0px -50% 0px');
@@ -388,7 +389,7 @@ describe('USAInPageNavigation', () => {
 
       // Test minimum threshold (0 = any visibility triggers active state)
       element.threshold = '0';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-threshold')).toBe('0');
@@ -412,7 +413,7 @@ describe('USAInPageNavigation', () => {
 
       // Test 4-value format (top right bottom left)
       element.rootMargin = '10px 0px -50% 0px';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-in-page-nav');
       expect(nav?.getAttribute('data-root-margin')).toBe('10px 0px -50% 0px');
@@ -510,7 +511,7 @@ describe('USAInPageNavigation', () => {
         element.title = 'Custom Navigation';
         element.titleHeadingLevel = '3';
         element.scrollOffset = 100;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const nav = element.querySelector('.usa-in-page-nav');
         expect(nav?.getAttribute('data-title-text')).toBe('Custom Navigation');
@@ -555,7 +556,7 @@ describe('USAInPageNavigation', () => {
 
         for (const level of headingLevels) {
           element.titleHeadingLevel = level;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const nav = element.querySelector('.usa-in-page-nav');
           expect(nav?.getAttribute('data-title-heading-level')).toBe(`h${level}`);
@@ -566,7 +567,7 @@ describe('USAInPageNavigation', () => {
       it('should maintain structure with different selectors', async () => {
         element.rootSelector = '.main-content';
         element.headingSelector = 'h1 h2 h3';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const nav = element.querySelector('.usa-in-page-nav');
         expect(nav?.getAttribute('data-main-content-selector')).toBe('.main-content');
@@ -592,7 +593,7 @@ describe('USAInPageNavigation', () => {
 
         for (const offset of offsets) {
           element.scrollOffset = offset;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const nav = element.querySelector('.usa-in-page-nav');
           expect(nav?.getAttribute('data-scroll-offset')).toBe(String(offset));
@@ -607,7 +608,7 @@ describe('USAInPageNavigation', () => {
 
         for (const threshold of thresholds) {
           element.threshold = threshold;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const nav = element.querySelector('.usa-in-page-nav');
           expect(nav?.getAttribute('data-threshold')).toBe(threshold);
@@ -625,7 +626,7 @@ describe('USAInPageNavigation', () => {
 
         for (const rootMargin of rootMargins) {
           element.rootMargin = rootMargin;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const nav = element.querySelector('.usa-in-page-nav');
           expect(nav?.getAttribute('data-root-margin')).toBe(rootMargin);
@@ -636,7 +637,7 @@ describe('USAInPageNavigation', () => {
       it('should sync all IntersectionObserver settings with DOM', async () => {
         element.threshold = '0.3';
         element.rootMargin = '10px 0px -40% 0px';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const nav = element.querySelector('.usa-in-page-nav');
         expect(nav?.getAttribute('data-threshold')).toBe('0.3');

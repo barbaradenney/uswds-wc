@@ -39,7 +39,7 @@ rootFiles.forEach(file => {
     if (file.endsWith('.html')) {
       violations.push(`❌ HTML file in root: ${file} (should be in debug/ or component folder)`);
     }
-    if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'vercel.json'].includes(file)) {
+    if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'vercel.json', 'lighthouserc.json'].includes(file)) {
       violations.push(`❌ JSON file in root: ${file} (should be in reports/)`);
     }
     if ((file.endsWith('.js') || file.endsWith('.sh')) && file.startsWith('test-')) {

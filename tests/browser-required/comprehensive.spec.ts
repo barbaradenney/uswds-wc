@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Date Picker (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-date-picker--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=forms-date-picker--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
   });
@@ -46,7 +46,7 @@ test.describe('Date Picker (Browser Required)', () => {
 
 test.describe('Footer (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-footer--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=navigation-footer--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
   });
@@ -113,7 +113,7 @@ test.describe('Footer (Browser Required)', () => {
 
 test.describe('In-Page Navigation (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-in-page-navigation--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=navigation-in-page-navigation--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
   });
@@ -164,7 +164,7 @@ test.describe('In-Page Navigation (Browser Required)', () => {
 
 test.describe('Storybook Story Rendering (Browser Required)', () => {
   test('should render pagination story with actual DOM content', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-pagination--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=navigation-pagination--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
@@ -180,7 +180,7 @@ test.describe('Storybook Story Rendering (Browser Required)', () => {
   });
 
   test('should respond to pagination story args/controls', async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-pagination--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=navigation-pagination--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 

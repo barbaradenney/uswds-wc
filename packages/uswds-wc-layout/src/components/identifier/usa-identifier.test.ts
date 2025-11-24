@@ -18,6 +18,7 @@ import {
   verifyKeyboardOnlyUsable,
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAIdentifier', () => {
   let element: USAIdentifier;
@@ -88,7 +89,7 @@ describe('USAIdentifier', () => {
   describe('Masthead Section', () => {
     it('should display domain', async () => {
       element.domain = 'va.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const domain = element.querySelector('.usa-identifier__identity-domain');
       expect(domain?.textContent?.trim()).toBe('va.gov');
@@ -96,7 +97,7 @@ describe('USAIdentifier', () => {
 
     it('should display parent agency', async () => {
       element.parentAgency = 'Department of Veterans Affairs';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const disclaimer = element.querySelector('.usa-identifier__identity-disclaimer');
       expect(disclaimer?.textContent).toContain('Department of Veterans Affairs');
@@ -105,7 +106,7 @@ describe('USAIdentifier', () => {
     it('should display parent agency with link', async () => {
       element.parentAgency = 'Department of Veterans Affairs';
       element.parentAgencyHref = 'https://va.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const agencyLink = element.querySelector('.usa-identifier__identity-disclaimer .usa-link');
       expect(agencyLink?.getAttribute('href')).toBe('https://va.gov');
@@ -114,7 +115,7 @@ describe('USAIdentifier', () => {
 
     it('should fallback to "United States government" when no parent agency', async () => {
       element.parentAgency = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const disclaimer = element.querySelector('.usa-identifier__identity-disclaimer');
       expect(disclaimer?.textContent).toContain('United States government');
@@ -129,7 +130,7 @@ describe('USAIdentifier', () => {
 
     it('should set custom masthead logo alt text', async () => {
       element.mastheadLogoAlt = 'Custom agency logo';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logo = element.querySelector('.usa-identifier__logo-img');
       expect(logo?.getAttribute('alt')).toBe('Custom agency logo');
@@ -138,7 +139,7 @@ describe('USAIdentifier', () => {
     it('should generate alt text from parent agency', async () => {
       element.parentAgency = 'Department of Veterans Affairs';
       element.mastheadLogoAlt = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logo = element.querySelector('.usa-identifier__logo-img');
       expect(logo?.getAttribute('alt')).toBe('Department of Veterans Affairs logo');
@@ -147,7 +148,7 @@ describe('USAIdentifier', () => {
     it('should fallback to generic alt text', async () => {
       element.parentAgency = '';
       element.mastheadLogoAlt = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logo = element.querySelector('.usa-identifier__logo-img');
       expect(logo?.getAttribute('alt')).toBe('Parent agency logo');
@@ -173,7 +174,7 @@ describe('USAIdentifier', () => {
 
     it('should hide required links when showRequiredLinks is false', async () => {
       element.showRequiredLinks = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const requiredLinksSection = element.querySelector(
         '.usa-identifier__section--required-links'
@@ -188,7 +189,7 @@ describe('USAIdentifier', () => {
       ];
 
       element.requiredLinks = customLinks;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('.usa-identifier__required-link');
       expect(links).toHaveLength(2);
@@ -231,7 +232,7 @@ describe('USAIdentifier', () => {
     it('should hide logos section when showLogos is false', async () => {
       element.logos = [{ src: '/logo.png', alt: 'Test logo' }];
       element.showLogos = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logosSection = element.querySelector(
         '.usa-identifier__section[aria-label="Agency logos"]'
@@ -246,7 +247,7 @@ describe('USAIdentifier', () => {
       ];
 
       element.logos = testLogos;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logosSection = element.querySelector(
         '.usa-identifier__section[aria-label="Agency logos"]'
@@ -271,7 +272,7 @@ describe('USAIdentifier', () => {
       ];
 
       element.logos = testLogos;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logoLinks = element.querySelectorAll(
         '.usa-identifier__section[aria-label="Agency logos"] .usa-identifier__logo.usa-link'
@@ -284,7 +285,7 @@ describe('USAIdentifier', () => {
 
     it('should have proper ARIA label for logos section', async () => {
       element.logos = [{ src: '/logo.png', alt: 'Test logo' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logosSection = element.querySelector(
         '.usa-identifier__section[aria-label="Agency logos"]'
@@ -450,7 +451,7 @@ describe('USAIdentifier', () => {
   describe('Accessibility Features', () => {
     it('should have proper ARIA labels', async () => {
       element.logos = [{ src: '/logo.png', alt: 'Test logo' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const masthead = element.querySelector('.usa-identifier__section--masthead');
       const identity = element.querySelector('.usa-identifier__identity');
@@ -479,7 +480,7 @@ describe('USAIdentifier', () => {
         { src: '/logo1.png', alt: 'Agency 1 logo' },
         { src: '/logo2.png', alt: 'Agency 2 logo' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const images = element.querySelectorAll('img[role="img"]');
       expect(images).toHaveLength(3); // masthead + 2 logos
@@ -539,7 +540,7 @@ describe('USAIdentifier', () => {
       element.agency = 'Department of Veterans Affairs';
       element.parentAgency = 'Department of Veterans Affairs';
       element.parentAgencyHref = 'https://va.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const domain = element.querySelector('.usa-identifier__identity-domain');
       expect(domain?.textContent?.trim()).toBe('va.gov');
@@ -562,7 +563,7 @@ describe('USAIdentifier', () => {
         { href: '/ada', text: 'ADA Compliance' },
       ];
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('.usa-identifier__required-link');
       expect(links).toHaveLength(4);
@@ -579,7 +580,7 @@ describe('USAIdentifier', () => {
         { src: '/ready-logo.png', alt: 'Ready.gov', href: 'https://ready.gov' },
       ];
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logoLinks = element.querySelectorAll(
         '.usa-identifier__section[aria-label="Agency logos"] .usa-link'
@@ -604,7 +605,7 @@ describe('USAIdentifier', () => {
         { href: '/nondiscrimination', text: 'Nondiscrimination' },
       ];
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const domain = element.querySelector('.usa-identifier__identity-domain');
       expect(domain?.textContent?.trim()).toBe('HealthCare.gov');
@@ -623,7 +624,7 @@ describe('USAIdentifier', () => {
         },
       ];
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const agencyLink = element.querySelector('.usa-identifier__identity-disclaimer .usa-link');
       expect(agencyLink?.textContent?.trim()).toBe('U.S. Department of the Treasury');
@@ -673,7 +674,7 @@ describe('USAIdentifier', () => {
   describe('Error Handling', () => {
     it('should handle empty required links array', async () => {
       element.requiredLinks = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const requiredLinksSection = element.querySelector(
         '.usa-identifier__section--required-links'
@@ -689,7 +690,7 @@ describe('USAIdentifier', () => {
       ];
 
       element.requiredLinks = malformedLinks;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('.usa-identifier__required-link');
       expect(links).toHaveLength(3); // Should still render all links
@@ -1051,7 +1052,7 @@ describe('USAIdentifier', () => {
 
       // Run comprehensive accessibility audit
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 10000); // Increased timeout for CI environment - accessibility tests can be slow
 
     it('should pass accessibility tests with minimal configuration', async () => {
       element.domain = 'simple.gov';
@@ -1106,7 +1107,7 @@ describe('USAIdentifier', () => {
     it('should pass comprehensive keyboard navigation tests', async () => {
       element.domain = 'example.gov';
       element.agency = 'Test Agency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const identifier = element.querySelector('.usa-identifier');
       expect(identifier).toBeTruthy();
@@ -1126,7 +1127,7 @@ describe('USAIdentifier', () => {
         { text: 'About', href: '/about' },
         { text: 'Contact', href: '/contact' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBeGreaterThanOrEqual(2);
@@ -1158,7 +1159,7 @@ describe('USAIdentifier', () => {
     it('should handle Enter key activation on links', async () => {
       element.domain = 'example.gov';
       element.requiredLinks = [{ text: 'Privacy', href: '/privacy' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link).toBeTruthy();
@@ -1177,7 +1178,7 @@ describe('USAIdentifier', () => {
 
     it('should maintain focus visibility (WCAG 2.4.7)', async () => {
       element.domain = 'example.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       links.forEach((link) => {
@@ -1189,7 +1190,7 @@ describe('USAIdentifier', () => {
       element.domain = 'example.gov';
       element.parentAgency = 'Department of Test';
       element.parentAgencyHref = 'https://test.gov';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const parentLink = element.querySelector('.usa-identifier__parent-link');
       if (parentLink) {
@@ -1207,7 +1208,7 @@ describe('USAIdentifier', () => {
         { text: 'FOIA', href: '/foia' },
         { text: 'Privacy', href: '/privacy' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const allLinks = element.querySelectorAll('a');
       // Custom required links should be present among all links
@@ -1224,7 +1225,7 @@ describe('USAIdentifier', () => {
         { src: '/logo1.png', alt: 'Logo 1', href: 'https://agency1.gov' },
         { src: '/logo2.png', alt: 'Logo 2', href: 'https://agency2.gov' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logoLinks = element.querySelectorAll('.usa-identifier__logo a');
       if (logoLinks.length > 0) {
@@ -1240,7 +1241,7 @@ describe('USAIdentifier', () => {
     it('should handle identifier without logos', async () => {
       element.domain = 'example.gov';
       element.showLogos = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const identifier = element.querySelector('.usa-identifier');
       expect(identifier).toBeTruthy();
@@ -1253,7 +1254,7 @@ describe('USAIdentifier', () => {
     it('should handle identifier without required links section', async () => {
       element.domain = 'example.gov';
       element.showRequiredLinks = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const identifier = element.querySelector('.usa-identifier');
       expect(identifier).toBeTruthy();
@@ -1267,7 +1268,7 @@ describe('USAIdentifier', () => {
       element.domain = 'example.gov';
       element.showLogos = false;
       element.showRequiredLinks = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const identifier = element.querySelector('.usa-identifier');
       expect(identifier).toBeTruthy();

@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-pagination.ts';
 import type { USAPagination } from './usa-pagination.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('Pagination JavaScript Interaction Testing', () => {
   let element: USAPagination;
@@ -152,7 +153,7 @@ describe('Pagination JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing current page
       element.currentPage = 3;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const currentButton = element.querySelector('.usa-current');
       if (currentButton) {

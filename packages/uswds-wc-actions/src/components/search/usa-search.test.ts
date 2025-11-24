@@ -34,6 +34,7 @@ import {
   testTextSpacing,
   testMobileAccessibility,
 } from '@uswds-wc/test-utils/responsive-accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USASearch', () => {
   let element: USASearch;
@@ -96,7 +97,7 @@ describe('USASearch', () => {
 
     it('should apply small size class', async () => {
       element.size = 'small';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form?.classList.contains('usa-search--small')).toBe(true);
@@ -104,7 +105,7 @@ describe('USASearch', () => {
 
     it('should apply big size class', async () => {
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form?.classList.contains('usa-search--big')).toBe(true);
@@ -133,7 +134,7 @@ describe('USASearch', () => {
   describe('Input Properties', () => {
     it('should display custom placeholder', async () => {
       element.placeholder = 'Search documents';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.getAttribute('placeholder')).toBe('Search documents');
@@ -150,7 +151,7 @@ describe('USASearch', () => {
 
     it('should set input value', async () => {
       element.value = 'test query';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       expect(input.value).toBe('test query');
@@ -158,7 +159,7 @@ describe('USASearch', () => {
 
     it('should set input name attribute', async () => {
       element.name = 'site-search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.getAttribute('name')).toBe('site-search');
@@ -167,7 +168,7 @@ describe('USASearch', () => {
     it('should set custom input and button IDs', async () => {
       element.inputId = 'custom-input';
       element.buttonId = 'custom-button';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       const button = element.querySelector('button');
@@ -180,7 +181,7 @@ describe('USASearch', () => {
   describe('Disabled State', () => {
     it('should disable input when disabled property is true', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.hasAttribute('disabled')).toBe(true);
@@ -188,7 +189,7 @@ describe('USASearch', () => {
 
     it('should disable button when disabled property is true', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('button');
       expect(button?.hasAttribute('disabled')).toBe(true);
@@ -213,7 +214,7 @@ describe('USASearch', () => {
   describe('Icon and Button Content', () => {
     it('should show button text for medium and big sizes', async () => {
       element.size = 'medium';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttonText = element.querySelector('.usa-search__submit-text');
       expect(buttonText).toBeTruthy();
@@ -222,7 +223,7 @@ describe('USASearch', () => {
 
     it('should not show button text for small size', async () => {
       element.size = 'small';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttonText = element.querySelector('.usa-search__submit-text');
       expect(buttonText).toBeFalsy();
@@ -249,7 +250,7 @@ describe('USASearch', () => {
 
       // Verify no img tags with icon paths exist
       const imgTags = element.querySelectorAll('img');
-      const iconImgs = Array.from(imgTags).filter(img => {
+      const iconImgs = Array.from(imgTags).filter((img) => {
         const src = img.getAttribute('src');
         return src && (src.includes('search') || src.includes('icon'));
       });
@@ -278,7 +279,7 @@ describe('USASearch', () => {
       });
 
       element.value = 'test search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form') as HTMLFormElement;
       const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
@@ -369,7 +370,7 @@ describe('USASearch', () => {
 
     it('should have screen reader label', async () => {
       element.placeholder = 'Search documents';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('.usa-sr-only');
       expect(label?.textContent?.trim()).toBe('Search documents');
@@ -377,7 +378,7 @@ describe('USASearch', () => {
 
     it('should associate label with input', async () => {
       element.inputId = 'custom-search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const input = element.querySelector('input');
@@ -424,7 +425,7 @@ describe('USASearch', () => {
       element.placeholder = 'Search VA.gov';
       element.buttonText = 'Search VA.gov';
       element.name = 'site-search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       const buttonText = element.querySelector('.usa-search__submit-text');
@@ -438,7 +439,7 @@ describe('USASearch', () => {
       element.placeholder = 'Search federal regulations';
       element.buttonText = 'Search regulations';
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form?.classList.contains('usa-search--big')).toBe(true);
@@ -451,7 +452,7 @@ describe('USASearch', () => {
       element.placeholder = 'Find benefits and services';
       element.buttonText = 'Find benefits';
       element.name = 'benefits-search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.getAttribute('placeholder')).toBe('Find benefits and services');
@@ -462,7 +463,7 @@ describe('USASearch', () => {
       element.placeholder = 'Search federal jobs';
       element.buttonText = 'Search jobs';
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       const input = element.querySelector('input');
@@ -474,7 +475,7 @@ describe('USASearch', () => {
     it('should handle compact header search', async () => {
       element.size = 'small';
       element.placeholder = 'Search site';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form?.classList.contains('usa-search--small')).toBe(true);
@@ -521,7 +522,7 @@ describe('USASearch', () => {
       element.placeholder = 'Updated';
       element.buttonText = 'Updated Button';
       element.value = 'Updated Value';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       const buttonText = element.querySelector('.usa-search__submit-text');
@@ -779,7 +780,7 @@ describe('USASearch', () => {
   describe('Keyboard Navigation (WCAG 2.1)', () => {
     it('should allow keyboard focus to input field', async () => {
       element.placeholder = 'Search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -824,7 +825,7 @@ describe('USASearch', () => {
     it('should activate search button with Enter/Space keys', async () => {
       element.placeholder = 'Search';
       element.buttonText = 'Search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const button = element.querySelector('button[type="submit"]') as HTMLButtonElement;
       expect(button).toBeTruthy();
@@ -871,7 +872,7 @@ describe('USASearch', () => {
     it('should have no keyboard traps', async () => {
       element.placeholder = 'Search';
       element.buttonText = 'Search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -897,7 +898,7 @@ describe('USASearch', () => {
 
     it('should maintain focus visibility (WCAG 2.4.7)', async () => {
       element.placeholder = 'Search government websites';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -942,7 +943,7 @@ describe('USASearch', () => {
       element.placeholder = 'Search';
       element.buttonText = 'Go';
       element.size = 'small';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       const button = element.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -963,7 +964,7 @@ describe('USASearch', () => {
       element.placeholder = 'Search';
       element.buttonText = 'Search';
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       const button = element.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -983,7 +984,7 @@ describe('USASearch', () => {
     it('should handle form submission via Enter key', async () => {
       element.placeholder = 'Search';
       element.value = 'test search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -1220,7 +1221,7 @@ describe('USASearch', () => {
 
     it('should maintain ARIA when disabled (WCAG 4.1.2)', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]');
       const button = element.querySelector('button[type="submit"]');
@@ -1256,7 +1257,7 @@ describe('USASearch', () => {
 
       for (const size of sizes) {
         element.size = size;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const input = element.querySelector('input[type="search"]');
         const button = element.querySelector('button[type="submit"]');
@@ -1318,7 +1319,7 @@ describe('USASearch', () => {
 
     it('should support placeholder with accessible name (WCAG 4.1.2)', async () => {
       element.placeholder = 'Search documents...';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]');
       expect(input).toBeTruthy();
@@ -1339,7 +1340,7 @@ describe('USASearch', () => {
 
       // After property updates, ARIA should still be valid
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const updatedInput = element.querySelector('input[type="search"]');
       const updatedResult = testAccessibleName(updatedInput as Element);
@@ -1419,7 +1420,7 @@ describe('USASearch', () => {
 
     it('should maintain responsive behavior in small size (WCAG 1.4.10)', async () => {
       element.size = 'small';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form).toBeTruthy();
@@ -1432,7 +1433,7 @@ describe('USASearch', () => {
 
     it('should maintain responsive behavior in big size (WCAG 1.4.10)', async () => {
       element.size = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const form = element.querySelector('form');
       expect(form).toBeTruthy();
@@ -1471,7 +1472,7 @@ describe('USASearch', () => {
 
     it('should pass placeholder to input', async () => {
       element.placeholder = 'Search articles';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -1481,7 +1482,7 @@ describe('USASearch', () => {
     it('should display placeholder when no value set', async () => {
       element.placeholder = 'Search...';
       element.value = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input?.getAttribute('placeholder')).toBe('Search...');
@@ -1490,7 +1491,7 @@ describe('USASearch', () => {
 
     it('should pass value to input', async () => {
       element.value = 'test query';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="search"]') as HTMLInputElement;
       expect(input).toBeTruthy();

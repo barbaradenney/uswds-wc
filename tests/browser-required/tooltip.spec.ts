@@ -14,7 +14,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Tooltip DOM Structure (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to Storybook story for tooltip
-    await page.goto('http://localhost:6006/iframe.html?id=components-tooltip--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=feedback-tooltip--default&viewMode=story');
     await page.waitForLoadState('networkidle');
 
     // Wait for USWDS to initialize
@@ -46,7 +46,7 @@ test.describe('Tooltip DOM Structure (Browser Required)', () => {
 
   test('should have top position class', async ({ page }) => {
     // Navigate to top position story
-    await page.goto('http://localhost:6006/iframe.html?id=components-tooltip--position-top&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=feedback-tooltip--position-top&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
@@ -56,7 +56,7 @@ test.describe('Tooltip DOM Structure (Browser Required)', () => {
 
   test('should have bottom position class', async ({ page }) => {
     // Navigate to bottom position story
-    await page.goto('http://localhost:6006/iframe.html?id=components-tooltip--position-bottom&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=feedback-tooltip--position-bottom&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 

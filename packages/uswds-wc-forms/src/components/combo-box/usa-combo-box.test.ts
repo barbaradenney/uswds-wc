@@ -11,6 +11,7 @@ import {
   verifyKeyboardOnlyUsable,
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAComboBox', () => {
   let element: USAComboBox;
@@ -101,7 +102,7 @@ describe('USAComboBox', () => {
 
     it('should handle placeholder option', async () => {
       element.placeholder = 'Select a fruit';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const options = select?.querySelectorAll('option');
@@ -116,7 +117,7 @@ describe('USAComboBox', () => {
   describe('Properties', () => {
     it('should handle value changes', async () => {
       element.value = 'banana';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select?.value).toBe('banana');
@@ -124,7 +125,7 @@ describe('USAComboBox', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select?.disabled).toBe(true);
@@ -132,7 +133,7 @@ describe('USAComboBox', () => {
 
     it('should handle required state', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select?.required).toBe(true);
@@ -159,7 +160,7 @@ describe('USAComboBox', () => {
       element.required = true;
       element.value = '';
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select?.required).toBe(true);
@@ -186,7 +187,7 @@ describe('USAComboBox', () => {
     it('should have proper label association', async () => {
       element.selectId = 'fruit-select';
       element.label = 'Choose a fruit';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const select = element.querySelector('select');
@@ -203,7 +204,7 @@ describe('USAComboBox', () => {
     // These tests prevent the "combo box looks like select" issue
     it('should NEVER put usa-combo-box class on select element', async () => {
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select?.classList.contains('usa-combo-box')).toBe(false);
@@ -212,7 +213,7 @@ describe('USAComboBox', () => {
 
     it('should ALWAYS use container div with usa-combo-box class', async () => {
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const containerDiv = element.querySelector('.usa-combo-box');
       expect(containerDiv).toBeTruthy();
@@ -225,7 +226,7 @@ describe('USAComboBox', () => {
 
     it('should maintain correct parent-child relationship', async () => {
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const containerDiv = element.querySelector('.usa-combo-box');
       const select = element.querySelector('select');
@@ -242,7 +243,7 @@ describe('USAComboBox', () => {
       // BUG: String "false" was truthy, preventing enhancement
       // FIX: Changed to strict equality check: dataset.enhanced === 'true'
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const comboBoxWrapper = element.querySelector('.usa-combo-box');
 
@@ -302,7 +303,7 @@ describe('USAComboBox', () => {
       // CRITICAL: data-enhanced must be a string ("true" or "false"), not boolean
       // The behavior file checks: if (dataset.enhanced === 'true')
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const comboBoxWrapper = element.querySelector('.usa-combo-box');
 
@@ -351,7 +352,7 @@ describe('USAComboBox', () => {
     it('should include data-default-value attribute on container element', async () => {
       element.value = 'banana';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const container = element.querySelector('.usa-combo-box') as HTMLElement;
       expect(container).toBeTruthy();
@@ -365,7 +366,7 @@ describe('USAComboBox', () => {
     it('should set data-default-value to empty string when no value', async () => {
       element.value = '';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const container = element.querySelector('.usa-combo-box') as HTMLElement;
       expect(container?.getAttribute('data-default-value')).toBe('');
@@ -373,7 +374,7 @@ describe('USAComboBox', () => {
 
     it('should have data-enhanced attribute on combo box wrapper', async () => {
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const comboBoxWrapper = element.querySelector('.usa-combo-box');
       expect(comboBoxWrapper).toBeTruthy();
@@ -387,7 +388,7 @@ describe('USAComboBox', () => {
     it('should render placeholder option when placeholder is set', async () => {
       element.placeholder = 'Select a fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const placeholderOption = select?.querySelector('option[value=""]') as HTMLOptionElement;
@@ -400,7 +401,7 @@ describe('USAComboBox', () => {
       element.placeholder = 'Select a fruit';
       element.value = '';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const placeholderOption = select?.querySelector('option[value=""]') as HTMLOptionElement;
@@ -414,7 +415,7 @@ describe('USAComboBox', () => {
       element.placeholder = 'Select a fruit';
       element.value = 'apple';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const placeholderOption = select?.querySelector('option[value=""]') as HTMLOptionElement;
@@ -427,14 +428,14 @@ describe('USAComboBox', () => {
     it('should maintain data-default-value when value changes', async () => {
       element.value = 'apple';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let container = element.querySelector('.usa-combo-box') as HTMLElement;
       expect(container?.getAttribute('data-default-value')).toBe('apple');
 
       // Change value
       element.value = 'banana';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       container = element.querySelector('.usa-combo-box') as HTMLElement;
       expect(container?.getAttribute('data-default-value')).toBe('banana');
@@ -459,7 +460,7 @@ describe('USAComboBox', () => {
 
     it('should handle empty options array', async () => {
       element.options = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const options = select?.querySelectorAll('option');
@@ -472,7 +473,7 @@ describe('USAComboBox', () => {
         { value: 'option&with&ampersands', label: 'Option & With & Ampersands' },
         { value: 'option<with>brackets', label: 'Option <With> Brackets' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       const options = select?.querySelectorAll('option');
@@ -529,7 +530,7 @@ describe('USAComboBox', () => {
     it('should have no keyboard traps', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -578,7 +579,7 @@ describe('USAComboBox', () => {
     it('should support arrow key navigation through options (browser native)', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select).toBeTruthy();
@@ -600,7 +601,7 @@ describe('USAComboBox', () => {
     it('should maintain focus visibility (WCAG 2.4.7)', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -616,7 +617,7 @@ describe('USAComboBox', () => {
       element.name = 'fruit';
       element.options = defaultOptions;
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select).toBeTruthy();
@@ -631,7 +632,7 @@ describe('USAComboBox', () => {
     it('should handle Enter key to open dropdown (USWDS enhancement)', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -653,7 +654,7 @@ describe('USAComboBox', () => {
     it('should handle Escape key to close dropdown (USWDS enhancement)', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -675,7 +676,7 @@ describe('USAComboBox', () => {
     it('should support type-ahead filtering (USWDS enhancement)', async () => {
       element.name = 'fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -689,7 +690,7 @@ describe('USAComboBox', () => {
     it('should handle empty options gracefully with keyboard', async () => {
       element.name = 'fruit';
       element.options = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -704,7 +705,7 @@ describe('USAComboBox', () => {
       element.name = 'fruit';
       element.options = defaultOptions;
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select).toBeTruthy();
@@ -725,7 +726,7 @@ describe('USAComboBox', () => {
     it('should have proper select element with label (WCAG 4.1.2)', async () => {
       element.label = 'Choose your fruit';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       const label = element.querySelector('label');
@@ -738,7 +739,7 @@ describe('USAComboBox', () => {
     it('should have proper label for select element (WCAG 4.1.2)', async () => {
       element.label = 'Select option';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const select = element.querySelector('select');
@@ -753,7 +754,7 @@ describe('USAComboBox', () => {
     it('should have proper option structure (WCAG 4.1.2)', async () => {
       element.label = 'Select option';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = element.querySelectorAll('select option');
       expect(options.length).toBeGreaterThan(0);
@@ -773,7 +774,7 @@ describe('USAComboBox', () => {
       element.label = 'Select option';
       element.hint = 'Choose carefully';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -788,7 +789,7 @@ describe('USAComboBox', () => {
       element.label = 'Select option';
       element.error = 'This field is required';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       const describedby = select?.getAttribute('aria-describedby');
@@ -800,7 +801,7 @@ describe('USAComboBox', () => {
     it('should have USWDS class for combobox transformation (WCAG 4.1.2)', async () => {
       element.label = 'Select option';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -812,7 +813,7 @@ describe('USAComboBox', () => {
     it('should update select value when component value changes (WCAG 4.1.3)', async () => {
       element.label = 'Select option';
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select).toBeTruthy();
@@ -829,7 +830,7 @@ describe('USAComboBox', () => {
       element.label = 'Select option';
       element.required = true;
       element.options = defaultOptions;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select?.hasAttribute('required')).toBe(true);

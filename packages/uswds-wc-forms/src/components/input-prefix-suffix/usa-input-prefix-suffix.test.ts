@@ -13,6 +13,7 @@ import {
   testErrorSuggestion,
   testFormErrorAccessibility,
 } from '@uswds-wc/test-utils/form-error-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAInputPrefixSuffix', () => {
   let element: USAInputPrefixSuffix;
@@ -1225,7 +1226,7 @@ describe('USAInputPrefixSuffix', () => {
       element.value = '';
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 10000); // Increased timeout for comprehensive accessibility tests
 
     it('should maintain accessibility during dynamic updates', async () => {
       // Start with basic configuration
@@ -1356,14 +1357,14 @@ describe('USAInputPrefixSuffix', () => {
       const input = element.querySelector('input') as HTMLInputElement;
 
       // Initially no error
-      expect(input.getAttribute('aria-invalid')).not.toBe('true');
+      expect(await waitForARIAAttribute(input, 'aria-invalid')).not.toBe('true');
 
       // Set error
       element.error = 'This field is required';
       await element.updateComplete;
 
       // Verify error is set
-      const ariaInvalid = input.getAttribute('aria-invalid');
+      const ariaInvalid = await waitForARIAAttribute(input, 'aria-invalid');
       if (ariaInvalid !== 'true') {
         console.warn('Component should set aria-invalid="true" when error is set');
       }
@@ -1373,7 +1374,7 @@ describe('USAInputPrefixSuffix', () => {
       await element.updateComplete;
 
       // Should remove error state
-      expect(input.getAttribute('aria-invalid')).not.toBe('true');
+      expect(await waitForARIAAttribute(input, 'aria-invalid')).not.toBe('true');
     });
 
     it('should maintain error accessibility with prefix/suffix', async () => {

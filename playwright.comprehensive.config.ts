@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import fs from 'fs';
 
 /**
  * Comprehensive Playwright Configuration for USWDS Web Components
@@ -24,7 +25,7 @@ export default defineConfig({
     '**/error-recovery/**/*.spec.ts',
     '**/api-contracts/**/*.spec.ts',
     '**/cross-browser/**/*.spec.ts',
-    '**/integration/**/*.spec.ts'
+    '**/integration/**/*.spec.ts',
   ],
 
   // Global test configuration
@@ -39,19 +40,28 @@ export default defineConfig({
 
   // Reporter configuration
   reporter: [
-    ['html', {
-      outputFolder: './test-reports/playwright-html',
-      open: process.env.CI ? 'never' : 'on-failure'
-    }],
-    ['json', {
-      outputFile: './test-reports/playwright-results.json'
-    }],
-    ['junit', {
-      outputFile: './test-reports/playwright-junit.xml'
-    }],
+    [
+      'html',
+      {
+        outputFolder: './test-reports/playwright-html',
+        open: process.env.CI ? 'never' : 'on-failure',
+      },
+    ],
+    [
+      'json',
+      {
+        outputFile: './test-reports/playwright-results.json',
+      },
+    ],
+    [
+      'junit',
+      {
+        outputFile: './test-reports/playwright-junit.xml',
+      },
+    ],
     ['list'],
     // Custom reporter for comprehensive reporting
-    ['./scripts/playwright-comprehensive-reporter.js']
+    ['./scripts/test/playwright-comprehensive-reporter.cjs'],
   ],
 
   // Global test setup and teardown
@@ -77,16 +87,14 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 720 },
-        // Enable additional browser features for comprehensive testing
-        permissions: ['accessibility-events'],
         colorScheme: 'light',
       },
       dependencies: ['setup'],
       testMatch: [
         '**/accessibility/**/*.spec.ts',
         '**/api-contracts/**/*.spec.ts',
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
+        '**/progressive-enhancement/**/*.spec.ts',
+      ],
     },
     {
       name: 'firefox-desktop',
@@ -96,10 +104,7 @@ export default defineConfig({
         colorScheme: 'light',
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/cross-browser/**/*.spec.ts',
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
+      testMatch: ['**/cross-browser/**/*.spec.ts', '**/progressive-enhancement/**/*.spec.ts'],
     },
     {
       name: 'webkit-desktop',
@@ -109,10 +114,7 @@ export default defineConfig({
         colorScheme: 'light',
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/cross-browser/**/*.spec.ts',
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
+      testMatch: ['**/cross-browser/**/*.spec.ts', '**/progressive-enhancement/**/*.spec.ts'],
     },
 
     // Mobile devices - Responsive and touch testing
@@ -124,10 +126,7 @@ export default defineConfig({
         hasTouch: true,
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/accessibility/**/*.spec.ts',
-        '**/cross-browser/**/*.spec.ts'
-      ]
+      testMatch: ['**/accessibility/**/*.spec.ts', '**/cross-browser/**/*.spec.ts'],
     },
     {
       name: 'mobile-safari',
@@ -137,9 +136,7 @@ export default defineConfig({
         hasTouch: true,
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/cross-browser/**/*.spec.ts'
-      ]
+      testMatch: ['**/cross-browser/**/*.spec.ts'],
     },
 
     // Accessibility-focused testing environments
@@ -153,9 +150,7 @@ export default defineConfig({
         forcedColors: 'active', // High contrast mode
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/accessibility/**/*.spec.ts'
-      ]
+      testMatch: ['**/accessibility/**/*.spec.ts'],
     },
     {
       name: 'accessibility-reduced-motion',
@@ -166,10 +161,7 @@ export default defineConfig({
         reducedMotion: 'reduce',
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/accessibility/**/*.spec.ts',
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
+      testMatch: ['**/accessibility/**/*.spec.ts', '**/progressive-enhancement/**/*.spec.ts'],
     },
     {
       name: 'accessibility-dark-mode',
@@ -179,9 +171,7 @@ export default defineConfig({
         colorScheme: 'dark',
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/accessibility/**/*.spec.ts'
-      ]
+      testMatch: ['**/accessibility/**/*.spec.ts'],
     },
 
     // Performance testing environment
@@ -192,13 +182,11 @@ export default defineConfig({
         viewport: { width: 1280, height: 720 },
         // Simulate slower CPU for performance testing
         launchOptions: {
-          args: ['--enable-precise-memory-info', '--disable-features=TranslateUI']
-        }
+          args: ['--enable-precise-memory-info', '--disable-features=TranslateUI'],
+        },
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/performance/**/*.spec.ts'
-      ]
+      testMatch: ['**/performance/**/*.spec.ts'],
     },
 
     // Security testing environment
@@ -212,13 +200,11 @@ export default defineConfig({
           'X-Frame-Options': 'DENY',
           'X-Content-Type-Options': 'nosniff',
           'X-XSS-Protection': '1; mode=block',
-          'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
-        }
+          'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+        },
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/security/**/*.spec.ts'
-      ]
+      testMatch: ['**/security/**/*.spec.ts'],
     },
 
     // Error recovery testing environment
@@ -229,13 +215,11 @@ export default defineConfig({
         viewport: { width: 1280, height: 720 },
         // Simulate network instability
         launchOptions: {
-          args: ['--disable-web-security', '--disable-features=VizDisplayCompositor']
-        }
+          args: ['--disable-web-security', '--disable-features=VizDisplayCompositor'],
+        },
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/error-recovery/**/*.spec.ts'
-      ]
+      testMatch: ['**/error-recovery/**/*.spec.ts'],
     },
 
     // Progressive enhancement testing - Older browser simulation
@@ -248,9 +232,7 @@ export default defineConfig({
         javaScriptEnabled: false, // Test without JavaScript
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
+      testMatch: ['**/progressive-enhancement/**/*.spec.ts'],
     },
 
     // Integration testing environment
@@ -263,9 +245,7 @@ export default defineConfig({
         permissions: ['clipboard-read', 'clipboard-write'],
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/integration/**/*.spec.ts'
-      ]
+      testMatch: ['**/integration/**/*.spec.ts'],
     },
 
     // Visual regression testing environment (if using Playwright screenshots)
@@ -280,9 +260,7 @@ export default defineConfig({
         timezoneId: 'UTC',
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/visual/**/*.spec.ts'
-      ]
+      testMatch: ['**/visual/**/*.spec.ts'],
     },
 
     // Edge cases and boundary testing
@@ -293,15 +271,12 @@ export default defineConfig({
         viewport: { width: 320, height: 568 }, // Very small viewport
         // Simulate constrained environment
         launchOptions: {
-          args: ['--memory-pressure-off', '--max_old_space_size=512']
-        }
+          args: ['--memory-pressure-off', '--max_old_space_size=512'],
+        },
       },
       dependencies: ['setup'],
-      testMatch: [
-        '**/error-recovery/**/*.spec.ts',
-        '**/progressive-enhancement/**/*.spec.ts'
-      ]
-    }
+      testMatch: ['**/error-recovery/**/*.spec.ts', '**/progressive-enhancement/**/*.spec.ts'],
+    },
   ],
 
   // Global test configuration
@@ -331,13 +306,20 @@ export default defineConfig({
     userAgent: 'USWDS-WebComponents-Test-Runner/1.0',
   },
 
-  // Web server configuration (if needed)
-  webServer: {
-    command: 'npm run storybook',
-    url: 'http://localhost:6006',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000, // 2 minutes to start Storybook
-  },
+  // Web server configuration
+  // Note: comprehensive-testing.yml starts http-server manually in each job
+  // after downloading the storybook-static artifact. This avoids timing issues
+  // where webServer runs before the artifact is available.
+  // For local development, start Storybook manually: npm run storybook
+  webServer: process.env.CI
+    ? undefined
+    : {
+        // Local development only - start Storybook dev server
+        command: 'npm run storybook',
+        url: 'http://localhost:6006',
+        reuseExistingServer: true,
+        timeout: 120000,
+      },
 
   // Output directories
   outputDir: './test-reports/playwright-artifacts',

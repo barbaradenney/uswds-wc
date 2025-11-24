@@ -27,11 +27,7 @@ The Form Summary Pattern provides a simple way to display submitted form data in
 ### Basic Example
 
 ```html
-<usa-form-summary-pattern
-  .sections=${sections}
-  show-print
->
-</usa-form-summary-pattern>
+<usa-form-summary-pattern .sections="${sections}" show-print> </usa-form-summary-pattern>
 
 <script>
   const sections = [
@@ -39,16 +35,16 @@ The Form Summary Pattern provides a simple way to display submitted form data in
       heading: 'Personal Information',
       items: [
         { label: 'Full Name', value: 'John Smith' },
-        { label: 'Email', value: 'john@example.com' }
-      ]
+        { label: 'Email', value: 'john@example.com' },
+      ],
     },
     {
       heading: 'Contact Details',
       items: [
         { label: 'Phone', value: '(555) 123-4567' },
-        { label: 'Address', value: '123 Main St' }
-      ]
-    }
+        { label: 'Address', value: '123 Main St' },
+      ],
+    },
   ];
 </script>
 ```
@@ -57,7 +53,7 @@ The Form Summary Pattern provides a simple way to display submitted form data in
 
 ```html
 <usa-form-summary-pattern
-  .sections=${sections}
+  .sections="${sections}"
   show-confirmation
   confirmation-title="Application Submitted"
   confirmation-type="success"
@@ -83,36 +79,31 @@ const sections = [
         onEdit: () => {
           // Navigate back to edit form
           window.location.href = '/edit?section=personal';
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ];
 ```
 
 ```html
-<usa-form-summary-pattern
-  .sections=${sections}
-  show-edit
-  show-print
->
-</usa-form-summary-pattern>
+<usa-form-summary-pattern .sections="${sections}" show-edit show-print> </usa-form-summary-pattern>
 ```
 
 ## Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `sections` | `SummarySection[]` | `[]` | Array of summary sections |
-| `title` | `string` | `'Review Your Information'` | Page title |
-| `show-confirmation` | `boolean` | `false` | Whether to show confirmation alert |
-| `confirmation-title` | `string` | `'Success'` | Confirmation alert title |
-| `confirmation-type` | `'success' \| 'info' \| 'warning' \| 'error'` | `'success'` | Alert type |
-| `show-print` | `boolean` | `true` | Whether to show print button |
-| `show-download` | `boolean` | `false` | Whether to show download button |
-| `show-edit` | `boolean` | `false` | Whether to show edit buttons |
-| `print-button-label` | `string` | `'Print'` | Print button label |
-| `download-button-label` | `string` | `'Download'` | Download button label |
+| Property                | Type                                          | Default                     | Description                        |
+| ----------------------- | --------------------------------------------- | --------------------------- | ---------------------------------- |
+| `sections`              | `SummarySection[]`                            | `[]`                        | Array of summary sections          |
+| `title`                 | `string`                                      | `'Review Your Information'` | Page title                         |
+| `show-confirmation`     | `boolean`                                     | `false`                     | Whether to show confirmation alert |
+| `confirmation-title`    | `string`                                      | `'Success'`                 | Confirmation alert title           |
+| `confirmation-type`     | `'success' \| 'info' \| 'warning' \| 'error'` | `'success'`                 | Alert type                         |
+| `show-print`            | `boolean`                                     | `true`                      | Whether to show print button       |
+| `show-download`         | `boolean`                                     | `false`                     | Whether to show download button    |
+| `show-edit`             | `boolean`                                     | `false`                     | Whether to show edit buttons       |
+| `print-button-label`    | `string`                                      | `'Print'`                   | Print button label                 |
+| `download-button-label` | `string`                                      | `'Download'`                | Download button label              |
 
 ## Interfaces
 
@@ -120,8 +111,8 @@ const sections = [
 
 ```typescript
 interface SummarySection {
-  heading: string;              // Section heading
-  items: SummaryItem[];        // Items in the section
+  heading: string; // Section heading
+  items: SummaryItem[]; // Items in the section
 }
 ```
 
@@ -129,9 +120,9 @@ interface SummarySection {
 
 ```typescript
 interface SummaryItem {
-  label: string;                // Field label
-  value: string;                // Field value
-  onEdit?: () => void;         // Optional edit callback
+  label: string; // Field label
+  value: string; // Field value
+  onEdit?: () => void; // Optional edit callback
 }
 ```
 
@@ -185,11 +176,11 @@ pattern.addEventListener('download-summary', (e) => {
 
 ## Slots
 
-| Slot | Description |
-|------|-------------|
-| `header` | Optional custom header (replaces default title) |
-| `footer` | Optional footer content |
-| `confirmation` | Custom confirmation message content |
+| Slot           | Description                                     |
+| -------------- | ----------------------------------------------- |
+| `header`       | Optional custom header (replaces default title) |
+| `footer`       | Optional footer content                         |
+| `confirmation` | Custom confirmation message content             |
 
 ## Public API
 
@@ -208,9 +199,7 @@ Add a new section to the summary.
 ```javascript
 pattern.addSection({
   heading: 'Additional Information',
-  items: [
-    { label: 'Notes', value: 'Special instructions' }
-  ]
+  items: [{ label: 'Notes', value: 'Special instructions' }],
 });
 ```
 
@@ -243,7 +232,7 @@ pattern.download();
 ### Custom Header and Footer
 
 ```html
-<usa-form-summary-pattern .sections=${sections}>
+<usa-form-summary-pattern .sections="${sections}">
   <div slot="header">
     <h1 class="font-heading-xl">Application Summary</h1>
     <p class="usa-intro">Reference #: APP-2025-001234</p>
@@ -277,20 +266,12 @@ pattern.addEventListener('download-summary', async (e) => {
 
 ```html
 <!-- Multi-step form -->
-<usa-multi-step-form-pattern
-  .steps=${formSteps}
-  @form-complete="${handleFormComplete}"
->
+<usa-multi-step-form-pattern .steps="${formSteps}" @form-complete="${handleFormComplete}">
   <!-- Form steps -->
 </usa-multi-step-form-pattern>
 
 <!-- Summary (hidden until form complete) -->
-<usa-form-summary-pattern
-  id="summary"
-  style="display: none"
-  show-confirmation
-  show-print
->
+<usa-form-summary-pattern id="summary" style="display: none" show-confirmation show-print>
 </usa-form-summary-pattern>
 
 <script>
@@ -353,6 +334,7 @@ function ConfirmationPage({ submittedData }) {
 ## Browser Support
 
 Works in all modern browsers that support:
+
 - Web Components (Custom Elements v1)
 - ES2015+
 - Print API (for print functionality)

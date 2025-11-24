@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import '../combo-box/index.ts';
 import type { USAComboBox } from './usa-combo-box.js';
 import { validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USAComboBox Layout Tests', () => {
   let element: USAComboBox;
@@ -188,7 +189,7 @@ describe('USAComboBox Layout Tests', () => {
       // Verify input has correct attributes
       if (input) {
         expect(input.getAttribute('role')).toBe('combobox');
-        expect(input.getAttribute('aria-expanded')).toBe('false');
+        expect(await waitForARIAAttribute(input, 'aria-expanded')).toBe('false');
       }
     });
 
@@ -235,7 +236,7 @@ describe('USAComboBox Layout Tests', () => {
 
       if (input) {
         expect(input.getAttribute('role')).toBe('combobox');
-        expect(input.getAttribute('aria-expanded')).toBe('false');
+        expect(await waitForARIAAttribute(input, 'aria-expanded')).toBe('false');
 
         if (list) {
           // Verify list has proper role and ID

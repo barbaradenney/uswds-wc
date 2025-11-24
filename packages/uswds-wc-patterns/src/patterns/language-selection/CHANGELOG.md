@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Overview
+
 **Workflow Pattern for language preference selection**
 
 #### Features
+
 - **Multiple Display Variants (two-languages, dropdown, unstyled)**
 - **Language Persistence with localStorage**
 - **Document Language Update (updates html lang attribute)**
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition: Uses `usa-language-selector` component**
 
 #### Properties
+
 - `variant` - Display variant (two-languages, dropdown, unstyled)
 - `small` - Whether to use small size
 - `buttonText` - Text for dropdown button
@@ -30,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `updateDocumentLang` - Whether to update html lang attribute
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Specialized workflow APIs
@@ -38,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Pattern](https://designsystem.digital.gov/components/language-selector/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

@@ -134,7 +134,6 @@ export class USASelect extends LitElement {
     // No manual content application needed for Light DOM components
   }
 
-
   private updateSelectElement() {
     if (!this.selectElement) return;
 
@@ -436,10 +435,7 @@ export class USASelect extends LitElement {
     const selectTemplate = html`
       ${this.renderLabel(selectId)} ${this.renderHint(selectId)} ${this.renderError(selectId)}
       ${this.renderSuccess(selectId)}
-
-      ${this.noComboBox
-        ? selectElement
-        : html`<div class="usa-combo-box">${selectElement}</div>`}
+      ${this.noComboBox ? selectElement : html`<div class="usa-combo-box">${selectElement}</div>`}
     `;
 
     // Compact mode: no form-group wrapper (for use inside fieldsets/patterns)

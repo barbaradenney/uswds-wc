@@ -36,6 +36,7 @@ import {
   testReflow,
   testTextSpacing,
 } from '@uswds-wc/test-utils/responsive-accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 /**
  * Browser-dependent tests for USAModal
@@ -149,7 +150,7 @@ describe.skip('USAModal', () => {
   describe('Content Display', () => {
     it('should display heading', async () => {
       element.heading = 'Test Modal Heading';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-modal__heading');
       expect(heading?.textContent?.trim()).toBe('Test Modal Heading');
@@ -157,7 +158,7 @@ describe.skip('USAModal', () => {
 
     it('should display description when provided', async () => {
       element.description = 'Test modal description';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const description = element.querySelector('.usa-prose p');
       expect(description?.textContent?.trim()).toBe('Test modal description');
@@ -212,7 +213,7 @@ describe.skip('USAModal', () => {
 
     it('should hide secondary button when showSecondaryButton is false', async () => {
       element.showSecondaryButton = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondaryButton = element.querySelector('.usa-button--unstyled');
       expect(secondaryButton).toBeFalsy();
@@ -310,7 +311,7 @@ describe.skip('USAModal', () => {
 
       element.heading = 'Test Modal';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const primaryButton = element.querySelector(
         '.usa-modal__footer .usa-button:not(.usa-button--unstyled)'
@@ -329,7 +330,7 @@ describe.skip('USAModal', () => {
 
       element.heading = 'Test Modal';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondaryButton = element.querySelector(
         '.usa-modal__footer .usa-button--unstyled'
@@ -343,7 +344,7 @@ describe.skip('USAModal', () => {
     it('should close modal when secondary button clicked and forceAction is false', async () => {
       element.forceAction = false;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondaryButton = element.querySelector('.usa-button--unstyled') as HTMLButtonElement;
       secondaryButton.click();
@@ -354,7 +355,7 @@ describe.skip('USAModal', () => {
     it('should not close modal when secondary button clicked and forceAction is true', async () => {
       element.forceAction = true;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondaryButton = element.querySelector('.usa-button--unstyled') as HTMLButtonElement;
       secondaryButton.click();
@@ -411,7 +412,7 @@ describe.skip('USAModal', () => {
     it('should have proper ARIA attributes', async () => {
       element.heading = 'Test Modal';
       element.description = 'Test description';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
 
@@ -426,7 +427,7 @@ describe.skip('USAModal', () => {
 
     it('should have properly associated heading', async () => {
       element.heading = 'Test Modal';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       const heading = element.querySelector('.usa-modal__heading');
@@ -440,7 +441,7 @@ describe.skip('USAModal', () => {
 
     it('should have close button with proper aria-label', async () => {
       element.forceAction = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-modal__close');
       expect(closeButton?.getAttribute('aria-label')).toBe('Close this window');
@@ -501,7 +502,7 @@ describe.skip('USAModal', () => {
     it('should not close modal when clicking modal content', async () => {
       element.forceAction = false;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal') as HTMLElement;
       modal.click();
@@ -512,7 +513,7 @@ describe.skip('USAModal', () => {
     it('should close modal when close button is clicked', async () => {
       element.forceAction = false;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-modal__close') as HTMLButtonElement;
       closeButton.click();
@@ -692,7 +693,7 @@ describe.skip('USAModal', () => {
       element.primaryButtonText = 'Yes, proceed';
       element.secondaryButtonText = 'Cancel';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-modal__heading');
       const description = element.querySelector('.usa-prose p');
@@ -713,7 +714,7 @@ describe.skip('USAModal', () => {
       element.forceAction = true;
       element.primaryButtonText = 'Extend Session';
       element.showSecondaryButton = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-modal__close');
       expect(closeButton).toBeFalsy();
@@ -950,7 +951,7 @@ describe.skip('USAModal', () => {
   describe('Large Modal Width Utilization (REGRESSION TESTS)', () => {
     it('should apply large modal class correctly', async () => {
       element.large = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       expect(modal?.classList.contains('usa-modal--lg')).toBe(true);
@@ -964,21 +965,21 @@ describe.skip('USAModal', () => {
 
       // Start as normal modal
       element.large = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       let modal = element.querySelector('.usa-modal');
       expect(modal?.classList.contains('usa-modal--lg')).toBe(false);
 
       // Switch to large modal
       element.large = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       modal = element.querySelector('.usa-modal');
       expect(modal?.classList.contains('usa-modal--lg')).toBe(true);
 
       // Switch back to normal modal
       element.large = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       modal = element.querySelector('.usa-modal');
       expect(modal?.classList.contains('usa-modal--lg')).toBe(false);
@@ -1243,7 +1244,7 @@ describe.skip('USAModal', () => {
     it('should trap focus within modal when open', async () => {
       element.heading = 'Test Modal';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       expect(dialog).toBeTruthy();
@@ -1265,7 +1266,7 @@ describe.skip('USAModal', () => {
       element.heading = 'Test Modal';
       element.description = 'Modal content';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       expect(dialog).toBeTruthy();
@@ -1310,7 +1311,7 @@ describe.skip('USAModal', () => {
       element.primaryButtonText = 'Confirm';
       element.secondaryButtonText = 'Cancel';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       const focusableElements = getFocusableElements(dialog!);
@@ -1324,7 +1325,7 @@ describe.skip('USAModal', () => {
       element.primaryButtonText = 'Confirm';
       element.secondaryButtonText = 'Cancel';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       expect(dialog).toBeTruthy();
@@ -1341,7 +1342,7 @@ describe.skip('USAModal', () => {
     it('should maintain focus visibility within modal (WCAG 2.4.7)', async () => {
       element.heading = 'Test Modal';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       const focusableElements = getFocusableElements(dialog!);
@@ -1366,7 +1367,7 @@ describe.skip('USAModal', () => {
       element.heading = 'Test Modal';
       element.primaryButtonText = 'Confirm';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const primaryButton =
         element.querySelector('.usa-modal__primary-action') ||
@@ -1394,7 +1395,7 @@ describe.skip('USAModal', () => {
       element.heading = 'Test Modal';
       element.secondaryButtonText = 'Cancel';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondaryButton =
         element.querySelector('.usa-modal__secondary-action') ||
@@ -1419,7 +1420,7 @@ describe.skip('USAModal', () => {
     it('should handle close button with keyboard', async () => {
       element.heading = 'Test Modal';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('.usa-modal__close');
 
@@ -1468,7 +1469,7 @@ describe.skip('USAModal', () => {
       element.heading = 'Large Modal';
       element.large = true;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const dialog = element.querySelector('.usa-modal');
       expect(dialog).toBeTruthy();
@@ -1837,7 +1838,7 @@ describe.skip('USAModal', () => {
 
     it('should have correct ARIA role for dialog (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       expect(modal).toBeTruthy();
@@ -1852,7 +1853,7 @@ describe.skip('USAModal', () => {
 
     it('should have aria-modal attribute for screen readers (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       expect(modal).toBeTruthy();
@@ -1861,7 +1862,7 @@ describe.skip('USAModal', () => {
 
     it('should have accessible name from heading (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       const heading = element.querySelector('.usa-modal__heading');
@@ -1883,7 +1884,7 @@ describe.skip('USAModal', () => {
 
     it('should have accessible names for all buttons (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
       expect(buttons.length).toBeGreaterThan(0);
@@ -1897,7 +1898,7 @@ describe.skip('USAModal', () => {
 
     it('should have correct button roles and states (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const primaryButton = element.querySelector('[data-close-modal]');
       const secondaryButton = element.querySelectorAll('button')[1];
@@ -1964,7 +1965,7 @@ describe.skip('USAModal', () => {
     it('should have proper ARIA for force action modals (WCAG 4.1.2)', async () => {
       element.forceAction = true;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       expect(modal?.getAttribute('role')).toBe('dialog');
@@ -1980,7 +1981,7 @@ describe.skip('USAModal', () => {
 
     it('should have accessible close button with proper label (WCAG 4.1.2)', async () => {
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeButton = element.querySelector('[data-close-modal]');
       expect(closeButton).toBeTruthy();
@@ -1998,7 +1999,7 @@ describe.skip('USAModal', () => {
 
       // Update heading dynamically
       element.heading = 'Updated Heading';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       const labelledby = modal?.getAttribute('aria-labelledby');
@@ -2014,7 +2015,7 @@ describe.skip('USAModal', () => {
     it('should have proper ARIA for large modal variant (WCAG 4.1.2)', async () => {
       element.large = true;
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal');
       expect(modal).toBeTruthy();
@@ -2049,7 +2050,7 @@ describe.skip('USAModal', () => {
       });
 
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const buttons = element.querySelectorAll('button');
 
@@ -2071,7 +2072,7 @@ describe.skip('USAModal', () => {
       it('should have proper dialog structure in DOM', async () => {
         element.heading = 'Test Modal';
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const modal = element.querySelector('.usa-modal');
         expect(modal).toBeTruthy();
@@ -2087,7 +2088,7 @@ describe.skip('USAModal', () => {
       it('should NOT have extra wrapper elements around modal content', async () => {
         element.heading = 'Test Modal';
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const modal = element.querySelector('.usa-modal');
         const content = modal?.querySelector('.usa-modal__content');
@@ -2143,7 +2144,7 @@ describe.skip('USAModal', () => {
         element.heading = 'Test Modal';
         element.forceAction = false;
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const closeButton = element.querySelector('.usa-modal__close');
         expect(closeButton).toBeTruthy();
@@ -2161,7 +2162,7 @@ describe.skip('USAModal', () => {
         // Test with forceAction false
         element.forceAction = false;
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         let closeButton = element.querySelector('.usa-modal__close');
         expect(closeButton).toBeTruthy();
@@ -2172,7 +2173,7 @@ describe.skip('USAModal', () => {
 
         element.forceAction = true;
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         closeButton = element.querySelector('.usa-modal__close');
         expect(closeButton).toBeFalsy();
@@ -2195,7 +2196,7 @@ describe.skip('USAModal', () => {
       it('should have proper modal class structure', async () => {
         element.heading = 'Test Modal';
         element.large = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const modal = element.querySelector('.usa-modal');
         expect(modal?.classList.contains('usa-modal')).toBe(true);
@@ -2207,7 +2208,7 @@ describe.skip('USAModal', () => {
       it('should render modal structure in DOM (visual tests in Cypress)', async () => {
         element.heading = 'Test Modal';
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const modal = element.querySelector('.usa-modal') as HTMLElement;
         expect(modal).toBeTruthy();
@@ -2228,7 +2229,7 @@ describe.skip('USAModal', () => {
         element.heading = 'Test Modal';
         element.description = 'Test description';
         element.open = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const heading = element.querySelector('.usa-modal__heading');
         const description = element.querySelector('.usa-prose p');
@@ -2279,7 +2280,7 @@ describe.skip('USAModal', () => {
       element.description =
         'Testing text spacing with line height, letter spacing, and word spacing';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const description = element.querySelector('.usa-modal__main');
       expect(description).toBeTruthy();
@@ -2299,7 +2300,7 @@ describe.skip('USAModal', () => {
       element.heading = 'Large Modal Reflow';
       element.description = 'Testing large modal responsive behavior';
       element.open = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const modal = element.querySelector('.usa-modal--lg');
       expect(modal).toBeTruthy();

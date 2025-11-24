@@ -1252,7 +1252,7 @@ describe('USAMemorableDate', () => {
       element.year = '';
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 30000); // Increased timeout for comprehensive accessibility tests (canvas operations in jsdom can be slow)
 
     it('should maintain accessibility during dynamic updates', async () => {
       // Set initial accessible state
@@ -1278,7 +1278,7 @@ describe('USAMemorableDate', () => {
       element.setFromISODate('1985-12-25');
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 10000); // Increased timeout for comprehensive accessibility tests
 
     it('should pass accessibility with form integration', async () => {
       const form = document.createElement('form');

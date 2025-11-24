@@ -18,6 +18,7 @@ import {
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
 import { testFocusIndicators } from '@uswds-wc/test-utils/focus-management-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAHeader', () => {
   let element: USAHeader;
@@ -101,7 +102,7 @@ describe('USAHeader', () => {
     it('should handle logo image', async () => {
       element.logoImageSrc = '/logo.png';
       element.logoImageAlt = 'Agency Logo';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logoImg = element.querySelector('img') as HTMLImageElement;
       expect(logoImg).toBeTruthy();
@@ -111,7 +112,7 @@ describe('USAHeader', () => {
 
     it('should handle extended header mode', async () => {
       element.extended = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('.usa-header');
       expect(header?.classList.contains('usa-header--extended')).toBe(true);
@@ -133,7 +134,7 @@ describe('USAHeader', () => {
       element.logoText = 'Test Agency';
       element.showSearch = true;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('header.usa-header');
       const skipNav = element.querySelector('.usa-skipnav');
@@ -158,7 +159,7 @@ describe('USAHeader', () => {
       ];
 
       element.navItems = navItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const navLinks = element.querySelectorAll('.usa-nav__primary-item');
       expect(navLinks.length).toBe(3);
@@ -180,7 +181,7 @@ describe('USAHeader', () => {
       ];
 
       element.navItems = navItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const accordionButton = element.querySelector('.usa-accordion__button');
       const submenu = element.querySelector('.usa-nav__submenu');
@@ -208,7 +209,7 @@ describe('USAHeader', () => {
 
     it('should not render search when disabled', async () => {
       element.showSearch = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const searchForm = element.querySelector('.usa-search');
       expect(searchForm).toBe(null);
@@ -221,7 +222,7 @@ describe('USAHeader', () => {
 
     it('should close mobile menu when close button clicked', async () => {
       element.mobileMenuOpen = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const closeBtn = element.querySelector('.usa-nav__close') as HTMLButtonElement;
       closeBtn.click();
@@ -273,7 +274,7 @@ describe('USAHeader', () => {
       });
 
       element.navItems = [{ label: 'Test Link', href: '/test' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const navLink = element.querySelector('.usa-nav__link') as HTMLAnchorElement;
       navLink.click();
@@ -309,7 +310,7 @@ describe('USAHeader', () => {
   describe('ARIA and Accessibility', () => {
     it('should have correct ARIA attributes', async () => {
       element.logoText = 'Test Agency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('header');
       const nav = element.querySelector('nav');
@@ -343,7 +344,7 @@ describe('USAHeader', () => {
 
     it('should have home link with proper ARIA', async () => {
       element.logoText = 'Agency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const homeLink = element.querySelector('.usa-logo__text a');
       expect(homeLink?.getAttribute('title')).toBe('Home');
@@ -533,7 +534,7 @@ describe('USAHeader', () => {
       ];
 
       element.navItems = navItems;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const primaryItems = element.querySelectorAll('.usa-nav__primary-item');
       const submenuItems = element.querySelectorAll('.usa-nav__submenu-item');
@@ -628,7 +629,7 @@ describe('USAHeader', () => {
         element.extended = true;
         element.showSearch = true;
         element.navItems = agencyNavItems;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const logoLink = element.querySelector('.usa-logo__text a') as HTMLAnchorElement;
         expect(logoLink.href).toBe('https://www.epa.gov/');
@@ -665,7 +666,7 @@ describe('USAHeader', () => {
         element.logoImageAlt = 'State of California Seal';
         element.extended = true;
         element.navItems = stateNavItems;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const logoImage = element.querySelector('img') as HTMLImageElement;
         expect(logoImage.src).toContain('/assets/ca-seal.svg');
@@ -835,7 +836,7 @@ describe('USAHeader', () => {
         element.extended = true;
         element.showSearch = true;
         element.navItems = vaNavItems;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const logoImage = element.querySelector('img') as HTMLImageElement;
         expect(logoImage.src).toContain('/assets/va-logo.svg');
@@ -1154,7 +1155,7 @@ describe('USAHeader', () => {
         { label: 'Publications', href: '/publications' },
         { label: 'Policy Updates', href: '/policy' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const pressLink = element.querySelectorAll('.usa-nav__link')[0] as HTMLAnchorElement;
       pressLink.click();
@@ -1342,7 +1343,7 @@ describe('USAHeader', () => {
 
     it('should pass comprehensive keyboard navigation tests', async () => {
       element.navItems = [{ text: 'Home', href: '/' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('.usa-header');
       expect(header).toBeTruthy();
@@ -1361,7 +1362,7 @@ describe('USAHeader', () => {
         { text: 'Link 1', href: '/link1' },
         { text: 'Link 2', href: '/link2' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBeGreaterThanOrEqual(2);
@@ -1395,7 +1396,7 @@ describe('USAHeader', () => {
 
     it('should handle Enter key activation on navigation links', async () => {
       element.navItems = [{ text: 'Home', href: '/' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const navLink = element.querySelector('.usa-nav__link');
       expect(navLink).toBeTruthy();
@@ -1424,7 +1425,7 @@ describe('USAHeader', () => {
 
     it('should handle mobile menu button keyboard activation', async () => {
       element.navItems = [{ text: 'Home', href: '/' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const menuButton = element.querySelector('.usa-menu-btn');
 
@@ -1449,7 +1450,7 @@ describe('USAHeader', () => {
 
     it('should handle search input keyboard interaction', async () => {
       element.showSearch = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const searchInput = element.querySelector('.usa-search input');
 
@@ -1478,7 +1479,7 @@ describe('USAHeader', () => {
         { text: 'Home', href: '/' },
         { text: 'About', href: '/about' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('.usa-header--extended');
       expect(header).toBeTruthy();
@@ -1490,7 +1491,7 @@ describe('USAHeader', () => {
     it('should handle logo link keyboard activation', async () => {
       element.logoText = 'Agency Name';
       element.logoHref = '/home';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const logoLink = element.querySelector('.usa-logo a');
       expect(logoLink).toBeTruthy();
@@ -1519,7 +1520,7 @@ describe('USAHeader', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const navLinks = element.querySelectorAll('.usa-nav__link');
       expect(navLinks.length).toBeGreaterThanOrEqual(1);
@@ -1533,7 +1534,7 @@ describe('USAHeader', () => {
     it('should handle empty header gracefully', async () => {
       element.navItems = [];
       element.logoText = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const header = element.querySelector('.usa-header');
       expect(header).toBeTruthy();
@@ -1550,7 +1551,7 @@ describe('USAHeader', () => {
     describe('Search Component Structure', () => {
       it('should have search directly in usa-nav__secondary (not in list item)', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search');
         expect(search).toBeTruthy();
@@ -1566,7 +1567,7 @@ describe('USAHeader', () => {
 
       it('should NOT have extra wrapper elements around search', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search');
         const parent = search?.parentElement;
@@ -1608,7 +1609,7 @@ describe('USAHeader', () => {
     describe('CSS Display Properties', () => {
       it('should have inline-block display on usa-search', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search') as HTMLElement;
 
@@ -1632,7 +1633,7 @@ describe('USAHeader', () => {
 
       it('should not have block display that breaks layout', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search') as HTMLElement;
 
@@ -1679,7 +1680,7 @@ describe('USAHeader', () => {
     describe('Visual Rendering Validation', () => {
       it('should render search element in DOM (visual tests in Cypress)', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search') as HTMLElement;
         expect(search).toBeTruthy();
@@ -1702,7 +1703,7 @@ describe('USAHeader', () => {
 
       it('should have search input and button rendered', async () => {
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const search = element.querySelector('usa-search');
 
@@ -1726,7 +1727,7 @@ describe('USAHeader', () => {
         // Test basic header
         element.extended = false;
         element.showSearch = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         let search = element.querySelector('usa-search') as HTMLElement;
         expect(search).toBeTruthy();
@@ -1741,7 +1742,7 @@ describe('USAHeader', () => {
 
         // Test extended header
         element.extended = true;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         search = element.querySelector('usa-search') as HTMLElement;
         expect(search).toBeTruthy();

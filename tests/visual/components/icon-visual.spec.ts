@@ -114,7 +114,7 @@ test.describe('Icon Visual Regression Tests', () => {
   });
 
   test('should render accessible icons with labels', async ({ page }) => {
-    await page.goto('http://localhost:6006/?path=/story/data-display-icon--with-label');
+    await page.goto('http://localhost:6006/?path=/story/data-display-icon--default');
     await page.waitForLoadState('networkidle');
 
     const icon = page.locator('usa-icon').first();

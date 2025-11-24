@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-time-picker.ts';
 import type { USATimePicker } from './usa-time-picker.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Time Picker JavaScript Interaction Testing', () => {
   let element: USATimePicker;
@@ -82,7 +83,8 @@ describe('Time Picker JavaScript Interaction Testing', () => {
       const listbox = element.querySelector('.usa-time-picker__list') as HTMLElement;
 
       if (toggleButton && listbox) {
-        const initialExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+        const initialExpanded =
+          (await waitForARIAAttribute(toggleButton, 'aria-expanded')) === 'true';
 
         let eventFired = false;
         element.addEventListener('time-picker-toggle', () => {
@@ -93,7 +95,7 @@ describe('Time Picker JavaScript Interaction Testing', () => {
         toggleButton.click();
         await waitForUpdate(element);
 
-        const newExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+        const newExpanded = (await waitForARIAAttribute(toggleButton, 'aria-expanded')) === 'true';
         const dropdownToggled = newExpanded !== initialExpanded || eventFired;
 
         if (!dropdownToggled) {
@@ -285,7 +287,7 @@ describe('Time Picker JavaScript Interaction Testing', () => {
     it('should handle 12-hour and 24-hour formats', async () => {
       // Test 24-hour format
       element.format24 = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = element.querySelectorAll('.usa-time-picker__list-option');
       if (options.length > 0) {
@@ -306,7 +308,7 @@ describe('Time Picker JavaScript Interaction Testing', () => {
       // Test time constraints
       element.min = '09:00 AM';
       element.max = '05:00 PM';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = element.querySelectorAll('.usa-time-picker__list-option');
 
@@ -356,10 +358,10 @@ describe('Time Picker JavaScript Interaction Testing', () => {
       if (input && button && listbox) {
         // Check ARIA attributes
         expect(input.getAttribute('role')).toBe('combobox');
-        expect(input.getAttribute('aria-expanded')).toBe('false');
-        expect(input.getAttribute('aria-haspopup')).toBe('listbox');
+        expect(await waitForARIAAttribute(input, 'aria-expanded')).toBe('false');
+        expect(await waitForARIAAttribute(input, 'aria-haspopup')).toBe('listbox');
 
-        expect(button.getAttribute('aria-expanded')).toBe('false');
+        expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('false');
         expect(listbox.getAttribute('role')).toBe('listbox');
 
         const options = element.querySelectorAll('.usa-time-picker__list-option');

@@ -111,16 +111,21 @@ function validateReadme() {
   });
 
   // Check npm package link
+  // Allow both root package and scoped packages (@uswds-wc/*)
   const npmLinkPattern = new RegExp(`https://www\\.npmjs\\.com/package/([a-z0-9-@/]+)`, 'g');
   const npmLinks = [...content.matchAll(npmLinkPattern)];
 
   npmLinks.forEach(match => {
-    if (match[1] !== SOURCE_OF_TRUTH.packageName) {
+    const packageName = match[1];
+    // Valid: root package OR scoped packages under @uswds-wc/
+    const isValid = packageName === SOURCE_OF_TRUTH.packageName || packageName.startsWith('@uswds-wc/');
+
+    if (!isValid) {
       issues.push({
         file: 'README.md',
         type: 'link-mismatch',
-        description: 'npm package link should match package name',
-        expected: SOURCE_OF_TRUTH.npmUrl,
+        description: 'npm package link should be either root package or @uswds-wc/* scoped package',
+        expected: `${SOURCE_OF_TRUTH.npmUrl} or https://www.npmjs.com/package/@uswds-wc/*`,
         found: match[0],
       });
     }

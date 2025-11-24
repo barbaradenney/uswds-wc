@@ -39,8 +39,7 @@ const sampleSections: SummarySection[] = [
  */
 export const Default: Story = {
   render: () => html`
-    <usa-form-summary-pattern .sections=${sampleSections} show-print>
-    </usa-form-summary-pattern>
+    <usa-form-summary-pattern .sections=${sampleSections} show-print> </usa-form-summary-pattern>
   `,
 };
 
@@ -158,7 +157,8 @@ export const JobApplicationSummary: Story = {
       >
         <div slot="confirmation">
           <p class="usa-alert__text">
-            Thank you for your application. Our recruitment team will review your information and contact you within 5-7 business days.
+            Thank you for your application. Our recruitment team will review your information and
+            contact you within 5-7 business days.
           </p>
         </div>
         <div slot="footer">

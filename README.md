@@ -108,30 +108,30 @@ import '@uswds-wc/core/styles.css';
 
 ```html
 <usa-button variant="primary">Click me</usa-button>
-<usa-alert type="success" heading="Success!">
-  Your form has been submitted.
-</usa-alert>
+<usa-alert type="success" heading="Success!"> Your form has been submitted. </usa-alert>
 <usa-text-input label="Email address" required></usa-text-input>
 ```
 
 ## 📦 Available Packages
 
 ### Core Package
+
 - **[@uswds-wc/core](https://www.npmjs.com/package/@uswds-wc/core)** - Base utilities, USWDS integration, shared types
 
 ### Category Packages
 
-| Package | Components | Bundle Size | Use Case |
-|---------|-----------|-------------|----------|
-| **[@uswds-wc/forms](https://www.npmjs.com/package/@uswds-wc/forms)** | 15 | ~45 KB | Form inputs, validation |
-| **[@uswds-wc/navigation](https://www.npmjs.com/package/@uswds-wc/navigation)** | 8 | ~32 KB | Headers, menus, breadcrumbs |
-| **[@uswds-wc/data-display](https://www.npmjs.com/package/@uswds-wc/data-display)** | 8 | ~28 KB | Tables, cards, lists |
-| **[@uswds-wc/feedback](https://www.npmjs.com/package/@uswds-wc/feedback)** | 5 | ~18 KB | Alerts, modals, tooltips |
-| **[@uswds-wc/actions](https://www.npmjs.com/package/@uswds-wc/actions)** | 4 | ~12 KB | Buttons, links, search |
-| **[@uswds-wc/layout](https://www.npmjs.com/package/@uswds-wc/layout)** | 4 | ~15 KB | Grid, containers, spacing |
-| **[@uswds-wc/structure](https://www.npmjs.com/package/@uswds-wc/structure)** | 1 | ~8 KB | Accordion |
+| Package                                                                            | Components | Bundle Size | Use Case                    |
+| ---------------------------------------------------------------------------------- | ---------- | ----------- | --------------------------- |
+| **[@uswds-wc/forms](https://www.npmjs.com/package/@uswds-wc/forms)**               | 15         | ~45 KB      | Form inputs, validation     |
+| **[@uswds-wc/navigation](https://www.npmjs.com/package/@uswds-wc/navigation)**     | 8          | ~32 KB      | Headers, menus, breadcrumbs |
+| **[@uswds-wc/data-display](https://www.npmjs.com/package/@uswds-wc/data-display)** | 8          | ~28 KB      | Tables, cards, lists        |
+| **[@uswds-wc/feedback](https://www.npmjs.com/package/@uswds-wc/feedback)**         | 5          | ~18 KB      | Alerts, modals, tooltips    |
+| **[@uswds-wc/actions](https://www.npmjs.com/package/@uswds-wc/actions)**           | 4          | ~12 KB      | Buttons, links, search      |
+| **[@uswds-wc/layout](https://www.npmjs.com/package/@uswds-wc/layout)**             | 4          | ~15 KB      | Grid, containers, spacing   |
+| **[@uswds-wc/structure](https://www.npmjs.com/package/@uswds-wc/structure)**       | 1          | ~8 KB       | Accordion                   |
 
 ### Meta Package
+
 - **[@uswds-wc/all](https://www.npmjs.com/package/@uswds-wc/all)** - All components (convenience package)
 
 ## 🎯 Project Goals
@@ -165,6 +165,7 @@ Create **thin web component wrappers** around official USWDS components that:
 4. **[Component Guidelines](CLAUDE.md#component-development-pattern)** - 📋 Development process
 
 ### Quick Architecture Validation
+
 ```bash
 pnpm run arch:check  # Validate before committing
 pnpm run arch:guide  # Open architecture guide
@@ -261,11 +262,13 @@ pnpm turbo build  # 0.35s with cache (vs 39s without)
 ```
 
 **Performance Metrics:**
+
 - **Local cache:** 39s → 5s (8x faster)
 - **Remote cache:** 39s → 0.35s (**111x faster!**)
 - **CI/CD expected:** ~5min → ~30s (10x faster)
 
 **Benefits:**
+
 - ✅ **Share cache across team** - benefit from teammates' builds
 - ✅ **Zero rebuild** for unchanged code
 - ✅ **Free for personal projects** on Vercel
@@ -289,24 +292,31 @@ pnpm changeset
 ## 📚 Component Categories
 
 ### Forms (`@uswds-wc/forms`)
+
 Text Input, Textarea, Checkbox, Radio, Select, File Input, Date Picker, Date Range Picker, Time Picker, Memorable Date, Combo Box, Range Slider, Character Count, Validation, Input Prefix/Suffix
 
 ### Navigation (`@uswds-wc/navigation`)
+
 Header, Footer, Breadcrumb, Pagination, Side Navigation, In-Page Navigation, Skip Link, Language Selector
 
 ### Data Display (`@uswds-wc/data-display`)
+
 Table, Collection, Card, List, Icon List, Summary Box, Tag, Icon
 
 ### Feedback (`@uswds-wc/feedback`)
+
 Alert, Site Alert, Modal, Tooltip, Banner
 
 ### Actions (`@uswds-wc/actions`)
+
 Button, Button Group, Link, Search
 
 ### Layout (`@uswds-wc/layout`)
+
 Prose, Process List, Step Indicator, Identifier
 
 ### Structure (`@uswds-wc/structure`)
+
 Accordion
 
 ## 🧪 Testing

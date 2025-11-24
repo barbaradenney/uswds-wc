@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-modal.ts';
 import type { USAModal } from './usa-modal.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 // Helper to wait for USWDS modal transformation
 async function waitForModalTransformation(modalId: string, timeout = 2000): Promise<HTMLElement> {
@@ -323,9 +324,11 @@ describe('Modal DOM Structure Validation', () => {
       const wrapper = await waitForModalTransformation(modalId!);
 
       expect(wrapper.getAttribute('role')).toBe('dialog');
-      expect(wrapper.getAttribute('aria-modal')).toBe('true');
-      expect(wrapper.getAttribute('aria-labelledby')).toBe(`${modalId}-heading`);
-      expect(wrapper.getAttribute('aria-describedby')).toBe(`${modalId}-description`);
+      expect(await waitForARIAAttribute(wrapper, 'aria-modal')).toBe('true');
+      expect(await waitForARIAAttribute(wrapper, 'aria-labelledby')).toBe(`${modalId}-heading`);
+      expect(await waitForARIAAttribute(wrapper, 'aria-describedby')).toBe(
+        `${modalId}-description`
+      );
     });
 
     it('should have matching heading id', async () => {

@@ -89,6 +89,11 @@ export class USALanguageSelector extends USWDSBaseComponent {
     await this.updateComplete;
     await new Promise((resolve) => requestAnimationFrame(() => resolve(undefined)));
 
+    // Guard against test environment teardown (prevents "document is not defined" in CI)
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     // Initialize using mirrored USWDS behavior
     // Pass document instead of 'this' to enable click-outside-to-close functionality
     this.cleanup = initializeLanguageSelector(document);

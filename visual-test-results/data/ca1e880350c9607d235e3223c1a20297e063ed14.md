@@ -1,0 +1,47 @@
+# Page snapshot
+
+```yaml
+- table "Employee Directory" [ref=e5]:
+  - caption [ref=e6]: Employee Directory
+  - rowgroup [ref=e7]:
+    - row "Name , sortable column, currently unsorted Title , sortable column, currently unsorted Department , sortable column, currently unsorted Phone Email" [ref=e8]:
+      - columnheader "Name , sortable column, currently unsorted" [ref=e9]:
+        - text: Name
+        - button "Click to sort by Name in ascending order." [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+      - columnheader "Title , sortable column, currently unsorted" [ref=e18]:
+        - text: Title
+        - button "Click to sort by Title in ascending order." [ref=e19] [cursor=pointer]:
+          - img [ref=e20]
+      - columnheader "Department , sortable column, currently unsorted" [ref=e27]:
+        - text: Department
+        - button "Click to sort by Department in ascending order." [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+      - columnheader "Phone" [ref=e36]
+      - columnheader "Email" [ref=e37]
+  - rowgroup [ref=e38]:
+    - row "Sarah Johnson Senior Analyst Health Services (555) 123-4567 sarah.johnson@company.example" [ref=e39]:
+      - rowheader "Sarah Johnson" [ref=e40]
+      - cell "Senior Analyst" [ref=e41]
+      - cell "Health Services" [ref=e42]
+      - cell "(555) 123-4567" [ref=e43]
+      - cell "sarah.johnson@company.example" [ref=e44]
+    - row "Michael Chen IT Administrator Information Technology (555) 234-5678 michael.chen@company.example" [ref=e45]:
+      - rowheader "Michael Chen" [ref=e46]
+      - cell "IT Administrator" [ref=e47]
+      - cell "Information Technology" [ref=e48]
+      - cell "(555) 234-5678" [ref=e49]
+      - cell "michael.chen@company.example" [ref=e50]
+    - row "Emily Rodriguez Financial Analyst Finance Office (555) 345-6789 emily.rodriguez@company.example" [ref=e51]:
+      - rowheader "Emily Rodriguez" [ref=e52]
+      - cell "Financial Analyst" [ref=e53]
+      - cell "Finance Office" [ref=e54]
+      - cell "(555) 345-6789" [ref=e55]
+      - cell "emily.rodriguez@company.example" [ref=e56]
+    - row "David Williams Environmental Specialist Environmental Services (555) 456-7890 david.williams@company.example" [ref=e57]:
+      - rowheader "David Williams" [ref=e58]
+      - cell "Environmental Specialist" [ref=e59]
+      - cell "Environmental Services" [ref=e60]
+      - cell "(555) 456-7890" [ref=e61]
+      - cell "david.williams@company.example" [ref=e62]
+```

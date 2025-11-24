@@ -19,18 +19,14 @@ type Story = StoryObj;
  * Formats input as 999-999-9999 as user types.
  */
 export const Default: Story = {
-  render: () => html`
-    <usa-phone-number-pattern></usa-phone-number-pattern>
-  `,
+  render: () => html` <usa-phone-number-pattern></usa-phone-number-pattern> `,
 };
 
 /**
  * Required phone number field with validation.
  */
 export const Required: Story = {
-  render: () => html`
-    <usa-phone-number-pattern required></usa-phone-number-pattern>
-  `,
+  render: () => html` <usa-phone-number-pattern required></usa-phone-number-pattern> `,
 };
 
 /**
@@ -39,11 +35,7 @@ export const Required: Story = {
  */
 export const WithType: Story = {
   render: () => html`
-    <usa-phone-number-pattern
-      show-type
-      required
-      label="Contact Number"
-    ></usa-phone-number-pattern>
+    <usa-phone-number-pattern show-type required label="Contact Number"></usa-phone-number-pattern>
   `,
 };
 
@@ -53,10 +45,7 @@ export const WithType: Story = {
  */
 export const WithExtension: Story = {
   render: () => html`
-    <usa-phone-number-pattern
-      show-extension
-      label="Business Phone"
-    ></usa-phone-number-pattern>
+    <usa-phone-number-pattern show-extension label="Business Phone"></usa-phone-number-pattern>
   `,
 };
 
@@ -182,8 +171,8 @@ export const MultiplePhoneNumbers: Story = {
     <div class="margin-top-4 usa-alert usa-alert--info usa-alert--slim">
       <div class="usa-alert__body">
         <p class="usa-alert__text">
-          We will only use these numbers to contact you about your application.
-          Please be aware that we may leave voicemail messages.
+          We will only use these numbers to contact you about your application. Please be aware that
+          we may leave voicemail messages.
         </p>
       </div>
     </div>

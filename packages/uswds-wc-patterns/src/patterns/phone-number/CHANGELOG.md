@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Overview
+
 **Data Collection Pattern for collecting phone numbers**
 
 #### Features
+
 - **Phone Number Input with formatting**
 - **Extension Support for business numbers**
 - **Phone Type Selection (mobile, home, work)**
@@ -22,12 +24,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition: Uses `usa-text-input` and `usa-select` components**
 
 #### Properties
+
 - `label` - Label for the phone number section
 - `required` - Whether the phone number is required
 - `showExtension` - Whether to show extension field
 - `showType` - Whether to show phone type selector
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Standard data pattern APIs
@@ -37,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Pattern](https://designsystem.digital.gov/patterns/create-a-user-profile/phone-number/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

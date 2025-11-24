@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-combo-box.ts';
 import type { USAComboBox } from './usa-combo-box.js';
 import { waitForUpdate, validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Regression Tests for Combo Box Functionality
@@ -123,7 +124,7 @@ describe('USAComboBox Regression Tests', () => {
         { value: 'cat', label: 'Cat' },
         { value: 'dog', label: 'Dog' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = selectElement.querySelectorAll('option');
       expect(options.length).toBe(2); // 2 options (no placeholder by default)
@@ -133,7 +134,7 @@ describe('USAComboBox Regression Tests', () => {
 
     it('should handle placeholder text', async () => {
       element.placeholder = 'Choose a fruit';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const placeholderOption = selectElement.querySelector('option[value=""]');
       expect(placeholderOption?.textContent).toBe('Choose a fruit');
@@ -190,7 +191,7 @@ describe('USAComboBox Regression Tests', () => {
 
     it('should have selected options marked correctly', async () => {
       element.value = 'banana';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = selectElement.querySelectorAll('option');
       expect(options[0].selected).toBe(false); // apple
@@ -240,7 +241,7 @@ describe('USAComboBox Regression Tests', () => {
 
     it('should handle empty options array', async () => {
       element.options = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const options = selectElement.querySelectorAll('option');
       expect(options.length).toBe(0);
@@ -365,7 +366,7 @@ describe('USAComboBox Regression Tests', () => {
         const isHidden =
           list.hasAttribute('hidden') ||
           !list.classList.contains('is-visible') ||
-          list.getAttribute('aria-hidden') === 'true';
+          (await waitForARIAAttribute(list, 'aria-hidden')) === 'true';
 
         expect(isHidden).toBe(true);
       }

@@ -338,6 +338,46 @@ describe('USARadio', () => {
       expect(eventDetail.value).toBe('test-value');
       expect(eventDetail.checked).toBe(true);
     });
+
+    // Regression tests for label click functionality
+    // Prevents bug where clicking label doesn't properly select radio
+    it('should select radio when label is clicked', async () => {
+      element.label = 'Test Label';
+      await element.updateComplete;
+
+      const radio = element.querySelector('input[type="radio"]') as HTMLInputElement;
+      const label = element.querySelector('label') as HTMLLabelElement;
+
+      expect(radio).toBeTruthy();
+      expect(label).toBeTruthy();
+      expect(radio.checked).toBe(false);
+
+      // Click the label (simulates user clicking the label text)
+      label.click();
+      await element.updateComplete;
+
+      // Radio should now be checked
+      expect(radio.checked).toBe(true);
+      expect(element.checked).toBe(true);
+    });
+
+    it('should select radio when input is clicked directly', async () => {
+      element.label = 'Test Label';
+      await element.updateComplete;
+
+      const radio = element.querySelector('input[type="radio"]') as HTMLInputElement;
+
+      expect(radio).toBeTruthy();
+      expect(radio.checked).toBe(false);
+
+      // Click the radio directly
+      radio.click();
+      await element.updateComplete;
+
+      // Radio should now be checked
+      expect(radio.checked).toBe(true);
+      expect(element.checked).toBe(true);
+    });
   });
 
   describe('USWDS CSS Classes', () => {

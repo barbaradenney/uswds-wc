@@ -106,11 +106,18 @@ export class USAComponent extends USWDSBaseComponent {
 
 ## Unit Test Template
 
+**IMPORTANT**: Always use CI timing utilities to prevent race conditions in CI environments. See [CI Timing Best Practices](TESTING_GUIDE.md#3-ci-timing-best-practices--new) for complete documentation.
+
 ```typescript
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-component.ts';
 import type { USAComponent } from './usa-component.js';
-import { testComponentAccessibility, USWDS_A11Y_CONFIG } from '@uswds-wc/core/testing';
+import {
+  testComponentAccessibility,
+  USWDS_A11Y_CONFIG,
+  waitForPropertyPropagation,
+  waitForARIAAttribute
+} from '@uswds-wc/test-utils';
 
 describe('USAComponent', () => {
   let element: USAComponent;
@@ -129,12 +136,104 @@ describe('USAComponent', () => {
     expect(element.disabled).toBe(false);
   });
 
+  // ✅ CI-SAFE: Use waitForPropertyPropagation after setting properties
+  it('should propagate required property to child elements', async () => {
+    element.required = true;
+    await waitForPropertyPropagation(element);
+
+    const input = element.querySelector('input');
+    expect(input?.required).toBe(true);
+  });
+
+  // ✅ CI-SAFE: Use waitForARIAAttribute for ARIA attributes
+  it('should set ARIA attributes correctly', async () => {
+    element.expanded = true;
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    const ariaExpanded = await waitForARIAAttribute(button!, 'aria-expanded');
+    expect(ariaExpanded).toBe('true');
+  });
+
   it('should pass accessibility tests', async () => {
     await element.updateComplete;
     await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
   });
 });
 ```
+
+### CI Timing Patterns for Tests
+
+**Pattern 1: Property → DOM Propagation**
+```typescript
+// ❌ BAD - May fail in CI
+element.disabled = true;
+await element.updateComplete;
+const button = element.querySelector('button');
+expect(button.disabled).toBe(true);
+
+// ✅ GOOD - CI-safe
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
+
+element.disabled = true;
+await waitForPropertyPropagation(element);
+const button = element.querySelector('button');
+expect(button.disabled).toBe(true);
+```
+
+**Pattern 2: ARIA Attributes**
+```typescript
+// ❌ BAD - May fail in CI
+const ariaLabel = button.getAttribute('aria-label');
+expect(ariaLabel).toBe('Submit');
+
+// ✅ GOOD - CI-safe
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
+
+const ariaLabel = await waitForARIAAttribute(button, 'aria-label');
+expect(ariaLabel).toBe('Submit');
+```
+
+**Pattern 3: Modal/Complex Components**
+```typescript
+// ❌ BAD - May fail in CI
+modal.open = true;
+await modal.updateComplete;
+const title = modal.querySelector('.usa-modal__heading');
+
+// ✅ GOOD - CI-safe
+import { waitForModalOpen } from '@uswds-wc/test-utils';
+
+modal.open = true;
+await waitForModalOpen(modal);
+const title = modal.querySelector('.usa-modal__heading');
+```
+
+**Pattern 4: Accordion/Transitions**
+```typescript
+// ❌ BAD - May fail in CI
+button.click();
+await element.updateComplete;
+expect(button.getAttribute('aria-expanded')).toBe('true');
+
+// ✅ GOOD - CI-safe
+import { waitForAccordionTransition } from '@uswds-wc/test-utils';
+
+button.click();
+await waitForAccordionTransition(element);
+expect(button.getAttribute('aria-expanded')).toBe('true');
+```
+
+**Available CI Timing Utilities**:
+- `waitForPropertyPropagation(element, iterations?)` - Property changes → DOM
+- `waitForARIAAttribute(element, attribute, timeout?)` - ARIA attribute polling
+- `waitForModalOpen(modal)` - Modal initialization
+- `waitForAccordionTransition(accordion)` - Accordion CSS transitions
+- `waitForComboBoxInit(comboBox)` - Combo-box USWDS initialization
+- `waitForDatePickerInit(datePicker)` - Date picker calendar rendering
+- `waitForElementRender(element, timeout?)` - Generic element rendering
+
+**See Also**: [docs/TESTING_GUIDE.md - CI Timing Best Practices](TESTING_GUIDE.md#3-ci-timing-best-practices--new)
 
 ## Storybook Story Template
 

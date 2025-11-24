@@ -11,7 +11,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import glob from 'glob';
+import { globSync } from 'glob';
 
 const errors = [];
 let fileCount = 0;
@@ -90,7 +90,7 @@ function main() {
   console.log('🔍 Validating JavaScript syntax patterns...');
 
   // Find all TypeScript files in components
-  const files = glob.sync('src/components/**/*.ts', {
+  const files = globSync('src/components/**/*.ts', {
     ignore: ['**/*.test.ts', '**/*.stories.ts', '**/*.d.ts'],
   });
 

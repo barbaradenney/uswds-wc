@@ -23,7 +23,7 @@ const PATTERNS = {
   // usa-icon usage (correct pattern)
   usaIcon: /<usa-icon[^>]+name=["'][^"']+["'][^>]*>/g,
   // Import of usa-icon component
-  iconImport: /import.*['"]@uswds-wc\/data-display\/components\/icon['"]/,
+  iconImport: /import.*['"]@uswds-wc\/data-display['"]/,
 };
 
 // Icons that should use usa-icon component
@@ -136,7 +136,7 @@ class CompositionValidator {
           this.errors.push({
             file: fileName,
             issue: 'Missing usa-icon component import',
-            suggestion: "Add: import '@uswds-wc/data-display/components/icon';",
+            suggestion: "Add: import '@uswds-wc/data-display';",
           });
         }
       }
@@ -243,7 +243,7 @@ class CompositionValidator {
       if (this.errors.length > 0) {
         console.log('💡 Fix suggestions:');
         console.log('   - Replace <img> icon tags with <usa-icon> component');
-        console.log("   - Add import: import '@uswds-wc/data-display/components/icon';");
+        console.log("   - Add import: import '@uswds-wc/data-display';");
         console.log('   - Use proper component composition patterns\n');
       }
     }

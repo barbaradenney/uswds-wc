@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-tooltip.ts';
 import type { USATooltip } from './usa-tooltip.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('Tooltip JavaScript Interaction Testing', () => {
   let element: USATooltip;
@@ -188,7 +189,7 @@ describe('Tooltip JavaScript Interaction Testing', () => {
     it('should handle programmatic show/hide', async () => {
       // Test programmatically showing tooltip
       element.show = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const tooltipBody = element.querySelector('.usa-tooltip__body') as HTMLElement;
       if (tooltipBody) {
@@ -338,7 +339,7 @@ describe('Tooltip JavaScript Interaction Testing', () => {
         expect(tooltipBody.id).toBeTruthy();
 
         // Check ARIA live region for dynamic updates
-        const liveAttribute = tooltipBody.getAttribute('aria-live');
+        const liveAttribute = await waitForARIAAttribute(tooltipBody, 'aria-live');
         if (liveAttribute) {
           expect(['polite', 'assertive']).toContain(liveAttribute);
         }

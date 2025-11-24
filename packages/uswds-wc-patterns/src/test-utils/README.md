@@ -9,6 +9,7 @@ These utilities ensure consistent USWDS compliance testing across all patterns w
 ## What Can Be Generalized
 
 ### ✅ Highly Reusable (All Patterns)
+
 - Fieldset/legend structure validation
 - Compact mode usage validation
 - No form-group wrappers validation
@@ -19,11 +20,13 @@ These utilities ensure consistent USWDS compliance testing across all patterns w
 - Compact rendering validation
 
 ### ⚠️ Partially Reusable (Pattern-Specific Configuration)
+
 - Field label validation (labels are pattern-specific, but validation logic is reusable)
 - Field order validation (order is pattern-specific, but validation logic is reusable)
 - Field count validation (counts are pattern-specific)
 
 ### ❌ Pattern-Specific (Not Reusable)
+
 - Dropdown option lists (e.g., state/territory options in address pattern)
 - Pattern-specific field behavior (e.g., urbanization field logic)
 - Custom validation rules unique to a pattern
@@ -288,6 +291,7 @@ describe('USAAddressPattern - USWDS Compliance', () => {
 ## When to Use Generic vs Pattern-Specific Tests
 
 ### Use Generic Validators For:
+
 - Fieldset/legend structure
 - Compact mode usage
 - No form-group/grid wrappers
@@ -296,6 +300,7 @@ describe('USAAddressPattern - USWDS Compliance', () => {
 - Field order validation
 
 ### Write Pattern-Specific Tests For:
+
 - Dropdown option lists (like state/territory options)
 - Complex field interactions
 - Conditional field visibility logic

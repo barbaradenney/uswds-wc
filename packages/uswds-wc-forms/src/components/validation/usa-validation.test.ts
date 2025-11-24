@@ -11,6 +11,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAValidation', () => {
   let element: USAValidation;
@@ -72,7 +73,7 @@ describe('USAValidation', () => {
     it('should render textarea when inputType is textarea', async () => {
       element.inputType = 'textarea';
       element.rows = 5;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea');
       expect(textarea).toBeTruthy();
@@ -86,7 +87,7 @@ describe('USAValidation', () => {
         { value: 'option1', text: 'Option 1' },
         { value: 'option2', text: 'Option 2' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select');
       expect(select).toBeTruthy();
@@ -298,7 +299,7 @@ describe('USAValidation', () => {
     it('should validate on input when enabled', async () => {
       element.validateOnInput = true;
       element.rules = [{ type: 'required', message: 'Required' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       input.value = 'test';
@@ -311,7 +312,7 @@ describe('USAValidation', () => {
     it('should validate on blur when enabled', async () => {
       element.validateOnBlur = true;
       element.rules = [{ type: 'required', message: 'Required' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       input.value = 'test';
@@ -354,7 +355,7 @@ describe('USAValidation', () => {
 
     it('should show required indicator for required fields', async () => {
       element.rules = [{ type: 'required', message: 'Required' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const formGroup = element.querySelector('.usa-form-group');
       const requiredIndicator = element.querySelector('abbr[title="required"]');
@@ -397,7 +398,7 @@ describe('USAValidation', () => {
     it('should have proper label association', async () => {
       element.name = 'test-input';
       element.label = 'Test Label';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const label = element.querySelector('label');
       const input = element.querySelector('input');
@@ -409,7 +410,7 @@ describe('USAValidation', () => {
     it('should associate hint with input using aria-describedby', async () => {
       element.hint = 'This is a hint';
       element.name = 'test-input';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       const hint = element.querySelector('.usa-hint');
@@ -651,7 +652,7 @@ describe('USAValidation', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.disabled).toBe(true);
@@ -659,7 +660,7 @@ describe('USAValidation', () => {
 
     it('should handle readonly state', async () => {
       element.readonly = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input');
       expect(input?.readOnly).toBe(true);

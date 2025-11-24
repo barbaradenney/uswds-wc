@@ -13,7 +13,7 @@
 describe('Button Group - Accessibility', () => {
   beforeEach(() => {
     // Visit the button group Storybook story
-    cy.visit('/iframe.html?id=components-button-group--default&viewMode=story');
+    cy.visit('/iframe.html?id=actions-button-group--default&viewMode=story');
 
     // Wait for USWDS JavaScript to initialize
     cy.wait(1000);
@@ -28,7 +28,7 @@ describe('Button Group - Accessibility', () => {
   describe('Segmented Button Layout', () => {
     it('should have clean CSS classes for segmented button positioning', () => {
       // Visit segmented variant
-      cy.visit('/iframe.html?id=components-button-group--segmented&viewMode=story');
+      cy.visit('/iframe.html?id=actions-button-group--segmented&viewMode=story');
       cy.wait(1000);
 
       cy.get('usa-button-group').as('segmentedGroup');
@@ -247,7 +247,7 @@ describe('Button Group - Accessibility', () => {
     });
 
     it('should support segmented variant accessibility', () => {
-      cy.visit('/iframe.html?id=components-button-group--segmented&viewMode=story');
+      cy.visit('/iframe.html?id=actions-button-group--segmented&viewMode=story');
       cy.wait(1000);
 
       // Re-inject axe after visiting new page

@@ -23,7 +23,7 @@
 describe('Modal - Programmatic API and Force Action', () => {
   beforeEach(() => {
     // Visit the modal Storybook story
-    cy.visit('/iframe.html?id=components-modal--default&viewMode=story');
+    cy.visit('/iframe.html?id=feedback-modal--default&viewMode=story');
     cy.wait(1000); // Wait for USWDS initialization
   });
 
@@ -278,7 +278,7 @@ describe('Modal - Programmatic API and Force Action', () => {
   describe('Force Action Mode - Escape Key Blocking', () => {
     beforeEach(() => {
       // Visit force-action modal story
-      cy.visit('/iframe.html?id=components-modal--force-action&viewMode=story');
+      cy.visit('/iframe.html?id=feedback-modal--force-action&viewMode=story');
       cy.wait(1000);
     });
 
@@ -370,7 +370,7 @@ describe('Modal - Programmatic API and Force Action', () => {
   describe('Force Action Mode - Programmatic Control', () => {
     beforeEach(() => {
       // Visit force-action modal story
-      cy.visit('/iframe.html?id=components-modal--force-action&viewMode=story');
+      cy.visit('/iframe.html?id=feedback-modal--force-action&viewMode=story');
       cy.wait(1000);
     });
 

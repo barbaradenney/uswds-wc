@@ -7,7 +7,7 @@ import { initializeSearch } from './usa-search-behavior.js';
 import '@uswds-wc/core/styles.css';
 
 // Import usa-icon component for search icon
-import '@uswds-wc/data-display/components/icon';
+import '@uswds-wc/data-display';
 
 /**
  * USA Search Web Component

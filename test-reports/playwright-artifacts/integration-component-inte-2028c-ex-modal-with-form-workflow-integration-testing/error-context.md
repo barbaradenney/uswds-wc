@@ -1,0 +1,73 @@
+# Page snapshot
+
+```yaml
+- main [ref=e2]:
+  - heading "User Management Dashboard" [level=1] [ref=e3]
+  - button "Add New User" [ref=e4] [cursor=pointer]
+  - table [ref=e5]:
+    - rowgroup [ref=e6]:
+      - row "Name Email Role Actions" [ref=e7]:
+        - cell "Name" [ref=e8]
+        - cell "Email" [ref=e9]
+        - cell "Role" [ref=e10]
+        - cell "Actions" [ref=e11]
+    - rowgroup [ref=e12]:
+      - row "John Doe john@example.com Admin Edit Delete" [ref=e13]:
+        - cell "John Doe" [ref=e14]
+        - cell "john@example.com" [ref=e15]
+        - cell "Admin" [ref=e16]
+        - cell "Edit Delete" [ref=e17]:
+          - button "Edit" [ref=e18] [cursor=pointer]
+          - button "Delete" [ref=e19] [cursor=pointer]
+  - generic "Add New User" [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Add New User" [level=2] [ref=e23]
+        - paragraph [ref=e24]: Please fill in the user information below.
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - generic [ref=e27]: Full Name *
+            - textbox "Full Name *" [ref=e28]: Jane Smith
+          - generic [ref=e29]:
+            - generic [ref=e30]: Email Address *
+            - textbox "Email Address *" [active] [ref=e31]: jane.smith@example.com
+          - group "User Role *" [ref=e32]:
+            - generic [ref=e33]: User Role *
+            - generic [ref=e34]:
+              - radio "Administrator" [ref=e35]
+              - generic [ref=e36] [cursor=pointer]: Administrator
+            - generic [ref=e37]:
+              - radio "Editor" [ref=e38]
+              - generic [ref=e39] [cursor=pointer]: Editor
+            - generic [ref=e40]:
+              - radio "Viewer" [ref=e41]
+              - generic [ref=e42] [cursor=pointer]: Viewer
+          - group "Permissions" [ref=e43]:
+            - generic [ref=e44]: Permissions
+            - generic [ref=e45]:
+              - checkbox "Read Access" [checked] [ref=e46]
+              - generic [ref=e47] [cursor=pointer]: Read Access
+            - generic [ref=e48]:
+              - checkbox "Write Access" [ref=e49]
+              - generic [ref=e50] [cursor=pointer]: Write Access
+            - generic [ref=e51]:
+              - checkbox "Delete Access" [ref=e52]
+              - generic [ref=e53] [cursor=pointer]: Delete Access
+          - generic [ref=e54]:
+            - generic [ref=e55]: Department
+            - combobox "Department" [ref=e56]:
+              - option "Select department" [selected]
+              - option "Engineering"
+              - option "Design"
+              - option "Marketing"
+              - option "Sales"
+          - generic [ref=e57]:
+            - generic [ref=e58]: Start Date
+            - textbox "Start Date" [ref=e59]
+      - list [ref=e61]:
+        - listitem [ref=e62]:
+          - button "Save User" [ref=e63] [cursor=pointer]
+        - listitem [ref=e64]:
+          - button "Cancel" [ref=e65] [cursor=pointer]
+  - region
+```

@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Modal Interactive Tests (Browser Required)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:6006/iframe.html?id=components-modal--default&viewMode=story');
+    await page.goto('http://localhost:6006/iframe.html?id=feedback-modal--default&viewMode=story');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
   });

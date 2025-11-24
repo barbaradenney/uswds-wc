@@ -1,0 +1,651 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Global" [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Skip to canvas" [ref=e12] [cursor=pointer]:
+            - /url: "#storybook-preview-wrapper"
+          - link "Storybook" [ref=e14]:
+            - /url: ./
+            - img "Storybook" [ref=e15]
+          - button "Shortcuts" [ref=e23] [cursor=pointer]:
+            - img [ref=e24]
+        - generic [ref=e27]: Search for components
+        - combobox "Search for components" [ref=e29]:
+          - generic:
+            - img
+          - searchbox "Search for components" [ref=e30]
+          - code:
+            - generic: ⌘
+            - text: K
+          - button "Tag filters" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+        - generic [ref=e41]:
+          - img
+          - link "Getting Started" [ref=e52] [cursor=pointer]:
+            - /url: /?path=/docs/getting-started--docs
+            - img [ref=e54]
+            - text: Getting Started
+          - link "About" [ref=e57] [cursor=pointer]:
+            - /url: /?path=/docs/about--docs
+            - img [ref=e59]
+            - text: About
+          - link "Bundle Optimization" [ref=e62] [cursor=pointer]:
+            - /url: /?path=/docs/bundle-optimization--docs
+            - img [ref=e64]
+            - text: Bundle Optimization
+          - link "CI-CD Pipeline" [ref=e67] [cursor=pointer]:
+            - /url: /?path=/docs/ci-cd-pipeline--docs
+            - img [ref=e69]
+            - text: CI-CD Pipeline
+          - link "Component Generator" [ref=e72] [cursor=pointer]:
+            - /url: /?path=/docs/component-generator--docs
+            - img [ref=e74]
+            - text: Component Generator
+          - link "Post-Commit System" [ref=e77] [cursor=pointer]:
+            - /url: /?path=/docs/post-commit-system--docs
+            - img [ref=e79]
+            - text: Post-Commit System
+          - link "Pre-Commit System" [ref=e82] [cursor=pointer]:
+            - /url: /?path=/docs/pre-commit-system--docs
+            - img [ref=e84]
+            - text: Pre-Commit System
+          - link "Pre-Push System" [ref=e87] [cursor=pointer]:
+            - /url: /?path=/docs/pre-push-system--docs
+            - img [ref=e89]
+            - text: Pre-Push System
+          - link "USWDS Compliance" [ref=e92] [cursor=pointer]:
+            - /url: /?path=/docs/uswds-compliance--docs
+            - img [ref=e94]
+            - text: USWDS Compliance
+          - link "USWDS Sync System" [ref=e97] [cursor=pointer]:
+            - /url: /?path=/docs/uswds-sync-system--docs
+            - img [ref=e99]
+            - text: USWDS Sync System
+          - link "Weekly Automation" [ref=e102] [cursor=pointer]:
+            - /url: /?path=/docs/weekly-automation--docs
+            - img [ref=e104]
+            - text: Weekly Automation
+          - link "Working with Claude" [ref=e107] [cursor=pointer]:
+            - /url: /?path=/docs/working-with-claude--docs
+            - img [ref=e109]
+            - text: Working with Claude
+          - generic [ref=e111]:
+            - button "Forms" [expanded] [ref=e112] [cursor=pointer]:
+              - img [ref=e114]
+              - text: Forms
+            - button "Collapse" [ref=e116] [cursor=pointer]:
+              - img [ref=e117]
+          - button "Character Count" [ref=e120] [cursor=pointer]:
+            - generic [ref=e121]:
+              - img [ref=e123]
+              - img [ref=e125]
+            - text: Character Count
+          - button "Checkbox" [ref=e128] [cursor=pointer]:
+            - generic [ref=e129]:
+              - img [ref=e131]
+              - img [ref=e133]
+            - text: Checkbox
+          - button "Combo Box" [ref=e136] [cursor=pointer]:
+            - generic [ref=e137]:
+              - img [ref=e139]
+              - img [ref=e141]
+            - text: Combo Box
+          - button "Date Picker" [ref=e144] [cursor=pointer]:
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - img [ref=e149]
+            - text: Date Picker
+          - button "Date Range Picker" [ref=e152] [cursor=pointer]:
+            - generic [ref=e153]:
+              - img [ref=e155]
+              - img [ref=e157]
+            - text: Date Range Picker
+          - button "File Input" [ref=e160] [cursor=pointer]:
+            - generic [ref=e161]:
+              - img [ref=e163]
+              - img [ref=e165]
+            - text: File Input
+          - button "Input Prefix Suffix" [ref=e168] [cursor=pointer]:
+            - generic [ref=e169]:
+              - img [ref=e171]
+              - img [ref=e173]
+            - text: Input Prefix Suffix
+          - button "Memorable Date" [ref=e176] [cursor=pointer]:
+            - generic [ref=e177]:
+              - img [ref=e179]
+              - img [ref=e181]
+            - text: Memorable Date
+          - button "Radio" [ref=e184] [cursor=pointer]:
+            - generic [ref=e185]:
+              - img [ref=e187]
+              - img [ref=e189]
+            - text: Radio
+          - button "Range Slider" [ref=e192] [cursor=pointer]:
+            - generic [ref=e193]:
+              - img [ref=e195]
+              - img [ref=e197]
+            - text: Range Slider
+          - button "Select" [ref=e200] [cursor=pointer]:
+            - generic [ref=e201]:
+              - img [ref=e203]
+              - img [ref=e205]
+            - text: Select
+          - button "Text Input" [expanded] [ref=e208] [cursor=pointer]:
+            - generic [ref=e209]:
+              - img [ref=e211]
+              - img [ref=e213]
+            - text: Text Input
+          - link "Docs" [ref=e216] [cursor=pointer]:
+            - /url: /?path=/docs/forms-text-input--docs
+            - img [ref=e218]
+            - text: Docs
+          - generic [ref=e220]:
+            - link "Default" [ref=e221] [cursor=pointer]:
+              - /url: /?path=/story/forms-text-input--default
+              - img [ref=e223]
+              - text: Default
+            - link "Skip to canvas" [ref=e225] [cursor=pointer]:
+              - /url: "#storybook-preview-wrapper"
+          - link "With Placeholder" [ref=e227] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--with-placeholder
+            - img [ref=e229]
+            - text: With Placeholder
+          - link "Required" [ref=e232] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--required
+            - img [ref=e234]
+            - text: Required
+          - link "With Error" [ref=e237] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--with-error
+            - img [ref=e239]
+            - text: With Error
+          - link "Disabled" [ref=e242] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--disabled
+            - img [ref=e244]
+            - text: Disabled
+          - link "Read Only" [ref=e247] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--read-only
+            - img [ref=e249]
+            - text: Read Only
+          - link "Width Variants" [ref=e252] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--width-variants
+            - img [ref=e254]
+            - text: Width Variants
+          - link "Tax ID (EIN)" [ref=e257] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--tax-id
+            - img [ref=e259]
+            - text: Tax ID (EIN)
+          - link "Tax ID Number" [ref=e262] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--tax-id-number
+            - img [ref=e264]
+            - text: Tax ID Number
+          - link "Employee ID" [ref=e267] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--employee-id
+            - img [ref=e269]
+            - text: Employee ID
+          - link "Business Email Address" [ref=e272] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--business-email
+            - img [ref=e274]
+            - text: Business Email Address
+          - link "Business Number" [ref=e277] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--business-number
+            - img [ref=e279]
+            - text: Business Number
+          - link "Case Number" [ref=e282] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--case-number
+            - img [ref=e284]
+            - text: Case Number
+          - link "Project Number" [ref=e287] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--project-number
+            - img [ref=e289]
+            - text: Project Number
+          - link "Accessibility Demo" [ref=e292] [cursor=pointer]:
+            - /url: /?path=/story/forms-text-input--accessibility-demo
+            - img [ref=e294]
+            - text: Accessibility Demo
+          - link "Changelog" [ref=e297] [cursor=pointer]:
+            - /url: /?path=/docs/forms-text-input-changelog--docs
+            - img [ref=e299]
+            - text: Changelog
+          - button "Textarea" [ref=e302] [cursor=pointer]:
+            - generic [ref=e303]:
+              - img [ref=e305]
+              - img [ref=e307]
+            - text: Textarea
+          - button "Time Picker" [ref=e310] [cursor=pointer]:
+            - generic [ref=e311]:
+              - img [ref=e313]
+              - img [ref=e315]
+            - text: Time Picker
+          - button "Validation" [ref=e318] [cursor=pointer]:
+            - generic [ref=e319]:
+              - img [ref=e321]
+              - img [ref=e323]
+            - text: Validation
+          - generic [ref=e325]:
+            - button "Navigation" [expanded] [ref=e326] [cursor=pointer]:
+              - img [ref=e328]
+              - text: Navigation
+            - button "Collapse" [ref=e330] [cursor=pointer]:
+              - img [ref=e331]
+          - button "Breadcrumb" [ref=e334] [cursor=pointer]:
+            - generic [ref=e335]:
+              - img [ref=e337]
+              - img [ref=e339]
+            - text: Breadcrumb
+          - button "Footer" [ref=e342] [cursor=pointer]:
+            - generic [ref=e343]:
+              - img [ref=e345]
+              - img [ref=e347]
+            - text: Footer
+          - button "Header" [ref=e350] [cursor=pointer]:
+            - generic [ref=e351]:
+              - img [ref=e353]
+              - img [ref=e355]
+            - text: Header
+          - button "In Page Navigation" [ref=e358] [cursor=pointer]:
+            - generic [ref=e359]:
+              - img [ref=e361]
+              - img [ref=e363]
+            - text: In Page Navigation
+          - button "Language Selector" [ref=e366] [cursor=pointer]:
+            - generic [ref=e367]:
+              - img [ref=e369]
+              - img [ref=e371]
+            - text: Language Selector
+          - button "Pagination" [ref=e374] [cursor=pointer]:
+            - generic [ref=e375]:
+              - img [ref=e377]
+              - img [ref=e379]
+            - text: Pagination
+          - button "Side Navigation" [ref=e382] [cursor=pointer]:
+            - generic [ref=e383]:
+              - img [ref=e385]
+              - img [ref=e387]
+            - text: Side Navigation
+          - button "Skip Link" [ref=e390] [cursor=pointer]:
+            - generic [ref=e391]:
+              - img [ref=e393]
+              - img [ref=e395]
+            - text: Skip Link
+          - generic [ref=e397]:
+            - button "Data Display" [expanded] [ref=e398] [cursor=pointer]:
+              - img [ref=e400]
+              - text: Data Display
+            - button "Collapse" [ref=e402] [cursor=pointer]:
+              - img [ref=e403]
+          - button "Card" [ref=e406] [cursor=pointer]:
+            - generic [ref=e407]:
+              - img [ref=e409]
+              - img [ref=e411]
+            - text: Card
+          - button "Collection" [ref=e414] [cursor=pointer]:
+            - generic [ref=e415]:
+              - img [ref=e417]
+              - img [ref=e419]
+            - text: Collection
+          - button "Icon List" [ref=e422] [cursor=pointer]:
+            - generic [ref=e423]:
+              - img [ref=e425]
+              - img [ref=e427]
+            - text: Icon List
+          - button "Icon" [ref=e430] [cursor=pointer]:
+            - generic [ref=e431]:
+              - img [ref=e433]
+              - img [ref=e435]
+            - text: Icon
+          - button "List" [ref=e438] [cursor=pointer]:
+            - generic [ref=e439]:
+              - img [ref=e441]
+              - img [ref=e443]
+            - text: List
+          - button "Summary Box" [ref=e446] [cursor=pointer]:
+            - generic [ref=e447]:
+              - img [ref=e449]
+              - img [ref=e451]
+            - text: Summary Box
+          - button "Table" [ref=e454] [cursor=pointer]:
+            - generic [ref=e455]:
+              - img [ref=e457]
+              - img [ref=e459]
+            - text: Table
+          - button "Tag" [ref=e462] [cursor=pointer]:
+            - generic [ref=e463]:
+              - img [ref=e465]
+              - img [ref=e467]
+            - text: Tag
+          - generic [ref=e469]:
+            - button "Feedback" [expanded] [ref=e470] [cursor=pointer]:
+              - img [ref=e472]
+              - text: Feedback
+            - button "Collapse" [ref=e474] [cursor=pointer]:
+              - img [ref=e475]
+          - button "Alert" [ref=e478] [cursor=pointer]:
+            - generic [ref=e479]:
+              - img [ref=e481]
+              - img [ref=e483]
+            - text: Alert
+          - button "Banner" [ref=e486] [cursor=pointer]:
+            - generic [ref=e487]:
+              - img [ref=e489]
+              - img [ref=e491]
+            - text: Banner
+          - button "Modal" [ref=e494] [cursor=pointer]:
+            - generic [ref=e495]:
+              - img [ref=e497]
+              - img [ref=e499]
+            - text: Modal
+          - button "Site Alert" [ref=e502] [cursor=pointer]:
+            - generic [ref=e503]:
+              - img [ref=e505]
+              - img [ref=e507]
+            - text: Site Alert
+          - button "Tooltip" [ref=e510] [cursor=pointer]:
+            - generic [ref=e511]:
+              - img [ref=e513]
+              - img [ref=e515]
+            - text: Tooltip
+          - generic [ref=e517]:
+            - button "Actions" [expanded] [ref=e518] [cursor=pointer]:
+              - img [ref=e520]
+              - text: Actions
+            - button "Collapse" [ref=e522] [cursor=pointer]:
+              - img [ref=e523]
+          - button "Button Group" [ref=e526] [cursor=pointer]:
+            - generic [ref=e527]:
+              - img [ref=e529]
+              - img [ref=e531]
+            - text: Button Group
+          - button "Button" [ref=e534] [cursor=pointer]:
+            - generic [ref=e535]:
+              - img [ref=e537]
+              - img [ref=e539]
+            - text: Button
+          - button "Link" [ref=e542] [cursor=pointer]:
+            - generic [ref=e543]:
+              - img [ref=e545]
+              - img [ref=e547]
+            - text: Link
+          - button "Search" [ref=e550] [cursor=pointer]:
+            - generic [ref=e551]:
+              - img [ref=e553]
+              - img [ref=e555]
+            - text: Search
+          - generic [ref=e557]:
+            - button "Layout" [expanded] [ref=e558] [cursor=pointer]:
+              - img [ref=e560]
+              - text: Layout
+            - button "Collapse" [ref=e562] [cursor=pointer]:
+              - img [ref=e563]
+          - button "Identifier" [ref=e566] [cursor=pointer]:
+            - generic [ref=e567]:
+              - img [ref=e569]
+              - img [ref=e571]
+            - text: Identifier
+          - button "Process List" [ref=e574] [cursor=pointer]:
+            - generic [ref=e575]:
+              - img [ref=e577]
+              - img [ref=e579]
+            - text: Process List
+          - button "Prose" [ref=e582] [cursor=pointer]:
+            - generic [ref=e583]:
+              - img [ref=e585]
+              - img [ref=e587]
+            - text: Prose
+          - button "Step Indicator" [ref=e590] [cursor=pointer]:
+            - generic [ref=e591]:
+              - img [ref=e593]
+              - img [ref=e595]
+            - text: Step Indicator
+          - generic [ref=e597]:
+            - button "Structure" [expanded] [ref=e598] [cursor=pointer]:
+              - img [ref=e600]
+              - text: Structure
+            - button "Collapse" [ref=e602] [cursor=pointer]:
+              - img [ref=e603]
+          - button "Accordion" [ref=e606] [cursor=pointer]:
+            - generic [ref=e607]:
+              - img [ref=e609]
+              - img [ref=e611]
+            - text: Accordion
+          - generic [ref=e613]:
+            - button "Patterns" [expanded] [ref=e614] [cursor=pointer]:
+              - img [ref=e616]
+              - text: Patterns
+            - button "Collapse" [ref=e618] [cursor=pointer]:
+              - img [ref=e619]
+          - button "User Profile" [ref=e622] [cursor=pointer]:
+            - generic [ref=e623]:
+              - img [ref=e625]
+              - img [ref=e627]
+            - text: User Profile
+          - button "Form Summary" [ref=e630] [cursor=pointer]:
+            - generic [ref=e631]:
+              - img [ref=e633]
+              - img [ref=e635]
+            - text: Form Summary
+          - button "Language Selection" [ref=e638] [cursor=pointer]:
+            - generic [ref=e639]:
+              - img [ref=e641]
+              - img [ref=e643]
+            - text: Language Selection
+          - button "Multi-Step Form" [ref=e646] [cursor=pointer]:
+            - generic [ref=e647]:
+              - img [ref=e649]
+              - img [ref=e651]
+            - text: Multi-Step Form
+      - generic [ref=e655]:
+        - generic [ref=e656] [cursor=pointer]:
+          - button "Run tests" [ref=e659]:
+            - img [ref=e660]
+            - generic [ref=e663]: Run tests
+          - button "Expand testing module" [ref=e666]:
+            - img [ref=e667]
+        - generic [ref=e671]:
+          - generic [ref=e672]:
+            - generic [ref=e673]:
+              - generic [ref=e674]: Run component tests
+              - generic [ref=e675]: Not run
+            - generic [ref=e676]:
+              - button "Enable watch mode" [ref=e678] [cursor=pointer]:
+                - img [ref=e679]
+              - button "Start test run" [ref=e683] [cursor=pointer]:
+                - img [ref=e684]
+          - generic [ref=e686]:
+            - generic [ref=e687]:
+              - generic [ref=e688]:
+                - checkbox "Interactions" [checked] [disabled] [ref=e690]
+                - generic [ref=e692]: Interactions
+              - button "Run tests to see results" [disabled] [ref=e694]:
+                - generic "Run tests to see results" [ref=e695]
+            - generic [ref=e696]:
+              - generic [ref=e697] [cursor=pointer]:
+                - checkbox "Coverage" [ref=e699]
+                - generic [ref=e701]: Coverage
+              - 'button "Coverage status: unknown" [disabled] [ref=e703]':
+                - 'generic "Coverage status: unknown" [ref=e704]'
+            - generic [ref=e705]:
+              - generic [ref=e706] [cursor=pointer]:
+                - checkbox "Accessibility" [ref=e708]
+                - generic [ref=e710]: Accessibility
+              - button "Run tests to see accessibility results" [disabled] [ref=e712]:
+                - generic "Run tests to see accessibility results" [ref=e713]
+  - main [ref=e715]:
+    - region "Toolbar" [ref=e716]:
+      - generic [ref=e717]: Toolbar
+      - generic [ref=e718]:
+        - generic [ref=e719]:
+          - button "Remount component" [ref=e720] [cursor=pointer]:
+            - img [ref=e721]
+          - button "Zoom in" [ref=e723] [cursor=pointer]:
+            - img [ref=e724]
+          - button "Zoom out" [ref=e727] [cursor=pointer]:
+            - img [ref=e728]
+          - button "Reset zoom" [ref=e731] [cursor=pointer]:
+            - img [ref=e732]
+          - button "Apply a grid to the preview" [ref=e735] [cursor=pointer]:
+            - img [ref=e736]
+          - button "Change the background of the preview" [ref=e739] [cursor=pointer]:
+            - img [ref=e740]
+          - button "Enable measure" [ref=e743] [cursor=pointer]:
+            - img [ref=e744]
+          - button "Apply outlines to the preview" [ref=e747] [cursor=pointer]:
+            - img [ref=e748]
+          - button "Change the size of the preview" [ref=e751] [cursor=pointer]:
+            - img [ref=e752]
+          - button "Vision simulator" [ref=e757] [cursor=pointer]:
+            - img [ref=e758]
+          - generic:
+            - img
+          - button "light" [ref=e764] [cursor=pointer]:
+            - img [ref=e765]
+            - text: light
+        - generic [ref=e767]:
+          - button "Go full screen" [ref=e768] [cursor=pointer]:
+            - img [ref=e769]
+          - link "Open canvas in new tab" [ref=e771] [cursor=pointer]:
+            - /url: iframe.html?globals=&id=forms-text-input--default
+            - img [ref=e772]
+          - button "Copy canvas link" [ref=e775] [cursor=pointer]:
+            - img [ref=e776]
+    - generic [ref=e781]:
+      - link "Skip to sidebar" [ref=e782] [cursor=pointer]:
+        - /url: "#forms-text-input--default"
+      - iframe [ref=e783]:
+        - generic [ref=f1e4]:
+          - generic [ref=f1e5]: Full Name
+          - generic [ref=f1e6]: Enter your complete legal name
+          - textbox "Full Name" [ref=f1e7]:
+            - /placeholder: ""
+  - generic [ref=e786]:
+    - generic [ref=e788]:
+      - tablist [ref=e790]:
+        - tab "Controls 15" [ref=e791] [cursor=pointer]:
+          - generic [ref=e792]:
+            - generic [ref=e793]: Controls
+            - generic [ref=e794]: "15"
+        - tab "Actions" [ref=e795] [cursor=pointer]:
+          - generic [ref=e797]: Actions
+        - tab "Interactions" [ref=e798] [cursor=pointer]:
+          - generic [ref=e800]: Interactions
+        - tab "Accessibility" [ref=e801] [cursor=pointer]:
+          - generic [ref=e803]: Accessibility
+      - generic [ref=e806]:
+        - button "Change addon orientation [⌥ D]" [ref=e807] [cursor=pointer]:
+          - img [ref=e808]
+        - button "Hide addons [⌥ A]" [ref=e811] [cursor=pointer]:
+          - img [ref=e812]
+    - generic [ref=e819]:
+      - button "Reset controls" [ref=e821] [cursor=pointer]:
+        - img [ref=e822]
+      - table [ref=e824]:
+        - rowgroup [ref=e825]:
+          - row "Name Control" [ref=e826]:
+            - cell "Name" [ref=e827]
+            - cell "Control" [ref=e828]
+        - rowgroup [ref=e829]:
+          - row "type text" [ref=e830]:
+            - cell "type" [ref=e831]
+            - cell "text" [ref=e832]:
+              - generic [ref=e833]:
+                - img
+                - combobox [ref=e834]:
+                  - option "Choose option..." [disabled]
+                  - option "text" [selected]
+                  - option "email"
+                  - option "password"
+                  - option "number"
+                  - option "tel"
+                  - option "url"
+          - row "name" [ref=e835]:
+            - cell "name" [ref=e836]
+            - cell [ref=e837]:
+              - textbox [ref=e839]:
+                - /placeholder: Edit string...
+          - row "value" [ref=e840]:
+            - cell "value" [ref=e841]
+            - cell [ref=e842]:
+              - textbox [ref=e844]:
+                - /placeholder: Edit string...
+          - row "placeholder" [ref=e845]:
+            - cell "placeholder" [ref=e846]
+            - cell [ref=e847]:
+              - textbox [ref=e849]:
+                - /placeholder: Edit string...
+          - row "label Full Name" [ref=e850]:
+            - cell "label" [ref=e851]
+            - cell "Full Name" [ref=e852]:
+              - textbox [ref=e854]:
+                - /placeholder: Edit string...
+                - text: Full Name
+          - row "hint Enter your complete legal name" [ref=e855]:
+            - cell "hint" [ref=e856]
+            - cell "Enter your complete legal name" [ref=e857]:
+              - textbox [ref=e859]:
+                - /placeholder: Edit string...
+                - text: Enter your complete legal name
+          - row "error" [ref=e860]:
+            - cell "error" [ref=e861]
+            - cell [ref=e862]:
+              - textbox [ref=e864]:
+                - /placeholder: Edit string...
+          - row "width Choose option..." [ref=e865]:
+            - cell "width" [ref=e866]
+            - cell "Choose option..." [ref=e867]:
+              - generic [ref=e868]:
+                - img
+                - combobox [ref=e869]:
+                  - option "Choose option..." [disabled] [selected]
+                  - option
+                  - option "2xs"
+                  - option "xs"
+                  - option "sm"
+                  - option "small"
+                  - option "md"
+                  - option "medium"
+                  - option "lg"
+                  - option "xl"
+                  - option "2xl"
+          - row "disabled disabled" [ref=e870]:
+            - cell "disabled" [ref=e871]
+            - cell "disabled" [ref=e872]:
+              - generic "disabled" [ref=e873]:
+                - switch "disabled" [ref=e874] [cursor=pointer]
+                - generic [ref=e875] [cursor=pointer]: "False"
+                - generic [ref=e876] [cursor=pointer]: "True"
+          - row "required required" [ref=e877]:
+            - cell "required" [ref=e878]
+            - cell "required" [ref=e879]:
+              - generic "required" [ref=e880]:
+                - switch "required" [ref=e881] [cursor=pointer]
+                - generic [ref=e882] [cursor=pointer]: "False"
+                - generic [ref=e883] [cursor=pointer]: "True"
+          - row "readonly readonly" [ref=e884]:
+            - cell "readonly" [ref=e885]
+            - cell "readonly" [ref=e886]:
+              - generic "readonly" [ref=e887]:
+                - switch "readonly" [ref=e888] [cursor=pointer]
+                - generic [ref=e889] [cursor=pointer]: "False"
+                - generic [ref=e890] [cursor=pointer]: "True"
+          - row "autocomplete" [ref=e891]:
+            - cell "autocomplete" [ref=e892]
+            - cell [ref=e893]:
+              - textbox [ref=e895]:
+                - /placeholder: Edit string...
+          - row "pattern" [ref=e896]:
+            - cell "pattern" [ref=e897]
+            - cell [ref=e898]:
+              - textbox [ref=e900]:
+                - /placeholder: Edit string...
+          - row "maxlength" [ref=e901]:
+            - cell "maxlength" [ref=e902]
+            - cell [ref=e903]:
+              - spinbutton [ref=e905]
+          - row "minlength" [ref=e906]:
+            - cell "minlength" [ref=e907]
+            - cell [ref=e908]:
+              - spinbutton [ref=e910]
+```

@@ -5,7 +5,4 @@
  */
 
 export { USAContactPreferencesPattern } from './usa-contact-preferences-pattern.js';
-export type {
-  ContactPreferencesData,
-  ContactMethod,
-} from './usa-contact-preferences-pattern.js';
+export type { ContactPreferencesData, ContactMethod } from './usa-contact-preferences-pattern.js';

@@ -15,6 +15,7 @@ import { waitForBehaviorInit } from '@uswds-wc/test-utils/test-utils.js';
 import './usa-footer.js';
 import type { USAFooter } from './usa-footer.js';
 import { toggleHtmlTag } from './usa-footer-behavior.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USWDS Footer Behavior Contract', () => {
   let element: USAFooter;
@@ -235,14 +236,14 @@ describe('USWDS Footer Behavior Contract', () => {
       firstButton.click();
       await waitForBehaviorInit(element);
 
-      expect(firstButton.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(firstButton, 'aria-expanded')).toBe('true');
 
       // Open second panel
       secondButton.click();
       await waitForBehaviorInit(element);
 
-      expect(secondButton.getAttribute('aria-expanded')).toBe('true');
-      expect(firstButton.getAttribute('aria-expanded')).toBe('false');
+      expect(await waitForARIAAttribute(secondButton, 'aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(firstButton, 'aria-expanded')).toBe('false');
     });
 
     // SKIP: JSDOM limitation - requires real browser for USWDS footer accordion behavior
@@ -257,7 +258,7 @@ describe('USWDS Footer Behavior Contract', () => {
       button.click();
       await waitForBehaviorInit(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
 
       // Change to desktop width
       Object.defineProperty(window, 'innerWidth', {
@@ -372,7 +373,7 @@ describe('USWDS Footer Behavior Contract', () => {
       button.dispatchEvent(clickEvent);
       await waitForBehaviorInit(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
     });
 
     // SKIP: JSDOM limitation - requires real browser for USWDS event delegation
@@ -391,7 +392,7 @@ describe('USWDS Footer Behavior Contract', () => {
       span.click();
       await waitForBehaviorInit(element);
 
-      expect(button.getAttribute('aria-expanded')).toBe('true');
+      expect(await waitForARIAAttribute(button, 'aria-expanded')).toBe('true');
     });
   });
 

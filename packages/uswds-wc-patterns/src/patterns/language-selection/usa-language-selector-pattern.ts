@@ -5,7 +5,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '@uswds-wc/core/styles.css';
 
 // Import language-selector component
-import '@uswds-wc/navigation/components/language-selector/index.js';
+import '@uswds-wc/navigation';
 
 /**
  * Language option interface for pattern consumers
@@ -244,7 +244,9 @@ export class USALanguageSelectorPattern extends LitElement {
   /**
    * Public API: Set available languages
    */
-  setLanguages(languages: Array<{ code: string; name: string; nativeName: string; href?: string }>) {
+  setLanguages(
+    languages: Array<{ code: string; name: string; nativeName: string; href?: string }>
+  ) {
     this.languages = languages;
   }
 

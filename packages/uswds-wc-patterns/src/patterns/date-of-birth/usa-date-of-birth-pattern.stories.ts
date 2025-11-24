@@ -462,21 +462,19 @@ export const AccessibilityCompliance: Story = {
       <h4>✅ Accessibility Compliance</h4>
       <ul>
         <li>
-          <strong>NO auto-advance focus:</strong> Focus does NOT automatically move to the
-          next field
+          <strong>NO auto-advance focus:</strong> Focus does NOT automatically move to the next
+          field
         </li>
         <li>
-          <strong>Type="text" with inputmode="numeric":</strong> NOT type="number" (better
-          for mobile)
+          <strong>Type="text" with inputmode="numeric":</strong> NOT type="number" (better for
+          mobile)
         </li>
         <li><strong>Visible labels:</strong> All fields have clear, visible labels</li>
-        <li>
-          <strong>Fieldset grouping:</strong> Fields grouped in fieldset with legend
-        </li>
+        <li><strong>Fieldset grouping:</strong> Fields grouped in fieldset with legend</li>
       </ul>
       <p>
-        <strong>Try it:</strong> Select a month, then press Tab. Notice focus moves to
-        Month dropdown (natural tab order), NOT auto-advanced to Day field.
+        <strong>Try it:</strong> Select a month, then press Tab. Notice focus moves to Month
+        dropdown (natural tab order), NOT auto-advanced to Day field.
       </p>
     </div>
 

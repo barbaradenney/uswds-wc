@@ -70,7 +70,7 @@ afterEach(() => {
 
   // Clean up any remaining elements - more aggressive approach
   document.body.innerHTML = '';
-  document.head.querySelectorAll('style[data-component]').forEach(el => el.remove());
+  document.head.querySelectorAll('style[data-component]').forEach((el) => el.remove());
 
   // Reset body classes and styles that components might set
   document.body.className = '';
@@ -132,8 +132,20 @@ afterEach(() => {
     document.body.parentNode?.replaceChild(newBody, document.body);
   } catch (e) {
     // Fallback: try individual event type removal
-    const eventTypes = ['keydown', 'keyup', 'click', 'focus', 'blur', 'resize', 'scroll', 'mousedown', 'mouseup', 'touchstart', 'touchend'];
-    eventTypes.forEach(type => {
+    const eventTypes = [
+      'keydown',
+      'keyup',
+      'click',
+      'focus',
+      'blur',
+      'resize',
+      'scroll',
+      'mousedown',
+      'mouseup',
+      'touchstart',
+      'touchend',
+    ];
+    eventTypes.forEach((type) => {
       try {
         const clone = (window as any).EventTarget.prototype.addEventListener;
         if (clone) {
@@ -149,7 +161,7 @@ afterEach(() => {
   // Clear any cached modules or component state
   try {
     // Clear any component initialization flags
-    document.querySelectorAll('[data-web-component-managed]').forEach(el => {
+    document.querySelectorAll('[data-web-component-managed]').forEach((el) => {
       el.removeAttribute('data-web-component-managed');
     });
   } catch (e) {
@@ -333,11 +345,71 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock window.getComputedStyle for better CSS testing
+// Suppress jsdom "Not implemented: window.getComputedStyle(elt, pseudoElt)" warnings
+// that occur during axe-core accessibility tests checking pseudo-element color contrast
 const originalGetComputedStyle = window.getComputedStyle;
+const originalError = console.error;
+
+// Filter out getComputedStyle pseudo-element warnings
+console.error = (...args: any[]) => {
+  const message = args.join(' ');
+
+  // Suppress jsdom getComputedStyle warnings (pseudo-elements not implemented)
+  if (
+    message.includes('Not implemented: window.getComputedStyle') ||
+    message.includes('getComputedStyle(elt, pseudoElt)')
+  ) {
+    return;
+  }
+
+  // Let other errors through
+  return originalError.apply(console, args);
+};
+
 window.getComputedStyle = (element: Element, pseudoElement?: string | null) => {
-  const originalStyles = originalGetComputedStyle(element, pseudoElement);
-  // Return a more complete mock if the original fails
-  if (!originalStyles) {
+  // If pseudo-element is requested, return a complete mock to prevent jsdom errors
+  // jsdom doesn't implement getComputedStyle for pseudo-elements (:before, :after, etc.)
+  if (pseudoElement) {
+    return {
+      getPropertyValue: (property: string) => {
+        // Return sensible defaults for common pseudo-element properties
+        if (property === 'display') return 'inline';
+        if (property === 'content') return '""';
+        if (property === 'color') return 'rgb(0, 0, 0)';
+        if (property === 'background-color') return 'rgba(0, 0, 0, 0)';
+        return '';
+      },
+      setProperty: () => {},
+      removeProperty: () => '',
+      cssFloat: '',
+      cssText: '',
+      length: 0,
+      parentRule: null,
+      getPropertyPriority: () => '',
+      item: () => '',
+    } as any;
+  }
+
+  // For non-pseudo-element calls, use original implementation
+  try {
+    const originalStyles = originalGetComputedStyle.call(window, element);
+    // Return a more complete mock if the original fails
+    if (!originalStyles) {
+      return {
+        getPropertyValue: () => '',
+        setProperty: () => {},
+        removeProperty: () => '',
+        cssFloat: '',
+        cssText: '',
+        length: 0,
+        parentRule: null,
+        getPropertyPriority: () => '',
+        item: () => '',
+      } as any;
+    }
+    return originalStyles;
+  } catch (error) {
+    // Fallback mock if original throws
     return {
       getPropertyValue: () => '',
       setProperty: () => {},
@@ -346,11 +418,10 @@ window.getComputedStyle = (element: Element, pseudoElement?: string | null) => {
       cssText: '',
       length: 0,
       parentRule: null,
-      propertyPriority: () => '',
+      getPropertyPriority: () => '',
       item: () => '',
     } as any;
   }
-  return originalStyles;
 };
 
 // Mock window.scrollTo for components that use scrolling
@@ -374,30 +445,45 @@ Object.defineProperty(navigator, 'userAgent', {
   value: 'Mozilla/5.0 (Node.js) AppleWebKit/537.36 (KHTML, like Gecko) Test/1.0.0',
 });
 
-// Mock localStorage for components that might use it
-const localStorageMock = {
-  getItem: (_key: string) => null,
-  setItem: (_key: string, _value: string) => {},
-  removeItem: (_key: string) => {},
-  clear: () => {},
-  length: 0,
-  key: (_index: number) => null,
+// Mock localStorage with a working implementation for tests
+// This uses a real Map to store values, unlike the previous mock that did nothing
+const createStorage = () => {
+  const store = new Map<string, string>();
+  return {
+    getItem: (key: string) => store.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      store.set(key, String(value));
+    },
+    removeItem: (key: string) => {
+      store.delete(key);
+    },
+    clear: () => {
+      store.clear();
+    },
+    get length() {
+      return store.size;
+    },
+    key: (index: number) => {
+      const keys = Array.from(store.keys());
+      return keys[index] ?? null;
+    },
+  };
 };
 
 Object.defineProperty(window, 'localStorage', {
   writable: true,
-  value: localStorageMock,
+  value: createStorage(),
 });
 
-// Mock sessionStorage
+// Mock sessionStorage with its own storage
 Object.defineProperty(window, 'sessionStorage', {
   writable: true,
-  value: localStorageMock,
+  value: createStorage(),
 });
 
 // Mock HTMLFormElement.requestSubmit for JSdom compatibility
 if (!HTMLFormElement.prototype.requestSubmit) {
-  HTMLFormElement.prototype.requestSubmit = function(submitter?: HTMLElement) {
+  HTMLFormElement.prototype.requestSubmit = function (submitter?: HTMLElement) {
     // Simulate form submission
     const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 
@@ -430,9 +516,9 @@ if (process.env.CI) {
             return target.hash || ''; // Always return string, never undefined
           }
           return target[prop as keyof Location];
-        }
+        },
       });
-    }
+    },
   });
 
   // Wrap Error constructor to suppress specific USWDS test environment errors
@@ -446,13 +532,13 @@ if (process.env.CI) {
     'Not implemented',
     'window.matchMedia is not a function',
     'window.getComputedStyle',
-    'navigation to another Document'
+    'navigation to another Document',
   ];
 
   global.Error = class SuppressedError extends OriginalError {
     constructor(message?: string) {
       // Check if this error should be suppressed
-      const shouldSuppress = message && suppressedMessages.some(msg => message.includes(msg));
+      const shouldSuppress = message && suppressedMessages.some((msg) => message.includes(msg));
 
       if (shouldSuppress) {
         // Create a silent error that won't be reported by Vitest
@@ -477,7 +563,7 @@ if (process.env.CI) {
   const originalErrorHandler = globalThis.onerror;
   globalThis.onerror = (message, source, lineno, colno, error) => {
     const errorMessage = error?.message || message?.toString() || '';
-    const shouldSuppress = suppressedMessages.some(msg => errorMessage.includes(msg));
+    const shouldSuppress = suppressedMessages.some((msg) => errorMessage.includes(msg));
 
     if (shouldSuppress) {
       return true; // Prevent default error handling
@@ -493,7 +579,7 @@ if (process.env.CI) {
   const originalRejectionHandler = globalThis.onunhandledrejection;
   globalThis.onunhandledrejection = (event: PromiseRejectionEvent) => {
     const errorMessage = event.reason?.message || event.reason?.toString() || '';
-    const shouldSuppress = suppressedMessages.some(msg => errorMessage.includes(msg));
+    const shouldSuppress = suppressedMessages.some((msg) => errorMessage.includes(msg));
 
     if (shouldSuppress) {
       event.preventDefault();
@@ -506,7 +592,9 @@ if (process.env.CI) {
     }
   };
 
-  console.info('✅ Vitest test environment setup complete (CI mode - USWDS error suppression enabled)');
+  console.info(
+    '✅ Vitest test environment setup complete (CI mode - USWDS error suppression enabled)'
+  );
 } else {
   console.info('✅ Vitest test environment setup complete');
 }

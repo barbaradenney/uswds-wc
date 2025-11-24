@@ -72,6 +72,9 @@ export class USAButton extends LitElement {
     this.originalContent = Array.from(this.childNodes);
     // Initialize progressive enhancement
     this.initializeUSWDSButton();
+
+    // Add keyboard event listeners to forward Enter/Space to internal button
+    this.addEventListener('keydown', this.handleKeyDown);
   }
 
   override firstUpdated() {
@@ -167,13 +170,33 @@ export class USAButton extends LitElement {
     }
   }
 
+  /**
+   * Handle keyboard events to forward Enter/Space to the internal button
+   * This ensures the button works correctly when focus is on the web component host
+   */
+  private handleKeyDown = (event: KeyboardEvent) => {
+    // Only handle Enter and Space keys
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    // Prevent default to avoid page scrolling on Space
+    event.preventDefault();
+
+    // Don't activate if disabled
+    if (this.disabled) {
+      return;
+    }
+
+    // Trigger the button click
+    this.buttonElement?.click();
+  };
+
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.cleanupUSWDS();
-    // Remove event listener to prevent memory leaks
-    if (this.buttonElement) {
-      // No custom event listeners to remove
-    }
+    // Remove event listeners to prevent memory leaks
+    this.removeEventListener('keydown', this.handleKeyDown);
   }
 
   /**

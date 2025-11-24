@@ -1,0 +1,70 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - toolbar "Mobile navigation controls" [ref=e5]:
+    - button "Open navigation menu" [ref=e6]:
+      - img [ref=e7]
+      - paragraph
+    - button "Open addon panel" [ref=e9] [cursor=pointer]:
+      - img [ref=e10]
+  - main [ref=e14]:
+    - region "Toolbar" [ref=e15]:
+      - generic [ref=e16]: Toolbar
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - button "Remount component" [ref=e19] [cursor=pointer]:
+            - img [ref=e20]
+          - button "Zoom in" [ref=e22] [cursor=pointer]:
+            - img [ref=e23]
+          - button "Zoom out" [ref=e26] [cursor=pointer]:
+            - img [ref=e27]
+          - button "Reset zoom" [ref=e30] [cursor=pointer]:
+            - img [ref=e31]
+          - button "Enable measure" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+          - button "Apply outlines to the preview" [ref=e38] [cursor=pointer]:
+            - img [ref=e39]
+          - button "Change the size of the preview" [ref=e42] [cursor=pointer]:
+            - img [ref=e43]
+          - button "Vision simulator" [ref=e48] [cursor=pointer]:
+            - img [ref=e49]
+          - generic:
+            - img
+          - button "light" [ref=e55] [cursor=pointer]:
+            - img [ref=e56]
+            - text: light
+        - generic [ref=e58]:
+          - link "Open canvas in new tab" [ref=e59] [cursor=pointer]:
+            - /url: iframe.html?id=data-display-icon--decorative
+            - img [ref=e60]
+          - button "Copy canvas link" [ref=e63] [cursor=pointer]:
+            - img [ref=e64]
+    - iframe [ref=e70]:
+      - generic [ref=f1e2]:
+        - heading "Couldn't find story matching id 'data-display-icon--decorative' after HMR." [level=1] [ref=f1e3]
+        - paragraph [ref=f1e4]: "The component failed to render properly, likely due to a configuration issue in Storybook. Here are some common causes and how you can address them:"
+        - list [ref=f1e5]:
+          - listitem [ref=f1e6]:
+            - strong [ref=f1e7]: Missing Context/Providers
+            - text: ": You can use decorators to supply specific contexts or providers, which are sometimes necessary for components to render correctly. For detailed instructions on using decorators, please visit the"
+            - link "Decorators documentation" [ref=f1e8]:
+              - /url: https://storybook.js.org/docs/writing-stories/decorators
+            - text: .
+          - listitem [ref=f1e9]:
+            - strong [ref=f1e10]: Misconfigured Webpack or Vite
+            - text: ": Verify that Storybook picks up all necessary settings for loaders, plugins, and other relevant parameters. You can find step-by-step guides for configuring"
+            - link "Webpack" [ref=f1e11]:
+              - /url: https://storybook.js.org/docs/builders/webpack
+            - text: or
+            - link "Vite" [ref=f1e12]:
+              - /url: https://storybook.js.org/docs/builders/vite
+            - text: with Storybook.
+          - listitem [ref=f1e13]:
+            - strong [ref=f1e14]: Missing Environment Variables
+            - text: ": Your Storybook may require specific environment variables to function as intended. You can set up custom environment variables as outlined in the"
+            - link "Environment Variables documentation" [ref=f1e15]:
+              - /url: https://storybook.js.org/docs/configure/environment-variables
+            - text: .
+        - code [ref=f1e17]: "- Did you just rename a story? - Did you remove it from your CSF file? - Are you sure a story with the id 'data-display-icon--decorative' exists? - Please check the values in the stories field of your main.js config and see if they would match your CSF File. - Also check the browser console and terminal for potential error messages."
+```

@@ -1,6 +1,6 @@
 describe('Accordion Click Behavior', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:6006/iframe.html?id=components-accordion--default&viewMode=story');
+    cy.visit('http://localhost:6006/iframe.html?id=structure-accordion--default&viewMode=story');
     cy.wait(1000); // Wait for USWDS initialization
   });
 

@@ -13,6 +13,7 @@ import {
   validateComponentJavaScript,
 } from '@uswds-wc/test-utils/test-utils.js';
 import { getFocusableElements } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAIcon', () => {
   let element: USAIcon;
@@ -47,7 +48,7 @@ describe('USAIcon', () => {
 
     it('should render SVG element', async () => {
       element.name = 'search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg).toBeTruthy();
@@ -73,11 +74,11 @@ describe('USAIcon', () => {
       // Disable sprite mode to test inline SVG paths
       element.useSprite = false;
       element.name = 'search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       const searchPath = element.querySelector('path')?.getAttribute('d');
 
       element.name = 'close';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       const closePath = element.querySelector('path')?.getAttribute('d');
 
       expect(searchPath).toBeTruthy();
@@ -102,7 +103,7 @@ describe('USAIcon', () => {
 
     it('should apply correct size classes', async () => {
       element.size = '5';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.classList.contains('usa-icon--size-5')).toBe(true);
@@ -110,7 +111,7 @@ describe('USAIcon', () => {
 
     it('should not add size class for empty size', async () => {
       element.size = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('class')).toBe('usa-icon');
@@ -137,7 +138,7 @@ describe('USAIcon', () => {
       element.ariaLabel = 'Test icon';
 
       element.decorative = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('aria-hidden')).toBe('false');
@@ -153,7 +154,7 @@ describe('USAIcon', () => {
     it('should have proper accessibility attributes', async () => {
       element.name = 'search';
       element.ariaLabel = 'Search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('role')).toBe('img');
@@ -165,7 +166,7 @@ describe('USAIcon', () => {
     it('should be decorative when specified', async () => {
       element.name = 'search';
       element.decorative = 'true';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('aria-hidden')).toBe('true');
@@ -178,7 +179,7 @@ describe('USAIcon', () => {
       element.name = 'search';
       element.useSprite = true;
       element.spriteUrl = '/icons.svg';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
@@ -188,7 +189,7 @@ describe('USAIcon', () => {
 
     it('should use sprite by default (sprite-first architecture)', async () => {
       element.name = 'search';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
@@ -200,7 +201,7 @@ describe('USAIcon', () => {
     it('should use inline SVG when explicitly disabled', async () => {
       element.name = 'search';
       element.useSprite = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const path = svg?.querySelector('path');
@@ -215,7 +216,7 @@ describe('USAIcon', () => {
         element.name = 'search';
         element.ariaLabel = 'Search government website';
         element.size = '4';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const svg = element.querySelector('svg');
         expect(svg?.classList.contains('usa-icon--size-4')).toBe(true);
@@ -240,7 +241,7 @@ describe('USAIcon', () => {
         element.name = 'menu';
         element.ariaLabel = 'Open navigation menu';
         element.size = '5';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const svg = element.querySelector('svg');
         expect(svg?.classList.contains('usa-icon--size-5')).toBe(true);
@@ -286,7 +287,7 @@ describe('USAIcon', () => {
         element.name = 'help';
         element.ariaLabel = 'Get help with this form';
         element.size = '3';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const svg = element.querySelector('svg');
         expect(svg?.classList.contains('usa-icon--size-3')).toBe(true);
@@ -296,7 +297,7 @@ describe('USAIcon', () => {
       it('should render file download icons for government documents', async () => {
         element.name = 'file_download';
         element.ariaLabel = 'Download form PDF';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const svg = element.querySelector('svg');
         expect(svg?.getAttribute('aria-label')).toBe('Download form PDF');
@@ -314,7 +315,7 @@ describe('USAIcon', () => {
         for (const icon of contactIcons) {
           element.name = icon.name;
           element.ariaLabel = icon.label;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const svg = element.querySelector('svg');
           expect(svg?.getAttribute('aria-label')).toBe(icon.label);
@@ -329,7 +330,7 @@ describe('USAIcon', () => {
         for (const iconName of arrowIcons) {
           element.name = iconName;
           element.ariaLabel = `Navigate ${iconName.replace('arrow_', '')}`;
-          await waitForUpdate(element);
+          await waitForPropertyPropagation(element);
 
           const svg = element.querySelector('svg');
           expect(svg?.getAttribute('aria-label')).toBe(
@@ -341,7 +342,7 @@ describe('USAIcon', () => {
       it('should render expand/collapse icons for government content', async () => {
         element.name = 'expand_more';
         element.ariaLabel = 'Expand section';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const svg = element.querySelector('svg');
         expect(svg?.getAttribute('aria-label')).toBe('Expand section');
@@ -374,7 +375,7 @@ describe('USAIcon', () => {
     it('should meet WCAG guidelines for decorative icons', async () => {
       element.name = 'settings';
       element.decorative = 'true';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('aria-hidden')).toBe('true');
@@ -385,7 +386,7 @@ describe('USAIcon', () => {
     it('should support screen readers with proper labeling', async () => {
       element.name = 'info';
       element.ariaLabel = 'Important information about tax filing';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg?.getAttribute('role')).toBe('img');
@@ -420,7 +421,7 @@ describe('USAIcon', () => {
       element.useSprite = true;
       element.spriteUrl = '/img/sprite.svg';
       element.ariaLabel = 'Official government website';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
@@ -433,7 +434,7 @@ describe('USAIcon', () => {
       element.name = 'security';
       element.useSprite = true;
       element.spriteUrl = 'https://secure.gov/assets/icons.svg';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const use = element.querySelector('use');
       expect(use?.getAttribute('href')).toBe('https://secure.gov/assets/icons.svg#security');
@@ -460,7 +461,7 @@ describe('USAIcon', () => {
       element.useSprite = false;
       element.name = 'nonexistent_icon';
       element.ariaLabel = 'Unknown icon';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const path = svg?.querySelector('path');
@@ -472,7 +473,7 @@ describe('USAIcon', () => {
       // Disable sprite mode to test inline SVG fallback
       element.useSprite = false;
       element.name = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg).toBeTruthy();
@@ -482,7 +483,7 @@ describe('USAIcon', () => {
 
     it('should handle invalid size values', async () => {
       (element as any).size = 'invalid';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       // Should not add invalid size class
@@ -524,7 +525,7 @@ describe('USAIcon', () => {
       element.name = 'flag';
       element.useSprite = true;
       element.spriteUrl = '/sprite.svg';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
@@ -922,7 +923,7 @@ describe('USAIcon', () => {
     it('should maintain proper ARIA for screen readers (not keyboard)', async () => {
       element.name = 'warning';
       element.ariaLabel = 'Warning';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const svg = element.querySelector('svg');
       expect(svg).toBeTruthy();

@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-validation.ts';
 import type { USAValidation } from './usa-validation.js';
 import { waitForUpdate, validateComponentJavaScript } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Regression Tests for Validation Component Interactive Functionality
@@ -162,7 +163,7 @@ describe('USAValidation Interactive Regression Tests', () => {
     it('should validate on input when validateOnInput is true', async () => {
       element.rules = [{ type: 'required', message: 'Required field' }];
       element.validateOnInput = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
       input.value = 'test value';
@@ -177,7 +178,7 @@ describe('USAValidation Interactive Regression Tests', () => {
     it('should not validate on input when validateOnInput is false', async () => {
       element.rules = [{ type: 'required', message: 'Required field' }];
       element.validateOnInput = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
       input.value = 'test value';
@@ -192,7 +193,7 @@ describe('USAValidation Interactive Regression Tests', () => {
       element.rules = [{ type: 'required', message: 'Required field' }];
       element.validateOnBlur = true;
       element.validateOnInput = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
       input.value = 'test value';
@@ -209,7 +210,7 @@ describe('USAValidation Interactive Regression Tests', () => {
       element.rules = [{ type: 'required', message: 'Required field' }];
       element.validateOnBlur = false;
       element.validateOnInput = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
       input.value = 'test value';
@@ -224,7 +225,7 @@ describe('USAValidation Interactive Regression Tests', () => {
     it('should render textarea input type correctly', async () => {
       element.inputType = 'textarea';
       element.rows = 5;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
       expect(textarea).toBeTruthy();
@@ -238,7 +239,7 @@ describe('USAValidation Interactive Regression Tests', () => {
         { value: 'option1', text: 'Option 1' },
         { value: 'option2', text: 'Option 2' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       expect(select).toBeTruthy();
@@ -252,7 +253,7 @@ describe('USAValidation Interactive Regression Tests', () => {
         { value: 'option1', text: 'Option 1' },
         { value: 'option2', text: 'Option 2' },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const select = element.querySelector('select') as HTMLSelectElement;
       select.value = 'option1';
@@ -264,7 +265,7 @@ describe('USAValidation Interactive Regression Tests', () => {
 
     it('should render different input types correctly', async () => {
       element.type = 'email';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       expect(input.type).toBe('email');
@@ -302,7 +303,7 @@ describe('USAValidation Interactive Regression Tests', () => {
 
     it('should apply required class when rule is required', async () => {
       element.rules = [{ type: 'required', message: 'Required' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const formGroup = element.querySelector('.usa-form-group');
       expect(formGroup?.classList.contains('usa-form-group--required')).toBe(true);
@@ -310,7 +311,7 @@ describe('USAValidation Interactive Regression Tests', () => {
 
     it('should show required indicator in label', async () => {
       element.rules = [{ type: 'required', message: 'Required' }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const requiredAbbr = element.querySelector('abbr.usa-hint--required');
       expect(requiredAbbr).toBeTruthy();
@@ -433,10 +434,10 @@ describe('USAValidation Interactive Regression Tests', () => {
   describe('ARIA and Accessibility', () => {
     it('should have correct aria-describedby when hint is present', async () => {
       element.hint = 'This is a helpful hint';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
-      expect(input.getAttribute('aria-describedby')).toBe('test-input-hint');
+      expect(await waitForARIAAttribute(input, 'aria-describedby')).toBe('test-input-hint');
 
       const hint = element.querySelector('#test-input-hint');
       expect(hint?.textContent).toBe('This is a helpful hint');
@@ -450,7 +451,7 @@ describe('USAValidation Interactive Regression Tests', () => {
       await waitForUpdate(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
-      expect(input.getAttribute('aria-describedby')).toBe('test-input-error');
+      expect(await waitForARIAAttribute(input, 'aria-describedby')).toBe('test-input-error');
     });
 
     it('should combine hint and error in aria-describedby', async () => {
@@ -462,7 +463,9 @@ describe('USAValidation Interactive Regression Tests', () => {
       await waitForUpdate(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
-      expect(input.getAttribute('aria-describedby')).toBe('test-input-hint test-input-error');
+      expect(await waitForARIAAttribute(input, 'aria-describedby')).toBe(
+        'test-input-hint test-input-error'
+      );
     });
 
     it('should have correct role attributes for messages', async () => {
@@ -544,7 +547,7 @@ describe('USAValidation Interactive Regression Tests', () => {
 
     it('should handle disabled and readonly states', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('#test-input') as HTMLInputElement;
       expect(input.disabled).toBe(true);

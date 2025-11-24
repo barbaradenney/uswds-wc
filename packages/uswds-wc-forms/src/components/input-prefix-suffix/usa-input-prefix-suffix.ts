@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 // Import official USWDS compiled CSS
 import '@uswds-wc/core/styles.css';
 // Import usa-icon component for icon support
-import '@uswds-wc/data-display/components/icon';
+import '@uswds-wc/data-display';
 
 /**
  * USA Input Prefix/Suffix Web Component
@@ -230,6 +230,7 @@ export class USAInputPrefixSuffix extends LitElement {
             ?readonly=${this.readonly}
             autocomplete="${this.autocomplete}"
             aria-describedby="${this.getAriaDescribedBy(hasError)}"
+            aria-invalid="${hasError ? 'true' : 'false'}"
             @input="${this.handleInputChange}"
             @change="${this.handleInputChange}"
           />

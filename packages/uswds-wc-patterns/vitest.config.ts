@@ -26,6 +26,12 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.ts'],
     exclude: ['node_modules', 'dist'],
+    // Isolate test files to prevent localStorage pollution between files
+    isolate: true,
+    // Ensure each test file gets a fresh environment
+    pool: 'forks',
+    // Use custom reporter to clarify test output
+    reporters: ['../../scripts/test/vitest-clarified-reporter.js'],
   },
   resolve: {
     alias: {

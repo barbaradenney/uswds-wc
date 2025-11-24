@@ -1,0 +1,53 @@
+{
+  "name": "@uswds-wc/core",
+  "version": "2.0.0",
+  "description": "Core utilities and base components for USWDS Web Components",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./utils/*": {
+      "import": "./dist/utils/*.js",
+      "types": "./dist/utils/*.d.ts"
+    },
+    "./styles.css": {
+      "import": "./src/styles/styles.css",
+      "default": "./dist/styles/styles.css"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "build:css": "sass src/styles/styles.scss src/styles/styles.css --source-map --load-path=../../node_modules/@uswds/uswds/packages --load-path=../../node_modules && NODE_ENV=production postcss src/styles/styles.css --replace",
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "uswds",
+    "web-components",
+    "core",
+    "utilities"
+  ],
+  "author": "Barbara Miles",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barbaradenney/USWDS-webcomponents.git",
+    "directory": "packages/uswds-wc-core"
+  }
+}

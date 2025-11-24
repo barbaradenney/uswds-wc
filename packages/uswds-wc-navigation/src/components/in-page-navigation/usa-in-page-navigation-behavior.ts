@@ -270,8 +270,8 @@ const handleScrollToSection = (el: HTMLElement): void => {
  * SOURCE: index.js (Lines 182-191)
  */
 const scrollToCurrentSection = (): void => {
-  // Guard against undefined window.location in test environments (jsdom)
-  if (!window.location || !window.location.hash) {
+  // Guard against undefined window in test teardown (prevents "window is not defined" in CI)
+  if (typeof window === 'undefined' || !window.location || !window.location.hash) {
     return;
   }
   const hashFragment = window.location.hash.slice(1);
@@ -478,6 +478,11 @@ function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => vo
  * @returns Cleanup function
  */
 export function initializeInPageNavigation(root: HTMLElement | Document = document): () => void {
+  // Guard against undefined document in test teardown (prevents "document is not defined" in CI)
+  if (typeof document === 'undefined') {
+    return () => {}; // Return noop cleanup function
+  }
+
   const inPageNavElements = selectOrMatches(`.${IN_PAGE_NAV_CLASS}`, root);
 
   inPageNavElements.forEach((inPageNavEl) => {

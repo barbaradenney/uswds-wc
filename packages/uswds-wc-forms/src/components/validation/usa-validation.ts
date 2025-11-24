@@ -414,13 +414,8 @@ export class USAValidation extends LitElement {
     super.connectedCallback();
 
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
+    // USWDS Validation is CSS-only - no JavaScript initialization needed
     this.setAttribute('data-web-component-managed', 'true');
-    console.log(
-      '🔍 Validation: Initializing (presentational component - no USWDS JavaScript needed)'
-    );
-    console.log(
-      '🔍 Validation: Using presentational component behavior (USWDS Validation is CSS-only)'
-    );
   }
 
   override disconnectedCallback() {
@@ -472,6 +467,27 @@ export class USAValidation extends LitElement {
     </div>`;
   }
 
+  private renderLiveRegion() {
+    // USWDS live region pattern for screen reader announcements
+    // Creates sr-only element with aria-live and aria-atomic attributes
+    // This announces validation state changes to screen readers
+    const statusText = this._hasBeenValidated
+      ? this._validationResult.isValid
+        ? 'Input is valid'
+        : `Error: ${this._validationResult.errors.join(', ')}`
+      : '';
+
+    return html`<div
+      class="usa-sr-only"
+      data-validation-status
+      aria-live="polite"
+      aria-atomic="true"
+      role="status"
+    >
+      ${statusText}
+    </div>`;
+  }
+
   override render() {
     // Show errors either from validation result or from errors property or from message property
     // Show errors if:
@@ -494,7 +510,7 @@ export class USAValidation extends LitElement {
         </label>
 
         ${this.renderHint()} ${errorsToShow.map((error) => this.renderErrorMessage(error))}
-        ${this.renderSuccessState()} ${this.renderInput()}
+        ${this.renderSuccessState()} ${this.renderInput()} ${this.renderLiveRegion()}
       </div>
     `;
   }

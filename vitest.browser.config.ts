@@ -21,16 +21,11 @@ export default defineConfig({
     include: [
       'src/**/usa-*.browser.test.ts',
       'src/**/usa-*.visual.test.ts',
-      'src/**/*.browser.test.ts'
+      'src/**/*.browser.test.ts',
     ],
 
     // Exclude regular unit tests
-    exclude: [
-      'node_modules/**',
-      'dist/**',
-      'src/**/usa-*.test.ts',
-      'src/**/usa-*.layout.test.ts'
-    ],
+    exclude: ['node_modules/**', 'dist/**', 'src/**/usa-*.test.ts', 'src/**/usa-*.layout.test.ts'],
 
     // Browser test specific configuration
     testTimeout: 10000, // Longer timeout for browser operations
@@ -40,18 +35,15 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/components/**/*.ts'],
-      exclude: [
-        'src/components/**/*.test.ts',
-        'src/components/**/*.stories.ts'
-      ],
+      exclude: ['src/components/**/*.test.ts', 'src/components/**/*.stories.ts'],
       reporter: ['text', 'html', 'json'],
-      reportsDirectory: './coverage/browser'
-    }
+      reportsDirectory: './coverage/browser',
+    },
   },
 
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
-    }
-  }
+      '@': resolve(__dirname, './src'),
+    },
+  },
 });

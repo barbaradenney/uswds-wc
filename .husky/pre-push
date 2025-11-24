@@ -51,8 +51,9 @@ if ! echo "$BRANCH" | grep -qE "$VALID_PATTERN"; then
 fi
 
 # 3. Run full test suite (faster than waiting for CI to fail)
-echo "🧪 Running full test suite..."
-pnpm test || {
+# Skip bundle analysis test (performance test that requires full build, runs in CI)
+echo "🧪 Running full test suite (excluding bundle analysis)..."
+pnpm test -- --exclude "**/bundle-analysis.test.js" || {
   echo "❌ Tests failed! Fix before pushing."
   echo "   Or use: git push --no-verify (not recommended)"
   exit 1

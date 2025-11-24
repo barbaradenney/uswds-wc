@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Overview
+
 **Workflow Pattern for navigating multi-step forms with progress tracking**
 
 #### Features
+
 - **Step Navigation with next/back/skip buttons**
 - **Progress Tracking across form steps**
 - **State Persistence with localStorage**
@@ -24,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition: Uses `usa-button` components**
 
 #### Properties
+
 - `steps` - Array of form steps
 - `showNavigation` - Whether to show navigation buttons
 - `backButtonLabel` - Label for back button
@@ -34,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `storageKey` - localStorage key for state persistence
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Specialized workflow APIs
@@ -42,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Pattern](https://designsystem.digital.gov/patterns/complete-a-complex-form/progress-easily/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

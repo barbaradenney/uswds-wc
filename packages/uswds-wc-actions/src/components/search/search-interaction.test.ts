@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-search.ts';
 import type { USASearch } from './usa-search.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('Search JavaScript Interaction Testing', () => {
   let element: USASearch;
@@ -137,7 +138,7 @@ describe('Search JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing value property
       element.value = 'new search term';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       expect(input?.value).toBe('new search term');

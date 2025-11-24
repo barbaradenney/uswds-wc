@@ -589,7 +589,6 @@ describe('USAContactPreferencesPattern', () => {
       await pattern.updateComplete;
 
       const hints = Array.from(pattern.querySelectorAll('.usa-hint'));
-      const customHint = hints.find((h) => h.id.includes('hint') && h.textContent !== '');
 
       // Should only have the optional hint, not a custom hint
       expect(hints.length).toBe(1);
@@ -685,10 +684,7 @@ describe('USAContactPreferencesPattern', () => {
       });
 
       it('should initialize phone checkbox component', async () => {
-        const phoneCheckbox = await verifyChildComponent(
-          pattern,
-          'usa-checkbox[value="phone"]'
-        );
+        const phoneCheckbox = await verifyChildComponent(pattern, 'usa-checkbox[value="phone"]');
         expect(phoneCheckbox).toBeTruthy();
 
         // Verify internal structure rendered

@@ -19,6 +19,7 @@ import {
   testTargetSize,
   testLabelInName,
 } from '@uswds-wc/test-utils/touch-pointer-utils.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 // Performance testing utility (commented out - not currently used)
 // const measurePerformance = (fn: () => void): number => {
@@ -1640,7 +1641,7 @@ describe('USAButton', () => {
       await element.updateComplete;
 
       const buttonElement = element.querySelector('button') as HTMLElement;
-      expect(buttonElement.getAttribute('aria-pressed')).toBe('false');
+      expect(await waitForARIAAttribute(buttonElement, 'aria-pressed')).toBe('false');
 
       // Focus and activate
       buttonElement.focus();
@@ -1649,7 +1650,7 @@ describe('USAButton', () => {
       // Component should allow ARIA state changes via properties
       element.ariaPressed = 'true';
       await element.updateComplete;
-      expect(buttonElement.getAttribute('aria-pressed')).toBe('true');
+      expect(await waitForARIAAttribute(buttonElement, 'aria-pressed')).toBe('true');
     });
   });
 

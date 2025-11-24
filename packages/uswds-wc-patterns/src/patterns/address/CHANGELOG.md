@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Initial Release
 
 #### Features
+
 - **Data Collection Pattern** for collecting physical or mailing addresses
 - **US Address Support** with street, city, state, and ZIP code
 - **International Address Support** with country field
@@ -20,12 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **USWDS Component Composition**: Uses `usa-text-input` and `usa-select` components
 
 #### Properties
+
 - `label` - Label for the address section
 - `required` - Whether all fields are required
 - `showStreet2` - Whether to show street line 2
 - `international` - Whether to support international addresses
 
 #### Contract Compliance
+
 - ✅ Custom element registration
 - ✅ Light DOM architecture
 - ✅ Standard data pattern APIs
@@ -35,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Data immutability
 
 #### USWDS Alignment
+
 - Implements [USWDS Address Pattern](https://designsystem.digital.gov/patterns/create-a-user-profile/address/)
 - Uses official USWDS components and styles
 - Follows USWDS accessibility standards

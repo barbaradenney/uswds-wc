@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './index.ts';
 import type { USATooltip } from './usa-tooltip.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Browser-dependent tests for USATooltip
@@ -222,7 +223,7 @@ describe.skip('USATooltip Browser Tests', () => {
 
       const trigger = element.querySelector('.usa-tooltip__trigger') as HTMLElement;
       if (trigger) {
-        const ariaDescribedBy = trigger.getAttribute('aria-describedby');
+        const ariaDescribedBy = await waitForARIAAttribute(trigger, 'aria-describedby');
         if (ariaDescribedBy) {
           expect(ariaDescribedBy, 'Should have proper ARIA relationship').toBe('test-tooltip-aria');
         }

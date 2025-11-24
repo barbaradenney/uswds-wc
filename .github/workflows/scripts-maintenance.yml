@@ -24,18 +24,26 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 10
+
+
+
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
-        cache: 'npm'
+        node-version: '20'
+        cache: 'pnpm'
         
     - name: Install dependencies
-      run: npm ci
+      run: pnpm install --frozen-lockfile
       
     - name: Run scripts maintenance check
-      run: npm run scripts:check
+      run: pnpm run scripts:check
       
     - name: Comment on PR if issues found
       if: failure() && github.event_name == 'pull_request'
@@ -45,7 +53,7 @@ jobs:
           const { execSync } = require('child_process');
           let output;
           try {
-            execSync('npm run scripts:check', { encoding: 'utf8' });
+            execSync('pnpm run scripts:check', { encoding: 'utf8' });
             output = 'Scripts maintenance check passed ✅';
           } catch (error) {
             output = error.stdout || error.message;
@@ -55,16 +63,19 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: `## 🔧 Scripts Maintenance Check
-            
-\`\`\`
-${output}
-\`\`\`
-
-**Fix suggestions:**
-- Run \`npm run scripts:clean\` to auto-fix some issues
-- Review unused scripts and remove if no longer needed
-- Check for orphaned package.json commands
-
-_This check runs automatically on changes to scripts/ or package.json_`
+            body: [
+              '## 🔧 Scripts Maintenance Check',
+              '',
+              '```',
+              output,
+              '```',
+              '',
+              '**Fix suggestions:**',
+              '- Run `pnpm run scripts:clean` to auto-fix some issues',
+              '- Review unused scripts and remove if no longer needed',
+              '- Check for orphaned package.json commands',
+              '',
+              '_This check runs automatically on changes to scripts/ or package.json_'
+            ].join('\n')
           });
+

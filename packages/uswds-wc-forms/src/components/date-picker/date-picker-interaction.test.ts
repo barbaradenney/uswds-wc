@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './usa-date-picker.ts';
 import type { USADatePicker } from './usa-date-picker.js';
 import { waitForUpdate } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('Date Picker JavaScript Interaction Testing', () => {
   let element: USADatePicker;
@@ -165,7 +166,7 @@ describe('Date Picker JavaScript Interaction Testing', () => {
     it('should handle dynamic property changes', async () => {
       // Test changing value
       element.value = '02/14/2024';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input') as HTMLInputElement;
       if (input) {
@@ -174,7 +175,7 @@ describe('Date Picker JavaScript Interaction Testing', () => {
 
       // Test changing disabled state
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const disabledInput = element.querySelector('input[disabled]');
       expect(disabledInput).toBeTruthy();

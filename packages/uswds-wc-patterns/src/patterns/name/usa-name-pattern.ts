@@ -367,7 +367,7 @@ export class USANamePattern extends LitElement {
             maxlength="128"
             ?required="${this.required}"
             compact
-          @input="${(e: Event) =>
+            @input="${(e: Event) =>
               this.handleFieldChange('givenName', (e.target as HTMLInputElement).value)}"
           ></usa-text-input>
 
@@ -379,7 +379,7 @@ export class USANamePattern extends LitElement {
             hint="(optional)"
             maxlength="128"
             compact
-          @input="${(e: Event) =>
+            @input="${(e: Event) =>
               this.handleFieldChange('middleName', (e.target as HTMLInputElement).value)}"
           ></usa-text-input>
 
@@ -392,7 +392,7 @@ export class USANamePattern extends LitElement {
             maxlength="128"
             ?required="${this.required}"
             compact
-          @input="${(e: Event) =>
+            @input="${(e: Event) =>
               this.handleFieldChange('familyName', (e.target as HTMLInputElement).value)}"
           ></usa-text-input>
 
@@ -492,10 +492,7 @@ export class USANamePattern extends LitElement {
       return !!(this.nameData.givenName && this.nameData.familyName);
     } else {
       // flexible: either full name or given+family
-      return !!(
-        this.nameData.fullName ||
-        (this.nameData.givenName && this.nameData.familyName)
-      );
+      return !!(this.nameData.fullName || (this.nameData.givenName && this.nameData.familyName));
     }
   }
 

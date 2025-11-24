@@ -16,6 +16,7 @@ import {
   verifyKeyboardOnlyUsable,
   getFocusableElements,
 } from '@uswds-wc/test-utils/keyboard-navigation-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USAFooter', () => {
   let element: USAFooter;
@@ -96,7 +97,7 @@ describe('USAFooter', () => {
       ];
 
       element.sections = sections;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footerSections = element.querySelectorAll('.usa-footer__primary-content');
       expect(footerSections.length).toBe(2);
@@ -117,7 +118,7 @@ describe('USAFooter', () => {
   describe('Rendering', () => {
     it('should render footer with correct structure', async () => {
       element.agencyName = 'Test Agency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('footer.usa-footer');
       const secondarySection = element.querySelector('.usa-footer__secondary-section');
@@ -144,7 +145,7 @@ describe('USAFooter', () => {
       ];
 
       element.sections = sections;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-footer__nav');
       const section = element.querySelector('.usa-footer__primary-content');
@@ -159,7 +160,7 @@ describe('USAFooter', () => {
 
     it('should not render navigation when no sections provided', async () => {
       element.sections = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const nav = element.querySelector('.usa-footer__nav');
       expect(nav).toBe(null);
@@ -167,7 +168,7 @@ describe('USAFooter', () => {
 
     it('should render agency name in secondary section when provided', async () => {
       element.agencyName = 'Test Agency';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const secondarySection = element.querySelector('.usa-footer__secondary-section');
       const logoHeading = element.querySelector('.usa-footer__logo-heading');
@@ -180,7 +181,7 @@ describe('USAFooter', () => {
     it('should not render identifier when no agency name or identifier links', async () => {
       element.agencyName = '';
       // element.identifierLinks = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const identifier = element.querySelector('.usa-identifier');
       expect(identifier).toBe(null);
@@ -193,7 +194,7 @@ describe('USAFooter', () => {
   describe('Footer Variants', () => {
     it('should render slim footer correctly', async () => {
       element.variant = 'slim';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       expect(footer?.classList.contains('usa-footer--slim')).toBe(true);
@@ -202,7 +203,7 @@ describe('USAFooter', () => {
 
     it('should render medium footer correctly', async () => {
       element.variant = 'medium';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       expect(footer?.classList.contains('usa-footer--medium')).toBe(true);
@@ -211,7 +212,7 @@ describe('USAFooter', () => {
 
     it('should render big footer correctly', async () => {
       element.variant = 'big';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       expect(footer?.classList.contains('usa-footer--big')).toBe(true);
@@ -237,7 +238,7 @@ describe('USAFooter', () => {
           links: [{ label: 'Test Link', href: '/test' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('.usa-footer__secondary-link a') as HTMLAnchorElement;
       link.click();
@@ -306,7 +307,7 @@ describe('USAFooter', () => {
     it('should have correct ARIA attributes', async () => {
       element.agencyName = 'Test Agency';
       element.sections = [{ title: 'About', links: [{ label: 'Mission', href: '/mission' }] }];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('footer');
       const nav = element.querySelector('.usa-footer__nav');
@@ -327,7 +328,7 @@ describe('USAFooter', () => {
           links: [{ label: 'Link', href: '/link' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-footer__primary-link');
       expect(heading?.tagName).toBe('H4');
@@ -662,7 +663,7 @@ describe('USAFooter', () => {
           links: [{ text: 'Link', href: '/link' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       expect(footer).toBeTruthy();
@@ -686,7 +687,7 @@ describe('USAFooter', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       expect(links.length).toBeGreaterThanOrEqual(2);
@@ -739,7 +740,7 @@ describe('USAFooter', () => {
           links: [{ text: 'Home', href: '/' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link).toBeTruthy();
@@ -763,7 +764,7 @@ describe('USAFooter', () => {
           links: [{ text: 'Link', href: '/link' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       links.forEach((link) => {
@@ -800,7 +801,7 @@ describe('USAFooter', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer--slim');
       expect(footer).toBeTruthy();
@@ -818,7 +819,7 @@ describe('USAFooter', () => {
           links: [{ text: 'Link', href: '/link' }],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer--big');
       expect(footer).toBeTruthy();
@@ -837,7 +838,7 @@ describe('USAFooter', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a[href^="https://"]');
       // Footer may render links with or without https prefix
@@ -851,7 +852,7 @@ describe('USAFooter', () => {
     it('should handle empty footer gracefully', async () => {
       element.sections = [];
       // element.identifierLinks = [];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const footer = element.querySelector('.usa-footer');
       expect(footer).toBeTruthy();
@@ -872,7 +873,7 @@ describe('USAFooter', () => {
           ],
         },
       ];
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const links = element.querySelectorAll('a');
       const contactLinks = Array.from(links).filter(
@@ -1018,7 +1019,7 @@ describe('USAFooter', () => {
 
         // Update agency name
         element.agencyName = 'Updated Agency';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const updatedLogoHeading = element.querySelector('.usa-footer__logo-heading');
         expect(updatedLogoHeading?.textContent?.trim()).toBe('Updated Agency');
@@ -1080,7 +1081,7 @@ describe('USAFooter', () => {
 
         // Change to medium
         element.variant = 'medium';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         footer = element.querySelector('.usa-footer');
         expect(footer?.classList.contains('usa-footer--medium')).toBe(true);
@@ -1088,7 +1089,7 @@ describe('USAFooter', () => {
 
         // Change to slim
         element.variant = 'slim';
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         footer = element.querySelector('.usa-footer');
         expect(footer?.classList.contains('usa-footer--slim')).toBe(true);

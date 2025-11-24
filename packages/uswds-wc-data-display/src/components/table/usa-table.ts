@@ -212,7 +212,19 @@ export class USATable extends USWDSBaseComponent {
 
     // Ensure announcement region persists after re-renders
     // (Lit re-renders wipe out USWDS-set live region content otherwise)
-    this.ensureRequiredElements();
+    // Only run when properties that affect the table structure change
+    // to avoid infinite update loops from DOM manipulation
+    if (
+      changedProperties.has('headers') ||
+      changedProperties.has('data') ||
+      changedProperties.has('scrollable') ||
+      changedProperties.has('sortColumn') ||
+      changedProperties.has('sortDirection') ||
+      changedProperties.has('striped') ||
+      changedProperties.has('borderless')
+    ) {
+      this.ensureRequiredElements();
+    }
   }
 
   private applySlottedContent() {
@@ -355,50 +367,60 @@ export class USATable extends USWDSBaseComponent {
         if (headerIndex >= 0 && headerIndex < this.headers.length) {
           const column = this.headers[headerIndex];
 
-          // Check if we're sorting a new column or toggling the same column
-          // CRITICAL: Read aria-sort from USWDS behavior instead of managing our own state!
-          // The USWDS behavior has already set the aria-sort attribute correctly.
-          // We just need to sync our component state with it.
-          const currentAriaSort = header.getAttribute('aria-sort');
-          let newDirection: 'asc' | 'desc';
+          // CRITICAL FIX: Use requestAnimationFrame to defer reading aria-sort
+          // until after USWDS behavior has updated it.
+          //
+          // RACE CONDITION EXPLANATION:
+          // Both the component's click listener and USWDS behavior's click listener
+          // fire on the same click event. USWDS updates aria-sort in its listener,
+          // but if we read the attribute synchronously here, we get the OLD value
+          // before USWDS has finished updating it.
+          //
+          // SOLUTION: Defer reading until next animation frame, ensuring USWDS
+          // has completed its update. This fixes the "double-click to sort" bug.
+          requestAnimationFrame(() => {
+            // Now read aria-sort AFTER USWDS has updated it
+            const currentAriaSort = header.getAttribute('aria-sort');
+            let newDirection: 'asc' | 'desc';
 
-          if (currentAriaSort === 'ascending') {
-            newDirection = 'asc';
-          } else if (currentAriaSort === 'descending') {
-            newDirection = 'desc';
-          } else {
-            // Fallback - should not happen if USWDS behavior ran first
-            newDirection = 'asc';
-          }
+            if (currentAriaSort === 'ascending') {
+              newDirection = 'asc';
+            } else if (currentAriaSort === 'descending') {
+              newDirection = 'desc';
+            } else {
+              // Fallback - should not happen if USWDS behavior ran first
+              newDirection = 'asc';
+            }
 
-          // Capture old data before sorting
-          const oldData = this.data;
+            // Capture old data before sorting
+            const oldData = this.data;
 
-          // Update component state synchronously
-          this.sortColumn = column.key;
-          this.sortDirection = newDirection;
+            // Update component state
+            this.sortColumn = column.key;
+            this.sortDirection = newDirection;
 
-          // Sort the component's data array synchronously
-          this.sortData();
+            // Sort the component's data array
+            this.sortData();
 
-          // Force a re-render after sorting with correct old/new values
-          this.requestUpdate('data', oldData);
+            // Force a re-render after sorting with correct old/new values
+            this.requestUpdate('data', oldData);
 
-          // Dispatch event synchronously for external listeners
-          this.dispatchEvent(
-            new CustomEvent('table-sort', {
-              detail: {
-                column: column.key,
-                direction: this.sortDirection,
-                sortType: column.sortType || 'text',
-              },
-              bubbles: true,
-              composed: true,
-            })
-          );
+            // Dispatch event for external listeners
+            this.dispatchEvent(
+              new CustomEvent('table-sort', {
+                detail: {
+                  column: column.key,
+                  direction: this.sortDirection,
+                  sortType: column.sortType || 'text',
+                },
+                bubbles: true,
+                composed: true,
+              })
+            );
 
-          // DO NOT update aria-sort here! USWDS behavior has already set it correctly.
-          // We are just syncing our component state with what USWDS did.
+            // DO NOT update aria-sort here! USWDS behavior has already set it correctly.
+            // We are just syncing our component state with what USWDS did.
+          });
         }
       }
     });

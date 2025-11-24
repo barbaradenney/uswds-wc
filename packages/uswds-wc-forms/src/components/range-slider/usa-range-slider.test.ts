@@ -12,6 +12,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation, waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 describe('USARangeSlider', () => {
   let element: USARangeSlider;
@@ -122,7 +123,7 @@ describe('USARangeSlider', () => {
 
     it('should handle disabled state', async () => {
       element.disabled = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input.disabled).toBe(true);
@@ -130,7 +131,7 @@ describe('USARangeSlider', () => {
 
     it('should handle required state', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       const formGroup = element.querySelector('.usa-form-group');
@@ -151,14 +152,14 @@ describe('USARangeSlider', () => {
 
     it('should handle showValue toggle', async () => {
       element.showValue = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const valueDisplay = element.querySelector('.usa-range__value');
 
       expect(valueDisplay).toBeNull();
 
       element.showValue = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const valueDisplayAfter = element.querySelector('.usa-range__value');
 
@@ -204,7 +205,7 @@ describe('USARangeSlider', () => {
 
       // Default range 0-100
       element.value = 0;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
       const input = element.querySelector('input[type="range"]') as HTMLInputElement;
       expect(input.value).toBe('0');
 
@@ -231,7 +232,7 @@ describe('USARangeSlider', () => {
       element.max = 1;
       element.step = 0.1;
       element.value = 0.5;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(parseFloat(input.value)).toBe(0.5);
@@ -242,7 +243,7 @@ describe('USARangeSlider', () => {
       element.min = -100;
       element.max = 100;
       element.value = -50;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="range"]') as HTMLInputElement;
       expect(input.min).toBe('-100');
@@ -303,7 +304,7 @@ describe('USARangeSlider', () => {
     it('should update value display when value changes', async () => {
       element.showValue = true;
       element.value = 25;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const valueDisplay = element.querySelector('.usa-range__value');
       expect(valueDisplay?.textContent?.trim()).toBe('25');
@@ -324,7 +325,7 @@ describe('USARangeSlider', () => {
       element.value = 50;
       element.min = 10;
       element.max = 90;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -347,7 +348,7 @@ describe('USARangeSlider', () => {
       element.min = 0;
       element.max = 100;
       element.step = 1;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input.step).toBe('1');
@@ -363,7 +364,7 @@ describe('USARangeSlider', () => {
     it('should handle step-based value changes', async () => {
       element.value = 50;
       element.step = 5;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input.step).toBe('5');
@@ -379,7 +380,7 @@ describe('USARangeSlider', () => {
       element.min = 0;
       element.max = 100;
       element.step = 10;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
 
@@ -398,7 +399,7 @@ describe('USARangeSlider', () => {
       element.max = 90;
       element.step = 5;
       element.value = 85;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
 
@@ -433,7 +434,7 @@ describe('USARangeSlider', () => {
       element.min = 20;
       element.max = 80;
       element.unit = '%';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
 
@@ -457,18 +458,20 @@ describe('USARangeSlider', () => {
 
     it('should connect hint text with aria-describedby', async () => {
       element.hint = 'Adjust the volume level';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       const hint = element.querySelector('.usa-hint') as HTMLElement;
 
       expect(hint.id).toBe(`${element.inputId}-hint`);
-      expect(input.getAttribute('aria-describedby')).toContain(`${element.inputId}-hint`);
+      expect(await waitForARIAAttribute(input, 'aria-describedby')).toContain(
+        `${element.inputId}-hint`
+      );
     });
 
     it('should show required indicator', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const requiredIndicator = element.querySelector('.usa-hint--required');
       expect(requiredIndicator?.textContent?.trim()).toBe('*');
@@ -482,16 +485,16 @@ describe('USARangeSlider', () => {
       element.value = 30;
       await waitForUpdate(element);
 
-      expect(input.getAttribute('aria-valuenow')).toBe('30');
+      expect(await waitForARIAAttribute(input, 'aria-valuenow')).toBe('30');
     });
 
     it('should update aria-valuetext with formatted value', async () => {
       element.unit = '$';
       element.value = 150;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
-      expect(input.getAttribute('aria-valuetext')).toBe('150$');
+      expect(await waitForARIAAttribute(input, 'aria-valuetext')).toBe('150$');
     });
   });
 
@@ -512,7 +515,7 @@ describe('USARangeSlider', () => {
 
     it('should support form validation', async () => {
       element.required = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input.checkValidity()).toBe(true); // Range inputs always have a value
@@ -559,7 +562,7 @@ describe('USARangeSlider', () => {
 
     it('should handle zero step value', async () => {
       element.step = 0;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('.usa-range') as HTMLInputElement;
       expect(input).toBeTruthy();
@@ -570,7 +573,7 @@ describe('USARangeSlider', () => {
       element.min = 0;
       element.max = 1000000;
       element.value = 500000;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const input = element.querySelector('input[type="range"]') as HTMLInputElement;
       expect(input.min).toBe('0');
@@ -622,7 +625,7 @@ describe('USARangeSlider', () => {
       element.max = 95;
       element.unit = '°C';
       element.showMinMax = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const minMaxSpans = element.querySelectorAll('.display-flex.flex-justify span');
 
@@ -635,7 +638,7 @@ describe('USARangeSlider', () => {
       element.value = 42;
       element.unit = 'MB';
       element.showValue = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const valueDisplay = element.querySelector('.usa-range__value');
 
@@ -647,7 +650,7 @@ describe('USARangeSlider', () => {
       element.max = 200;
       element.value = 150;
       element.showValue = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const valueDisplay = element.querySelector('.usa-range__value');
       expect(valueDisplay?.textContent?.trim()).toBe('150'); // Value should be displayed correctly

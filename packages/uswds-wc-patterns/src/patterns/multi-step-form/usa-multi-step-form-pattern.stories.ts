@@ -27,6 +27,23 @@ export const Default: Story = {
       { id: 'review', label: 'Review' },
     ];
 
+    // Use requestAnimationFrame to access DOM after render
+    requestAnimationFrame(() => {
+      const pattern = document.querySelector('usa-multi-step-form-pattern');
+      const log = document.getElementById('event-log');
+
+      if (pattern && log) {
+        pattern.addEventListener('step-change', (e: Event) => {
+          log.textContent = 'step-change: ' + JSON.stringify((e as CustomEvent).detail, null, 2);
+        });
+
+        pattern.addEventListener('form-complete', (e: Event) => {
+          log.textContent = 'form-complete: ' + JSON.stringify((e as CustomEvent).detail, null, 2);
+          alert('Form completed! Check the event log.');
+        });
+      }
+    });
+
     return html`
       <usa-multi-step-form-pattern .steps=${steps}>
         <div slot="step-personal-info">
@@ -72,22 +89,6 @@ export const Default: Story = {
         <h3>Event Log:</h3>
         <pre id="event-log" style="background: #f0f0f0; padding: 1rem;">Waiting for events...</pre>
       </div>
-
-      <script>
-        (() => {
-          const pattern = document.querySelector('usa-multi-step-form-pattern');
-          const log = document.getElementById('event-log');
-
-          pattern.addEventListener('step-change', (e) => {
-            log.textContent = 'step-change: ' + JSON.stringify(e.detail, null, 2);
-          });
-
-          pattern.addEventListener('form-complete', (e) => {
-            log.textContent = 'form-complete: ' + JSON.stringify(e.detail, null, 2);
-            alert('Form completed! Check the event log.');
-          });
-        })();
-      </script>
     `;
   },
 };
@@ -108,17 +109,13 @@ export const WithPersistence: Story = {
       <div class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
           <p class="usa-alert__text">
-            <strong>State persistence enabled:</strong> Your progress is automatically saved.
-            Try navigating steps and refreshing the page!
+            <strong>State persistence enabled:</strong> Your progress is automatically saved. Try
+            navigating steps and refreshing the page!
           </p>
         </div>
       </div>
 
-      <usa-multi-step-form-pattern
-        .steps=${steps}
-        persist-state
-        storage-key="demo-form-progress"
-      >
+      <usa-multi-step-form-pattern .steps=${steps} persist-state storage-key="demo-form-progress">
         <div slot="step-step1">
           <h2 class="usa-prose">Step 1: Getting Started</h2>
           <p class="usa-prose">This is the first step of the form.</p>
@@ -325,32 +322,40 @@ export const ProgrammaticControl: Story = {
       { id: 'conclusion', label: 'Conclusion' },
     ];
 
+    const handleGoToStep = (stepIndex: number) => {
+      const pattern = document.querySelector('usa-multi-step-form-pattern') as any;
+      pattern?.goToStep(stepIndex);
+    };
+
+    const handleReset = () => {
+      const pattern = document.querySelector('usa-multi-step-form-pattern') as any;
+      pattern?.reset();
+    };
+
+    // Use requestAnimationFrame to access DOM after render
+    requestAnimationFrame(() => {
+      const pattern = document.querySelector('usa-multi-step-form-pattern');
+      const display = document.getElementById('current-step-display');
+
+      if (pattern && display) {
+        pattern.addEventListener('step-change', (e: Event) => {
+          display.textContent = String((e as CustomEvent).detail.currentStep + 1);
+        });
+      }
+    });
+
     return html`
       <div class="margin-bottom-2">
-        <button
-          class="usa-button usa-button--outline"
-          onclick="document.querySelector('usa-multi-step-form-pattern').goToStep(0)"
-        >
+        <button class="usa-button usa-button--outline" @click="${() => handleGoToStep(0)}">
           Jump to Step 1
         </button>
-        <button
-          class="usa-button usa-button--outline"
-          onclick="document.querySelector('usa-multi-step-form-pattern').goToStep(1)"
-        >
+        <button class="usa-button usa-button--outline" @click="${() => handleGoToStep(1)}">
           Jump to Step 2
         </button>
-        <button
-          class="usa-button usa-button--outline"
-          onclick="document.querySelector('usa-multi-step-form-pattern').goToStep(2)"
-        >
+        <button class="usa-button usa-button--outline" @click="${() => handleGoToStep(2)}">
           Jump to Step 3
         </button>
-        <button
-          class="usa-button usa-button--secondary"
-          onclick="document.querySelector('usa-multi-step-form-pattern').reset()"
-        >
-          Reset
-        </button>
+        <button class="usa-button usa-button--secondary" @click="${handleReset}">Reset</button>
       </div>
 
       <usa-multi-step-form-pattern .steps=${steps} show-navigation="false">
@@ -377,17 +382,6 @@ export const ProgrammaticControl: Story = {
           <span id="current-step-display">1</span>
         </p>
       </div>
-
-      <script>
-        (() => {
-          const pattern = document.querySelector('usa-multi-step-form-pattern');
-          const display = document.getElementById('current-step-display');
-
-          pattern.addEventListener('step-change', (e) => {
-            display.textContent = e.detail.currentStep + 1;
-          });
-        })();
-      </script>
     `;
   },
 };

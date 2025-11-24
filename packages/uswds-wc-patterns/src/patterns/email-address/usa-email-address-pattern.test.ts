@@ -51,7 +51,9 @@ describe('USAEmailAddressPattern', () => {
     });
 
     it('should fire pattern-ready event on first update', async () => {
-      const element2 = document.createElement('usa-email-address-pattern') as USAEmailAddressPattern;
+      const element2 = document.createElement(
+        'usa-email-address-pattern'
+      ) as USAEmailAddressPattern;
 
       const readyPromise = new Promise((resolve) => {
         element2.addEventListener('pattern-ready', (e: Event) => {
@@ -118,7 +120,7 @@ describe('USAEmailAddressPattern', () => {
     it('should show consent section when showConsent is true', async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0)); // Wait for Promise.resolve()
+      await new Promise((resolve) => setTimeout(resolve, 0)); // Wait for Promise.resolve()
 
       const consentSection = element.querySelector('.consent-section');
       expect(consentSection?.classList.contains('display-none')).toBe(false);
@@ -127,11 +129,11 @@ describe('USAEmailAddressPattern', () => {
     it('should hide consent section when showConsent is false', async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       element.showConsent = false;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const consentSection = element.querySelector('.consent-section');
       expect(consentSection?.classList.contains('display-none')).toBe(true);
@@ -188,7 +190,7 @@ describe('USAEmailAddressPattern', () => {
       input.dispatchEvent(new Event('input', { bubbles: true }));
       await element.updateComplete;
 
-      const detail = await changePromise as any;
+      const detail = (await changePromise) as any;
       expect(detail.field).toBe('email');
       expect(detail.value).toBe('test@example.com');
       expect(detail.emailData.email).toBe('test@example.com');
@@ -199,7 +201,7 @@ describe('USAEmailAddressPattern', () => {
     beforeEach(async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     it('should render consent radio buttons', () => {
@@ -218,10 +220,12 @@ describe('USAEmailAddressPattern', () => {
     it('should update consent data on radio change', async () => {
       const yesRadio = element.querySelector('usa-radio[value="yes-info"]') as any;
 
-      yesRadio.dispatchEvent(new CustomEvent('change', {
-        detail: { checked: true, value: 'yes-info' },
-        bubbles: true,
-      }));
+      yesRadio.dispatchEvent(
+        new CustomEvent('change', {
+          detail: { checked: true, value: 'yes-info' },
+          bubbles: true,
+        })
+      );
       await element.updateComplete;
 
       const data = element.getEmailData();
@@ -237,13 +241,15 @@ describe('USAEmailAddressPattern', () => {
 
       const noRadio = element.querySelector('usa-radio[value="no-info"]') as any;
 
-      noRadio.dispatchEvent(new CustomEvent('change', {
-        detail: { checked: true, value: 'no-info' },
-        bubbles: true,
-      }));
+      noRadio.dispatchEvent(
+        new CustomEvent('change', {
+          detail: { checked: true, value: 'no-info' },
+          bubbles: true,
+        })
+      );
       await element.updateComplete;
 
-      const detail = await changePromise as any;
+      const detail = (await changePromise) as any;
       expect(detail.field).toBe('sensitiveInfoConsent');
       expect(detail.value).toBe('no-info');
     });
@@ -286,7 +292,7 @@ describe('USAEmailAddressPattern', () => {
 
       element.setEmailData(testData);
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const data = element.getEmailData();
       expect(data.email).toBe('set@example.com');
@@ -296,7 +302,7 @@ describe('USAEmailAddressPattern', () => {
     it('should update email input value', async () => {
       element.setEmailData({ email: 'input@example.com' });
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const emailInput = element.querySelector('usa-text-input[name="email"]') as any;
       expect(emailInput?.value).toBe('input@example.com');
@@ -305,11 +311,11 @@ describe('USAEmailAddressPattern', () => {
     it('should check correct radio button', async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       element.setEmailData({ sensitiveInfoConsent: 'no-info' });
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const noRadio = element.querySelector('usa-radio[value="no-info"]') as any;
       expect(noRadio?.checked).toBe(true);
@@ -336,7 +342,7 @@ describe('USAEmailAddressPattern', () => {
     it('should reset email input', async () => {
       element.clearEmail();
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const emailInput = element.querySelector('usa-text-input[name="email"]') as any;
       const input = emailInput?.querySelector('input') as HTMLInputElement;
@@ -346,11 +352,11 @@ describe('USAEmailAddressPattern', () => {
     it('should reset radio buttons', async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       element.clearEmail();
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const radios = element.querySelectorAll('usa-radio[name="sensitiveInfoConsent"]');
       radios.forEach((radio: any) => {
@@ -462,14 +468,16 @@ describe('USAEmailAddressPattern', () => {
     it('should return current consent value', async () => {
       element.showConsent = true;
       await element.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       const yesRadio = element.querySelector('usa-radio[value="yes-info"]') as any;
 
-      yesRadio.dispatchEvent(new CustomEvent('change', {
-        detail: { checked: true, value: 'yes-info' },
-        bubbles: true,
-      }));
+      yesRadio.dispatchEvent(
+        new CustomEvent('change', {
+          detail: { checked: true, value: 'yes-info' },
+          bubbles: true,
+        })
+      );
       await element.updateComplete;
 
       expect(element.getConsent()).toBe('yes-info');
@@ -562,10 +570,7 @@ describe('USAEmailAddressPattern', () => {
       });
 
       it('should initialize email text input component', async () => {
-        const emailInput = await verifyChildComponent(
-          element,
-          'usa-text-input[name="email"]'
-        );
+        const emailInput = await verifyChildComponent(element, 'usa-text-input[name="email"]');
         expect(emailInput).toBeTruthy();
 
         // Verify internal structure rendered
@@ -576,16 +581,10 @@ describe('USAEmailAddressPattern', () => {
       it('should initialize consent radio buttons when showConsent is true', async () => {
         element.showConsent = true;
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
-        const yesRadio = await verifyChildComponent(
-          element,
-          'usa-radio[value="yes-info"]'
-        );
-        const noRadio = await verifyChildComponent(
-          element,
-          'usa-radio[value="no-info"]'
-        );
+        const yesRadio = await verifyChildComponent(element, 'usa-radio[value="yes-info"]');
+        const noRadio = await verifyChildComponent(element, 'usa-radio[value="no-info"]');
 
         expect(yesRadio).toBeTruthy();
         expect(noRadio).toBeTruthy();
@@ -600,7 +599,7 @@ describe('USAEmailAddressPattern', () => {
       it('should render all child components', async () => {
         element.showConsent = true;
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         // Email input should exist
         const emailInput = element.querySelector('usa-text-input[name="email"]');
@@ -618,7 +617,7 @@ describe('USAEmailAddressPattern', () => {
         element.showConsent = true;
         document.body.appendChild(element);
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
       });
 
       afterEach(() => {
@@ -686,7 +685,7 @@ describe('USAEmailAddressPattern', () => {
       it('should compose all fields when consent is shown', async () => {
         element.showConsent = true;
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         await verifyUSWDSStructure(element, {
           fieldsetClass: 'usa-fieldset',
@@ -705,12 +704,12 @@ describe('USAEmailAddressPattern', () => {
 
         element.showConsent = true;
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         expect(consentSection?.classList.contains('display-none')).toBe(false);
 
         element.showConsent = false;
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         expect(consentSection?.classList.contains('display-none')).toBe(true);
       });
     });
@@ -721,7 +720,7 @@ describe('USAEmailAddressPattern', () => {
         element.showConsent = true;
         document.body.appendChild(element);
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
       });
 
       afterEach(() => {
@@ -755,10 +754,12 @@ describe('USAEmailAddressPattern', () => {
         const yesRadio = element.querySelector('usa-radio[value="yes-info"]') as any;
         await yesRadio?.updateComplete;
 
-        yesRadio.dispatchEvent(new CustomEvent('change', {
-          detail: { checked: true, value: 'yes-info' },
-          bubbles: true,
-        }));
+        yesRadio.dispatchEvent(
+          new CustomEvent('change', {
+            detail: { checked: true, value: 'yes-info' },
+            bubbles: true,
+          })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].field).toBe('sensitiveInfoConsent');
@@ -774,10 +775,12 @@ describe('USAEmailAddressPattern', () => {
         const noRadio = element.querySelector('usa-radio[value="no-info"]') as any;
         await noRadio?.updateComplete;
 
-        noRadio.dispatchEvent(new CustomEvent('change', {
-          detail: { checked: true, value: 'no-info' },
-          bubbles: true,
-        }));
+        noRadio.dispatchEvent(
+          new CustomEvent('change', {
+            detail: { checked: true, value: 'no-info' },
+            bubbles: true,
+          })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         expect(events[0].field).toBe('sensitiveInfoConsent');
@@ -799,10 +802,12 @@ describe('USAEmailAddressPattern', () => {
 
         // Set consent
         const yesRadio = element.querySelector('usa-radio[value="yes-info"]') as any;
-        yesRadio.dispatchEvent(new CustomEvent('change', {
-          detail: { checked: true, value: 'yes-info' },
-          bubbles: true,
-        }));
+        yesRadio.dispatchEvent(
+          new CustomEvent('change', {
+            detail: { checked: true, value: 'yes-info' },
+            bubbles: true,
+          })
+        );
 
         expect(events.length).toBeGreaterThan(0);
         const lastEvent = events[events.length - 1];
@@ -920,7 +925,7 @@ describe('USAEmailAddressPattern', () => {
         element.showConsent = true;
         document.body.appendChild(element);
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
       });
 
       afterEach(() => {
@@ -952,10 +957,10 @@ describe('USAEmailAddressPattern', () => {
       it('should allow setting consent via pattern API', async () => {
         element.setEmailData({
           email: 'test@example.com',
-          sensitiveInfoConsent: 'yes-info'
+          sensitiveInfoConsent: 'yes-info',
         });
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         const yesRadio = element.querySelector('usa-radio[value="yes-info"]') as any;
         expect(yesRadio?.checked).toBe(true);
@@ -968,7 +973,7 @@ describe('USAEmailAddressPattern', () => {
           sensitiveInfoConsent: 'yes-info',
         });
         await element.updateComplete;
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         // Clear via pattern API
         element.clearEmail();

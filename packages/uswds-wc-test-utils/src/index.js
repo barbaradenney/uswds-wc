@@ -10,6 +10,7 @@
 export * from './test-utils.js';
 export * from './accessibility-utils.js';
 export * from './aria-screen-reader-utils.js';
+export * from './ci-timing-utils.js';
 export * from './contrast-utils.js';
 export * from './css-class-utils.js';
 export * from './focus-management-utils.js';

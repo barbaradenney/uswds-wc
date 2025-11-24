@@ -1,0 +1,724 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Global" [ref=e6]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Skip to canvas" [ref=e12] [cursor=pointer]:
+            - /url: "#storybook-preview-wrapper"
+          - link "Storybook" [ref=e14] [cursor=pointer]:
+            - /url: ./
+            - img "Storybook" [ref=e15]
+          - button "Shortcuts" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+        - generic [ref=e25]: Search for components
+        - combobox "Search for components" [ref=e27]:
+          - generic:
+            - img
+          - searchbox "Search for components" [ref=e28]
+          - code:
+            - generic: ⌘
+            - text: K
+          - button "Tag filters" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+        - generic [ref=e39]:
+          - img
+          - link "Getting Started" [ref=e41] [cursor=pointer]:
+            - /url: /?path=/docs/getting-started--docs
+            - img [ref=e43]
+            - text: Getting Started
+          - link "About" [ref=e46] [cursor=pointer]:
+            - /url: /?path=/docs/about--docs
+            - img [ref=e48]
+            - text: About
+          - link "Bundle Optimization" [ref=e51] [cursor=pointer]:
+            - /url: /?path=/docs/bundle-optimization--docs
+            - img [ref=e53]
+            - text: Bundle Optimization
+          - link "CI-CD Pipeline" [ref=e56] [cursor=pointer]:
+            - /url: /?path=/docs/ci-cd-pipeline--docs
+            - img [ref=e58]
+            - text: CI-CD Pipeline
+          - link "Component Generator" [ref=e61] [cursor=pointer]:
+            - /url: /?path=/docs/component-generator--docs
+            - img [ref=e63]
+            - text: Component Generator
+          - link "Post-Commit System" [ref=e66] [cursor=pointer]:
+            - /url: /?path=/docs/post-commit-system--docs
+            - img [ref=e68]
+            - text: Post-Commit System
+          - link "Pre-Commit System" [ref=e71] [cursor=pointer]:
+            - /url: /?path=/docs/pre-commit-system--docs
+            - img [ref=e73]
+            - text: Pre-Commit System
+          - link "Pre-Push System" [ref=e76] [cursor=pointer]:
+            - /url: /?path=/docs/pre-push-system--docs
+            - img [ref=e78]
+            - text: Pre-Push System
+          - link "USWDS Compliance" [ref=e81] [cursor=pointer]:
+            - /url: /?path=/docs/uswds-compliance--docs
+            - img [ref=e83]
+            - text: USWDS Compliance
+          - link "USWDS Sync System" [ref=e86] [cursor=pointer]:
+            - /url: /?path=/docs/uswds-sync-system--docs
+            - img [ref=e88]
+            - text: USWDS Sync System
+          - link "Weekly Automation" [ref=e91] [cursor=pointer]:
+            - /url: /?path=/docs/weekly-automation--docs
+            - img [ref=e93]
+            - text: Weekly Automation
+          - link "Working with Claude" [ref=e96] [cursor=pointer]:
+            - /url: /?path=/docs/working-with-claude--docs
+            - img [ref=e98]
+            - text: Working with Claude
+          - generic [ref=e100]:
+            - button "Forms" [expanded] [ref=e101] [cursor=pointer]:
+              - img [ref=e103]
+              - text: Forms
+            - button "Collapse" [ref=e105] [cursor=pointer]:
+              - img [ref=e106]
+          - button "Character Count" [ref=e109] [cursor=pointer]:
+            - generic [ref=e110]:
+              - img [ref=e112]
+              - img [ref=e114]
+            - text: Character Count
+          - button "Checkbox" [ref=e117] [cursor=pointer]:
+            - generic [ref=e118]:
+              - img [ref=e120]
+              - img [ref=e122]
+            - text: Checkbox
+          - button "Combo Box" [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]:
+              - img [ref=e128]
+              - img [ref=e130]
+            - text: Combo Box
+          - button "Date Picker" [ref=e133] [cursor=pointer]:
+            - generic [ref=e134]:
+              - img [ref=e136]
+              - img [ref=e138]
+            - text: Date Picker
+          - button "Date Range Picker" [ref=e141] [cursor=pointer]:
+            - generic [ref=e142]:
+              - img [ref=e144]
+              - img [ref=e146]
+            - text: Date Range Picker
+          - button "File Input" [ref=e149] [cursor=pointer]:
+            - generic [ref=e150]:
+              - img [ref=e152]
+              - img [ref=e154]
+            - text: File Input
+          - button "Input Prefix Suffix" [ref=e157] [cursor=pointer]:
+            - generic [ref=e158]:
+              - img [ref=e160]
+              - img [ref=e162]
+            - text: Input Prefix Suffix
+          - button "Memorable Date" [ref=e165] [cursor=pointer]:
+            - generic [ref=e166]:
+              - img [ref=e168]
+              - img [ref=e170]
+            - text: Memorable Date
+          - button "Radio" [ref=e173] [cursor=pointer]:
+            - generic [ref=e174]:
+              - img [ref=e176]
+              - img [ref=e178]
+            - text: Radio
+          - button "Range Slider" [ref=e181] [cursor=pointer]:
+            - generic [ref=e182]:
+              - img [ref=e184]
+              - img [ref=e186]
+            - text: Range Slider
+          - button "Select" [ref=e189] [cursor=pointer]:
+            - generic [ref=e190]:
+              - img [ref=e192]
+              - img [ref=e194]
+            - text: Select
+          - button "Text Input" [ref=e197] [cursor=pointer]:
+            - generic [ref=e198]:
+              - img [ref=e200]
+              - img [ref=e202]
+            - text: Text Input
+          - button "Textarea" [ref=e205] [cursor=pointer]:
+            - generic [ref=e206]:
+              - img [ref=e208]
+              - img [ref=e210]
+            - text: Textarea
+          - button "Time Picker" [ref=e213] [cursor=pointer]:
+            - generic [ref=e214]:
+              - img [ref=e216]
+              - img [ref=e218]
+            - text: Time Picker
+          - button "Validation" [ref=e221] [cursor=pointer]:
+            - generic [ref=e222]:
+              - img [ref=e224]
+              - img [ref=e226]
+            - text: Validation
+          - generic [ref=e228]:
+            - button "Navigation" [expanded] [ref=e229] [cursor=pointer]:
+              - img [ref=e231]
+              - text: Navigation
+            - button "Collapse" [ref=e233] [cursor=pointer]:
+              - img [ref=e234]
+          - button "Breadcrumb" [ref=e237] [cursor=pointer]:
+            - generic [ref=e238]:
+              - img [ref=e240]
+              - img [ref=e242]
+            - text: Breadcrumb
+          - button "Footer" [ref=e245] [cursor=pointer]:
+            - generic [ref=e246]:
+              - img [ref=e248]
+              - img [ref=e250]
+            - text: Footer
+          - button "Header" [ref=e253] [cursor=pointer]:
+            - generic [ref=e254]:
+              - img [ref=e256]
+              - img [ref=e258]
+            - text: Header
+          - button "In Page Navigation" [ref=e261] [cursor=pointer]:
+            - generic [ref=e262]:
+              - img [ref=e264]
+              - img [ref=e266]
+            - text: In Page Navigation
+          - button "Language Selector" [ref=e269] [cursor=pointer]:
+            - generic [ref=e270]:
+              - img [ref=e272]
+              - img [ref=e274]
+            - text: Language Selector
+          - button "Pagination" [ref=e277] [cursor=pointer]:
+            - generic [ref=e278]:
+              - img [ref=e280]
+              - img [ref=e282]
+            - text: Pagination
+          - button "Side Navigation" [ref=e285] [cursor=pointer]:
+            - generic [ref=e286]:
+              - img [ref=e288]
+              - img [ref=e290]
+            - text: Side Navigation
+          - button "Skip Link" [ref=e293] [cursor=pointer]:
+            - generic [ref=e294]:
+              - img [ref=e296]
+              - img [ref=e298]
+            - text: Skip Link
+          - generic [ref=e300]:
+            - button "Data Display" [expanded] [ref=e301] [cursor=pointer]:
+              - img [ref=e303]
+              - text: Data Display
+            - button "Collapse" [ref=e305] [cursor=pointer]:
+              - img [ref=e306]
+          - button "Card" [ref=e309] [cursor=pointer]:
+            - generic [ref=e310]:
+              - img [ref=e312]
+              - img [ref=e314]
+            - text: Card
+          - button "Collection" [ref=e317] [cursor=pointer]:
+            - generic [ref=e318]:
+              - img [ref=e320]
+              - img [ref=e322]
+            - text: Collection
+          - button "Icon List" [ref=e325] [cursor=pointer]:
+            - generic [ref=e326]:
+              - img [ref=e328]
+              - img [ref=e330]
+            - text: Icon List
+          - button "Icon" [ref=e333] [cursor=pointer]:
+            - generic [ref=e334]:
+              - img [ref=e336]
+              - img [ref=e338]
+            - text: Icon
+          - button "List" [ref=e341] [cursor=pointer]:
+            - generic [ref=e342]:
+              - img [ref=e344]
+              - img [ref=e346]
+            - text: List
+          - button "Summary Box" [ref=e349] [cursor=pointer]:
+            - generic [ref=e350]:
+              - img [ref=e352]
+              - img [ref=e354]
+            - text: Summary Box
+          - button "Table" [expanded] [ref=e357] [cursor=pointer]:
+            - generic [ref=e358]:
+              - img [ref=e360]
+              - img [ref=e362]
+            - text: Table
+          - link "Docs" [ref=e365] [cursor=pointer]:
+            - /url: /?path=/docs/data-display-table--docs
+            - img [ref=e367]
+            - text: Docs
+          - link "Default" [ref=e370] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--default
+            - img [ref=e372]
+            - text: Default
+          - link "Striped" [ref=e375] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--striped
+            - img [ref=e377]
+            - text: Striped
+          - link "Compact" [ref=e380] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--compact
+            - img [ref=e382]
+            - text: Compact
+          - link "Borderless" [ref=e385] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--borderless
+            - img [ref=e387]
+            - text: Borderless
+          - link "Sticky Header" [ref=e390] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--sticky-header
+            - img [ref=e392]
+            - text: Sticky Header
+          - link "Scrollable" [ref=e395] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--scrollable
+            - img [ref=e397]
+            - text: Scrollable
+          - link "Budget Table" [ref=e400] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--budget-table
+            - img [ref=e402]
+            - text: Budget Table
+          - link "Contract Tracking" [ref=e405] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--contract-tracking
+            - img [ref=e407]
+            - text: Contract Tracking
+          - generic [ref=e409]:
+            - link "Sorting Demo" [ref=e410] [cursor=pointer]:
+              - /url: /?path=/story/data-display-table--sorting-demo
+              - img [ref=e412]
+              - text: Sorting Demo
+            - link "Skip to canvas" [ref=e414] [cursor=pointer]:
+              - /url: "#storybook-preview-wrapper"
+          - link "Mobile Stacked" [ref=e416] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--mobile-stacked
+            - img [ref=e418]
+            - text: Mobile Stacked
+          - link "Empty State" [ref=e421] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--empty-state
+            - img [ref=e423]
+            - text: Empty State
+          - link "Complex Data Types" [ref=e426] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--complex-data-types
+            - img [ref=e428]
+            - text: Complex Data Types
+          - link "Accessibility Demo" [ref=e431] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--accessibility-demo
+            - img [ref=e433]
+            - text: Accessibility Demo
+          - link "Large Dataset" [ref=e436] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--large-dataset
+            - img [ref=e438]
+            - text: Large Dataset
+          - link "Interactive Controls" [ref=e441] [cursor=pointer]:
+            - /url: /?path=/story/data-display-table--interactive-controls
+            - img [ref=e443]
+            - text: Interactive Controls
+          - link "Changelog" [ref=e446] [cursor=pointer]:
+            - /url: /?path=/docs/data-display-table-changelog--docs
+            - img [ref=e448]
+            - text: Changelog
+          - button "Tag" [ref=e451] [cursor=pointer]:
+            - generic [ref=e452]:
+              - img [ref=e454]
+              - img [ref=e456]
+            - text: Tag
+          - generic [ref=e458]:
+            - button "Feedback" [expanded] [ref=e459] [cursor=pointer]:
+              - img [ref=e461]
+              - text: Feedback
+            - button "Collapse" [ref=e463] [cursor=pointer]:
+              - img [ref=e464]
+          - button "Alert" [ref=e467] [cursor=pointer]:
+            - generic [ref=e468]:
+              - img [ref=e470]
+              - img [ref=e472]
+            - text: Alert
+          - button "Banner" [ref=e475] [cursor=pointer]:
+            - generic [ref=e476]:
+              - img [ref=e478]
+              - img [ref=e480]
+            - text: Banner
+          - button "Modal" [ref=e483] [cursor=pointer]:
+            - generic [ref=e484]:
+              - img [ref=e486]
+              - img [ref=e488]
+            - text: Modal
+          - button "Site Alert" [ref=e491] [cursor=pointer]:
+            - generic [ref=e492]:
+              - img [ref=e494]
+              - img [ref=e496]
+            - text: Site Alert
+          - button "Tooltip" [ref=e499] [cursor=pointer]:
+            - generic [ref=e500]:
+              - img [ref=e502]
+              - img [ref=e504]
+            - text: Tooltip
+          - generic [ref=e506]:
+            - button "Actions" [expanded] [ref=e507] [cursor=pointer]:
+              - img [ref=e509]
+              - text: Actions
+            - button "Collapse" [ref=e511] [cursor=pointer]:
+              - img [ref=e512]
+          - button "Button Group" [ref=e515] [cursor=pointer]:
+            - generic [ref=e516]:
+              - img [ref=e518]
+              - img [ref=e520]
+            - text: Button Group
+          - button "Button" [ref=e523] [cursor=pointer]:
+            - generic [ref=e524]:
+              - img [ref=e526]
+              - img [ref=e528]
+            - text: Button
+          - button "Link" [ref=e531] [cursor=pointer]:
+            - generic [ref=e532]:
+              - img [ref=e534]
+              - img [ref=e536]
+            - text: Link
+          - button "Search" [ref=e539] [cursor=pointer]:
+            - generic [ref=e540]:
+              - img [ref=e542]
+              - img [ref=e544]
+            - text: Search
+          - generic [ref=e546]:
+            - button "Layout" [expanded] [ref=e547] [cursor=pointer]:
+              - img [ref=e549]
+              - text: Layout
+            - button "Collapse" [ref=e551] [cursor=pointer]:
+              - img [ref=e552]
+          - button "Identifier" [ref=e555] [cursor=pointer]:
+            - generic [ref=e556]:
+              - img [ref=e558]
+              - img [ref=e560]
+            - text: Identifier
+          - button "Process List" [ref=e563] [cursor=pointer]:
+            - generic [ref=e564]:
+              - img [ref=e566]
+              - img [ref=e568]
+            - text: Process List
+          - button "Prose" [ref=e571] [cursor=pointer]:
+            - generic [ref=e572]:
+              - img [ref=e574]
+              - img [ref=e576]
+            - text: Prose
+          - button "Step Indicator" [ref=e579] [cursor=pointer]:
+            - generic [ref=e580]:
+              - img [ref=e582]
+              - img [ref=e584]
+            - text: Step Indicator
+          - generic [ref=e586]:
+            - button "Structure" [expanded] [ref=e587] [cursor=pointer]:
+              - img [ref=e589]
+              - text: Structure
+            - button "Collapse" [ref=e591] [cursor=pointer]:
+              - img [ref=e592]
+          - button "Accordion" [ref=e595] [cursor=pointer]:
+            - generic [ref=e596]:
+              - img [ref=e598]
+              - img [ref=e600]
+            - text: Accordion
+          - generic [ref=e602]:
+            - button "Patterns" [expanded] [ref=e603] [cursor=pointer]:
+              - img [ref=e605]
+              - text: Patterns
+            - button "Collapse" [ref=e607] [cursor=pointer]:
+              - img [ref=e608]
+          - button "User Profile" [ref=e611] [cursor=pointer]:
+            - generic [ref=e612]:
+              - img [ref=e614]
+              - img [ref=e616]
+            - text: User Profile
+          - button "Form Summary" [ref=e619] [cursor=pointer]:
+            - generic [ref=e620]:
+              - img [ref=e622]
+              - img [ref=e624]
+            - text: Form Summary
+          - button "Language Selection" [ref=e627] [cursor=pointer]:
+            - generic [ref=e628]:
+              - img [ref=e630]
+              - img [ref=e632]
+            - text: Language Selection
+          - button "Multi-Step Form" [ref=e635] [cursor=pointer]:
+            - generic [ref=e636]:
+              - img [ref=e638]
+              - img [ref=e640]
+            - text: Multi-Step Form
+      - generic [ref=e644]:
+        - generic [ref=e645] [cursor=pointer]:
+          - button "Run tests" [ref=e648]:
+            - img [ref=e649]
+            - generic [ref=e652]: Run tests
+          - button "Expand testing module" [ref=e655]:
+            - img [ref=e656]
+        - generic [ref=e660]:
+          - generic [ref=e661]:
+            - generic [ref=e662]:
+              - generic [ref=e663]: Run component tests
+              - generic [ref=e664]: Not run
+            - generic [ref=e665]:
+              - button "Enable watch mode" [ref=e667] [cursor=pointer]:
+                - img [ref=e668]
+              - button "Start test run" [ref=e672] [cursor=pointer]:
+                - img [ref=e673]
+          - generic [ref=e675]:
+            - generic [ref=e676]:
+              - generic [ref=e677]:
+                - checkbox "Interactions" [checked] [disabled] [ref=e679]
+                - generic [ref=e681]: Interactions
+              - button "Run tests to see results" [disabled] [ref=e683]:
+                - generic "Run tests to see results" [ref=e684]
+            - generic [ref=e685]:
+              - generic [ref=e686] [cursor=pointer]:
+                - checkbox "Coverage" [ref=e688]
+                - generic [ref=e690]: Coverage
+              - 'button "Coverage status: unknown" [disabled] [ref=e692]':
+                - 'generic "Coverage status: unknown" [ref=e693]'
+            - generic [ref=e694]:
+              - generic [ref=e695] [cursor=pointer]:
+                - checkbox "Accessibility" [ref=e697]
+                - generic [ref=e699]: Accessibility
+              - button "Run tests to see accessibility results" [disabled] [ref=e701]:
+                - generic "Run tests to see accessibility results" [ref=e702]
+  - main [ref=e704]:
+    - region "Toolbar" [ref=e705]:
+      - generic [ref=e706]: Toolbar
+      - generic [ref=e707]:
+        - generic [ref=e708]:
+          - button "Remount component" [ref=e709] [cursor=pointer]:
+            - img [ref=e710]
+          - button "Zoom in" [ref=e712] [cursor=pointer]:
+            - img [ref=e713]
+          - button "Zoom out" [ref=e716] [cursor=pointer]:
+            - img [ref=e717]
+          - button "Reset zoom" [ref=e720] [cursor=pointer]:
+            - img [ref=e721]
+          - button "Apply a grid to the preview" [ref=e724] [cursor=pointer]:
+            - img [ref=e725]
+          - button "Change the background of the preview" [ref=e728] [cursor=pointer]:
+            - img [ref=e729]
+          - button "Enable measure" [ref=e732] [cursor=pointer]:
+            - img [ref=e733]
+          - button "Apply outlines to the preview" [ref=e736] [cursor=pointer]:
+            - img [ref=e737]
+          - button "Change the size of the preview" [ref=e740] [cursor=pointer]:
+            - img [ref=e741]
+          - button "Vision simulator" [ref=e746] [cursor=pointer]:
+            - img [ref=e747]
+          - generic:
+            - img
+          - button "light" [ref=e753] [cursor=pointer]:
+            - img [ref=e754]
+            - text: light
+        - generic [ref=e756]:
+          - button "Go full screen" [ref=e757] [cursor=pointer]:
+            - img [ref=e758]
+          - link "Open canvas in new tab" [ref=e760] [cursor=pointer]:
+            - /url: iframe.html?globals=&id=data-display-table--sorting-demo
+            - img [ref=e761]
+          - button "Copy canvas link" [ref=e764] [cursor=pointer]:
+            - img [ref=e765]
+    - generic [ref=e770]:
+      - link "Skip to sidebar" [ref=e771] [cursor=pointer]:
+        - /url: "#data-display-table--sorting-demo"
+      - iframe [ref=e772]:
+        - generic [ref=f1e3]:
+          - table "Sortable Data Demonstration" [ref=f1e6]:
+            - caption [ref=f1e7]: Sortable Data Demonstration
+            - rowgroup [ref=f1e8]:
+              - row "Name, sortable column, currently unsorted Score, sortable column, currently unsorted Completion, sortable column, currently unsorted Due Date, sortable column, currently unsorted" [ref=f1e9]:
+                - columnheader "Name, sortable column, currently unsorted" [ref=f1e10]:
+                  - text: Name
+                  - button "Click to sort by Name in ascending order." [ref=f1e11] [cursor=pointer]:
+                    - img [ref=f1e12]
+                - columnheader "Score, sortable column, currently unsorted" [ref=f1e19]:
+                  - text: Score
+                  - button "Click to sort by Score in ascending order." [ref=f1e20] [cursor=pointer]:
+                    - img [ref=f1e21]
+                - columnheader "Completion, sortable column, currently unsorted" [ref=f1e28]:
+                  - text: Completion
+                  - button "Click to sort by Completion in ascending order." [ref=f1e29] [cursor=pointer]:
+                    - img [ref=f1e30]
+                - columnheader "Due Date, sortable column, currently unsorted" [ref=f1e37]:
+                  - text: Due Date
+                  - button "Click to sort by Due Date in ascending order." [ref=f1e38] [cursor=pointer]:
+                    - img [ref=f1e39]
+            - rowgroup [ref=f1e46]:
+              - row "Project Alpha 85 92.5% 6/14/2024" [ref=f1e47]:
+                - rowheader "Project Alpha" [ref=f1e48]
+                - cell "85" [ref=f1e49]
+                - cell "92.5%" [ref=f1e50]
+                - cell "6/14/2024" [ref=f1e51]
+              - row "Project Beta 78 88.2% 5/21/2024" [ref=f1e52]:
+                - rowheader "Project Beta" [ref=f1e53]
+                - cell "78" [ref=f1e54]
+                - cell "88.2%" [ref=f1e55]
+                - cell "5/21/2024" [ref=f1e56]
+              - row "Project Gamma 91 95.7% 7/2/2024" [ref=f1e57]:
+                - rowheader "Project Gamma" [ref=f1e58]
+                - cell "91" [ref=f1e59]
+                - cell "95.7%" [ref=f1e60]
+                - cell "7/2/2024" [ref=f1e61]
+              - row "Project Delta 73 81.4% 4/17/2024" [ref=f1e62]:
+                - rowheader "Project Delta" [ref=f1e63]
+                - cell "73" [ref=f1e64]
+                - cell "81.4%" [ref=f1e65]
+                - cell "4/17/2024" [ref=f1e66]
+          - generic [ref=f1e67]:
+            - heading "Sorting Instructions" [level=3] [ref=f1e68]
+            - text: Click any column header to sort the data. Click again to reverse the sort order.
+            - strong [ref=f1e69]: "Last Sort:"
+            - text: None
+  - generic [ref=e775]:
+    - generic [ref=e777]:
+      - tablist [ref=e779]:
+        - tab "Controls 12" [ref=e780] [cursor=pointer]:
+          - generic [ref=e781]:
+            - generic [ref=e782]: Controls
+            - generic [ref=e783]: "12"
+        - tab "Actions" [ref=e784] [cursor=pointer]:
+          - generic [ref=e786]: Actions
+        - tab "Interactions" [ref=e787] [cursor=pointer]:
+          - generic [ref=e789]: Interactions
+        - tab "Accessibility" [ref=e790] [cursor=pointer]:
+          - generic [ref=e792]: Accessibility
+      - generic [ref=e795]:
+        - button "Change addon orientation [⌥ D]" [ref=e796] [cursor=pointer]:
+          - img [ref=e797]
+        - button "Hide addons [⌥ A]" [ref=e800] [cursor=pointer]:
+          - img [ref=e801]
+    - generic [ref=e808]:
+      - button "Reset controls" [ref=e810] [cursor=pointer]:
+        - img [ref=e811]
+      - table [ref=e813]:
+        - rowgroup [ref=e814]:
+          - row "Name Control" [ref=e815]:
+            - cell "Name" [ref=e816]
+            - cell "Control" [ref=e817]
+        - rowgroup [ref=e818]:
+          - row "caption Sortable Data Demonstration" [ref=e819]:
+            - cell "caption" [ref=e820]
+            - cell "Sortable Data Demonstration" [ref=e821]:
+              - textbox [ref=e823]:
+                - /placeholder: Edit string...
+                - text: Sortable Data Demonstration
+          - 'row "headers Edit the headers properties in text format headers : [ add a new item to the ''headers'' array 0 : {...} 4 keys remove the object ''0'' 1 : {...} 4 keys remove the object ''1'' 2 : {...} 4 keys remove the object ''2'' 3 : {...} 4 keys remove the object ''3'' ] remove the array ''headers''" [ref=e824]':
+            - cell "headers" [ref=e825]
+            - 'cell "Edit the headers properties in text format headers : [ add a new item to the ''headers'' array 0 : {...} 4 keys remove the object ''0'' 1 : {...} 4 keys remove the object ''1'' 2 : {...} 4 keys remove the object ''2'' 3 : {...} 4 keys remove the object ''3'' ] remove the array ''headers''" [ref=e826]':
+              - generic [ref=e827]:
+                - switch "Edit the headers properties in text format" [ref=e828] [cursor=pointer]:
+                  - img [ref=e829]
+                  - generic [ref=e832]: RAW
+                - listitem [ref=e834]:
+                  - button "headers :" [expanded] [ref=e835]
+                  - region "headers :" [ref=e836]:
+                    - text: "["
+                    - button "add a new item to the 'headers' array" [ref=e837] [cursor=pointer]:
+                      - img [ref=e838]
+                    - list [ref=e841]:
+                      - listitem [ref=e842]:
+                        - button "0 :" [ref=e843]
+                        - region "0 :" [ref=e844]:
+                          - generic [ref=e845]: "{...} 4 keys"
+                          - button "remove the object '0'" [ref=e846] [cursor=pointer]:
+                            - img [ref=e847]
+                      - listitem [ref=e850]:
+                        - button "1 :" [ref=e851]
+                        - region "1 :" [ref=e852]:
+                          - generic [ref=e853]: "{...} 4 keys"
+                          - button "remove the object '1'" [ref=e854] [cursor=pointer]:
+                            - img [ref=e855]
+                      - listitem [ref=e858]:
+                        - button "2 :" [ref=e859]
+                        - region "2 :" [ref=e860]:
+                          - generic [ref=e861]: "{...} 4 keys"
+                          - button "remove the object '2'" [ref=e862] [cursor=pointer]:
+                            - img [ref=e863]
+                      - listitem [ref=e866]:
+                        - button "3 :" [ref=e867]
+                        - region "3 :" [ref=e868]:
+                          - generic [ref=e869]: "{...} 4 keys"
+                          - button "remove the object '3'" [ref=e870] [cursor=pointer]:
+                            - img [ref=e871]
+                    - text: "]"
+                    - button "remove the array 'headers'" [ref=e874] [cursor=pointer]:
+                      - img [ref=e875]
+          - 'row "data Edit the data properties in text format data : [ add a new item to the ''data'' array 0 : 0 : 1 : 1 : 2 : 2 : 3 : 3 : ] remove the array ''data''" [ref=e878]':
+            - cell "data" [ref=e879]
+            - 'cell "Edit the data properties in text format data : [ add a new item to the ''data'' array 0 : 0 : 1 : 1 : 2 : 2 : 3 : 3 : ] remove the array ''data''" [ref=e880]':
+              - generic [ref=e881]:
+                - switch "Edit the data properties in text format" [ref=e882] [cursor=pointer]:
+                  - img [ref=e883]
+                  - generic [ref=e886]: RAW
+                - listitem [ref=e888]:
+                  - button "data :" [expanded] [ref=e889]
+                  - region "data :" [ref=e890]:
+                    - text: "["
+                    - button "add a new item to the 'data' array" [ref=e891] [cursor=pointer]:
+                      - img [ref=e892]
+                    - list [ref=e895]:
+                      - listitem [ref=e896]:
+                        - button "0 :" [ref=e897]
+                        - region "0 :" [ref=e898]:
+                          - generic [ref=e899]: "{...} 4 keys"
+                          - button "remove the object '0'" [ref=e900] [cursor=pointer]:
+                            - img [ref=e901]
+                      - listitem [ref=e904]:
+                        - button "1 :" [ref=e905]
+                        - region "1 :" [ref=e906]:
+                          - generic [ref=e907]: "{...} 4 keys"
+                          - button "remove the object '1'" [ref=e908] [cursor=pointer]:
+                            - img [ref=e909]
+                      - listitem [ref=e912]:
+                        - button "2 :" [ref=e913]
+                        - region "2 :" [ref=e914]:
+                          - generic [ref=e915]: "{...} 4 keys"
+                          - button "remove the object '2'" [ref=e916] [cursor=pointer]:
+                            - img [ref=e917]
+                      - listitem [ref=e920]:
+                        - button "3 :" [ref=e921]
+                        - region "3 :" [ref=e922]:
+                          - generic [ref=e923]: "{...} 4 keys"
+                          - button "remove the object '3'" [ref=e924] [cursor=pointer]:
+                            - img [ref=e925]
+                    - text: "]"
+                    - button "remove the array 'data'" [ref=e928] [cursor=pointer]:
+                      - img [ref=e929]
+          - row "striped striped" [ref=e932]:
+            - cell "striped" [ref=e933]
+            - cell "striped" [ref=e934]:
+              - generic "striped" [ref=e935]:
+                - switch "striped" [checked] [ref=e936] [cursor=pointer]
+                - generic [ref=e937] [cursor=pointer]: "False"
+                - generic [ref=e938] [cursor=pointer]: "True"
+          - row "borderless Set boolean" [ref=e939]:
+            - cell "borderless" [ref=e940]
+            - cell "Set boolean" [ref=e941]:
+              - button "Set boolean" [ref=e942] [cursor=pointer]
+          - row "compact Set boolean" [ref=e943]:
+            - cell "compact" [ref=e944]
+            - cell "Set boolean" [ref=e945]:
+              - button "Set boolean" [ref=e946] [cursor=pointer]
+          - row "stacked Set boolean" [ref=e947]:
+            - cell "stacked" [ref=e948]
+            - cell "Set boolean" [ref=e949]:
+              - button "Set boolean" [ref=e950] [cursor=pointer]
+          - row "stackedHeader Set boolean" [ref=e951]:
+            - cell "stackedHeader" [ref=e952]
+            - cell "Set boolean" [ref=e953]:
+              - button "Set boolean" [ref=e954] [cursor=pointer]
+          - row "stickyHeader Set boolean" [ref=e955]:
+            - cell "stickyHeader" [ref=e956]
+            - cell "Set boolean" [ref=e957]:
+              - button "Set boolean" [ref=e958] [cursor=pointer]
+          - row "scrollable Set boolean" [ref=e959]:
+            - cell "scrollable" [ref=e960]
+            - cell "Set boolean" [ref=e961]:
+              - button "Set boolean" [ref=e962] [cursor=pointer]
+          - row "sortColumn Set string" [ref=e963]:
+            - cell "sortColumn" [ref=e964]
+            - cell "Set string" [ref=e965]:
+              - button "Set string" [ref=e966] [cursor=pointer]
+          - row "sortDirection Choose option..." [ref=e967]:
+            - cell "sortDirection" [ref=e968]
+            - cell "Choose option..." [ref=e969]:
+              - generic [ref=e970]:
+                - img
+                - combobox [ref=e971]:
+                  - option "Choose option..." [disabled] [selected]
+                  - option "asc"
+                  - option "desc"
+```

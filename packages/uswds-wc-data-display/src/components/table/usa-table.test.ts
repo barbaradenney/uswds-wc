@@ -12,6 +12,7 @@ import {
   testTextSpacing,
   testMobileAccessibility,
 } from '@uswds-wc/test-utils/responsive-accessibility-utils.js';
+import { waitForARIAAttribute, expectPerformanceWithinTolerance } from '@uswds-wc/test-utils';
 
 // Helper function to wait for USWDS initialization - MUST be at top level for all tests
 const waitForUSWDS = async (el: USATable) => {
@@ -260,10 +261,11 @@ describe('USATable', () => {
 
       // Initially no sorting applied - aria-sort should NOT be set until after first sort
       // This matches USWDS behavior exactly (see usa-table-behavior.ts sortRows() line 157)
-      sortableHeaders.forEach((header) => {
-        const ariaSort = header.getAttribute('aria-sort');
+      // Using for...of loop (not forEach) to properly handle async/await
+      for (const header of sortableHeaders) {
+        const ariaSort = await waitForARIAAttribute(header, 'aria-sort');
         expect(ariaSort).toBeNull(); // No attribute until sorting occurs
-      });
+      }
     });
 
     it('should handle sort click and dispatch event', async () => {
@@ -282,6 +284,10 @@ describe('USATable', () => {
         const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
         sortableHeader.dispatchEvent(clickEvent);
       }
+
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      await element.updateComplete;
 
       expect(sortEventSpy).toHaveBeenCalledOnce();
       // Check the event detail
@@ -323,7 +329,8 @@ describe('USATable', () => {
         sortableHeader.dispatchEvent(clickEvent);
       }
 
-      // Wait for sort to complete
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await element.updateComplete;
 
       // Verify data array is sorted correctly (test the sorting logic, not DOM reactivity)
@@ -348,7 +355,8 @@ describe('USATable', () => {
         ageSortableHeader.dispatchEvent(clickEvent);
       }
 
-      // Wait for sort to complete
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await element.updateComplete;
 
       // Verify data array is sorted correctly by age (test the sorting logic, not DOM reactivity)
@@ -810,10 +818,12 @@ describe('USATable', () => {
       const rows = element.querySelectorAll('tbody tr');
       expect(rows.length).toBe(1000);
 
-      // Should complete rendering within reasonable time (15 seconds for large dataset in CI environment)
-      // CI environments are slower than local, so increased from 5s to 15s
-      expect(endTime - startTime).toBeLessThan(15000);
-    }, 20000); // Increased timeout to 20s for CI environment
+      // Should complete rendering within reasonable time
+      // CI-aware tolerance: local 12s, CI 14.4s (12s * 1.2 tolerance)
+      // Baseline updated from 5s to 12s to reflect actual CI performance (13.3s observed)
+      const renderTime = endTime - startTime;
+      expectPerformanceWithinTolerance(renderTime, 12000, 0.2);
+    }, 25000); // Increased timeout to 25s for CI environment
   });
 
   // CRITICAL TESTS - Component Lifecycle Stability (Auto-dismiss Prevention)

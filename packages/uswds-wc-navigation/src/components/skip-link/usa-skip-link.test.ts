@@ -6,6 +6,7 @@ import {
   testComponentAccessibility,
   USWDS_A11Y_CONFIG,
 } from '@uswds-wc/test-utils/accessibility-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USASkipLink', () => {
   let element: USASkipLink;
@@ -50,7 +51,7 @@ describe('USASkipLink', () => {
   describe('Properties', () => {
     it('should handle href changes', async () => {
       element.href = '#custom-target';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.href).toContain('#custom-target');
@@ -58,7 +59,7 @@ describe('USASkipLink', () => {
 
     it('should handle text changes', async () => {
       element.text = 'Skip to navigation';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.textContent?.trim()).toBe('Skip to navigation');
@@ -66,7 +67,7 @@ describe('USASkipLink', () => {
 
     it('should handle multiple property changes', async () => {
       element.multiple = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.classList.contains('usa-skipnav--multiple')).toBe(true);
@@ -76,7 +77,7 @@ describe('USASkipLink', () => {
       element.href = '#secondary-nav';
       element.text = 'Skip to secondary navigation';
       element.multiple = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.href).toContain('#secondary-nav');
@@ -95,7 +96,7 @@ describe('USASkipLink', () => {
 
     it('should apply multiple class when enabled', async () => {
       element.multiple = true;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.classList.contains('usa-skipnav')).toBe(true);
@@ -107,7 +108,7 @@ describe('USASkipLink', () => {
       await waitForUpdate(element);
 
       element.multiple = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.classList.contains('usa-skipnav')).toBe(true);
@@ -193,7 +194,7 @@ describe('USASkipLink', () => {
 
     it('should focus target element after click', async () => {
       element.href = '#test-main-content';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       const target = document.getElementById('test-main-content') as HTMLElement;
@@ -210,7 +211,7 @@ describe('USASkipLink', () => {
 
     it('should add tabindex to target if not present', async () => {
       element.href = '#test-navigation';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
       const target = document.getElementById('test-navigation') as HTMLElement;
@@ -245,7 +246,7 @@ describe('USASkipLink', () => {
 
     it('should handle non-existent target gracefully', async () => {
       element.href = '#non-existent-target';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
 
@@ -370,7 +371,7 @@ describe('USASkipLink', () => {
       for (const change of changes) {
         element.href = change.href;
         element.text = change.text;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const link = element.querySelector('a');
         expect(link?.href).toContain(change.href);
@@ -389,7 +390,7 @@ describe('USASkipLink', () => {
       element.href = '#main-content';
       element.text = 'Skip to main content';
       element.multiple = false;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.href).toContain('#main-content');
@@ -428,7 +429,7 @@ describe('USASkipLink', () => {
 
     it('should work with screen readers', async () => {
       element.text = 'Skip to main content area';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.textContent?.trim()).toBe('Skip to main content area');
@@ -445,7 +446,7 @@ describe('USASkipLink', () => {
 
       for (const text of meaningfulTexts) {
         element.text = text;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const link = element.querySelector('a');
         expect(link?.textContent?.trim()).toBe(text);
@@ -538,7 +539,7 @@ describe('USASkipLink', () => {
 
       for (const href of malformedHrefs) {
         element.href = href;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const link = element.querySelector('a');
         expect(() => link?.click()).not.toThrow();
@@ -550,7 +551,7 @@ describe('USASkipLink', () => {
 
       for (const text of texts) {
         element.text = text;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const link = element.querySelector('a');
         // The template may add whitespace, so we trim for comparison
@@ -564,7 +565,7 @@ describe('USASkipLink', () => {
       document.body.appendChild(target);
 
       element.href = '#temp-target';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a') as HTMLAnchorElement;
 

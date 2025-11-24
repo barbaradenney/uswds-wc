@@ -10,6 +10,7 @@ import {
   testPropertyChanges,
   validateComponentJavaScript,
 } from '@uswds-wc/test-utils/test-utils.js';
+import { waitForPropertyPropagation } from '@uswds-wc/test-utils';
 
 describe('USASummaryBox', () => {
   let element: USASummaryBox;
@@ -79,7 +80,7 @@ describe('USASummaryBox', () => {
     it('should render heading with correct level and class', async () => {
       element.heading = 'Test Heading';
       element.headingLevel = 'h2';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h2.usa-summary-box__heading');
       expect(heading).toBeTruthy();
@@ -93,7 +94,7 @@ describe('USASummaryBox', () => {
       for (const level of headingLevels) {
         element.heading = `Test ${level.toUpperCase()}`;
         element.headingLevel = level;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const heading = element.querySelector(`${level}.usa-summary-box__heading`);
         expect(heading).toBeTruthy();
@@ -104,7 +105,7 @@ describe('USASummaryBox', () => {
     it('should default to h3 for invalid heading level', async () => {
       element.heading = 'Test Heading';
       element.headingLevel = 'invalid' as any;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h3.usa-summary-box__heading');
       expect(heading).toBeTruthy();
@@ -113,7 +114,7 @@ describe('USASummaryBox', () => {
 
     it('should not render heading when heading property is empty', async () => {
       element.heading = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-summary-box__heading');
       expect(heading).toBeFalsy();
@@ -121,7 +122,7 @@ describe('USASummaryBox', () => {
 
     it('should render content via property', async () => {
       element.content = '<p>Property content</p>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textContainer = element.querySelector('.usa-summary-box__text');
       expect(textContainer?.innerHTML).toContain('<p>Property content</p>');
@@ -163,7 +164,7 @@ describe('USASummaryBox', () => {
       `;
 
       element.content = complexContent;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textContainer = element.querySelector('.usa-summary-box__text');
       expect(textContainer?.innerHTML).toContain('<strong>Important:</strong>');
@@ -199,7 +200,7 @@ describe('USASummaryBox', () => {
     it('should maintain proper DOM hierarchy', async () => {
       element.heading = 'Test';
       element.content = '<p>Content</p>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const summaryBox = element.querySelector('.usa-summary-box');
       const body = summaryBox?.querySelector('.usa-summary-box__body');
@@ -218,7 +219,7 @@ describe('USASummaryBox', () => {
     it('should use semantic heading elements', async () => {
       element.heading = 'Accessible Heading';
       element.headingLevel = 'h2';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h2');
       expect(heading).toBeTruthy();
@@ -239,7 +240,7 @@ describe('USASummaryBox', () => {
       for (const testCase of testCases) {
         element.heading = `Level ${testCase.level}`;
         element.headingLevel = testCase.level;
-        await waitForUpdate(element);
+        await waitForPropertyPropagation(element);
 
         const heading = element.querySelector('.usa-summary-box__heading');
         expect(heading?.tagName).toBe(testCase.expectedTag);
@@ -248,7 +249,7 @@ describe('USASummaryBox', () => {
 
     it('should preserve accessibility attributes in content', async () => {
       element.content = '<p><a href="#test" aria-label="Test link">Link</a></p>';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const link = element.querySelector('a');
       expect(link?.getAttribute('aria-label')).toBe('Test link');
@@ -285,7 +286,7 @@ describe('USASummaryBox', () => {
   describe('Content Handling', () => {
     it('should handle empty content gracefully', async () => {
       element.content = '';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textContainer = element.querySelector('.usa-summary-box__text');
       expect(textContainer).toBeTruthy();
@@ -297,7 +298,7 @@ describe('USASummaryBox', () => {
 
     it('should handle whitespace-only content', async () => {
       element.content = '   \n\t   ';
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textContainer = element.querySelector('.usa-summary-box__text');
       // Whitespace-only content should still be rendered via property
@@ -308,7 +309,7 @@ describe('USASummaryBox', () => {
       const specialContent =
         '<p>&lt;script&gt;alert("test")&lt;/script&gt; &amp; special chars</p>';
       element.content = specialContent;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const textContainer = element.querySelector('.usa-summary-box__text');
       expect(textContainer?.innerHTML).toContain('&lt;script&gt;');
@@ -366,7 +367,7 @@ describe('USASummaryBox', () => {
     it('should handle boolean values as strings', async () => {
       element.heading = true as any;
       element.content = false as any;
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('.usa-summary-box__heading');
       expect(heading?.textContent).toBe('true');
@@ -440,7 +441,7 @@ describe('USASummaryBox', () => {
         </ul>
       `;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h2.usa-summary-box__heading');
       expect(heading?.textContent).toBe('Executive Order Summary');
@@ -460,7 +461,7 @@ describe('USASummaryBox', () => {
         <p><strong>Essential personnel:</strong> Follow emergency protocols</p>
       `;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h1.usa-summary-box__heading');
       expect(heading?.textContent).toBe('Weather Emergency Alert');
@@ -483,7 +484,7 @@ describe('USASummaryBox', () => {
         <p><strong>Apply online:</strong> <a href="#apply">benefits.gov</a></p>
       `;
 
-      await waitForUpdate(element);
+      await waitForPropertyPropagation(element);
 
       const heading = element.querySelector('h3.usa-summary-box__heading');
       expect(heading?.textContent).toBe('SNAP Benefits Eligibility');

@@ -18,7 +18,7 @@ on:
           - 'all'
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'
 
 jobs:
   check-dependencies:
@@ -31,20 +31,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check for outdated dependencies
         id: check
         run: |
           # Check for outdated packages
-          OUTDATED=$(npm outdated --json || echo '{}')
+          OUTDATED=$(pnpm outdated --json || echo '{}')
 
           # Count packages that need updates
           UPDATE_COUNT=$(echo "$OUTDATED" | jq 'length')
@@ -66,15 +73,15 @@ jobs:
       - name: Security audit
         run: |
           echo "Running security audit..."
-          npm audit --audit-level moderate --json > audit-results.json || true
+          pnpm audit --audit-level moderate --json > audit-results.json || true
 
           # Check if there are any vulnerabilities
           VULN_COUNT=$(jq '.metadata.vulnerabilities.total' audit-results.json 2>/dev/null || echo "0")
 
           if [ "$VULN_COUNT" -gt 0 ]; then
             echo "⚠️ Found $VULN_COUNT security vulnerabilities"
-            echo "Running npm audit fix..."
-            npm audit fix --dry-run
+            echo "Running pnpm audit fix..."
+            pnpm audit --fix --dry-run
           else
             echo "✅ No security vulnerabilities found"
           fi
@@ -100,11 +107,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Configure Git
         run: |
@@ -112,7 +124,7 @@ jobs:
           git config user.email "dependency-updater[bot]@github.com"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Create update branch
         run: |
@@ -126,26 +138,26 @@ jobs:
           npx npm-check-updates ${{ matrix.update-type.flag }} --upgrade
 
           # Install updated dependencies
-          npm install
+          pnpm install
 
       - name: Run tests after updates
         run: |
           echo "Running tests to ensure updates don't break functionality..."
 
           # Run comprehensive tests
-          npm run test:ci || {
+          pnpm run test:ci || {
             echo "❌ Tests failed after dependency updates"
             exit 1
           }
 
           # Run type checking
-          npm run typecheck || {
+          pnpm run typecheck || {
             echo "❌ Type checking failed after dependency updates"
             exit 1
           }
 
           # Run linting
-          npm run lint || {
+          pnpm run lint || {
             echo "❌ Linting failed after dependency updates"
             exit 1
           }
@@ -155,7 +167,7 @@ jobs:
           echo "Analyzing bundle size impact..."
 
           # Run build optimization to check bundle sizes
-          npm run build:optimize || {
+          pnpm run build:optimize || {
             echo "⚠️ Build optimization failed, but continuing..."
           }
 
@@ -250,11 +262,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Configure Git
         run: |
@@ -262,7 +279,7 @@ jobs:
           git config user.email "security-updater[bot]@github.com"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Check for security vulnerabilities
         id: security-check
@@ -270,7 +287,7 @@ jobs:
           echo "Running security audit..."
 
           # Run audit and capture results
-          npm audit --audit-level moderate --json > audit-results.json || AUDIT_EXIT_CODE=$?
+          pnpm audit --audit-level moderate --json > audit-results.json || AUDIT_EXIT_CODE=$?
 
           # Check if there are any vulnerabilities
           VULN_COUNT=$(jq '.metadata.vulnerabilities.total' audit-results.json 2>/dev/null || echo "0")
@@ -299,19 +316,19 @@ jobs:
           git checkout -b security/automated-security-fixes
 
           # Apply security fixes
-          npm audit fix
+          pnpm audit --fix
 
           # Check if any files were changed
           if ! git diff --exit-code; then
             echo "Security fixes applied, running tests..."
 
             # Install updated dependencies
-            npm install
+            pnpm install --frozen-lockfile
 
             # Run tests to ensure fixes don't break functionality
-            npm run test:ci
-            npm run typecheck
-            npm run lint
+            pnpm run test:ci
+            pnpm run typecheck
+            pnpm run lint
 
             # Commit changes
             git add .

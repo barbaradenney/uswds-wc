@@ -8,13 +8,13 @@ The Language Selection Pattern orchestrates the `usa-language-selector` componen
 
 ### Pattern vs Component
 
-| Aspect | Component (`usa-language-selector`) | Pattern (`usa-language-selector-pattern`) |
-|--------|-------------------------------------|-------------------------------------------|
-| **Purpose** | UI for selecting languages | Document language workflow |
-| **Scope** | Visual selector | Document state + persistence |
-| **State** | Selected language | Document lang + localStorage |
-| **Events** | `language-select` | `pattern-language-change`, `pattern-ready` |
-| **Use Case** | Custom integration | Complete language workflow |
+| Aspect       | Component (`usa-language-selector`) | Pattern (`usa-language-selector-pattern`)  |
+| ------------ | ----------------------------------- | ------------------------------------------ |
+| **Purpose**  | UI for selecting languages          | Document language workflow                 |
+| **Scope**    | Visual selector                     | Document state + persistence               |
+| **State**    | Selected language                   | Document lang + localStorage               |
+| **Events**   | `language-select`                   | `pattern-language-change`, `pattern-ready` |
+| **Use Case** | Custom integration                  | Complete language workflow                 |
 
 ## When to Use This Pattern
 
@@ -48,6 +48,7 @@ npm install @uswds-wc/patterns
 ```
 
 Default behavior:
+
 - Two languages: English and Spanish
 - Updates document `html[lang]` attribute
 - No persistence
@@ -97,14 +98,14 @@ Use in compact layouts like mobile headers.
 
 ## Properties/Attributes
 
-| Property | Attribute | Type | Default | Description |
-|----------|-----------|------|---------|-------------|
-| `variant` | `variant` | `'two-languages' \| 'dropdown' \| 'unstyled'` | `'two-languages'` | Display variant |
-| `small` | `small` | `boolean` | `false` | Compact size (dropdown only) |
-| `buttonText` | `button-text` | `string` | `'Languages'` | Dropdown button text |
-| `persistPreference` | `persist-preference` | `boolean` | `false` | Save to localStorage |
-| `storageKey` | `storage-key` | `string` | `'uswds-language-preference'` | localStorage key |
-| `updateDocumentLang` | `update-document-lang` | `boolean` | `true` | Update `html[lang]` |
+| Property             | Attribute              | Type                                          | Default                       | Description                  |
+| -------------------- | ---------------------- | --------------------------------------------- | ----------------------------- | ---------------------------- |
+| `variant`            | `variant`              | `'two-languages' \| 'dropdown' \| 'unstyled'` | `'two-languages'`             | Display variant              |
+| `small`              | `small`                | `boolean`                                     | `false`                       | Compact size (dropdown only) |
+| `buttonText`         | `button-text`          | `string`                                      | `'Languages'`                 | Dropdown button text         |
+| `persistPreference`  | `persist-preference`   | `boolean`                                     | `false`                       | Save to localStorage         |
+| `storageKey`         | `storage-key`          | `string`                                      | `'uswds-language-preference'` | localStorage key             |
+| `updateDocumentLang` | `update-document-lang` | `boolean`                                     | `true`                        | Update `html[lang]`          |
 
 ## Events
 
@@ -123,13 +124,14 @@ pattern.addEventListener('pattern-language-change', (e) => {
 ```
 
 **Event Detail:**
+
 ```typescript
 {
-  code: string;              // New language code (e.g., 'es')
-  language: LanguageOption;  // Full language object
-  previousCode: string;      // Previous language code
-  documentLang: string;      // Current html[lang] value
-  persisted: boolean;        // Whether preference was saved
+  code: string; // New language code (e.g., 'es')
+  language: LanguageOption; // Full language object
+  previousCode: string; // Previous language code
+  documentLang: string; // Current html[lang] value
+  persisted: boolean; // Whether preference was saved
 }
 ```
 
@@ -145,6 +147,7 @@ pattern.addEventListener('pattern-ready', (e) => {
 ```
 
 **Event Detail:**
+
 ```typescript
 {
   code: string;              // Current language code
@@ -246,10 +249,9 @@ pattern.clearPersistedPreference();
 
     loadTranslations(code) {
       // Load translation files
-      import(`./translations/${code}.json`)
-        .then(translations => {
-          this.i18n.setTranslations(code, translations);
-        });
+      import(`./translations/${code}.json`).then((translations) => {
+        this.i18n.setTranslations(code, translations);
+      });
     }
   }
 </script>
@@ -283,13 +285,7 @@ function App() {
     };
   }, []);
 
-  return (
-    <usa-language-selector-pattern
-      ref={patternRef}
-      persist-preference
-      variant="dropdown"
-    />
-  );
+  return <usa-language-selector-pattern ref={patternRef} persist-preference variant="dropdown" />;
 }
 ```
 
@@ -316,15 +312,15 @@ export default {
 
       // Update Vuex store
       this.$store.commit('setLanguage', code);
-    }
+    },
   },
   mounted() {
     // Get initial language
     const pattern = this.$refs.pattern;
     const initialLang = pattern.getCurrentLanguageCode();
     this.$i18n.locale = initialLang;
-  }
-}
+  },
+};
 </script>
 ```
 
@@ -404,6 +400,7 @@ The pattern inherits all accessibility features from the `usa-language-selector`
 - ✅ **High contrast support** - USWDS styling compliant
 
 Additional pattern-level accessibility:
+
 - ✅ **Document language** - Updates `html[lang]` for assistive technology
 - ✅ **Persistence** - Respects user preference across sessions
 
@@ -419,6 +416,7 @@ Additional pattern-level accessibility:
 ## Component Dependencies
 
 This pattern uses:
+
 - `usa-language-selector` from `@uswds-wc/navigation`
 
 ## Related Resources

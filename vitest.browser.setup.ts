@@ -42,7 +42,7 @@ beforeAll(() => {
 // Cleanup after each test
 afterEach(() => {
   // Clear any USWDS-created elements
-  document.querySelectorAll('.usa-tooltip__body').forEach(el => el.remove());
+  document.querySelectorAll('.usa-tooltip__body').forEach((el) => el.remove());
 
   // Clear any event listeners or timers that might persist
   vi.clearAllTimers();

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './usa-character-count.ts';
 import type { USACharacterCount } from './usa-character-count.js';
+import { waitForARIAAttribute } from '@uswds-wc/test-utils';
 
 /**
  * Character Count Visual Regression Tests
@@ -123,7 +124,7 @@ describe('Character Count Visual Regression Prevention', () => {
       const status = element.querySelector('.usa-character-count__status') as HTMLElement;
 
       expect(status).toBeTruthy();
-      expect(status.getAttribute('aria-hidden')).toBe('true'); // Not for screen readers
+      expect(await waitForARIAAttribute(status, 'aria-hidden')).toBe('true'); // Not for screen readers
       expect(status.classList.contains('usa-hint')).toBe(true);
 
       const style = window.getComputedStyle(status);
@@ -134,7 +135,7 @@ describe('Character Count Visual Regression Prevention', () => {
       const srStatus = element.querySelector('.usa-character-count__sr-status') as HTMLElement;
 
       expect(srStatus).toBeTruthy();
-      expect(srStatus.getAttribute('aria-live')).toBe('polite');
+      expect(await waitForARIAAttribute(srStatus, 'aria-live')).toBe('polite');
       expect(srStatus.classList.contains('usa-sr-only')).toBe(true);
     });
 
