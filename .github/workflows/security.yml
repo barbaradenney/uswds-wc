@@ -110,7 +110,7 @@ jobs:
     name: Snyk Security Scan
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: ${{ secrets.SNYK_TOKEN != '' || github.event_name == 'pull_request' }}
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
