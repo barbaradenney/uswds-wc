@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2025-11-24
+
+### ✨ New Features
+
+- **Test Monitoring**: Added real-time test monitoring dashboard with progress indicators
+- **Release Management**: Implemented comprehensive systematic release management system
+- **Workflow Testing**: Added local workflow testing script for CI/CD validation
+
+### 🐛 Bug Fixes
+
+- **Table Component**: Fixed double-click sorting issue caused by race condition
+- **Table Component**: Prevented infinite update loop in ensureRequiredElements
+- **CI/Workflows**: Extensive fixes to GitHub Actions workflows for monorepo structure
+- **Security Workflows**: Enhanced security workflow with improved error handling
+- **Time Picker**: Fixed data-default-value attribute handling
+
+### 🔧 Improvements
+
+- **Monorepo Support**: Updated all CI workflows for monorepo package structure
+- **Security**: Improved security scanning with better conditional execution
+- **Testing**: Enhanced test timing and reliability with CI-aware utilities
+- **Performance**: Upgraded cross-browser test timeouts for better stability
+
+### 📚 Documentation
+
+- Archived obsolete documentation
+- Enhanced workflow configuration guides
+
+---
+
+## [2.3.1] - 2025-11-24
+
+### 🐛 Bug Fixes
+
+- **ci:** fix security workflow - simplify TruffleHog base expression and make Snyk conditional ([5197532](https://github.com/YOUR_ORG/uswds-wc/commit/5197532))
+- **workflows:** fix scripts-maintenance and docs-maintenance syntax errors ([6f335e9](https://github.com/YOUR_ORG/uswds-wc/commit/6f335e9))
+- **ci:** add validate:uswds-transformation script alias for PR automation workflow ([4d7ca00](https://github.com/YOUR_ORG/uswds-wc/commit/4d7ca00))
+
+---
+
 ## [2.3.1] - 2025-11-12
 
 ### 🐛 **Bug Fixes**

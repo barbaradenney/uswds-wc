@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/navigation",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "USWDS Navigation Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
