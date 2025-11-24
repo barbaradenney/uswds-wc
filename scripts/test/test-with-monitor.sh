@@ -24,8 +24,9 @@ if [ -f "$MONITOR_SCRIPT" ]; then
         rm -f "$PID_FILE"
     fi
 
-    # Start monitor in background
-    bash "$MONITOR_SCRIPT" > /dev/null 2>&1 &
+    # Start monitor in background with visible console output
+    # The monitor will display a real-time terminal dashboard while tests run
+    bash "$MONITOR_SCRIPT" &
     MONITOR_PID=$!
 
     # Wait for monitor to initialize
@@ -43,10 +44,10 @@ echo ""
 # Determine test command
 if [ $# -eq 0 ]; then
     # Default: run all tests
-    vitest run 2>&1 | tee "$LOG_FILE"
+    pnpm test 2>&1 | tee "$LOG_FILE"
 else
     # Custom arguments passed
-    vitest "$@" 2>&1 | tee "$LOG_FILE"
+    pnpm vitest "$@" 2>&1 | tee "$LOG_FILE"
 fi
 
 TEST_EXIT_CODE=$?
