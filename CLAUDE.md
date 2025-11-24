@@ -1186,6 +1186,99 @@ Automated architectural analysis ensures clean code:
 
 See [docs/CODE_QUALITY_ARCHITECTURAL_REVIEW.md](docs/CODE_QUALITY_ARCHITECTURAL_REVIEW.md)
 
+## Release Management
+
+### 🚨 MANDATORY: Use Release Script for ALL Releases
+
+**CRITICAL RULE**: All releases MUST be performed using the official release script. Manual releases are prohibited.
+
+### Release Script Usage
+
+The release script is the **ONLY** approved method for creating releases:
+
+```bash
+# For patch releases (bug fixes)
+pnpm run release:patch
+
+# For minor releases (new features)
+pnpm run release:minor
+
+# For major releases (breaking changes)
+pnpm run release:major
+
+# Dry run (test without making changes)
+pnpm run release:dry-run patch
+pnpm run release:dry-run minor
+pnpm run release:dry-run major
+```
+
+### What the Release Script Does
+
+The script performs a comprehensive 14-step release process:
+
+1. **Pre-release validation** - Runs all quality checks
+2. **Changelog generation** - Generates from conventional commits
+3. **Version bump** - Updates all package versions
+4. **Documentation sync** - Synchronizes all docs
+5. **Package build** - Builds all packages with Turborepo
+6. **Final tests** - Runs comprehensive test suite
+7. **Review changes** - Shows what will be committed
+8. **Commit** - Creates release commit
+9. **Tag creation** - Creates annotated Git tag
+10. **Storybook build** - Builds Storybook for deployment
+11. **Push to GitHub** - Pushes commits and tags
+12. **GitHub Release** - Creates official release
+13. **Verification** - Runs post-release checks
+14. **Merge to develop** - Merges back to develop branch
+
+### Advanced Options
+
+```bash
+# Non-interactive mode (auto-confirm all steps)
+bash scripts/release/release.sh minor --no-confirm
+
+# Dry run with manual confirmation
+bash scripts/release/release.sh patch --dry-run
+
+# Get help
+bash scripts/release/release.sh --help
+```
+
+### Why This Is Enforced
+
+**Consistency**: Every release follows the exact same process
+**Quality**: All validation steps are mandatory
+**Traceability**: Complete audit trail of release steps
+**Safety**: Prevents skipped steps and forgotten tasks
+**Documentation**: Auto-generates changelog and release notes
+
+### ❌ What NOT to Do
+
+**NEVER:**
+- Manually bump version numbers
+- Skip validation steps
+- Create releases without the script
+- Bypass pre-release checks
+- Forget to merge back to develop
+- Skip changelog generation
+- Manually create GitHub releases
+
+### Manual Release Steps (Emergency Only)
+
+If the release script fails and you must proceed manually:
+
+1. **Document the reason** in the release notes
+2. **Follow ALL 14 steps** from the script exactly
+3. **Create an issue** to fix the script
+4. **Never skip validation** even in emergencies
+
+### Release Script Location
+
+- **Script**: `scripts/release/release.sh`
+- **Interactive version**: `scripts/release/release-interactive.sh` (for manual control)
+- **Validation**: `scripts/release/validate-pre-release.sh`
+- **Verification**: `scripts/release/verify-release.sh`
+
 ## Important Documentation References
 
 - [USWDS Integration Guide](docs/USWDS_INTEGRATION_GUIDE.md) - Complete USWDS patterns
