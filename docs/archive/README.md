@@ -226,3 +226,9 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 16 days
 
+
+### CI_CYPRESS_REMAINING_FAILURES_ANALYSIS.md (Archived 2025-11-24)
+- **Reason**: Temporary doc older than 7 days (9 days)
+- **Category**: TEMPORARY
+- **Age**: 9 days
+
