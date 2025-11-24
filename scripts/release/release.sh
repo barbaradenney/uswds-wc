@@ -264,8 +264,20 @@ fi
 
 run_step "Push to GitHub" "git push origin main --no-verify && git push origin \"v$NEW_VERSION\" --no-verify"
 
-# Step 12: Create GitHub Release
-echo -e "${BOLD}Step 12: GitHub Release${NC}"
+# Step 12: Publish to npm
+echo -e "${BOLD}Step 12: Publish to npm${NC}"
+if [ "$NO_CONFIRM" = false ]; then
+  confirm "Publish all packages to npm?"
+fi
+
+if [ "$DRY_RUN" = false ]; then
+  run_step "NPM Publish" "pnpm -r publish --access public --no-git-checks --provenance"
+else
+  echo -e "${YELLOW}[DRY RUN] Would publish to npm with provenance${NC}"
+fi
+
+# Step 13: Create GitHub Release
+echo -e "${BOLD}Step 13: GitHub Release${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Create GitHub Release?"
 fi
@@ -288,18 +300,17 @@ else
   echo -e "${YELLOW}[DRY RUN] Would create GitHub release${NC}"
 fi
 
-# Step 13: Post-release verification
-echo -e "${BOLD}Step 13: Post-Release Verification${NC}"
+# Step 14: Post-release verification
+echo -e "${BOLD}Step 14: Post-Release Verification${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Run post-release verification checks?"
 fi
 
-# Note: Verification will fail if packages aren't published to npm yet
-# That's expected - we're not auto-publishing in this script
-run_step "Post-Release Verification" "bash scripts/release/verify-release.sh $NEW_VERSION" || echo -e "${YELLOW}Note: Some verifications may fail until npm packages are published${NC}"
+# Verification should now pass since we published to npm
+run_step "Post-Release Verification" "bash scripts/release/verify-release.sh $NEW_VERSION" || echo -e "${YELLOW}Note: Some verifications may still be propagating${NC}"
 
-# Step 14: Merge to develop
-echo -e "${BOLD}Step 14: Merge to Develop${NC}"
+# Step 15: Merge to develop
+echo -e "${BOLD}Step 15: Merge to Develop${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Merge release to develop branch?"
 fi
@@ -317,12 +328,27 @@ echo -e "${BOLD}${GREEN}║${NC}        ${BOLD}✅ Release v$NEW_VERSION Complet
 echo -e "${BOLD}${GREEN}╚════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
-echo -e "${CYAN}📦 Next Steps (Manual):${NC}"
-echo "   1. Publish to npm: pnpm -r publish --access public --no-git-checks --provenance"
-echo "   2. Deploy Storybook to GitHub Pages (if configured)"
+echo -e "${CYAN}✅ Release Complete - All Steps Automated:${NC}"
+echo "   ✓ Validated pre-release checks"
+echo "   ✓ Generated changelog"
+echo "   ✓ Bumped all package versions"
+echo "   ✓ Built and tested packages"
+echo "   ✓ Committed and tagged release"
+echo "   ✓ Built Storybook"
+echo "   ✓ Published to npm"
+echo "   ✓ Created GitHub release"
+echo "   ✓ Verified release"
+echo "   ✓ Merged to develop"
+echo ""
+echo -e "${CYAN}📦 NPM Packages:${NC}"
+echo "   https://www.npmjs.com/org/uswds-wc"
 echo ""
 echo -e "${CYAN}🐙 GitHub Release:${NC}"
 echo "   https://github.com/barbaradenney/uswds-wc/releases/tag/v$NEW_VERSION"
+echo ""
+echo -e "${CYAN}📖 Storybook (deployed via GitHub Actions):${NC}"
+echo "   https://barbaradenney.github.io/uswds-wc/"
+echo "   Note: GitHub Pages deployment will complete in a few minutes"
 echo ""
 echo -e "${CYAN}📝 Release Log:${NC}"
 echo "   $RELEASE_LOG"

@@ -1214,7 +1214,7 @@ pnpm run release:dry-run major
 
 ### What the Release Script Does
 
-The script performs a comprehensive 14-step release process:
+The script performs a comprehensive 15-step **fully automated** release process:
 
 1. **Pre-release validation** - Runs all quality checks
 2. **Changelog generation** - Generates from conventional commits
@@ -1225,11 +1225,14 @@ The script performs a comprehensive 14-step release process:
 7. **Review changes** - Shows what will be committed
 8. **Commit** - Creates release commit
 9. **Tag creation** - Creates annotated Git tag
-10. **Storybook build** - Builds Storybook for deployment
-11. **Push to GitHub** - Pushes commits and tags
-12. **GitHub Release** - Creates official release
-13. **Verification** - Runs post-release checks
-14. **Merge to develop** - Merges back to develop branch
+10. **Storybook build** - Builds Storybook static files
+11. **Push to GitHub** - Pushes commits and tags (triggers GitHub Actions Storybook deployment)
+12. **Publish to npm** - Publishes all packages to npm with provenance
+13. **GitHub Release** - Creates official release with changelog
+14. **Verification** - Runs post-release checks (validates npm packages exist)
+15. **Merge to develop** - Merges back to develop branch
+
+**Everything is fully automated** - No manual steps required!
 
 ### Advanced Options
 
