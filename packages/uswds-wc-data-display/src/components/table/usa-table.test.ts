@@ -285,6 +285,10 @@ describe('USATable', () => {
         sortableHeader.dispatchEvent(clickEvent);
       }
 
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      await element.updateComplete;
+
       expect(sortEventSpy).toHaveBeenCalledOnce();
       // Check the event detail
       const event = sortEventSpy.mock.calls[0][0] as CustomEvent;
@@ -325,7 +329,8 @@ describe('USATable', () => {
         sortableHeader.dispatchEvent(clickEvent);
       }
 
-      // Wait for sort to complete
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await element.updateComplete;
 
       // Verify data array is sorted correctly (test the sorting logic, not DOM reactivity)
@@ -350,7 +355,8 @@ describe('USATable', () => {
         ageSortableHeader.dispatchEvent(clickEvent);
       }
 
-      // Wait for sort to complete
+      // Wait for requestAnimationFrame to complete (sorting is now async)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await element.updateComplete;
 
       // Verify data array is sorted correctly by age (test the sorting logic, not DOM reactivity)
