@@ -163,11 +163,13 @@ jobs:
 
       - name: Check licenses
         run: |
-          # Note: Additional licenses allowed for devDependencies only (not distributed):
-          # - AGPL-3.0-or-later: @whitespace/storybook-addon-html (dev tool)
-          # - BlueOak-1.0.0: glob@12.0.0 (permissive open-source license)
-          license-checker --summary --excludePrivatePackages --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;CC-BY-3.0;CC-BY-4.0;Unlicense;WTFPL;Python-2.0;MPL-2.0;AGPL-3.0-or-later;BlueOak-1.0.0' > license-report.txt
+          # Only check production dependencies (excludes devDependencies)
+          # DevDependencies are not distributed with the package, so their licenses don't matter
+          # This prevents issues with tools like Storybook, test runners, etc.
+          license-checker --production --summary --excludePrivatePackages --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;CC-BY-3.0;CC-BY-4.0;Unlicense;WTFPL;Python-2.0;MPL-2.0' > license-report.txt
           cat license-report.txt
+          echo ""
+          echo "Note: Only production dependencies are checked. DevDependencies are not included in distributed packages."
 
       - name: Upload license report
         uses: actions/upload-artifact@v4
