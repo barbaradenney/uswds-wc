@@ -184,6 +184,15 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
+      - name: Initialize USWDS
+        run: pnpm run uswds:init
+
+      - name: Compile USWDS styles
+        run: pnpm run uswds:compile
+
+      - name: Build Storybook (for cross-browser tests)
+        run: pnpm run build-storybook
+
       - name: Chaos Engineering Tests
         run: pnpm run test:chaos:medium
 
@@ -217,6 +226,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Download All Results
         uses: actions/download-artifact@v4
