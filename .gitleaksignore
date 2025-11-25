@@ -1,0 +1,7 @@
+# Gitleaks Ignore File
+# Ignores false positives in documentation
+
+# Documentation examples - not real secrets
+docs/MONOREPO_MIGRATION_FINAL_STATUS.md:generic-api-key:182
+docs/MONOREPO_OPTIONAL_STEPS_COMPLETE.md:generic-api-key:213
+docs/EDGE_CACHING_GUIDE.md:curl-auth-header:240
