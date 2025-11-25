@@ -43,8 +43,8 @@ echo ""
 
 # Determine test command
 if [ $# -eq 0 ]; then
-    # Default: run all tests
-    pnpm test 2>&1 | tee "$LOG_FILE"
+    # Default: run all tests (use vitest directly to avoid recursion)
+    pnpm vitest run 2>&1 | tee "$LOG_FILE"
 else
     # Custom arguments passed
     pnpm vitest "$@" 2>&1 | tee "$LOG_FILE"
