@@ -17,7 +17,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Always-run status check job to show clear status
+  status-check:
+    name: Visual Regression Status
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Check trigger event
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "✅ Visual regression tests will run for this pull request"
+          else
+            echo "⏭️  Visual regression tests only run on pull requests"
+            echo "This is expected behavior to save resources"
+          fi
+
   visual-tests:
+    if: github.event_name == 'pull_request'
     name: Visual Regression Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
