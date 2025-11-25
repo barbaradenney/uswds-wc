@@ -13,6 +13,10 @@ test.describe('Cross-Browser Accessibility Tests', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
+      // Wait for USWDS to initialize modal (especially slow in Webkit)
+      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout: 10000 });
+      // Additional wait for USWDS JS to fully initialize
+      await page.waitForTimeout(1000);
     });
 
     test('should pass axe accessibility tests in all browsers @a11y @critical', async ({ page }) => {
@@ -23,8 +27,9 @@ test.describe('Cross-Browser Accessibility Tests', () => {
 
       expect(accessibilityScanResults.violations).toEqual([]);
 
-      // Open modal and test again
+      // Wait for button to be interactive before clicking
       const openButton = page.locator('button:has-text("Open Modal")').first();
+      await openButton.waitFor({ state: 'visible', timeout: 10000 });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
       await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
@@ -37,7 +42,9 @@ test.describe('Cross-Browser Accessibility Tests', () => {
     });
 
     test('should have correct ARIA modal structure', async ({ page }) => {
+      // Wait for button to be interactive before clicking
       const openButton = page.locator('button:has-text("Open Modal")').first();
+      await openButton.waitFor({ state: 'visible', timeout: 10000 });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
       await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
@@ -67,6 +74,10 @@ test.describe('Cross-Browser Accessibility Tests', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
+      // Wait for USWDS to transform select into combo box (especially slow in Webkit)
+      await page.waitForSelector('.usa-combo-box__input', { state: 'visible', timeout: 10000 });
+      // Additional wait for USWDS JS to fully initialize combo box
+      await page.waitForTimeout(1000);
     });
 
     test('should pass axe accessibility tests @a11y', async ({ page }) => {
@@ -76,8 +87,9 @@ test.describe('Cross-Browser Accessibility Tests', () => {
 
       expect(accessibilityScanResults.violations).toEqual([]);
 
-      // Test with dropdown open
+      // Test with dropdown open - wait for toggle button to be interactive
       const toggleButton = page.locator('.usa-combo-box__toggle-list');
+      await toggleButton.waitFor({ state: 'visible', timeout: 10000 });
       await toggleButton.click();
       await page.waitForSelector('.usa-combo-box__list:not([hidden])');
 
@@ -89,8 +101,13 @@ test.describe('Cross-Browser Accessibility Tests', () => {
     });
 
     test('should have correct ARIA combobox pattern', async ({ page }) => {
+      // Wait for USWDS transformation to complete before checking attributes
       const input = page.locator('.usa-combo-box__input');
+      await input.waitFor({ state: 'visible', timeout: 10000 });
+
       const toggleButton = page.locator('.usa-combo-box__toggle-list');
+      await toggleButton.waitFor({ state: 'visible', timeout: 10000 });
+
       const listbox = page.locator('.usa-combo-box__list');
 
       // Test ARIA attributes
@@ -207,8 +224,13 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
-      // Open modal to test focus trapping
+      // Wait for USWDS to initialize modal
+      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout: 10000 });
+      await page.waitForTimeout(1000);
+
+      // Open modal to test focus trapping - wait for button to be interactive
       const openButton = page.locator('button:has-text("Open Modal")').first();
+      await openButton.waitFor({ state: 'visible', timeout: 10000 });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
       await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
