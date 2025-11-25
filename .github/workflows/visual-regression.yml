@@ -1,6 +1,13 @@
 name: Visual Regression Testing
 
 on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'packages/*/src/**'
+      - '.storybook/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
   pull_request:
     branches: [main, develop]
     paths:
