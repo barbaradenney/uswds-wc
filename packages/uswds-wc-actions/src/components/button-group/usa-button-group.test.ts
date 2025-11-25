@@ -857,10 +857,11 @@ describe('USAButtonGroup', () => {
 
   describe('Accessibility Compliance (CRITICAL)', () => {
     // CI Environment: Increased timeout for comprehensive accessibility testing (6 sequential axe-core runs)
-    // Passes locally in <7s, but CI environment is slower. Timeout of 10s provides buffer for CI overhead.
+    // Passes locally in <7s, but CI environment is slower. Timeout of 15s provides buffer for CI variability.
+    // Previous timeout of 10s occasionally failed during CI infrastructure slowdowns (1/10 runs).
     it(
       'should pass comprehensive accessibility tests (same as Storybook)',
-      { timeout: 10000 },
+      { timeout: 15000 },
       async () => {
         // Test with empty button group (slot mode)
         element.buttons = [];
