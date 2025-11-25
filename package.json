@@ -2,7 +2,7 @@
   "name": "uswds-webcomponents-monorepo",
   "version": "2.4.0",
   "private": true,
-  "description": "USWDS Web Components Monorepo - Components, Patterns, and Templates",
+  "description": "USWDS Web Components Monorepo - Production-Ready Components, Patterns, and Templates",
   "type": "module",
   "engines": {
     "node": ">=18.0.0",
