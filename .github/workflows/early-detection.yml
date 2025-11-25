@@ -10,11 +10,11 @@ on:
     - cron: '0 2 * * *'
 
 jobs:
-  # PHASE 1: Fast Critical Validation (5-8 minutes)
+  # PHASE 1: Fast Critical Validation (10-15 minutes with full test suite)
   fast-validation:
     name: ⚡ Fast Critical Validation
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
