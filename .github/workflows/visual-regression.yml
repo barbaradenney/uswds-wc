@@ -17,6 +17,7 @@ on:
       - 'pnpm-lock.yaml'
     paths-ignore:
       - '.github/workflows/visual-regression.yml'
+  workflow_dispatch:
 
 # Prevent concurrent runs on the same PR
 concurrency:
