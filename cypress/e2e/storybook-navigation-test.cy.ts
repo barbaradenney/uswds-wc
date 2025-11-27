@@ -164,7 +164,7 @@ describe('Storybook Navigation Tests - Interactive Components', () => {
         testComponentFunctionality(component, 'after navigation');
       });
 
-      it('should work after multiple navigation cycles', () => {
+      testFunction('should work after multiple navigation cycles', () => {
         // Test 3 cycles of navigation
         for (let i = 0; i < 3; i++) {
           // Navigate to story A

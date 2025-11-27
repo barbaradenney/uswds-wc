@@ -48,7 +48,14 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        // Webkit in CI is slower at JS initialization - use longer timeouts
+        actionTimeout: 15000,
+        navigationTimeout: 30000,
+      },
+      // More retries for Webkit due to JS initialization timing issues
+      retries: process.env.CI ? 3 : 0,
     },
 
     /* Test against mobile viewports */

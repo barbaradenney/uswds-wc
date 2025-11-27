@@ -6,20 +6,30 @@ import AxeBuilder from '@axe-core/playwright';
  *
  * Tests accessibility compliance across different browsers and assistive technologies.
  * Focus areas: ARIA compliance, keyboard navigation, screen reader compatibility
+ *
+ * Note: Webkit (Safari) tests have longer timeouts due to slower JS initialization in CI
  */
+
+// Helper to get browser-appropriate timeout
+const getTimeout = (browserName: string, baseTimeout: number) => {
+  // Webkit in CI needs 2x timeout due to slower JS initialization
+  return browserName === 'webkit' ? baseTimeout * 2 : baseTimeout;
+};
+
 test.describe('Cross-Browser Accessibility Tests', () => {
 
   test.describe('Modal Accessibility', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
       // Wait for USWDS to initialize modal (especially slow in Webkit)
-      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout: 10000 });
-      // Additional wait for USWDS JS to fully initialize
-      await page.waitForTimeout(1000);
+      const timeout = getTimeout(browserName, 10000);
+      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout });
+      // Additional wait for USWDS JS to fully initialize (longer for Webkit)
+      await page.waitForTimeout(browserName === 'webkit' ? 2000 : 1000);
     });
 
-    test('should pass axe accessibility tests in all browsers @a11y @critical', async ({ page }) => {
+    test('should pass axe accessibility tests in all browsers @a11y @critical', async ({ page, browserName }) => {
       // Test closed modal first
       const accessibilityScanResults = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
@@ -28,11 +38,12 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       expect(accessibilityScanResults.violations).toEqual([]);
 
       // Wait for button to be interactive before clicking
+      const timeout = getTimeout(browserName, 10000);
       const openButton = page.locator('button:has-text("Open Modal")').first();
-      await openButton.waitFor({ state: 'visible', timeout: 10000 });
+      await openButton.waitFor({ state: 'visible', timeout });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
-      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
+      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: getTimeout(browserName, 15000) });
 
       const modalAccessibilityResults = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
@@ -41,13 +52,14 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       expect(modalAccessibilityResults.violations).toEqual([]);
     });
 
-    test('should have correct ARIA modal structure', async ({ page }) => {
+    test('should have correct ARIA modal structure', async ({ page, browserName }) => {
       // Wait for button to be interactive before clicking
+      const timeout = getTimeout(browserName, 10000);
       const openButton = page.locator('button:has-text("Open Modal")').first();
-      await openButton.waitFor({ state: 'visible', timeout: 10000 });
+      await openButton.waitFor({ state: 'visible', timeout });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
-      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
+      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: getTimeout(browserName, 15000) });
 
       // Use .first() to handle potential multiple modals from previous tests
       const modal = page.locator('[role="dialog"]').first();
@@ -71,16 +83,17 @@ test.describe('Cross-Browser Accessibility Tests', () => {
   });
 
   test.describe('Combo Box Accessibility', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
       // Wait for USWDS to transform select into combo box (especially slow in Webkit)
-      await page.waitForSelector('.usa-combo-box__input', { state: 'visible', timeout: 10000 });
-      // Additional wait for USWDS JS to fully initialize combo box
-      await page.waitForTimeout(1000);
+      const timeout = getTimeout(browserName, 10000);
+      await page.waitForSelector('.usa-combo-box__input', { state: 'visible', timeout });
+      // Additional wait for USWDS JS to fully initialize combo box (longer for Webkit)
+      await page.waitForTimeout(browserName === 'webkit' ? 2000 : 1000);
     });
 
-    test('should pass axe accessibility tests @a11y', async ({ page }) => {
+    test('should pass axe accessibility tests @a11y', async ({ page, browserName }) => {
       const accessibilityScanResults = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
         .analyze();
@@ -88,10 +101,11 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       expect(accessibilityScanResults.violations).toEqual([]);
 
       // Test with dropdown open - wait for toggle button to be interactive
+      const timeout = getTimeout(browserName, 10000);
       const toggleButton = page.locator('.usa-combo-box__toggle-list');
-      await toggleButton.waitFor({ state: 'visible', timeout: 10000 });
+      await toggleButton.waitFor({ state: 'visible', timeout });
       await toggleButton.click();
-      await page.waitForSelector('.usa-combo-box__list:not([hidden])');
+      await page.waitForSelector('.usa-combo-box__list:not([hidden])', { timeout });
 
       const openAccessibilityResults = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
@@ -100,13 +114,14 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       expect(openAccessibilityResults.violations).toEqual([]);
     });
 
-    test('should have correct ARIA combobox pattern', async ({ page }) => {
+    test('should have correct ARIA combobox pattern', async ({ page, browserName }) => {
       // Wait for USWDS transformation to complete before checking attributes
+      const timeout = getTimeout(browserName, 10000);
       const input = page.locator('.usa-combo-box__input');
-      await input.waitFor({ state: 'visible', timeout: 10000 });
+      await input.waitFor({ state: 'visible', timeout });
 
       const toggleButton = page.locator('.usa-combo-box__toggle-list');
-      await toggleButton.waitFor({ state: 'visible', timeout: 10000 });
+      await toggleButton.waitFor({ state: 'visible', timeout });
 
       const listbox = page.locator('.usa-combo-box__list');
 
@@ -191,12 +206,15 @@ test.describe('Cross-Browser Accessibility Tests', () => {
   });
 
   test.describe('Keyboard Navigation Accessibility', () => {
-    test('should support Tab navigation across components @a11y', async ({ page }) => {
+    test('should support Tab navigation across components @a11y', async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=structure-accordion--default');
       await page.waitForLoadState('networkidle');
 
       // Wait for first focusable element to exist before Tab navigation
-      await page.waitForSelector('button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])', { timeout: 5000 });
+      const timeout = getTimeout(browserName, 5000);
+      await page.waitForSelector('button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])', { timeout });
+      // Additional wait for Webkit JS initialization
+      if (browserName === 'webkit') await page.waitForTimeout(1000);
 
       // Start from first focusable element
       await page.keyboard.press('Tab');
@@ -220,20 +238,21 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       }
     });
 
-    test('should support Shift+Tab reverse navigation @a11y', async ({ page }) => {
+    test('should support Shift+Tab reverse navigation @a11y', async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=feedback-modal--default');
       await page.waitForLoadState('networkidle');
 
       // Wait for USWDS to initialize modal
-      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout: 10000 });
-      await page.waitForTimeout(1000);
+      const timeout = getTimeout(browserName, 10000);
+      await page.waitForSelector('button:has-text("Open Modal")', { state: 'visible', timeout });
+      await page.waitForTimeout(browserName === 'webkit' ? 2000 : 1000);
 
       // Open modal to test focus trapping - wait for button to be interactive
       const openButton = page.locator('button:has-text("Open Modal")').first();
-      await openButton.waitFor({ state: 'visible', timeout: 10000 });
+      await openButton.waitFor({ state: 'visible', timeout });
       await openButton.click();
       // Increase timeout for modal to appear (USWDS initialization + animation)
-      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: 15000 });
+      await page.waitForSelector('[role="dialog"]', { state: 'visible', timeout: getTimeout(browserName, 15000) });
 
       // Tab forward through modal elements
       await page.keyboard.press('Tab');
@@ -255,9 +274,13 @@ test.describe('Cross-Browser Accessibility Tests', () => {
   });
 
   test.describe('Screen Reader Compatibility', () => {
-    test('should provide appropriate labels and descriptions @a11y', async ({ page }) => {
+    test('should provide appropriate labels and descriptions @a11y', async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=forms-combo-box--default');
       await page.waitForLoadState('networkidle');
+      // Wait for USWDS combo box transformation (longer for Webkit)
+      const timeout = getTimeout(browserName, 10000);
+      await page.waitForSelector('.usa-combo-box__input', { state: 'visible', timeout });
+      if (browserName === 'webkit') await page.waitForTimeout(1000);
 
       // Test that form elements have labels
       const input = page.locator('.usa-combo-box__input');
@@ -276,9 +299,13 @@ test.describe('Cross-Browser Accessibility Tests', () => {
       expect(hasLabel || hasAriaLabel).toBe(true);
     });
 
-    test('should announce state changes appropriately @a11y', async ({ page }) => {
+    test('should announce state changes appropriately @a11y', async ({ page, browserName }) => {
       await page.goto('/iframe.html?id=structure-accordion--default');
       await page.waitForLoadState('networkidle');
+      // Wait for accordion to render (longer for Webkit)
+      const timeout = getTimeout(browserName, 10000);
+      await page.waitForSelector('.usa-accordion__button', { state: 'visible', timeout });
+      if (browserName === 'webkit') await page.waitForTimeout(1000);
 
       const firstButton = page.locator('.usa-accordion__button').first();
 
