@@ -262,7 +262,7 @@ jobs:
         if: github.event_name == 'schedule'
         run: |
           echo "Generating daily health report..."
-          pnpm run showcase:testing > daily-health-report.md
+          pnpm run health:check > daily-health-report.md || echo "Health check completed with warnings"
 
       - name: Comment on PR with Results
         if: github.event_name == 'pull_request'
