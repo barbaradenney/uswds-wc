@@ -164,7 +164,8 @@ jobs:
       - name: Check for USWDS updates
         id: uswds_check
         run: |
-          CURRENT_VERSION=$(pnpm list @uswds/uswds --depth=0 --json | jq -r '.dependencies."@uswds/uswds".version')
+          # pnpm monorepo returns array; check devDependencies first (where @uswds/uswds is installed)
+          CURRENT_VERSION=$(pnpm list @uswds/uswds --depth=0 --json | jq -r '.[0].devDependencies."@uswds/uswds".version // .[0].dependencies."@uswds/uswds".version // empty')
           LATEST_VERSION=$(pnpm view @uswds/uswds version)
           
           echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
