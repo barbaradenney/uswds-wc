@@ -6,9 +6,9 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('USWDS Component User Flows', () => {
-  // Skip all user-flows tests in Webkit CI - USWDS/Storybook initialization too slow
-  test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'User flow tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+  // Skip user flow tests in CI - comprehensive local tests, CI uses simpler cross-browser tests
+  test.beforeEach(async ({ page }) => {
+    test.skip(!!process.env.CI, 'User flow tests skip CI - use cross-browser tests for CI coverage');
     await page.goto('/');
     // Wait for Storybook to load
     await page.waitForSelector('[data-item-id]', { timeout: 10000 });

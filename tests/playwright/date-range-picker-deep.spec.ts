@@ -20,7 +20,7 @@ const WRAPPER_SELECTOR = '.usa-date-range-picker'; // USWDS wrapper inside compo
 test.describe('Date Range Picker Deep Testing', () => {
   // Skip all date-range-picker tests in Webkit CI - USWDS/Storybook initialization too slow
   test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'Date range picker tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+    test.skip(!!process.env.CI, 'Deep tests skip CI - use cross-browser tests for CI coverage');
     await page.goto('/');
     await page.waitForLoadState('networkidle');
   });

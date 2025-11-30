@@ -20,7 +20,7 @@ const WRAPPER_SELECTOR = '.usa-date-picker'; // USWDS wrapper inside component
 test.describe('Date Picker Deep Testing', () => {
   // Skip all date-picker tests in Webkit CI - USWDS/Storybook initialization too slow
   test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'Date picker tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+    test.skip(!!process.env.CI, 'Deep tests skip CI - use cross-browser tests for CI coverage');
     await page.goto('/');
     await page.waitForLoadState('networkidle');
   });
