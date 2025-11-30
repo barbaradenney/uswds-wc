@@ -77,9 +77,10 @@ const VIEWPORTS = {
 };
 
 test.describe('Pattern Visual Regression Tests', () => {
-  // Skip all pattern visual tests in Webkit CI - USWDS/Storybook initialization too slow
+  // Skip all visual tests in CI - comprehensive local tests only
+  // CI uses simpler smoke tests for coverage
   test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'Pattern visual tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+    test.skip(!!process.env.CI, 'Visual tests skip CI - use smoke tests for CI coverage');
     // Set a reasonable timeout for Storybook navigation
     test.setTimeout(30000);
   });

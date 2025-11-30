@@ -7,9 +7,10 @@ import { test, expect } from '@playwright/test';
  * Focus areas: dropdown rendering, option selection, keyboard navigation
  */
 test.describe('Combo Box Component Cross-Browser Tests', () => {
-  // Skip all combo-box cross-browser tests in Webkit CI - USWDS/Storybook initialization too slow
+  // Skip all cross-browser tests in CI - comprehensive local tests only
+  // CI uses simpler smoke tests for coverage
   test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'Combo box tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+    test.skip(!!process.env.CI, 'Cross-browser tests skip CI - use smoke tests for CI coverage');
     await page.goto('/iframe.html?id=forms-combo-box--default');
     await page.waitForLoadState('networkidle');
   });

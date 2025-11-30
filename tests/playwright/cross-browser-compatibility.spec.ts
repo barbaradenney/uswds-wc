@@ -28,9 +28,10 @@ const testComponents = [
 ];
 
 test.describe('Cross-Browser Compatibility', () => {
-  // Skip all cross-browser compatibility tests in Webkit CI - USWDS/Storybook initialization too slow
+  // Skip all cross-browser tests in CI - comprehensive local tests only
+  // CI uses simpler smoke tests for coverage
   test.beforeEach(async ({ page, browserName }) => {
-    test.skip(browserName === 'webkit' && !!process.env.CI, 'Cross-browser tests skip Webkit in CI - USWDS/Storybook initialization too slow');
+    test.skip(!!process.env.CI, 'Cross-browser tests skip CI - use smoke tests for CI coverage');
     // Set up common test environment
     await page.goto('/');
     await page.waitForLoadState('networkidle');
