@@ -42,7 +42,7 @@ jobs:
     name: 🔍 Flaky Test Detection
     runs-on: ubuntu-latest
     if: github.event_name != 'push' && (github.event_name == 'schedule' || github.event.inputs.run_flaky != 'false')
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
