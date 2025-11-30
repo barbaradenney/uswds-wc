@@ -23,13 +23,13 @@ const config = {
   testRunner: 'vitest',
   coverageAnalysis: 'perTest',
 
-  // Mutation targets
+  // Mutation targets - monorepo structure
   mutate: [
-    'src/components/**/*.ts',
-    '!src/components/**/*.test.ts',
-    '!src/components/**/*.stories.ts',
-    '!src/components/**/*.cy.ts',
-    '!src/components/**/index.ts',
+    'packages/*/src/components/**/*.ts',
+    '!packages/*/src/components/**/*.test.ts',
+    '!packages/*/src/components/**/*.stories.ts',
+    '!packages/*/src/components/**/*.cy.ts',
+    '!packages/*/src/components/**/index.ts',
   ],
 
   // Ignore patterns

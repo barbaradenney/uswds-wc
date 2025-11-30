@@ -58,16 +58,34 @@ class ContractTester {
     }
   }
 
+  getComponentKey(component) {
+    // Generate a unique key for the component
+    if (typeof component === 'string') {
+      return component;
+    }
+    return component.package ? `${component.package}/${component.name}` : component.name;
+  }
+
+  getComponentDisplayName(component) {
+    // Get a display name for logging
+    if (typeof component === 'string') {
+      return component;
+    }
+    return component.package ? `${component.name} (${component.package})` : component.name;
+  }
+
   async generateContracts() {
     console.log('🔨 Generating component contracts...\n');
 
     const components = this.getComponents();
 
     for (const component of components) {
-      console.log(`\n📦 Analyzing ${component}...`);
+      const displayName = this.getComponentDisplayName(component);
+      const key = this.getComponentKey(component);
+      console.log(`\n📦 Analyzing ${displayName}...`);
 
       const contract = await this.extractContract(component);
-      this.contracts[component] = contract;
+      this.contracts[key] = contract;
 
       if (this.verbose) {
         console.log(JSON.stringify(contract, null, 2));
@@ -89,41 +107,88 @@ class ContractTester {
     }
 
     const savedContracts = JSON.parse(fs.readFileSync(CONTRACTS_FILE, 'utf-8'));
-    const components = this.component ? [this.component] : this.getComponents();
+    const components = this.component ? [{ name: this.component, package: null }] : this.getComponents();
 
     for (const component of components) {
-      if (!savedContracts[component]) {
-        console.warn(`⚠️  No contract found for ${component}`);
+      const key = this.getComponentKey(component);
+      const displayName = this.getComponentDisplayName(component);
+
+      if (!savedContracts[key]) {
+        console.warn(`⚠️  No contract found for ${displayName}`);
         continue;
       }
 
-      console.log(`\n📦 Validating ${component}...`);
+      console.log(`\n📦 Validating ${displayName}...`);
 
       const currentContract = await this.extractContract(component);
-      const savedContract = savedContracts[component];
+      const savedContract = savedContracts[key];
 
-      this.compareContracts(component, savedContract, currentContract);
+      this.compareContracts(displayName, savedContract, currentContract);
     }
   }
 
   getComponents() {
-    const componentsDir = path.join(process.cwd(), 'src/components');
-    const components = fs.readdirSync(componentsDir)
-      .filter(dir => {
-        const componentPath = path.join(componentsDir, dir);
-        return fs.statSync(componentPath).isDirectory() &&
-               fs.existsSync(path.join(componentPath, `usa-${dir}.ts`));
-      });
+    // Support monorepo structure: packages/*/src/components/
+    const packagesDir = path.join(process.cwd(), 'packages');
+    const components = [];
+
+    // Check if we have a monorepo structure
+    if (fs.existsSync(packagesDir)) {
+      const packages = fs.readdirSync(packagesDir)
+        .filter(dir => {
+          const pkgPath = path.join(packagesDir, dir);
+          return fs.statSync(pkgPath).isDirectory() &&
+                 fs.existsSync(path.join(pkgPath, 'src', 'components'));
+        });
+
+      for (const pkg of packages) {
+        const componentsDir = path.join(packagesDir, pkg, 'src', 'components');
+        const pkgComponents = fs.readdirSync(componentsDir)
+          .filter(dir => {
+            const componentPath = path.join(componentsDir, dir);
+            return fs.statSync(componentPath).isDirectory() &&
+                   fs.existsSync(path.join(componentPath, `usa-${dir}.ts`));
+          })
+          .map(dir => ({ name: dir, package: pkg }));
+
+        components.push(...pkgComponents);
+      }
+    } else {
+      // Fallback to legacy structure: src/components/
+      const componentsDir = path.join(process.cwd(), 'src/components');
+      if (fs.existsSync(componentsDir)) {
+        const legacyComponents = fs.readdirSync(componentsDir)
+          .filter(dir => {
+            const componentPath = path.join(componentsDir, dir);
+            return fs.statSync(componentPath).isDirectory() &&
+                   fs.existsSync(path.join(componentPath, `usa-${dir}.ts`));
+          })
+          .map(dir => ({ name: dir, package: null }));
+
+        components.push(...legacyComponents);
+      }
+    }
 
     if (this.component) {
-      return components.filter(c => c === this.component);
+      return components.filter(c => c.name === this.component);
     }
 
     return components;
   }
 
-  async extractContract(componentName) {
-    const componentPath = path.join(process.cwd(), 'src/components', componentName, `usa-${componentName}.ts`);
+  async extractContract(component) {
+    // Component can be either a string (legacy) or object { name, package }
+    const componentName = typeof component === 'string' ? component : component.name;
+    const packageName = typeof component === 'string' ? null : component.package;
+
+    let componentPath;
+    if (packageName) {
+      // Monorepo structure
+      componentPath = path.join(process.cwd(), 'packages', packageName, 'src', 'components', componentName, `usa-${componentName}.ts`);
+    } else {
+      // Legacy structure
+      componentPath = path.join(process.cwd(), 'src/components', componentName, `usa-${componentName}.ts`);
+    }
 
     if (!fs.existsSync(componentPath)) {
       return null;
@@ -133,6 +198,7 @@ class ContractTester {
 
     const contract = {
       component: componentName,
+      package: packageName,
       properties: this.extractProperties(source),
       events: this.extractEvents(source),
       methods: this.extractMethods(source),
