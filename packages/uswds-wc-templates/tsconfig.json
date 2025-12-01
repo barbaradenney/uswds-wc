@@ -1,0 +1,53 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "types": [],
+    "skipLibCheck": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.cy.ts"
+  ],
+  "references": [
+    {
+      "path": "../uswds-wc-core"
+    },
+    {
+      "path": "../uswds-wc-actions"
+    },
+    {
+      "path": "../uswds-wc-forms"
+    },
+    {
+      "path": "../uswds-wc-navigation"
+    },
+    {
+      "path": "../uswds-wc-data-display"
+    },
+    {
+      "path": "../uswds-wc-feedback"
+    },
+    {
+      "path": "../uswds-wc-layout"
+    },
+    {
+      "path": "../uswds-wc-structure"
+    },
+    {
+      "path": "../uswds-wc-patterns"
+    }
+  ]
+}

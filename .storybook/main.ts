@@ -56,6 +56,8 @@ const config: StorybookConfig = {
       '@uswds-wc/feedback': resolve(__dirname, '../packages/uswds-wc-feedback/src'),
       '@uswds-wc/layout': resolve(__dirname, '../packages/uswds-wc-layout/src'),
       '@uswds-wc/structure': resolve(__dirname, '../packages/uswds-wc-structure/src'),
+      '@uswds-wc/patterns': resolve(__dirname, '../packages/uswds-wc-patterns/src'),
+      '@uswds-wc/templates': resolve(__dirname, '../packages/uswds-wc-templates/src'),
       // Resolve @storybook/blocks to addon-docs for MDX files
       '@storybook/blocks': resolve(
         __dirname,

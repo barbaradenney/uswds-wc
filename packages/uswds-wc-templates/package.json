@@ -1,0 +1,65 @@
+{
+  "name": "@uswds-wc/templates",
+  "version": "2.4.0",
+  "description": "USWDS Templates - Page-level Web Component Layouts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/templates/*.js",
+      "types": "./dist/templates/*.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@uswds-wc/core": "workspace:*",
+    "@uswds-wc/actions": "workspace:*",
+    "@uswds-wc/forms": "workspace:*",
+    "@uswds-wc/navigation": "workspace:*",
+    "@uswds-wc/data-display": "workspace:*",
+    "@uswds-wc/feedback": "workspace:*",
+    "@uswds-wc/layout": "workspace:*",
+    "@uswds-wc/structure": "workspace:*",
+    "@uswds-wc/patterns": "workspace:*"
+  },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@uswds-wc/test-utils": "workspace:*",
+    "jsdom": "27.0.1",
+    "lit": "^3.0.0",
+    "vitest": "3.2.4"
+  },
+  "keywords": [
+    "uswds",
+    "web-components",
+    "templates",
+    "page-layouts",
+    "design-system"
+  ],
+  "author": "Barbara Miles",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barbaradenney/uswds-wc.git",
+    "directory": "packages/uswds-wc-templates"
+  }
+}

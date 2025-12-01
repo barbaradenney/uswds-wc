@@ -457,6 +457,49 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.1)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@2.6.1)(jsdom@27.0.1(canvas@3.2.0)(postcss@8.5.6))(sass-embedded@1.83.4)(sass@1.93.2)(yaml@2.8.1)
 
+  packages/uswds-wc-templates:
+    dependencies:
+      '@uswds-wc/actions':
+        specifier: workspace:*
+        version: link:../uswds-wc-actions
+      '@uswds-wc/core':
+        specifier: workspace:*
+        version: link:../uswds-wc-core
+      '@uswds-wc/data-display':
+        specifier: workspace:*
+        version: link:../uswds-wc-data-display
+      '@uswds-wc/feedback':
+        specifier: workspace:*
+        version: link:../uswds-wc-feedback
+      '@uswds-wc/forms':
+        specifier: workspace:*
+        version: link:../uswds-wc-forms
+      '@uswds-wc/layout':
+        specifier: workspace:*
+        version: link:../uswds-wc-layout
+      '@uswds-wc/navigation':
+        specifier: workspace:*
+        version: link:../uswds-wc-navigation
+      '@uswds-wc/patterns':
+        specifier: workspace:*
+        version: link:../uswds-wc-patterns
+      '@uswds-wc/structure':
+        specifier: workspace:*
+        version: link:../uswds-wc-structure
+    devDependencies:
+      '@uswds-wc/test-utils':
+        specifier: workspace:*
+        version: link:../uswds-wc-test-utils
+      jsdom:
+        specifier: 27.0.1
+        version: 27.0.1(canvas@3.2.0)(postcss@8.5.6)
+      lit:
+        specifier: ^3.0.0
+        version: 3.3.1
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.1)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@2.6.1)(jsdom@27.0.1(canvas@3.2.0)(postcss@8.5.6))(sass-embedded@1.83.4)(sass@1.93.2)(yaml@2.8.1)
+
   packages/uswds-wc-test-utils:
     dependencies:
       '@uswds-wc/core':
