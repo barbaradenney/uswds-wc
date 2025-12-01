@@ -1,11 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { USABaseTemplate } from './usa-base-template.js';
 
-// Register the component
-if (!customElements.get('usa-base-template')) {
-  customElements.define('usa-base-template', USABaseTemplate);
-}
-
 describe('USABaseTemplate', () => {
   let element: USABaseTemplate;
 

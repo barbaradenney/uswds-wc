@@ -4,13 +4,11 @@ import { customElement, property, state } from 'lit/decorators.js';
 // Import USWDS core styles
 import '@uswds-wc/core/styles.css';
 
-// Import USWDS web components
-import '@uswds-wc/feedback';
-import '@uswds-wc/navigation';
-import '@uswds-wc/layout';
-import '@uswds-wc/actions';
-import '@uswds-wc/forms';
-import '@uswds-wc/patterns';
+// Import USWDS web components used by this template
+import '@uswds-wc/feedback'; // usa-banner, usa-identifier
+import '@uswds-wc/navigation'; // usa-skip-link
+import '@uswds-wc/actions'; // usa-button
+import '@uswds-wc/forms'; // usa-text-input, usa-checkbox
 
 /**
  * Sign-in form data interface

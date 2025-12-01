@@ -1,11 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { USASignInTemplate } from './usa-sign-in-template.js';
 
-// Register the component
-if (!customElements.get('usa-sign-in-template')) {
-  customElements.define('usa-sign-in-template', USASignInTemplate);
-}
-
 describe('USASignInTemplate', () => {
   let element: USASignInTemplate;
 

@@ -47,7 +47,8 @@ export default defineConfig({
       'packages/**/src/**/*.stories.ts',
       'packages/**/src/**/*.browser.test.ts',
       'packages/**/src/**/*.visual.test.ts',
-      'node_modules',
+      'node_modules/**',
+      '**/node_modules/**',
       // Skip behavior/interaction tests in CI - they're flaky in jsdom, covered by Cypress
       ...(process.env.CI
         ? ['packages/**/src/**/*-behavior*.test.ts', 'packages/**/src/**/*-interaction.test.ts']
