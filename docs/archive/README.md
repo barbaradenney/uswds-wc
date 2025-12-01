@@ -232,3 +232,9 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 9 days
 
+
+### RELEASE_CHECKLIST.md (Archived 2025-12-01)
+- **Reason**: Temporary doc older than 7 days (8 days)
+- **Category**: TEMPORARY
+- **Age**: 8 days
+
