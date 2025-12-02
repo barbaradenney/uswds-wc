@@ -1,0 +1,433 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Contributing" />
+
+# Contributing to USWDS Web Components
+
+Thank you for your interest in contributing! This guide will help you get started with making contributions to the project.
+
+## AI-Assisted Development
+
+> **This codebase was written 100% using Claude Code.** All components, tests, documentation, and tooling were developed with Claude's assistance. The project's patterns, architecture, and conventions are optimized for Claude's understanding.
+>
+> **AI-assisted contributions are highly encouraged!** We welcome contributions developed with Claude Code, whether it's new components, bug fixes, tests, or documentation. While other AI tools like GitHub Copilot or Cursor may work, results may vary as they haven't been tested with this codebase.
+>
+> For the best experience, we recommend using [Claude Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) in VS Code. See the [Local Development Setup](?path=/docs/local-development-setup--docs) guide for installation instructions.
+
+## Ways to Contribute
+
+| Contribution Type | Description | Skill Level |
+|-------------------|-------------|-------------|
+| **Bug Reports** | Report issues you encounter | Beginner |
+| **Documentation** | Improve docs, fix typos, add examples | Beginner |
+| **Bug Fixes** | Fix reported issues | Intermediate |
+| **New Features** | Add new functionality | Intermediate |
+| **New Components** | Implement USWDS components | Advanced |
+| **Code Review** | Review pull requests | All levels |
+
+## Before You Start
+
+### 1. Check Existing Issues
+
+Before starting work, check if:
+- The bug has already been reported
+- The feature has been requested
+- Someone is already working on it
+
+Browse [open issues](https://github.com/barbaradenney/uswds-wc/issues) or search for keywords.
+
+### 2. Discuss Major Changes
+
+For significant changes, open an issue first to discuss:
+- New components
+- Architectural changes
+- Breaking changes
+- Large refactors
+
+This saves time and ensures alignment with project goals.
+
+### 3. Set Up Your Environment
+
+Follow the [Local Development Setup](?path=/docs/local-development-setup--docs) guide to configure your development environment.
+
+## Contribution Workflow
+
+### Step 1: Fork and Clone
+
+```bash
+# Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR-USERNAME/uswds-wc.git
+cd uswds-wc
+
+# Add upstream remote
+git remote add upstream https://github.com/barbaradenney/uswds-wc.git
+```
+
+### Step 2: Create a Branch
+
+```bash
+# Sync with upstream
+git fetch upstream
+git checkout develop
+git merge upstream/develop
+
+# Create a feature branch
+git checkout -b feat/your-feature-name
+
+# Or for bug fixes
+git checkout -b fix/issue-description
+```
+
+**Branch Naming Convention:**
+| Prefix | Use Case | Example |
+|--------|----------|---------|
+| `feat/` | New features | `feat/date-range-picker` |
+| `fix/` | Bug fixes | `fix/button-hover-state` |
+| `docs/` | Documentation | `docs/contributing-guide` |
+| `refactor/` | Code refactoring | `refactor/modal-cleanup` |
+| `test/` | Test improvements | `test/alert-accessibility` |
+
+### Step 3: Make Your Changes
+
+Follow these guidelines while coding:
+
+**Code Style**
+- Follow existing code patterns
+- Use TypeScript for all component code
+- Write meaningful variable and function names
+- Keep functions small and focused
+
+**USWDS Compliance**
+- Use official USWDS CSS classes
+- Don't create custom styles that override USWDS
+- Follow USWDS HTML structure exactly
+- Test with official USWDS documentation
+
+**Component Requirements**
+- Every component needs unit tests
+- Every component needs Storybook stories
+- Every component needs a README.mdx
+- All components must pass accessibility checks
+
+### Step 4: Write Tests
+
+All code changes require tests:
+
+```typescript
+// Example test structure
+describe('USAMyComponent', () => {
+  let element: USAMyComponent;
+
+  beforeEach(async () => {
+    element = document.createElement('usa-my-component') as USAMyComponent;
+    document.body.appendChild(element);
+    await element.updateComplete;
+  });
+
+  afterEach(() => {
+    element.remove();
+  });
+
+  it('should initialize with default values', () => {
+    expect(element.myProperty).toBe('default');
+  });
+
+  it('should update when property changes', async () => {
+    element.myProperty = 'new value';
+    await element.updateComplete;
+    expect(element.myProperty).toBe('new value');
+  });
+
+  it('should emit events correctly', async () => {
+    const handler = vi.fn();
+    element.addEventListener('my-event', handler);
+
+    element.triggerEvent();
+
+    expect(handler).toHaveBeenCalled();
+  });
+});
+```
+
+**Test Requirements:**
+- Minimum 80% code coverage for new code
+- Test all public properties and methods
+- Test event emissions
+- Include accessibility tests using axe-core
+
+### Step 5: Update Documentation
+
+If your changes affect users:
+
+1. **Update component README.mdx** with new properties, events, or usage
+2. **Update Storybook stories** to demonstrate new features
+3. **Update CHANGELOG.md** (if the component has one)
+
+### Step 6: Validate Your Changes
+
+Run all checks before committing:
+
+```bash
+# Run linting
+pnpm run lint
+
+# Run type checking
+pnpm run typecheck
+
+# Run tests
+pnpm test
+
+# Run full validation
+pnpm run validate
+```
+
+### Step 7: Commit Your Changes
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```bash
+# Feature
+git commit -m "feat(button): add outline variant"
+
+# Bug fix
+git commit -m "fix(modal): resolve focus trap issue"
+
+# Documentation
+git commit -m "docs(readme): add usage examples"
+
+# Breaking change
+git commit -m "feat(alert)!: rename 'type' to 'variant'
+
+BREAKING CHANGE: The 'type' property has been renamed to 'variant'"
+```
+
+**Commit Message Format:**
+```
+type(scope): description
+
+[optional body]
+
+[optional footer]
+```
+
+| Type | Description |
+|------|-------------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation only |
+| `style` | Code style (formatting, etc.) |
+| `refactor` | Code change that neither fixes a bug nor adds a feature |
+| `test` | Adding or updating tests |
+| `chore` | Build process or auxiliary tool changes |
+
+### Step 8: Push and Create PR
+
+```bash
+# Push your branch
+git push origin feat/your-feature-name
+```
+
+Then create a Pull Request on GitHub:
+
+1. Go to the [repository](https://github.com/barbaradenney/uswds-wc)
+2. Click "Pull Requests" > "New Pull Request"
+3. Select your branch
+4. Fill out the PR template
+
+## Pull Request Guidelines
+
+### PR Title Format
+
+Follow the same format as commits:
+```
+feat(component): brief description
+fix(component): brief description
+```
+
+### PR Description Template
+
+```markdown
+## Summary
+Brief description of what this PR does.
+
+## Changes
+- Added X feature
+- Fixed Y bug
+- Updated Z documentation
+
+## Testing
+- [ ] Unit tests added/updated
+- [ ] Storybook stories updated
+- [ ] Manual testing completed
+- [ ] Accessibility verified
+
+## Screenshots
+(If applicable, add screenshots of UI changes)
+
+## Related Issues
+Closes #123
+```
+
+### PR Checklist
+
+Before requesting review, ensure:
+
+- [ ] Code follows project style guidelines
+- [ ] Tests pass (`pnpm test`)
+- [ ] Linting passes (`pnpm run lint`)
+- [ ] Types check (`pnpm run typecheck`)
+- [ ] Documentation updated (if applicable)
+- [ ] Storybook stories updated (if applicable)
+- [ ] PR description is complete
+- [ ] Branch is up to date with `develop`
+
+## Code Review Process
+
+### What Reviewers Look For
+
+1. **Correctness** - Does the code work as intended?
+2. **Tests** - Are there adequate tests?
+3. **USWDS Compliance** - Does it follow USWDS standards?
+4. **Accessibility** - Is it accessible?
+5. **Performance** - Any performance concerns?
+6. **Documentation** - Is it documented?
+
+### Responding to Feedback
+
+- Be receptive to feedback
+- Ask questions if something is unclear
+- Make requested changes promptly
+- Mark conversations as resolved when addressed
+
+### After Approval
+
+Once approved, a maintainer will merge your PR. Thank you for contributing!
+
+## Component Development Guidelines
+
+### USWDS Compliance
+
+Components must match official USWDS exactly:
+
+```typescript
+// Reference USWDS source for patterns
+// node_modules/@uswds/uswds/packages/usa-[component]/src/
+
+// Use USWDS CSS classes
+render() {
+  return html`
+    <div class="usa-alert usa-alert--${this.type}">
+      <div class="usa-alert__body">
+        <slot></slot>
+      </div>
+    </div>
+  `;
+}
+```
+
+### Light DOM Requirement
+
+All components use Light DOM for USWDS CSS compatibility:
+
+```typescript
+// In your component class
+static override shadowRootOptions = null; // No Shadow DOM
+
+// Or extend USWDSBaseComponent which handles this
+export class USAMyComponent extends USWDSBaseComponent {
+  // Automatically uses Light DOM
+}
+```
+
+### Property Naming
+
+Follow these conventions:
+
+| Convention | Example | Use Case |
+|------------|---------|----------|
+| camelCase | `labelText` | Multi-word properties |
+| lowercase | `type` | Single-word properties |
+| Boolean | `disabled`, `required` | Toggle properties |
+
+### Event Naming
+
+Use the `usa-` prefix for custom events:
+
+```typescript
+this.dispatchEvent(new CustomEvent('usa-accordion-toggle', {
+  detail: { expanded: this.expanded },
+  bubbles: true,
+  composed: true,
+}));
+```
+
+## Getting Help
+
+### Resources
+
+- **Storybook Documentation** - Browse existing components for patterns
+- **USWDS Documentation** - [designsystem.digital.gov](https://designsystem.digital.gov/)
+- **Lit Documentation** - [lit.dev](https://lit.dev/)
+- **Project Docs** - Check the `docs/` folder
+
+### Asking Questions
+
+- **GitHub Issues** - For bugs and feature requests
+- **GitHub Discussions** - For questions and ideas
+
+### Mentorship
+
+New to web components or USWDS? Look for issues labeled:
+- `good first issue` - Great starting points
+- `help wanted` - Community help needed
+- `documentation` - Non-code contributions
+
+## Recognition
+
+Contributors are recognized in:
+- GitHub contributor list
+- Release notes
+- Project documentation
+
+Thank you for helping improve USWDS Web Components!
+
+---
+
+## Quick Reference
+
+### Essential Commands
+
+```bash
+# Development
+pnpm run storybook     # Start Storybook
+pnpm test              # Run tests
+pnpm run lint          # Check linting
+pnpm run typecheck     # Check types
+pnpm run validate      # Run all checks
+
+# Git workflow
+git checkout -b feat/my-feature  # Create branch
+git commit -m "feat(x): message" # Commit
+git push origin feat/my-feature  # Push
+```
+
+### Commit Types
+
+| Type | When to Use |
+|------|-------------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation |
+| `test` | Tests |
+| `refactor` | Code cleanup |
+| `chore` | Build/tooling |
+
+### Branch Types
+
+| Prefix | Purpose |
+|--------|---------|
+| `feat/` | Features |
+| `fix/` | Bug fixes |
+| `docs/` | Documentation |
+| `refactor/` | Refactoring |
+| `test/` | Test updates |

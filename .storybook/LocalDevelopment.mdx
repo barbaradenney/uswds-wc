@@ -1,0 +1,558 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Local Development Setup" />
+
+# Local Development Setup
+
+Complete guide for setting up the USWDS Web Components project on your local machine.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+| Tool | Minimum Version | Recommended | Check Command |
+|------|-----------------|-------------|---------------|
+| **Node.js** | 18.x | 20.x LTS | `node --version` |
+| **pnpm** | 8.x | 9.x | `pnpm --version` |
+| **Git** | 2.x | Latest | `git --version` |
+
+### Installing Prerequisites
+
+**Node.js (via nvm - recommended)**
+```bash
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Install Node.js 20 LTS
+nvm install 20
+nvm use 20
+```
+
+**pnpm**
+```bash
+# Install pnpm globally
+npm install -g pnpm
+
+# Or via corepack (Node.js 16.13+)
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+## Quick Start
+
+Get up and running with the complete development environment:
+
+### 1. Install Visual Studio Code
+
+Download and install VS Code from [code.visualstudio.com](https://code.visualstudio.com/):
+- **macOS**: Download `.zip`, extract, drag to Applications
+- **Windows**: Download and run the `.exe` installer
+- **Linux**: `sudo snap install code --classic`
+
+### 2. Install Claude Code Extension
+
+Claude Code is an AI assistant that helps with development on this project:
+
+1. Open VS Code
+2. Press `Cmd+Shift+X` (macOS) or `Ctrl+Shift+X` (Windows/Linux)
+3. Search for **"Claude"** by Anthropic
+4. Click **Install**
+5. Click the Claude icon in the sidebar and sign in
+
+### 3. Install Essential Extensions
+
+```bash
+# Run these commands in your terminal
+code --install-extension runem.lit-plugin
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension esbenp.prettier-vscode
+```
+
+### 4. Clone and Set Up the Project
+
+```bash
+# Clone the repository
+git clone https://github.com/barbaradenney/uswds-wc.git
+cd uswds-wc
+
+# Install dependencies
+pnpm install
+
+# Open in VS Code
+code .
+```
+
+### 5. Start Development Server
+
+```bash
+# Start Storybook
+pnpm run storybook
+```
+
+Storybook will open automatically at [http://localhost:6006](http://localhost:6006)
+
+### 6. Start Using Claude Code
+
+> **Note:** This entire codebase was written 100% using Claude Code. The project's patterns, architecture, and conventions are all optimized for Claude's understanding. While other AI tools like GitHub Copilot or Cursor may work, results may vary as they haven't been tested with this codebase. For the best experience, we recommend using Claude Code.
+>
+> **AI-assisted contributions are highly encouraged!** Whether it's code, tests, or documentation, feel free to use Claude Code to help with your contributions.
+
+With the project open in VS Code, click the Claude icon in the sidebar and paste this prompt to get started:
+
+```
+I just cloned the uswds-wc repository and want to start contributing. Please:
+
+1. Verify my development environment is set up correctly (check Node.js, pnpm versions)
+2. Run the health check to see the project status
+3. Give me a quick orientation of the codebase structure
+4. Suggest a good first task for a new contributor
+```
+
+Claude will verify your setup, explain the project, and help you find something to work on.
+
+**Other helpful prompts:**
+
+| What You Want | Prompt |
+|---------------|--------|
+| Understand a component | "Explain how the usa-button component works" |
+| Create a new component | "Help me create a new usa-card component" |
+| Fix a failing test | "The usa-modal tests are failing. Help me debug" |
+| Write tests | "Write unit tests for the usa-alert component" |
+| Understand an error | "I'm getting this error: [paste error]. What's wrong?" |
+
+See [Working with Claude](?path=/docs/working-with-claude--docs) for detailed guidance.
+
+## Project Structure
+
+```
+uswds-wc/
+├── .storybook/           # Storybook configuration and docs
+├── packages/             # Monorepo packages
+│   ├── uswds-wc-core/    # Core utilities and USWDS styles
+│   ├── uswds-wc-actions/ # Buttons, links, search
+│   ├── uswds-wc-forms/   # Form components
+│   ├── uswds-wc-navigation/ # Headers, footers, nav
+│   ├── uswds-wc-data-display/ # Tables, cards, lists
+│   ├── uswds-wc-feedback/ # Alerts, modals, tooltips
+│   ├── uswds-wc-layout/  # Grid, containers
+│   ├── uswds-wc-structure/ # Accordion
+│   ├── uswds-wc-patterns/ # Form patterns
+│   └── uswds-wc-templates/ # Page templates
+├── tests/                # Integration and e2e tests
+├── scripts/              # Build and maintenance scripts
+├── docs/                 # Additional documentation
+└── cypress/              # Cypress component tests
+```
+
+## Development Commands
+
+### Essential Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run storybook` | Start Storybook development server |
+| `pnpm run dev` | Start Vite development server |
+| `pnpm run build` | Build all packages (production) |
+| `pnpm test` | Run unit tests |
+| `pnpm run lint` | Check code quality |
+| `pnpm run typecheck` | Verify TypeScript types |
+
+### Package-Specific Commands
+
+Work with individual packages using the `--filter` flag:
+
+```bash
+# Build a specific package
+pnpm --filter @uswds-wc/forms build
+
+# Test a specific package
+pnpm --filter @uswds-wc/actions test
+
+# Run tests in watch mode for a package
+pnpm --filter @uswds-wc/forms test -- --watch
+```
+
+### Validation Commands
+
+```bash
+# Run all validations (linting, types, tests)
+pnpm run validate
+
+# Check USWDS compliance
+pnpm run validate -- --uswds
+
+# Check bundle sizes
+pnpm run validate:bundle-size
+```
+
+## Working with Components
+
+### Component Location
+
+Components are organized by category in the `packages/` directory:
+
+```
+packages/uswds-wc-[category]/src/components/[component-name]/
+├── usa-[component].ts        # Main component file
+├── usa-[component].test.ts   # Unit tests
+├── usa-[component].stories.ts # Storybook stories
+├── README.mdx                # Component documentation
+└── index.ts                  # Public exports
+```
+
+### Creating a New Component
+
+Use the component generator for consistent structure:
+
+```bash
+# Interactive mode (recommended)
+pnpm run generate:component -- --interactive
+
+# Or specify the name directly
+pnpm run generate:component -- --name=my-component
+```
+
+The generator will:
+- Create component files with proper structure
+- Set up tests and stories
+- Generate README documentation
+- Place files in the correct package
+
+### Component Development Workflow
+
+1. **Start Storybook** to see your component in action:
+   ```bash
+   pnpm run storybook
+   ```
+
+2. **Edit the component** - Changes hot-reload automatically
+
+3. **Write tests** alongside your component:
+   ```bash
+   # Run tests in watch mode
+   pnpm test -- --watch
+   ```
+
+4. **Check types** as you develop:
+   ```bash
+   pnpm run typecheck
+   ```
+
+## Testing
+
+### Running Tests
+
+```bash
+# Run all tests once
+pnpm test
+
+# Run tests in watch mode (recommended for development)
+pnpm test -- --watch
+
+# Run tests for a specific component
+pnpm test -- usa-button
+
+# Run tests with coverage
+pnpm test -- --coverage
+```
+
+### Test Types
+
+| Test Type | Command | Description |
+|-----------|---------|-------------|
+| Unit Tests | `pnpm test` | Component logic and rendering |
+| Visual Tests | `pnpm run test:visual` | Visual regression with Playwright |
+| E2E Tests | `pnpm run cypress` | Full integration tests |
+| Accessibility | `pnpm run test:a11y` | axe-core validation |
+
+### Writing Tests
+
+Tests use Vitest and follow this pattern:
+
+```typescript
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { USAButton } from './usa-button.js';
+
+describe('USAButton', () => {
+  let element: USAButton;
+
+  beforeEach(async () => {
+    element = document.createElement('usa-button') as USAButton;
+    document.body.appendChild(element);
+    await element.updateComplete;
+  });
+
+  afterEach(() => {
+    element.remove();
+  });
+
+  it('should render with default variant', () => {
+    expect(element.variant).toBe('default');
+  });
+});
+```
+
+## Storybook Development
+
+### Story Structure
+
+Stories are co-located with components:
+
+```typescript
+// usa-button.stories.ts
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit';
+import './usa-button.js';
+
+const meta: Meta = {
+  title: 'Actions/Button',
+  component: 'usa-button',
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'primary', 'secondary'],
+    },
+  },
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const Default: Story = {
+  render: (args) => html`
+    <usa-button variant="${args.variant}">
+      Click me
+    </usa-button>
+  `,
+  args: {
+    variant: 'default',
+  },
+};
+```
+
+### Useful Storybook Addons
+
+- **Controls** - Interact with component props
+- **Actions** - See event emissions
+- **A11y** - Accessibility checks
+- **Docs** - Auto-generated documentation
+
+## Git Hooks & Validation
+
+The project uses Git hooks to ensure code quality:
+
+### Pre-commit Hooks
+
+Runs automatically before each commit:
+- Linting and formatting
+- TypeScript type checking
+- Unit tests for changed files
+- USWDS compliance validation
+
+### Bypassing Hooks (When Necessary)
+
+```bash
+# Skip all hooks (use sparingly)
+git commit --no-verify -m "WIP: work in progress"
+
+# Note: You must document why in the commit message
+```
+
+See the [Pre-Commit System](?path=/docs/pre-commit-system--docs) documentation for details.
+
+## Troubleshooting
+
+### Common Issues
+
+**"Module not found" errors**
+
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules
+pnpm install
+```
+
+**Storybook not loading components**
+
+```bash
+# Rebuild packages
+pnpm run build
+
+# Clear Storybook cache
+rm -rf node_modules/.cache/storybook
+pnpm run storybook
+```
+
+**TypeScript errors after pulling changes**
+
+```bash
+# Regenerate TypeScript project references
+pnpm run typecheck
+```
+
+**Tests failing unexpectedly**
+
+```bash
+# Clear test cache
+pnpm test -- --clearCache
+
+# Run tests with verbose output
+pnpm test -- --reporter=verbose
+```
+
+### Performance Tips
+
+**Faster Development**
+```bash
+# Work on a specific package only
+pnpm --filter @uswds-wc/forms run storybook
+```
+
+**Faster Builds**
+```bash
+# Use Turborepo caching (enabled by default)
+pnpm run build
+
+# Force rebuild without cache
+pnpm turbo build --force
+```
+
+## IDE Setup
+
+### Step 1: Install Visual Studio Code
+
+VS Code is the recommended editor for this project.
+
+**Download and Install:**
+
+1. Visit [code.visualstudio.com](https://code.visualstudio.com/)
+2. Download the installer for your operating system:
+   - **macOS**: Download the `.zip` file, extract, and drag to Applications
+   - **Windows**: Download the `.exe` installer and run it
+   - **Linux**: Download the `.deb` or `.rpm` package, or use snap:
+     ```bash
+     sudo snap install code --classic
+     ```
+3. Launch VS Code
+
+**Verify Installation:**
+```bash
+# Check VS Code is accessible from terminal
+code --version
+```
+
+If the `code` command isn't found on macOS, open VS Code and press `Cmd+Shift+P`, then type "Shell Command: Install 'code' command in PATH".
+
+### Step 2: Install Essential VS Code Extensions
+
+Install these extensions for the best development experience:
+
+| Extension | Extension ID | Purpose |
+|-----------|--------------|---------|
+| **Lit Plugin** | `runem.lit-plugin` | Lit template highlighting and intellisense |
+| **ESLint** | `dbaeumer.vscode-eslint` | Code linting integration |
+| **Prettier** | `esbenp.prettier-vscode` | Code formatting |
+
+**Install via Command Line:**
+```bash
+# Install all recommended extensions at once
+code --install-extension runem.lit-plugin
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension esbenp.prettier-vscode
+```
+
+**Or install via VS Code:**
+1. Open VS Code
+2. Press `Cmd+Shift+X` (macOS) or `Ctrl+Shift+X` (Windows/Linux) to open Extensions
+3. Search for each extension and click "Install"
+
+### Step 3: Install Claude Code Extension
+
+Claude Code is an AI-powered coding assistant that integrates directly into VS Code. It's highly recommended for working on this project.
+
+**Install Claude Code:**
+
+1. Open VS Code
+2. Press `Cmd+Shift+X` (macOS) or `Ctrl+Shift+X` (Windows/Linux) to open Extensions
+3. Search for "Claude" in the Extensions marketplace
+4. Find **"Claude"** by Anthropic and click **Install**
+
+**Or install via Command Line:**
+```bash
+code --install-extension anthropic.claude-code
+```
+
+**Set Up Claude Code:**
+
+1. After installation, click the Claude icon in the VS Code sidebar (or press `Cmd+Shift+P` and type "Claude")
+2. Sign in with your Anthropic account (or create one at [anthropic.com](https://www.anthropic.com/))
+3. Follow the authentication prompts
+
+**Using Claude Code:**
+
+- **Open Claude Panel**: Click the Claude icon in the sidebar or use `Cmd+Shift+P` > "Claude: Open"
+- **Ask Questions**: Type questions about code, get explanations, or request changes
+- **Reference Files**: Claude can read and understand files in your workspace
+- **Generate Code**: Ask Claude to write components, tests, or documentation
+
+**Helpful Claude Code Commands:**
+
+| Action | How to Access |
+|--------|---------------|
+| Open Claude | Click sidebar icon or `Cmd+Shift+P` > "Claude: Open" |
+| Ask about selected code | Select code, then ask Claude |
+| Generate code | Describe what you need in the chat |
+| Explain code | Select code and ask "What does this do?" |
+| Fix errors | Share error messages with Claude |
+
+**Tips for Using Claude with This Project:**
+
+- Reference the `CLAUDE.md` file - it contains project-specific instructions Claude follows
+- Ask Claude about USWDS patterns and compliance
+- Have Claude help write tests and Storybook stories
+- Use Claude to understand complex component interactions
+
+See the [Working with Claude](?path=/docs/working-with-claude--docs) documentation for detailed guidance.
+
+### Step 4: Configure VS Code Settings
+
+**Recommended settings** (`.vscode/settings.json`):
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "lit-plugin.strict": true
+}
+```
+
+**Apply settings:**
+1. Open the project in VS Code: `code /path/to/uswds-wc`
+2. The `.vscode/settings.json` file in the project will apply automatically
+3. Or create your own user settings via `Cmd+,` (macOS) or `Ctrl+,` (Windows/Linux)
+
+### Alternative: WebStorm / IntelliJ
+
+If you prefer JetBrains IDEs:
+
+- **Languages & Frameworks > JavaScript > Libraries** - Add `@types/node`
+- **Languages & Frameworks > TypeScript** - Enable TypeScript service
+- **Plugins** - Install Lit plugin for template support
+
+Note: Claude Code is currently only available for VS Code.
+
+## Next Steps
+
+Now that you're set up:
+
+1. **Explore Storybook** - Browse components and their variants
+2. **Read Contributing Guide** - Learn how to submit changes
+3. **Check Component READMEs** - Understand individual components
+4. **Join Development** - Pick up an issue or suggest improvements
+
+---
+
+**Need help?** Open an issue on [GitHub](https://github.com/barbaradenney/uswds-wc/issues)
