@@ -221,7 +221,6 @@ describe('USABaseTemplate', () => {
     });
 
     it('should have skip link as first focusable element', () => {
-      const skipLink = element.querySelector('usa-skip-link');
       const firstElement = element.querySelector('.usa-base-template > *');
       expect(firstElement?.tagName.toLowerCase()).toBe('usa-skip-link');
     });
