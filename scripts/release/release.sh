@@ -266,7 +266,7 @@ if [ "$NO_CONFIRM" = false ]; then
   confirm "Push commits and tags to GitHub?"
 fi
 
-run_step "Push to GitHub" "git push origin main --no-verify && git push origin \"v$NEW_VERSION\" --no-verify"
+run_step "Push to GitHub" "git push origin develop --no-verify && git push origin \"v$NEW_VERSION\" --no-verify"
 
 # Step 12: Publish to npm
 echo -e "${BOLD}Step 12: Publish to npm${NC}"
@@ -313,17 +313,31 @@ fi
 # Verification should now pass since we published to npm
 run_step "Post-Release Verification" "bash scripts/release/verify-release.sh $NEW_VERSION" || echo -e "${YELLOW}Note: Some verifications may still be propagating${NC}"
 
-# Step 15: Merge to develop
-echo -e "${BOLD}Step 15: Merge to Develop${NC}"
-if [ "$NO_CONFIRM" = false ]; then
-  confirm "Merge release to develop branch?"
-fi
+# Step 15: Merge to main (if releasing from develop)
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" = "develop" ]; then
+  echo -e "${BOLD}Step 15: Merge to Main${NC}"
+  if [ "$NO_CONFIRM" = false ]; then
+    confirm "Merge release to main branch?"
+  fi
 
-run_step "Merge to Develop" "git checkout develop && \\
-  git pull origin develop && \\
-  git merge main --no-ff -m 'Merge v$NEW_VERSION release from main' --no-verify && \\
-  git push origin develop --no-verify && \\
-  git checkout main"
+  run_step "Merge to Main" "git checkout main && \\
+    git pull origin main && \\
+    git merge develop --no-ff -m 'Merge v$NEW_VERSION release from develop' --no-verify && \\
+    git push origin main --no-verify && \\
+    git checkout develop"
+else
+  echo -e "${BOLD}Step 15: Merge to Develop${NC}"
+  if [ "$NO_CONFIRM" = false ]; then
+    confirm "Merge release to develop branch?"
+  fi
+
+  run_step "Merge to Develop" "git checkout develop && \\
+    git pull origin develop && \\
+    git merge main --no-ff -m 'Merge v$NEW_VERSION release from main' --no-verify && \\
+    git push origin develop --no-verify && \\
+    git checkout main"
+fi
 
 # Success!
 echo ""
