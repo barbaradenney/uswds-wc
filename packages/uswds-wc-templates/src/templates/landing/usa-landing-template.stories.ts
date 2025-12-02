@@ -74,7 +74,7 @@ export const Default: Story = {
     heroHeading: 'Bring attention to a project priority',
     heroHeadingAccent: 'Hero callout:',
     heroDescription:
-      'Support the callout with some short explanatory text. You don\'t need more than a couple of sentences.',
+      "Support the callout with some short explanatory text. You don't need more than a couple of sentences.",
     heroCtaText: 'Call to action',
     heroCtaUrl: '#',
     taglineHeading: 'A tagline highlights your approach',
@@ -166,8 +166,15 @@ export const CustomHero: Story = {
     showIdentifier: true,
   },
   render: (args) => html`
-    <usa-landing-template ?show-banner="${args.showBanner}" ?show-identifier="${args.showIdentifier}">
-      <section slot="hero" class="usa-hero" style="background-image: url('https://designsystem.digital.gov/img/hero.png')">
+    <usa-landing-template
+      ?show-banner="${args.showBanner}"
+      ?show-identifier="${args.showIdentifier}"
+    >
+      <section
+        slot="hero"
+        class="usa-hero"
+        style="background-image: url('https://designsystem.digital.gov/img/hero.png')"
+      >
         <div class="grid-container">
           <div class="usa-hero__callout">
             <h1 class="usa-hero__heading">

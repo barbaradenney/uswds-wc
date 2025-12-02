@@ -218,9 +218,7 @@ export class USALandingTemplate extends LitElement {
       return nothing;
     }
 
-    const heroStyle = this.heroImageUrl
-      ? `background-image: url('${this.heroImageUrl}')`
-      : '';
+    const heroStyle = this.heroImageUrl ? `background-image: url('${this.heroImageUrl}')` : '';
 
     return html`
       <section class="usa-hero" aria-label="Introduction" style="${heroStyle}">
@@ -232,9 +230,7 @@ export class USALandingTemplate extends LitElement {
                 : nothing}
               ${this.heroHeading}
             </h1>
-            ${this.heroDescription
-              ? html`<p>${this.heroDescription}</p>`
-              : nothing}
+            ${this.heroDescription ? html`<p>${this.heroDescription}</p>` : nothing}
             ${this.heroCtaText
               ? html`<a class="usa-button" href="${this.heroCtaUrl}">${this.heroCtaText}</a>`
               : nothing}
@@ -340,9 +336,7 @@ export class USALandingTemplate extends LitElement {
       <section class="usa-section">
         <div class="grid-container">
           <h2 class="font-heading-xl margin-y-0">${this.ctaHeading}</h2>
-          ${this.ctaDescription
-            ? html`<p class="usa-intro">${this.ctaDescription}</p>`
-            : nothing}
+          ${this.ctaDescription ? html`<p class="usa-intro">${this.ctaDescription}</p>` : nothing}
           ${this.ctaButtonText
             ? html`<a class="usa-button usa-button--big" href="${this.ctaButtonUrl}">
                 ${this.ctaButtonText}
@@ -367,10 +361,7 @@ export class USALandingTemplate extends LitElement {
 
         <!-- Main Content -->
         <main id="main-content">
-          ${this.renderHero()}
-          ${this.renderTagline()}
-          ${this.renderGraphics()}
-          ${this.renderCta()}
+          ${this.renderHero()} ${this.renderTagline()} ${this.renderGraphics()} ${this.renderCta()}
           <!-- Additional content slot -->
           <slot name="main"></slot>
         </main>

@@ -87,12 +87,12 @@ export const Default: Story = {
         <div class="grid-container usa-section">
           <h1>Welcome to Our Agency</h1>
           <p class="usa-intro">
-            This is the main content area of the page. You can add any content here
-            using the main slot.
+            This is the main content area of the page. You can add any content here using the main
+            slot.
           </p>
           <p>
-            The base template provides the foundational structure for all government
-            websites, including skip navigation, government banner, and identifier.
+            The base template provides the foundational structure for all government websites,
+            including skip navigation, government banner, and identifier.
           </p>
         </div>
       </div>
@@ -103,10 +103,14 @@ export const Default: Story = {
               <div class="mobile-lg:grid-col-8">
                 <nav class="usa-footer__nav" aria-label="Footer navigation">
                   <ul class="grid-row grid-gap">
-                    <li class="mobile-lg:grid-col-6 desktop:grid-col-auto usa-footer__primary-content">
+                    <li
+                      class="mobile-lg:grid-col-6 desktop:grid-col-auto usa-footer__primary-content"
+                    >
                       <a class="usa-footer__primary-link" href="#">About</a>
                     </li>
-                    <li class="mobile-lg:grid-col-6 desktop:grid-col-auto usa-footer__primary-content">
+                    <li
+                      class="mobile-lg:grid-col-6 desktop:grid-col-auto usa-footer__primary-content"
+                    >
                       <a class="usa-footer__primary-link" href="#">Contact</a>
                     </li>
                   </ul>
@@ -126,10 +130,7 @@ export const WithoutBanner: Story = {
     showIdentifier: true,
   },
   render: (args) => html`
-    <usa-base-template
-      ?show-banner="${args.showBanner}"
-      ?show-identifier="${args.showIdentifier}"
-    >
+    <usa-base-template ?show-banner="${args.showBanner}" ?show-identifier="${args.showIdentifier}">
       <div slot="main">
         <div class="grid-container usa-section">
           <h1>Page Without Banner</h1>
@@ -146,10 +147,7 @@ export const MinimalTemplate: Story = {
     showIdentifier: false,
   },
   render: (args) => html`
-    <usa-base-template
-      ?show-banner="${args.showBanner}"
-      ?show-identifier="${args.showIdentifier}"
-    >
+    <usa-base-template ?show-banner="${args.showBanner}" ?show-identifier="${args.showIdentifier}">
       <div slot="main">
         <div class="grid-container usa-section">
           <h1>Minimal Template</h1>

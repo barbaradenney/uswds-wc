@@ -184,9 +184,7 @@ export const CustomErrorContent: Story = {
             <div class="tablet:grid-col-8 tablet:grid-offset-2">
               <div class="usa-prose text-center">
                 <h1>🔍 Oops! Page Not Found</h1>
-                <p class="usa-intro">
-                  The page you're looking for seems to have wandered off.
-                </p>
+                <p class="usa-intro">The page you're looking for seems to have wandered off.</p>
                 <p>Here are some helpful links:</p>
                 <ul class="usa-list">
                   <li><a href="/" class="usa-link">Home page</a></li>

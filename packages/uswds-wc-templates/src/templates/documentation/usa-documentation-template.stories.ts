@@ -84,14 +84,14 @@ export const Default: Story = {
       <article slot="content">
         <h1 id="overview">Documentation Overview</h1>
         <p class="usa-intro">
-          Welcome to our documentation. This template provides a clean layout for
-          technical documentation with side navigation.
+          Welcome to our documentation. This template provides a clean layout for technical
+          documentation with side navigation.
         </p>
 
         <h2 id="getting-started">Getting Started</h2>
         <p>
-          To get started, follow the installation instructions below. Our documentation
-          is organized into sections that cover all aspects of the system.
+          To get started, follow the installation instructions below. Our documentation is organized
+          into sections that cover all aspects of the system.
         </p>
 
         <h3 id="installation">Installation</h3>
@@ -100,20 +100,20 @@ export const Default: Story = {
 
         <h3 id="configuration">Configuration</h3>
         <p>
-          Configure your project by adding the following to your configuration file.
-          Make sure to include all required dependencies.
+          Configure your project by adding the following to your configuration file. Make sure to
+          include all required dependencies.
         </p>
 
         <h2 id="components">Components</h2>
         <p>
-          Our component library includes a variety of reusable UI elements that follow
-          USWDS design patterns.
+          Our component library includes a variety of reusable UI elements that follow USWDS design
+          patterns.
         </p>
 
         <h2 id="patterns">Patterns</h2>
         <p>
-          Patterns combine multiple components to solve common design problems such as
-          form layouts and navigation structures.
+          Patterns combine multiple components to solve common design problems such as form layouts
+          and navigation structures.
         </p>
       </article>
     </usa-documentation-template>
@@ -146,12 +146,10 @@ export const WithBreadcrumb: Story = {
       </nav>
       <article slot="content">
         <h1>Getting Started Guide</h1>
-        <p class="usa-intro">
-          This guide will help you get up and running with our system.
-        </p>
+        <p class="usa-intro">This guide will help you get up and running with our system.</p>
         <p>
-          Follow the steps below to complete the initial setup. If you encounter
-          any issues, please refer to our troubleshooting section.
+          Follow the steps below to complete the initial setup. If you encounter any issues, please
+          refer to our troubleshooting section.
         </p>
       </article>
     </usa-documentation-template>
@@ -177,8 +175,8 @@ export const SidenavRight: Story = {
           This layout places the side navigation on the right side of the content.
         </p>
         <p>
-          This can be useful when the primary focus should be on the content, with
-          navigation available as a secondary element.
+          This can be useful when the primary focus should be on the content, with navigation
+          available as a secondary element.
         </p>
       </article>
     </usa-documentation-template>
@@ -204,8 +202,8 @@ export const NarrowContent: Story = {
           This layout uses a narrower content column for improved readability.
         </p>
         <p>
-          Long-form content often benefits from narrower line lengths, making it
-          easier for users to read and follow along.
+          Long-form content often benefits from narrower line lengths, making it easier for users to
+          read and follow along.
         </p>
       </article>
     </usa-documentation-template>
@@ -246,8 +244,8 @@ export const CustomSidenav: Story = {
       <article slot="content">
         <h1>Custom Side Navigation</h1>
         <p class="usa-intro">
-          This example shows how to use a custom sidenav slot for complete control
-          over the navigation structure.
+          This example shows how to use a custom sidenav slot for complete control over the
+          navigation structure.
         </p>
       </article>
     </usa-documentation-template>
@@ -290,53 +288,33 @@ export const APIDocumentation: Story = {
       >
         <article slot="content">
           <h1 id="intro">API Reference</h1>
-          <p class="usa-intro">
-            Complete reference documentation for our REST API.
-          </p>
+          <p class="usa-intro">Complete reference documentation for our REST API.</p>
 
           <h2 id="auth">Authentication</h2>
-          <p>
-            All API requests require authentication. Choose from the following methods:
-          </p>
+          <p>All API requests require authentication. Choose from the following methods:</p>
 
           <h3 id="api-keys">API Keys</h3>
-          <p>
-            Include your API key in the request header:
-          </p>
+          <p>Include your API key in the request header:</p>
           <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
 
           <h3 id="oauth">OAuth 2.0</h3>
-          <p>
-            For user-specific operations, use OAuth 2.0 authorization flow.
-          </p>
+          <p>For user-specific operations, use OAuth 2.0 authorization flow.</p>
 
           <h2 id="endpoints">API Endpoints</h2>
-          <p>
-            Below you'll find detailed documentation for each API endpoint.
-          </p>
+          <p>Below you'll find detailed documentation for each API endpoint.</p>
 
           <h3 id="users">Users Endpoint</h3>
-          <p>
-            <code>GET /api/v1/users</code> - List all users
-          </p>
-          <p>
-            <code>POST /api/v1/users</code> - Create a new user
-          </p>
+          <p><code>GET /api/v1/users</code> - List all users</p>
+          <p><code>POST /api/v1/users</code> - Create a new user</p>
 
           <h3 id="resources">Resources Endpoint</h3>
-          <p>
-            <code>GET /api/v1/resources</code> - List all resources
-          </p>
+          <p><code>GET /api/v1/resources</code> - List all resources</p>
 
           <h2 id="errors">Error Handling</h2>
-          <p>
-            The API uses standard HTTP response codes to indicate success or failure.
-          </p>
+          <p>The API uses standard HTTP response codes to indicate success or failure.</p>
 
           <h2 id="rate-limits">Rate Limits</h2>
-          <p>
-            API requests are limited to 1000 requests per hour per API key.
-          </p>
+          <p>API requests are limited to 1000 requests per hour per API key.</p>
         </article>
       </usa-documentation-template>
     `;
@@ -359,8 +337,8 @@ export const MinimalDocumentation: Story = {
           A documentation page without government banner, identifier, or sidenav.
         </p>
         <p>
-          This is useful for internal documentation or simple help pages where
-          the full template structure is not needed.
+          This is useful for internal documentation or simple help pages where the full template
+          structure is not needed.
         </p>
       </article>
     </usa-documentation-template>

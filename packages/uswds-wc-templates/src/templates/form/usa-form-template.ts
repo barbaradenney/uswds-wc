@@ -382,9 +382,7 @@ export class USAFormTemplate extends LitElement {
           ? html`
               <div class="margin-bottom-4">
                 ${this.heading ? html`<h1>${this.heading}</h1>` : nothing}
-                ${this.subheading
-                  ? html`<p class="usa-intro">${this.subheading}</p>`
-                  : nothing}
+                ${this.subheading ? html`<p class="usa-intro">${this.subheading}</p>` : nothing}
               </div>
             `
           : nothing}
@@ -444,12 +442,9 @@ export class USAFormTemplate extends LitElement {
           <div class="grid-container usa-section">
             <div class="grid-row grid-gap">
               ${sidebarFirst && this.showSidebar
-                ? html`
-                    ${this.renderSidebar()} ${this.renderFormContent()}
-                  `
+                ? html` ${this.renderSidebar()} ${this.renderFormContent()} `
                 : html`
-                    ${this.renderFormContent()}
-                    ${this.showSidebar ? this.renderSidebar() : nothing}
+                    ${this.renderFormContent()} ${this.showSidebar ? this.renderSidebar() : nothing}
                   `}
             </div>
           </div>
@@ -518,9 +513,7 @@ export class USAFormTemplate extends LitElement {
    */
   setStepStatus(stepIndex: number, status: 'complete' | 'current' | 'incomplete'): void {
     if (stepIndex >= 0 && stepIndex < this.steps.length) {
-      this.steps = this.steps.map((step, i) =>
-        i === stepIndex ? { ...step, status } : step
-      );
+      this.steps = this.steps.map((step, i) => (i === stepIndex ? { ...step, status } : step));
     }
   }
 

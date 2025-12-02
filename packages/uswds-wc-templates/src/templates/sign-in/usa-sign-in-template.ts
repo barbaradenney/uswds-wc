@@ -348,8 +348,8 @@ export class USASignInTemplate extends LitElement {
                         <p class="text-center">
                           ${this.createAccountLabel}
                           <a class="usa-link" href="${this.createAccountUrl}">
-                            ${this.createAccountText}
-                          </a>.
+                            ${this.createAccountText} </a
+                          >.
                         </p>
                       `
                     : nothing}

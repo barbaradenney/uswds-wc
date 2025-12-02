@@ -104,12 +104,7 @@ export const SingleStepForm: Story = {
       @form-submit="${(e: CustomEvent) => console.log('Form submitted:', e.detail)}"
     >
       <div slot="form-content">
-        <usa-text-input
-          id="fullName"
-          name="fullName"
-          label="Full name"
-          required
-        ></usa-text-input>
+        <usa-text-input id="fullName" name="fullName" label="Full name" required></usa-text-input>
         <usa-text-input
           id="email"
           name="email"
@@ -117,18 +112,8 @@ export const SingleStepForm: Story = {
           label="Email address"
           required
         ></usa-text-input>
-        <usa-text-input
-          id="phone"
-          name="phone"
-          type="tel"
-          label="Phone number"
-        ></usa-text-input>
-        <usa-textarea
-          id="message"
-          name="message"
-          label="Message"
-          rows="5"
-        ></usa-textarea>
+        <usa-text-input id="phone" name="phone" type="tel" label="Phone number"></usa-text-input>
+        <usa-textarea id="message" name="message" label="Message" rows="5"></usa-textarea>
       </div>
     </usa-form-template>
   `,
@@ -185,11 +170,7 @@ export const MultiStepForm: Story = {
             label="Phone number"
             required
           ></usa-text-input>
-          <usa-text-input
-            id="address"
-            name="address"
-            label="Street address"
-          ></usa-text-input>
+          <usa-text-input id="address" name="address" label="Street address"></usa-text-input>
         </div>
       </usa-form-template>
     `;
@@ -215,12 +196,7 @@ export const WithSidebar: Story = {
       ?show-identifier="${args.showIdentifier}"
     >
       <div slot="form-content">
-        <usa-text-input
-          id="username"
-          name="username"
-          label="Username"
-          required
-        ></usa-text-input>
+        <usa-text-input id="username" name="username" label="Username" required></usa-text-input>
         <usa-text-input
           id="email"
           name="email"
@@ -413,22 +389,12 @@ export const CustomActions: Story = {
       ?show-identifier="${args.showIdentifier}"
     >
       <div slot="form-content">
-        <usa-text-input
-          id="data"
-          name="data"
-          label="Enter some data"
-        ></usa-text-input>
+        <usa-text-input id="data" name="data" label="Enter some data"></usa-text-input>
       </div>
       <div slot="form-actions" class="margin-top-4">
-        <usa-button type="button" variant="outline" class="margin-right-2">
-          Save Draft
-        </usa-button>
-        <usa-button type="button" variant="outline" class="margin-right-2">
-          Cancel
-        </usa-button>
-        <usa-button type="submit">
-          Submit
-        </usa-button>
+        <usa-button type="button" variant="outline" class="margin-right-2"> Save Draft </usa-button>
+        <usa-button type="button" variant="outline" class="margin-right-2"> Cancel </usa-button>
+        <usa-button type="submit"> Submit </usa-button>
       </div>
     </usa-form-template>
   `,
@@ -449,10 +415,7 @@ export const WithPatterns: Story = {
       ?show-identifier="${args.showIdentifier}"
     >
       <div slot="form-content">
-        <usa-name
-          first-name-label="First name"
-          last-name-label="Last name"
-        ></usa-name>
+        <usa-name first-name-label="First name" last-name-label="Last name"></usa-name>
 
         <usa-email-address></usa-email-address>
 

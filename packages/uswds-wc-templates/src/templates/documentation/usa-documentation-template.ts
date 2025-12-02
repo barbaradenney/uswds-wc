@@ -150,10 +150,7 @@ export class USADocumentationTemplate extends LitElement {
 
     return html`
       <li class="usa-sidenav__item">
-        <a
-          href="${item.href || '#'}"
-          class="${item.current ? 'usa-current' : ''}"
-        >
+        <a href="${item.href || '#'}" class="${item.current ? 'usa-current' : ''}">
           ${item.label}
         </a>
         ${hasSubnav
@@ -242,9 +239,7 @@ export class USADocumentationTemplate extends LitElement {
             </div>
 
             <!-- Mobile Sidenav (below content) -->
-            <div class="usa-layout-docs__sidenav desktop:display-none">
-              ${this.renderSidenav()}
-            </div>
+            <div class="usa-layout-docs__sidenav desktop:display-none">${this.renderSidenav()}</div>
           </div>
         </div>
 

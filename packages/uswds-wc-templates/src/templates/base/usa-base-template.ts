@@ -169,9 +169,7 @@ export class USABaseTemplate extends LitElement {
     if (this.hasSlotContent('skipnav')) {
       return html`<slot name="skipnav"></slot>`;
     }
-    return html`
-      <usa-skip-link href="${this.skipHref}" text="${this.skipText}"></usa-skip-link>
-    `;
+    return html` <usa-skip-link href="${this.skipHref}" text="${this.skipText}"></usa-skip-link> `;
   }
 
   /**
