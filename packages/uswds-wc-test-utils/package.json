@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/test-utils",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Shared test utilities for USWDS Web Components",
   "type": "module",
   "main": "./src/index.js",

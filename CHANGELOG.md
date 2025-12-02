@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2025-12-02
+
+### ✨ New Features
+
+- **Storybook Documentation**: Added Local Development setup guide with Claude Code integration
+- **Storybook Documentation**: Added Contributing guide with AI-assisted development workflow
+
+### ✅ Tests
+
+- add component contract baseline (#49) ([#49](https://github.com/YOUR_ORG/uswds-wc/issues/49)) ([6f256b8](https://github.com/YOUR_ORG/uswds-wc/commit/6f256b8))
+
+### 🐛 Bug Fixes
+
+- **Templates**: Removed unused skipLink variable in base template test
+- **Performance**: Fixed bundle analysis test timeout by removing unnecessary build step
+
+---
+
 ## [2.4.0] - 2025-11-24
 
 ### ✨ New Features

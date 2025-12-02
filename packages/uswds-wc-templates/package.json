@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/templates",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "USWDS Templates - Page-level Web Component Layouts",
   "type": "module",
   "main": "./dist/index.js",
