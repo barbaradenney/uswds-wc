@@ -42,11 +42,12 @@ run_check() {
 # 1. Check working directory is clean
 run_check "Clean Working Directory" "test -z \"\$(git status --porcelain)\""
 
-# 2. Check on main branch
-run_check "On Main Branch" "test \"\$(git branch --show-current)\" = \"main\""
+# 2. Check on main or develop branch
+CURRENT_BRANCH=$(git branch --show-current)
+run_check "On Release Branch (main or develop)" "test \"$CURRENT_BRANCH\" = \"main\" || test \"$CURRENT_BRANCH\" = \"develop\""
 
 # 3. Check up-to-date with remote
-run_check "Up-to-date with Remote" "git fetch origin main && test \"\$(git rev-parse HEAD)\" = \"\$(git rev-parse @{u})\""
+run_check "Up-to-date with Remote" "git fetch origin $CURRENT_BRANCH && test \"\$(git rev-parse HEAD)\" = \"\$(git rev-parse @{u})\""
 
 # 4. Run linting
 run_check "ESLint" "pnpm run lint"
