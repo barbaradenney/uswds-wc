@@ -40,8 +40,8 @@ jobs:
 
       - name: Run performance tests
         run: |
-          # Create performance test script
-          cat > performance-test.js << 'EOF'
+          # Create performance test script (using .cjs extension for CommonJS in ES module project)
+          cat > performance-test.cjs << 'EOF'
           const { chromium } = require('playwright');
           const fs = require('fs');
 
@@ -130,7 +130,7 @@ jobs:
           sleep 5
 
           # Run performance tests
-          node performance-test.js
+          node performance-test.cjs
 
           # Kill server
           kill $SERVER_PID

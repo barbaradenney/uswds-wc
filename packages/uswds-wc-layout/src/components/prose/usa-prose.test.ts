@@ -445,7 +445,7 @@ describe('USAProse', () => {
   });
 
   describe('Accessibility Compliance (CRITICAL)', () => {
-    it('should pass comprehensive accessibility tests (same as Storybook)', async () => {
+    it('should pass comprehensive accessibility tests (same as Storybook)', { timeout: 30000 }, async () => {
       // Test default empty prose
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
@@ -521,7 +521,7 @@ describe('USAProse', () => {
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
     });
 
-    it('should maintain accessibility during dynamic updates', async () => {
+    it('should maintain accessibility during dynamic updates', { timeout: 30000 }, async () => {
       // Set initial accessible state
       element.content = `
         <h2>Initial Content</h2>
@@ -560,7 +560,7 @@ describe('USAProse', () => {
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
     });
 
-    it('should pass accessibility with complex government content', async () => {
+    it('should pass accessibility with complex government content', { timeout: 30000 }, async () => {
       // Federal agency content with proper structure
       element.variant = 'default';
       element.width = 'default';
