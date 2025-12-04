@@ -20,14 +20,14 @@ import 'path/to/uswds-webcomponents/src/components/side-navigation/index.js';
 
 ## Properties
 
-| Property | Type            | Default | Description          |
-| -------- | --------------- | ------- | -------------------- |
-| `items`  | `SideNavItem[]` | `[]`    | Property description |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `items` | `SideNavItem[]` | `[]` | Property description |
 
 ## Events
 
-| Event           | Type        | Description       |
-| --------------- | ----------- | ----------------- |
+| Event | Type | Description |
+|-------|------|-------------|
 | `sidenav-click` | CustomEvent | Event description |
 
 ## Accessibility
@@ -66,4 +66,4 @@ View component examples: [USASideNavigation Stories](http://localhost:6006/?path
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-04_
