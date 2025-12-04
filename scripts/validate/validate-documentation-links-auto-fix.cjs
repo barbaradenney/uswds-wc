@@ -47,6 +47,11 @@ const DOC_PATTERNS = [
   'docs/**/*.md',
   'src/components/**/*.md',
   'src/components/**/*.mdx',
+  // Monorepo package documentation
+  'packages/*/src/components/**/*.md',
+  'packages/*/src/components/**/*.mdx',
+  'packages/*/*.md',
+  'packages/*/README.md',
   '.storybook/**/*.md',
   '.storybook/**/*.mdx',
   'CLAUDE.md',
