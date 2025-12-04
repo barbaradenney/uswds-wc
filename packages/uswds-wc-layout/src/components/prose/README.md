@@ -20,16 +20,16 @@ import 'path/to/uswds-webcomponents/src/components/prose/index.js';
 
 ## Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `variant` | `'default' | 'condensed' | 'expanded'` | `'default'` | Property description |
-| `width` | `'default' | 'narrow' | 'wide'` | `'default'` | Property description |
-| `content` | `any` | `''` | Property description |
+| Property  | Type       | Default     | Description          |
+| --------- | ---------- | ----------- | -------------------- | ----------- | -------------------- |
+| `variant` | `'default' | 'condensed' | 'expanded'`          | `'default'` | Property description |
+| `width`   | `'default' | 'narrow'    | 'wide'`              | `'default'` | Property description |
+| `content` | `any`      | `''`        | Property description |
 
 ## Events
 
-| Event | Type | Description |
-|-------|------|-------------|
+| Event          | Type        | Description       |
+| -------------- | ----------- | ----------------- |
 | `prose-change` | CustomEvent | Event description |
 
 ## Accessibility
