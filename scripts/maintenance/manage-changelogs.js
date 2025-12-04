@@ -12,8 +12,12 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configuration
-const COMPONENTS_DIR = path.join(__dirname, '../../src/components');
+// Configuration - support both legacy and monorepo structures
+const LEGACY_COMPONENTS_DIR = path.join(__dirname, '../../src/components');
+const PACKAGES_DIR = path.join(__dirname, '../../packages');
+
+// Backwards compatibility
+const COMPONENTS_DIR = LEGACY_COMPONENTS_DIR;
 
 // Changelog entry types based on conventional commits
 const CHANGELOG_TYPES = {
@@ -34,21 +38,49 @@ const CHANGELOG_TYPES = {
 };
 
 /**
- * Get all component directories
+ * Get all component directories from both legacy and monorepo structures
+ * Returns array of { name, path } objects
+ */
+function getAllComponentDirs() {
+  const dirs = [];
+
+  // Legacy src/components structure
+  if (fs.existsSync(LEGACY_COMPONENTS_DIR)) {
+    try {
+      fs.readdirSync(LEGACY_COMPONENTS_DIR)
+        .filter(dir => fs.statSync(path.join(LEGACY_COMPONENTS_DIR, dir)).isDirectory())
+        .forEach(dir => dirs.push({ name: dir, path: path.join(LEGACY_COMPONENTS_DIR, dir) }));
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  // Monorepo packages/*/src/components structure
+  if (fs.existsSync(PACKAGES_DIR)) {
+    try {
+      fs.readdirSync(PACKAGES_DIR)
+        .filter(pkg => pkg.startsWith('uswds-wc-'))
+        .forEach(pkg => {
+          const componentsPath = path.join(PACKAGES_DIR, pkg, 'src/components');
+          if (fs.existsSync(componentsPath)) {
+            fs.readdirSync(componentsPath)
+              .filter(dir => fs.statSync(path.join(componentsPath, dir)).isDirectory())
+              .forEach(dir => dirs.push({ name: dir, path: path.join(componentsPath, dir) }));
+          }
+        });
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  return dirs;
+}
+
+/**
+ * Get all component directories (legacy function for backwards compatibility)
  */
 function getComponentDirs() {
-  try {
-    return fs
-      .readdirSync(COMPONENTS_DIR)
-      .filter((dir) => {
-        const fullPath = path.join(COMPONENTS_DIR, dir);
-        return fs.statSync(fullPath).isDirectory();
-      })
-      .sort();
-  } catch (error) {
-    console.error('❌ Error reading components directory:', error.message);
-    return [];
-  }
+  return getAllComponentDirs().map(c => c.name);
 }
 
 /**
@@ -80,6 +112,7 @@ function parseCommitMessage(message) {
 
 /**
  * Get changed components with detailed file analysis
+ * Supports both legacy src/components/ and monorepo packages/[pkg]/src/components/
  */
 function getChangedComponents(fromCommit = 'HEAD~1', toCommit = 'HEAD') {
   try {
@@ -92,20 +125,41 @@ function getChangedComponents(fromCommit = 'HEAD~1', toCommit = 'HEAD') {
 
     changedFiles.forEach((line) => {
       const [status, file] = line.split('\t');
-      const match = file?.match(/^src\/components\/([^/]+)\/(.+)$/);
+      if (!file) return;
+
+      // Try legacy path first: src/components/component-name/file
+      let match = file.match(/^src\/components\/([^/]+)\/(.+)$/);
+      let componentPath = null;
 
       if (match) {
+        componentPath = path.join(LEGACY_COMPONENTS_DIR, match[1]);
+      } else {
+        // Try monorepo path: packages/uswds-wc-*/src/components/component-name/file
+        match = file.match(/^packages\/(uswds-wc-[^/]+)\/src\/components\/([^/]+)\/(.+)$/);
+        if (match) {
+          const [, pkgName, componentName, fileName] = match;
+          componentPath = path.join(PACKAGES_DIR, pkgName, 'src/components', componentName);
+          // Reconstruct match to have consistent structure
+          match = [null, componentName, fileName];
+        }
+      }
+
+      if (match && componentPath) {
         const [, componentName, fileName] = match;
 
-        if (!componentChanges.has(componentName)) {
-          componentChanges.set(componentName, {
+        // Use componentPath as unique key to handle same component name in different packages
+        const key = `${componentName}:${componentPath}`;
+
+        if (!componentChanges.has(key)) {
+          componentChanges.set(key, {
             component: componentName,
+            componentPath: componentPath,
             files: [],
             types: new Set(),
           });
         }
 
-        const change = componentChanges.get(componentName);
+        const change = componentChanges.get(key);
         change.files.push({ status, fileName });
 
         // Categorize the type of change
@@ -121,9 +175,9 @@ function getChangedComponents(fromCommit = 'HEAD~1', toCommit = 'HEAD') {
           change.types.add('stories');
         } else if (fileName.endsWith('.scss') || fileName.endsWith('.css')) {
           change.types.add('styles');
-        } else if (fileName === 'README.mdx') {
+        } else if (fileName === 'README.mdx' || fileName === 'README.md') {
           change.types.add('documentation');
-        } else if (fileName === 'CHANGELOG.mdx') {
+        } else if (fileName === 'CHANGELOG.mdx' || fileName === 'CHANGELOG.md') {
           change.types.add('changelog');
         } else if (fileName.endsWith('.mdx')) {
           change.types.add('docs');
@@ -296,9 +350,15 @@ function generateComponentEntry(componentChange, commitInfo, commitHash) {
 
 /**
  * Update component changelog with new entry
+ * @param {string} componentName - Name of the component
+ * @param {object} entryData - Entry data with section and entries
+ * @param {string} version - Version string (default: 'Unreleased')
+ * @param {string} componentPath - Optional path to component directory (for monorepo support)
  */
-function updateComponentChangelog(componentName, entryData, version = 'Unreleased') {
-  const changelogPath = path.join(COMPONENTS_DIR, componentName, 'CHANGELOG.mdx');
+function updateComponentChangelog(componentName, entryData, version = 'Unreleased', componentPath = null) {
+  // Use provided path or fall back to legacy path
+  const componentDir = componentPath || path.join(COMPONENTS_DIR, componentName);
+  const changelogPath = path.join(componentDir, 'CHANGELOG.mdx');
 
   // Create changelog if it doesn't exist
   if (!fs.existsSync(changelogPath)) {
@@ -316,7 +376,23 @@ function updateComponentChangelog(componentName, entryData, version = 'Unrelease
 
   // Find the position to insert the new entry
   const versionHeader = version === 'Unreleased' ? '## [Unreleased]' : `## [${version}]`;
-  const versionIndex = content.indexOf(versionHeader);
+  let versionIndex = content.indexOf(versionHeader);
+
+  // If [Unreleased] section doesn't exist, create it before the first version
+  if (versionIndex === -1 && version === 'Unreleased') {
+    // Find the first version section (e.g., ## [1.0.0])
+    const firstVersionMatch = content.match(/## \[\d+\.\d+\.\d+\]/);
+    if (firstVersionMatch) {
+      const insertPos = content.indexOf(firstVersionMatch[0]);
+      const unreleasedSection = '## [Unreleased]\n\n';
+      content = content.slice(0, insertPos) + unreleasedSection + content.slice(insertPos);
+      versionIndex = insertPos;
+      console.log(`📝 Added [Unreleased] section to ${componentName} changelog`);
+    } else {
+      console.warn(`⚠️  Could not find ${versionHeader} or version section in ${componentName} changelog`);
+      return false;
+    }
+  }
 
   if (versionIndex === -1) {
     console.warn(`⚠️  Could not find ${versionHeader} section in ${componentName} changelog`);
@@ -397,31 +473,31 @@ function processCommit(commitHash, commitMessage) {
       `   Generating ${entryData.entries.length} entries for ${componentChange.component}`
     );
 
-    // Update changelog for this specific component
-    updateComponentChangelog(componentChange.component, entryData);
+    // Update changelog for this specific component (pass componentPath for monorepo support)
+    updateComponentChangelog(componentChange.component, entryData, 'Unreleased', componentChange.componentPath);
   });
 }
 
 /**
- * Initialize changelogs for all components
+ * Initialize changelogs for all components (supports monorepo)
  */
 function initializeChangelogs() {
   console.log('🚀 Initializing changelogs for all components...\n');
 
-  const components = getComponentDirs();
+  const components = getAllComponentDirs();
   let created = 0;
   let existing = 0;
 
-  components.forEach((component) => {
-    const changelogPath = path.join(COMPONENTS_DIR, component, 'CHANGELOG.mdx');
+  components.forEach(({ name, path: componentPath }) => {
+    const changelogPath = path.join(componentPath, 'CHANGELOG.mdx');
 
     if (!fs.existsSync(changelogPath)) {
-      const content = createComponentChangelog(component);
+      const content = createComponentChangelog(name);
       fs.writeFileSync(changelogPath, content, 'utf8');
-      console.log(`📝 Created: ${component}/CHANGELOG.mdx`);
+      console.log(`📝 Created: ${name}/CHANGELOG.mdx at ${componentPath}`);
       created++;
     } else {
-      console.log(`✅ Exists: ${component}/CHANGELOG.mdx`);
+      console.log(`✅ Exists: ${name}/CHANGELOG.mdx`);
       existing++;
     }
   });
@@ -462,41 +538,38 @@ function updateFromCommits(numberOfCommits = 10) {
 }
 
 /**
- * Validate all component changelogs
+ * Validate all component changelogs (supports monorepo)
  */
 function validateChangelogs() {
   console.log('🔍 Validating component changelogs...\n');
 
-  const components = getComponentDirs();
+  const components = getAllComponentDirs();
   const issues = [];
 
-  components.forEach((component) => {
-    const changelogPath = path.join(COMPONENTS_DIR, component, 'CHANGELOG.mdx');
+  components.forEach(({ name, path: componentPath }) => {
+    const changelogPath = path.join(componentPath, 'CHANGELOG.mdx');
 
     if (!fs.existsSync(changelogPath)) {
-      issues.push(`❌ Missing: ${component}/CHANGELOG.mdx`);
+      issues.push(`❌ Missing: ${name}/CHANGELOG.mdx at ${componentPath}`);
       return;
     }
 
     try {
       const content = fs.readFileSync(changelogPath, 'utf8');
 
-      // Basic validation
-      if (!content.includes('## [Unreleased]')) {
-        issues.push(`⚠️  ${component}: Missing [Unreleased] section`);
+      // Basic validation - check for version sections (either [Unreleased] or numbered version)
+      const hasVersionSection = content.includes('## [Unreleased]') || content.match(/## \[\d+\.\d+\.\d+\]/);
+      if (!hasVersionSection) {
+        issues.push(`⚠️  ${name}: Missing version section`);
       }
 
-      if (!content.includes('## [1.0.0]')) {
-        issues.push(`⚠️  ${component}: Missing version section`);
+      if (content.length < 100) {
+        issues.push(`⚠️  ${name}: Changelog appears incomplete`);
       }
 
-      if (content.length < 200) {
-        issues.push(`⚠️  ${component}: Changelog appears incomplete`);
-      }
-
-      console.log(`✅ Valid: ${component}/CHANGELOG.mdx`);
+      console.log(`✅ Valid: ${name}/CHANGELOG.mdx`);
     } catch (error) {
-      issues.push(`❌ Error reading ${component}: ${error.message}`);
+      issues.push(`❌ Error reading ${name}: ${error.message}`);
     }
   });
 
@@ -563,12 +636,16 @@ function main() {
 }
 
 // Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+const scriptPath = fileURLToPath(import.meta.url);
+const argPath = process.argv[1];
+// Handle both direct path comparison and resolved path comparison
+if (scriptPath === argPath || import.meta.url === `file://${argPath}`) {
   main();
 }
 
 export {
   getComponentDirs,
+  getAllComponentDirs,
   parseCommitMessage,
   updateComponentChangelog,
   initializeChangelogs,
