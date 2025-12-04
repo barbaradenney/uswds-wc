@@ -319,9 +319,26 @@ else
   fi
 
   echo ""
+
+  # Check for broken documentation links (only if docs changed)
+  if [ "$DOCS_CHANGES" -gt 0 ] || [ "$MDX_CHANGES" -gt 0 ]; then
+    echo "🔗 Broken Link Check:"
+    # Run quick link check (internal links only, no external)
+    BROKEN_LINKS=$(node scripts/validate/validate-documentation-links.cjs 2>&1 | grep -c "✗" || echo "0")
+    if [ "$BROKEN_LINKS" -eq 0 ]; then
+      echo "   ✅ No broken documentation links detected"
+    else
+      echo "   ⚠️  Found $BROKEN_LINKS broken link(s)"
+      echo "   💡 Run: pnpm run validate:doc-links for details"
+      echo "   💡 Run: pnpm run validate:doc-links:fix to auto-fix"
+    fi
+    echo ""
+  fi
+
   echo "💡 For detailed reports, run:"
   echo "   pnpm run audit:skipped-tests"
   echo "   pnpm run audit:anti-patterns"
+  echo "   pnpm run validate:doc-links"
   echo ""
 fi
 
