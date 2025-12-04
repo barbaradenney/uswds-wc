@@ -20,16 +20,16 @@ import 'path/to/uswds-webcomponents/src/components/process-list/index.js';
 
 ## Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `items` | `ProcessItem[]` | `[]` | Property description |
-| `headingLevel` | `any` | `'h4'` | Property description |
+| Property       | Type            | Default | Description          |
+| -------------- | --------------- | ------- | -------------------- |
+| `items`        | `ProcessItem[]` | `[]`    | Property description |
+| `headingLevel` | `any`           | `'h4'`  | Property description |
 
 ## Events
 
-| Event | Type | Description |
-|-------|------|-------------|
-| No custom events | | |
+| Event            | Type | Description |
+| ---------------- | ---- | ----------- |
+| No custom events |      |             |
 
 ## Accessibility
 
