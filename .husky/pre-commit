@@ -241,20 +241,24 @@ echo "   ✅ Pass"
 
 # AI Code Quality Validation (detects common AI anti-patterns)
 echo "🤖 6b/9 AI code quality..."
-node scripts/validate/ai-code-quality-validator.cjs > /dev/null 2>&1 || {
-  echo "❌ AI code quality issues detected!"
-  echo "   Run: pnpm validate:ai-quality (for detailed report)"
-  echo ""
-  echo "💡 Common issues:"
-  echo "   • console.log statements"
-  echo "   • Debug code not removed"
-  echo "   • Event listeners without cleanup"
-  echo "   • Generic error messages"
-  echo ""
-  echo "To bypass warnings: AI_QUALITY_STRICT=0 git commit"
-  exit 1
-}
-echo "   ✅ Pass"
+if [ "${AI_QUALITY_STRICT:-1}" = "0" ]; then
+  echo "   ⏭️  Skipped (AI_QUALITY_STRICT=0)"
+else
+  node scripts/validate/ai-code-quality-validator.cjs > /dev/null 2>&1 || {
+    echo "❌ AI code quality issues detected!"
+    echo "   Run: pnpm validate:ai-quality (for detailed report)"
+    echo ""
+    echo "💡 Common issues:"
+    echo "   • console.log statements"
+    echo "   • Debug code not removed"
+    echo "   • Event listeners without cleanup"
+    echo "   • Generic error messages"
+    echo ""
+    echo "To bypass warnings: AI_QUALITY_STRICT=0 git commit"
+    exit 1
+  }
+  echo "   ✅ Pass"
+fi
 
 # Code Refactoring Analysis (informational only)
 if [ "$CODE_REFACTOR_CHECK" = "1" ]; then

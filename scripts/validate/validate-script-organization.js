@@ -42,6 +42,8 @@ const ONE_OFF_PATTERNS = {
     'cleanup-test-processes.js',        // Active test cleanup utility
     'cleanup-documentation.cjs',        // Active documentation lifecycle tool
     'validate-script-organization.js',  // This validator itself
+    'audit-skipped-tests.js',           // Ongoing maintenance audit tool
+    'audit-component-anti-patterns.js', // Ongoing maintenance audit tool
   ],
 };
 

@@ -12,7 +12,62 @@ import '@uswds-wc/core/styles.css';
  * Uses official USWDS classes and styling with minimal custom code.
  *
  * @element usa-card
+ *
+ * @slot - Default slot for card body content
+ * @slot header - Slot for card header content (alternative to heading attribute)
+ * @slot media - Slot for card media content (images, videos)
+ * @slot footer - Slot for card footer content (buttons, links)
+ *
+ * @attr {string} heading - Card heading text.
+ * @attr {string} text - Card body text (alternative to using default slot).
+ * @attr {string} mediaType - Media type: 'image' | 'video' | 'none'. Defaults to 'none'.
+ * @attr {string} mediaSrc - URL for media source.
+ * @attr {string} media-alt - Alt text for media.
+ * @attr {string} mediaPosition - Media position: 'inset' | 'exdent' | 'right'. Defaults to 'inset'.
+ * @attr {boolean} flagLayout - Use flag (horizontal) layout.
+ * @attr {boolean} headerFirst - Show header before media.
+ * @attr {boolean} actionable - Make entire card clickable.
+ * @attr {string} href - Link URL for actionable cards.
+ * @attr {string} target - Link target for actionable cards.
+ * @attr {string} footer-text - Footer text content.
+ * @attr {string} heading-level - Heading level: '1' | '2' | '3' | '4' | '5' | '6'. Defaults to '3'.
+ *
  * @fires card-click - Dispatched when the card is clicked (if actionable)
+ *
+ * @example
+ * ```html
+ * <!-- Basic card with heading and text -->
+ * <usa-card heading="Card Title">
+ *   This is the card content.
+ * </usa-card>
+ *
+ * <!-- Card with image -->
+ * <usa-card
+ *   heading="Featured Article"
+ *   mediaType="image"
+ *   mediaSrc="/images/hero.jpg"
+ *   media-alt="Article hero image"
+ * >
+ *   Article preview text goes here.
+ * </usa-card>
+ *
+ * <!-- Flag layout card -->
+ * <usa-card heading="Horizontal Card" flagLayout>
+ *   Content displayed beside the media.
+ * </usa-card>
+ *
+ * <!-- Actionable card with link -->
+ * <usa-card heading="Click Me" actionable href="/details">
+ *   Click anywhere to navigate.
+ * </usa-card>
+ *
+ * <!-- Card with slots -->
+ * <usa-card>
+ *   <span slot="header">Custom Header</span>
+ *   <p>Card body content</p>
+ *   <div slot="footer"><usa-button>Action</usa-button></div>
+ * </usa-card>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes

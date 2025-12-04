@@ -20,7 +20,39 @@ export interface AccordionItem {
  * Behavior is replicated from official USWDS source to maintain 100% parity.
  *
  * @element usa-accordion
- * @fires accordion-toggle - Dispatched when accordion item is toggled
+ *
+ * @slot - Default slot for custom accordion content (advanced usage)
+ *
+ * @attr {boolean} multiselectable - Allow multiple sections open at once.
+ * @attr {boolean} bordered - Use bordered variant with visual separation.
+ *
+ * @prop {Array<{id: string, title: string, content: string, expanded?: boolean}>} items - Array of accordion items.
+ *
+ * @fires accordion-toggle - Dispatched when accordion item is toggled. Detail: { id, expanded }
+ *
+ * @example
+ * ```html
+ * <!-- Basic accordion with items -->
+ * <usa-accordion
+ *   .items=${[
+ *     { id: 'item-1', title: 'First Section', content: 'Content for first section' },
+ *     { id: 'item-2', title: 'Second Section', content: 'Content for second section' },
+ *     { id: 'item-3', title: 'Third Section', content: 'Content for third section', expanded: true }
+ *   ]}
+ * ></usa-accordion>
+ *
+ * <!-- Bordered accordion -->
+ * <usa-accordion bordered .items=${items}></usa-accordion>
+ *
+ * <!-- Multiselectable accordion (multiple sections open) -->
+ * <usa-accordion multiselectable .items=${items}></usa-accordion>
+ *
+ * <!-- Accordion with event handling -->
+ * <usa-accordion
+ *   .items=${items}
+ *   @accordion-toggle=${(e) => console.log('Toggled:', e.detail)}
+ * ></usa-accordion>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes

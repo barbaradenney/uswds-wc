@@ -18,8 +18,55 @@ export interface SelectOption {
  * Uses official USWDS classes and styling with minimal custom code.
  *
  * @element usa-select
+ *
+ * @attr {string} name - Select name for form submission.
+ * @attr {string} value - Currently selected value.
+ * @attr {string} label - Label text displayed above the select.
+ * @attr {string} hint - Helper text displayed below the label.
+ * @attr {string} error - Error message displayed in red below the select.
+ * @attr {string} success - Success message displayed in green below the select.
+ * @attr {boolean} disabled - Whether the select is disabled.
+ * @attr {boolean} required - Whether the select is required.
+ * @attr {string} defaultOption - Placeholder text for default empty option.
+ * @attr {boolean} compact - Render without form-group wrapper for use in patterns.
+ * @attr {boolean} no-combo-box - Disable combo-box enhancement for simple selects.
+ *
+ * @prop {Array<{value: string, text: string, disabled?: boolean}>} options - Array of select options.
+ *
  * @fires change - Dispatched when the select value changes
  * @fires input - Dispatched when the select value changes (for consistency)
+ *
+ * @example
+ * ```html
+ * <!-- Basic select with options -->
+ * <usa-select
+ *   label="State"
+ *   name="state"
+ *   .options=${[
+ *     { value: 'ca', text: 'California' },
+ *     { value: 'ny', text: 'New York' },
+ *     { value: 'tx', text: 'Texas' }
+ *   ]}
+ * ></usa-select>
+ *
+ * <!-- Select with default placeholder -->
+ * <usa-select
+ *   label="Country"
+ *   defaultOption="Select a country"
+ *   .options=${[{ value: 'us', text: 'United States' }]}
+ * ></usa-select>
+ *
+ * <!-- Required select with error -->
+ * <usa-select
+ *   label="Category"
+ *   required
+ *   error="Please select a category"
+ *   .options=${[{ value: 'a', text: 'Option A' }]}
+ * ></usa-select>
+ *
+ * <!-- Compact select for patterns -->
+ * <usa-select compact no-combo-box label="Month" .options=${months}></usa-select>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes

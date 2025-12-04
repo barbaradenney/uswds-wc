@@ -16,6 +16,43 @@ type AlertVariant = 'info' | 'warning' | 'error' | 'success' | 'emergency';
  *
  * @element usa-alert
  *
+ * @slot - Default slot for alert body content
+ * @slot heading - Slot for alert heading (alternative to heading attribute)
+ *
+ * @attr {string} variant - Alert type: 'info' | 'warning' | 'error' | 'success' | 'emergency'. Defaults to 'info'.
+ * @attr {string} heading - Alert heading text.
+ * @attr {boolean} slim - Use slim variant with reduced padding.
+ * @attr {boolean} no-icon - Hide the alert icon.
+ * @attr {string} text - Alert body text (alternative to using default slot).
+ *
+ * @example
+ * ```html
+ * <!-- Info alert with heading -->
+ * <usa-alert variant="info" heading="Important">
+ *   This is an informational message.
+ * </usa-alert>
+ *
+ * <!-- Success alert -->
+ * <usa-alert variant="success" heading="Success!">
+ *   Your changes have been saved.
+ * </usa-alert>
+ *
+ * <!-- Error alert -->
+ * <usa-alert variant="error" heading="Error">
+ *   There was a problem processing your request.
+ * </usa-alert>
+ *
+ * <!-- Slim warning alert without icon -->
+ * <usa-alert variant="warning" slim no-icon>
+ *   Please review your information.
+ * </usa-alert>
+ *
+ * <!-- Emergency alert -->
+ * <usa-alert variant="emergency" heading="Emergency">
+ *   This is an emergency notification.
+ * </usa-alert>
+ * ```
+ *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports

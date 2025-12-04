@@ -33,19 +33,28 @@ function moveFile(source, dest) {
 // 1. Clean root directory
 console.log('📂 Cleaning root directory...');
 const rootFiles = fs.readdirSync('.');
+
+// Files that should remain in root for discoverability (AI agent docs, etc.)
+const ROOT_KEEPFILES = [
+  'README.md', 'CLAUDE.md', 'CHANGELOG.md', 'LICENSE', 'CODE_OF_CONDUCT.md',
+  'AI_USAGE.md', 'llms.txt',  // AI agent documentation - must be discoverable
+  'custom-elements.json',     // Custom Elements Manifest - standard location per spec
+];
+
 rootFiles.forEach(file => {
-  // Move documentation files
-  if (file.endsWith('.md') && !['README.md', 'CLAUDE.md', 'CHANGELOG.md'].includes(file)) {
+  // Move documentation files (except those that should stay in root)
+  if (file.endsWith('.md') && !ROOT_KEEPFILES.includes(file)) {
     moveFile(file, `docs/archived/${file}`);
   }
-  
+
   // Move HTML test files
   if (file.endsWith('.html')) {
     moveFile(file, `debug/${file}`);
   }
-  
-  // Move JSON test results
-  if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'lighthouserc.json'].includes(file) && !file.startsWith('tsconfig.') && !file.startsWith('.eslintrc')) {
+
+  // Move JSON test results (except those that should stay in root)
+  const jsonKeeFiles = ['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'lighthouserc.json', 'custom-elements.json'];
+  if (file.endsWith('.json') && !jsonKeeFiles.includes(file) && !file.startsWith('tsconfig.') && !file.startsWith('.eslintrc')) {
     moveFile(file, `reports/${file}`);
   }
   

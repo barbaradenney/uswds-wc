@@ -13,8 +13,44 @@ import '@uswds-wc/core/styles.css';
  * component that requires no JavaScript enhancement.
  *
  * @element usa-text-input
+ *
+ * @attr {string} type - Input type: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url'. Defaults to 'text'.
+ * @attr {string} name - Input name for form submission.
+ * @attr {string} value - Current input value.
+ * @attr {string} placeholder - Placeholder text.
+ * @attr {string} label - Label text displayed above the input.
+ * @attr {string} hint - Helper text displayed below the label.
+ * @attr {string} error - Error message displayed in red below the input.
+ * @attr {string} width - Input width: '' | '2xs' | 'xs' | 'sm' | 'small' | 'md' | 'medium' | 'lg' | 'xl' | '2xl'.
+ * @attr {boolean} disabled - Whether the input is disabled.
+ * @attr {boolean} required - Whether the input is required.
+ * @attr {boolean} readonly - Whether the input is read-only.
+ * @attr {string} autocomplete - Autocomplete hint for browsers.
+ * @attr {string} pattern - Validation pattern (regex).
+ * @attr {number} maxlength - Maximum character length.
+ * @attr {number} minlength - Minimum character length.
+ * @attr {boolean} compact - Render without form-group wrapper for use in patterns.
+ *
  * @fires input - Dispatched when the input value changes
  * @fires change - Dispatched when the input loses focus after value change
+ *
+ * @example
+ * ```html
+ * <!-- Basic text input with label -->
+ * <usa-text-input label="Full Name" name="fullname"></usa-text-input>
+ *
+ * <!-- Email input with hint -->
+ * <usa-text-input type="email" label="Email" hint="We'll never share your email"></usa-text-input>
+ *
+ * <!-- Input with error state -->
+ * <usa-text-input label="Phone" error="Please enter a valid phone number"></usa-text-input>
+ *
+ * <!-- Required input with placeholder -->
+ * <usa-text-input label="Username" required placeholder="Enter username"></usa-text-input>
+ *
+ * <!-- Small width input -->
+ * <usa-text-input label="ZIP Code" width="sm" maxlength="5"></usa-text-input>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes

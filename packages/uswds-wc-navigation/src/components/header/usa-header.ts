@@ -41,12 +41,70 @@ export interface SecondaryLink {
  * Uses USWDS-mirrored behavior pattern for 100% behavioral parity.
  *
  * @element usa-header
+ *
+ * @slot - Default slot for custom header content
+ *
+ * @attr {string} logoText - Text for the site logo/title.
+ * @attr {string} logoHref - URL for the logo link. Defaults to '/'.
+ * @attr {string} logoImageSrc - URL for logo image.
+ * @attr {string} logoImageAlt - Alt text for logo image.
+ * @attr {boolean} extended - Use extended header variant with megamenu support.
+ * @attr {boolean} showSearch - Show search form in header.
+ * @attr {string} searchPlaceholder - Placeholder text for search input. Defaults to 'Search'.
+ * @attr {boolean} showLanguageSelector - Show language selector.
+ *
+ * @prop {Array<{label: string, href?: string, current?: boolean, submenu?: NavItem[], megamenu?: MegamenuColumn[]}>} navItems - Navigation items array.
+ * @prop {Array<{label: string, href: string}>} secondaryLinks - Secondary navigation links.
+ * @prop {Array<{value: string, label: string}>} languages - Available languages for selector.
+ *
  * @fires nav-click - Dispatched when a navigation item is clicked
  * @fires mobile-menu-toggle - Dispatched when mobile menu is toggled
+ * @fires search-submit - Dispatched when search form is submitted
+ *
+ * @example
+ * ```html
+ * <!-- Basic header with navigation -->
+ * <usa-header
+ *   logoText="Agency Name"
+ *   .navItems=${[
+ *     { label: 'Home', href: '/', current: true },
+ *     { label: 'About', href: '/about' },
+ *     { label: 'Services', href: '/services' }
+ *   ]}
+ * ></usa-header>
+ *
+ * <!-- Extended header with search -->
+ * <usa-header
+ *   extended
+ *   logoText="Department Name"
+ *   showSearch
+ *   searchPlaceholder="Search site..."
+ *   .navItems=${navItems}
+ * ></usa-header>
+ *
+ * <!-- Header with dropdown menus -->
+ * <usa-header
+ *   logoText="Agency"
+ *   .navItems=${[
+ *     { label: 'Products', submenu: [
+ *       { label: 'Product A', href: '/products/a' },
+ *       { label: 'Product B', href: '/products/b' }
+ *     ]}
+ *   ]}
+ * ></usa-header>
+ *
+ * <!-- Header with logo image -->
+ * <usa-header
+ *   logoImageSrc="/images/logo.svg"
+ *   logoImageAlt="Agency Logo"
+ *   .navItems=${navItems}
+ * ></usa-header>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports
+ * @see usa-header-behavior.ts - USWDS behavior mirror
  *
  * @uswds-js-reference https://github.com/uswds/uswds/tree/develop/packages/usa-header/src/index.js
  * @uswds-css-reference https://github.com/uswds/uswds/tree/develop/packages/usa-header/src/styles/_usa-header.scss

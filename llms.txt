@@ -1,0 +1,117 @@
+# USWDS Web Components
+
+> Accessible Web Components implementing the U.S. Web Design System for government websites.
+
+## Overview
+
+This library provides constrained Web Components for building government website prototypes with AI assistance. Use ONLY these components—do not create custom HTML structures.
+
+## Installation
+
+```bash
+npm install @uswds-wc/all
+```
+
+## Quick Start
+
+```html
+<script type="module">
+  import '@uswds-wc/all';
+</script>
+
+<usa-banner></usa-banner>
+<usa-header title="Agency Name"></usa-header>
+<main class="usa-section">
+  <usa-alert type="info">Welcome message</usa-alert>
+  <usa-button variant="primary">Get Started</usa-button>
+</main>
+<usa-footer variant="medium"></usa-footer>
+```
+
+## Components
+
+### Actions
+- usa-button - Action button (primary, secondary, outline)
+- usa-button-group - Group of related buttons
+- usa-link - Styled hyperlink
+- usa-search - Search form
+
+### Forms
+- usa-text-input - Text input field
+- usa-textarea - Multi-line text
+- usa-select - Dropdown select
+- usa-checkbox - Checkbox input
+- usa-radio - Radio button
+- usa-date-picker - Calendar date picker
+- usa-time-picker - Time selection
+- usa-combo-box - Searchable dropdown
+- usa-file-input - File upload
+- usa-range-slider - Range/slider
+- usa-memorable-date - Month/Day/Year
+- usa-character-count - Input with limit
+
+### Navigation
+- usa-header - Site header
+- usa-footer - Site footer
+- usa-breadcrumb - Breadcrumb navigation
+- usa-pagination - Page navigation
+- usa-side-navigation - Sidebar nav
+- usa-in-page-navigation - Jump links
+- usa-language-selector - Language switcher
+- usa-skip-link - Accessibility skip link
+
+### Data Display
+- usa-card - Content card
+- usa-table - Data table
+- usa-tag - Status label
+- usa-list - Styled list
+- usa-icon - USWDS icon
+- usa-icon-list - List with icons
+- usa-collection - Item collection
+- usa-summary-box - Highlighted summary
+
+### Feedback
+- usa-alert - Notification (info, success, warning, error)
+- usa-site-alert - Page-level alert
+- usa-banner - Official government banner
+- usa-modal - Dialog window
+- usa-tooltip - Hover tooltip
+
+### Layout
+- usa-step-indicator - Multi-step progress
+- usa-process-list - Numbered steps
+- usa-identifier - Agency identifier
+- usa-prose - Styled prose content
+
+### Structure
+- usa-accordion - Expandable sections
+
+### Patterns
+- usa-name-pattern - Full name inputs
+- usa-address-pattern - Address form
+- usa-phone-number-pattern - Phone input
+- usa-email-address-pattern - Email input
+- usa-date-of-birth-pattern - DOB inputs
+- usa-ssn-pattern - SSN input
+- usa-contact-preferences-pattern - Communication prefs
+- usa-form-summary-pattern - Form review
+
+## Key Files
+
+- /AI_USAGE.md - Complete component reference for AI agents
+- /CLAUDE.md - Development workflow guidelines
+- /.github/copilot-instructions.md - GitHub Copilot instructions
+- /custom-elements.json - Machine-readable API (run: pnpm analyze)
+- /packages/ - Component source code
+
+## Constraints
+
+- Use ONLY components from this library for prototypes
+- Apply theming via USWDS utility classes
+- Do not create custom CSS or inline styles
+- All components use Light DOM (not Shadow DOM)
+
+## Links
+
+- USWDS Design System: https://designsystem.digital.gov/
+- Repository: https://github.com/barbaradenney/uswds-wc

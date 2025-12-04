@@ -13,12 +13,39 @@ import '@uswds-wc/core/styles.css';
  * This ensures full form integration and native button behavior.
  *
  * @element usa-button
+ *
+ * @slot - Default slot for button label/content
+ *
+ * @attr {string} variant - Button style variant: 'primary' | 'secondary' | 'accent-cool' | 'accent-warm' | 'base' | 'outline' | 'outline-inverse' | 'unstyled'. Defaults to 'primary'.
+ * @attr {string} size - Button size: 'small' | 'medium' | 'big'. Defaults to 'medium'.
+ * @attr {boolean} disabled - Whether the button is disabled. Defaults to false.
+ * @attr {string} type - Button type: 'button' | 'submit' | 'reset'. Defaults to 'button'.
+ * @attr {string} aria-label - Accessible label for the button.
+ * @attr {string} aria-pressed - Toggle state for toggle buttons.
+ *
  * @fires click - Dispatched when the button is clicked
+ *
+ * @example
+ * ```html
+ * <!-- Primary button -->
+ * <usa-button>Primary Button</usa-button>
+ *
+ * <!-- Secondary button -->
+ * <usa-button variant="secondary">Secondary</usa-button>
+ *
+ * <!-- Big outline button -->
+ * <usa-button variant="outline" size="big">Large Outline</usa-button>
+ *
+ * <!-- Disabled button -->
+ * <usa-button disabled>Disabled</usa-button>
+ *
+ * <!-- Submit button in a form -->
+ * <usa-button type="submit">Submit Form</usa-button>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports
- *
  *
  * @uswds-js-reference https://github.com/uswds/uswds/tree/develop/packages/usa-button/src/index.js
  * @uswds-css-reference https://github.com/uswds/uswds/tree/develop/packages/usa-button/src/styles/_usa-button.scss

@@ -9,24 +9,74 @@ import { SELECTORS, TIMING, CLASSES } from './modal-constants.js';
 import '@uswds-wc/core/styles.css';
 
 /**
- * ARCHITECTURE: USWDS-Mirrored Behavior Pattern
- * - Component renders HTML structure
- * - Behavior file (usa-modal-behavior.ts) mirrors USWDS JavaScript exactly
- * - No custom logic - 100% USWDS behavior parity
- *
  * USA Modal Web Component
  *
  * A minimal wrapper around USWDS modal functionality.
  * Provides the HTML structure for USWDS modal and delegates all behavior to mirrored USWDS JavaScript.
  * This ensures authentic USWDS behavior while providing a web components API.
  *
+ * ARCHITECTURE: USWDS-Mirrored Behavior Pattern
+ * - Component renders HTML structure
+ * - Behavior file (usa-modal-behavior.ts) mirrors USWDS JavaScript exactly
+ * - No custom logic - 100% USWDS behavior parity
+ *
  * @element usa-modal
- * @fires modal-close - Dispatched when the modal is closed (via USWDS)
- * @fires modal-open - Dispatched when the modal is opened (via USWDS)
+ *
+ * @slot - Default slot for modal body content
+ * @slot footer - Slot for modal footer buttons (alternative to button text attributes)
+ *
+ * @attr {string} heading - Modal heading/title text.
+ * @attr {string} description - Modal description text.
+ * @attr {string} trigger-text - Text for the trigger button.
+ * @attr {boolean} show-trigger - Show the trigger button. Defaults to true.
+ * @attr {boolean} large - Use large modal variant.
+ * @attr {boolean} force-action - Force user to take action (no close on backdrop click).
+ * @attr {string} primary-button-text - Primary action button text. Defaults to 'Continue'.
+ * @attr {string} secondary-button-text - Secondary action button text. Defaults to 'Cancel'.
+ * @attr {boolean} show-secondary-button - Show secondary button. Defaults to true.
+ * @attr {boolean} open - Whether the modal is currently open.
+ *
+ * @fires modal-open - Dispatched when the modal is opened
+ * @fires modal-close - Dispatched when the modal is closed
+ *
+ * @example
+ * ```html
+ * <!-- Basic modal with trigger -->
+ * <usa-modal
+ *   heading="Confirm Action"
+ *   trigger-text="Open Modal"
+ * >
+ *   Are you sure you want to proceed with this action?
+ * </usa-modal>
+ *
+ * <!-- Large modal -->
+ * <usa-modal heading="Terms of Service" large>
+ *   <p>Long form content goes here...</p>
+ * </usa-modal>
+ *
+ * <!-- Force action modal (no backdrop close) -->
+ * <usa-modal
+ *   heading="Session Expiring"
+ *   force-action
+ *   primary-button-text="Extend Session"
+ *   secondary-button-text="Log Out"
+ * >
+ *   Your session will expire in 5 minutes.
+ * </usa-modal>
+ *
+ * <!-- Programmatically controlled modal -->
+ * <usa-modal id="my-modal" heading="Custom Modal" show-trigger="false">
+ *   Content here
+ * </usa-modal>
+ * <script>
+ *   document.getElementById('my-modal').open = true;
+ * </script>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports
+ * @see usa-modal-behavior.ts - USWDS behavior mirror
  *
  * @uswds-js-reference https://github.com/uswds/uswds/tree/develop/packages/usa-modal/src/index.js
  * @uswds-css-reference https://github.com/uswds/uswds/tree/develop/packages/usa-modal/src/styles/_usa-modal.scss

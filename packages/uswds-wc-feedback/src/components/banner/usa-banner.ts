@@ -9,15 +9,44 @@ import '@uswds-wc/core/styles.css';
 /**
  * USA Banner Web Component
  *
- * Minimal wrapper around USWDS banner functionality.
- * Uses USWDS-mirrored behavior pattern for 100% behavioral parity.
+ * Official government website banner that identifies the site as an official U.S. government website.
+ * Required on all .gov websites. Uses USWDS-mirrored behavior pattern for 100% behavioral parity.
  *
  * @element usa-banner
- * @fires banner-toggle - Dispatched when banner is toggled
+ *
+ * @attr {string} flagImageSrc - URL for the U.S. flag image. Defaults to '/img/us_flag_small.png'.
+ * @attr {string} flagImageAlt - Alt text for flag image. Defaults to 'U.S. flag'.
+ * @attr {string} dotGovIconSrc - URL for .gov icon. Defaults to '/img/icon-dot-gov.svg'.
+ * @attr {string} httpsIconSrc - URL for HTTPS lock icon. Defaults to '/img/icon-https.svg'.
+ * @attr {string} headerText - Banner header text. Defaults to 'An official website of the United States government'.
+ * @attr {string} actionText - Expandable action text. Defaults to "Here's how you know".
+ * @attr {boolean} expanded - Whether the banner details are expanded.
+ *
+ * @fires banner-toggle - Dispatched when banner is expanded or collapsed. Detail: { expanded: boolean }
+ *
+ * @example
+ * ```html
+ * <!-- Default banner (required on .gov sites) -->
+ * <usa-banner></usa-banner>
+ *
+ * <!-- Banner with custom images -->
+ * <usa-banner
+ *   flagImageSrc="/assets/us-flag.png"
+ *   dotGovIconSrc="/assets/dot-gov.svg"
+ *   httpsIconSrc="/assets/https.svg"
+ * ></usa-banner>
+ *
+ * <!-- Pre-expanded banner -->
+ * <usa-banner expanded></usa-banner>
+ *
+ * <!-- Banner with event handling -->
+ * <usa-banner @banner-toggle=${(e) => console.log('Banner toggled:', e.detail.expanded)}></usa-banner>
+ * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports
+ * @see usa-banner-behavior.ts - USWDS behavior mirror
  *
  * @uswds-js-reference https://github.com/uswds/uswds/tree/develop/packages/usa-banner/src/index.js
  * @uswds-css-reference https://github.com/uswds/uswds/tree/develop/packages/usa-banner/src/styles/_usa-banner.scss

@@ -532,9 +532,9 @@ describe('USAFileInput', () => {
   });
 
   describe('Keyboard Navigation (WCAG 2.1)', () => {
+    // SKIP: JSDOM limitation - input[type="file"] focus not supported
+    // This test requires a real browser environment (covered by Cypress tests)
     it.skip('should allow keyboard focus to file input', async () => {
-      // SKIP: JSDOM limitation - input[type="file"] focus not supported
-      // This test requires a real browser environment (covered by Cypress tests)
       element.label = 'Upload document';
       await waitForPropertyPropagation(element);
 

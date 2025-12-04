@@ -15,7 +15,9 @@ const rootFiles = fs.readdirSync('.');
 const allowedRootFiles = [
   'README.md', 'CLAUDE.md', 'CHANGELOG.md', 'LICENSE',
   'CONTRIBUTING.md', 'SECURITY.md', 'CODE_OF_CONDUCT.md', // Standard open source files
+  'AI_USAGE.md', 'llms.txt',  // AI agent documentation - must be discoverable at root
   '.project-metadata.json', '.templates', // Documentation generation system
+  'custom-elements.json', 'custom-elements-manifest.config.mjs', // Custom Elements Manifest - standard location per spec
   'package.json', 'package-lock.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'renovate.json',
   'tsconfig.json', 'tsconfig.build.json', 'tsconfig.node.json', 'tsconfig.test.json',
   'vite.config.ts', 'vitest.config.ts', 'vitest.storybook.config.ts',
@@ -30,16 +32,27 @@ const allowedRootFiles = [
   '.changeset', 'packages', 'test-reports' // Monorepo directories
 ];
 
+// Standard documentation files that should stay in root
+const standardDocFiles = [
+  'README.md', 'CLAUDE.md', 'CHANGELOG.md', 'CONTRIBUTING.md',
+  'SECURITY.md', 'CODE_OF_CONDUCT.md', 'AI_USAGE.md', 'llms.txt'
+];
+
+// JSON files allowed in root
+const allowedJsonFiles = [
+  'package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json',
+  'turbo.json', 'vercel.json', 'lighthouserc.json', 'custom-elements.json'
+];
+
 rootFiles.forEach(file => {
   if (!allowedRootFiles.includes(file) && !file.startsWith('.')) {
-    const standardFiles = ['README.md', 'CLAUDE.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'SECURITY.md', 'CODE_OF_CONDUCT.md'];
-    if (file.endsWith('.md') && !standardFiles.includes(file)) {
+    if (file.endsWith('.md') && !standardDocFiles.includes(file)) {
       violations.push(`❌ Documentation file in root: ${file} (should be in docs/)`);
     }
     if (file.endsWith('.html')) {
       violations.push(`❌ HTML file in root: ${file} (should be in debug/ or component folder)`);
     }
-    if (file.endsWith('.json') && !['package.json', 'package-lock.json', 'renovate.json', 'tsconfig.json', 'turbo.json', 'vercel.json', 'lighthouserc.json'].includes(file)) {
+    if (file.endsWith('.json') && !allowedJsonFiles.includes(file)) {
       violations.push(`❌ JSON file in root: ${file} (should be in reports/)`);
     }
     if ((file.endsWith('.js') || file.endsWith('.sh')) && file.startsWith('test-')) {

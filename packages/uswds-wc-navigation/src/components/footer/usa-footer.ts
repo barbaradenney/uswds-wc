@@ -25,18 +25,56 @@ export interface FooterSection {
  * IMPORTANT: The footer and identifier are separate components in USWDS.
  * Place <usa-identifier> AFTER <usa-footer> on the page, not inside it.
  *
+ * @element usa-footer
+ *
+ * @slot - Default slot for custom footer content
+ *
+ * @attr {string} variant - Footer variant: 'slim' | 'medium' | 'big'. Defaults to 'medium'.
+ * @attr {string} agencyName - Name of the agency/organization.
+ *
+ * @prop {Array<{title: string, links: Array<{label: string, href: string}>}>} sections - Footer link sections.
+ *
+ * @fires footer-link-click - Dispatched when a footer link is clicked
+ *
  * @example
  * ```html
+ * <!-- Slim footer -->
+ * <usa-footer variant="slim" agencyName="Example Agency"></usa-footer>
+ *
+ * <!-- Medium footer with sections -->
+ * <usa-footer
+ *   variant="medium"
+ *   agencyName="Example Agency"
+ *   .sections=${[
+ *     {
+ *       title: 'About',
+ *       links: [
+ *         { label: 'Our Mission', href: '/mission' },
+ *         { label: 'Contact Us', href: '/contact' }
+ *       ]
+ *     },
+ *     {
+ *       title: 'Resources',
+ *       links: [
+ *         { label: 'Documentation', href: '/docs' },
+ *         { label: 'FAQ', href: '/faq' }
+ *       ]
+ *     }
+ *   ]}
+ * ></usa-footer>
+ *
+ * <!-- Big footer with multiple columns -->
+ * <usa-footer variant="big" agencyName="Department of Example" .sections=${sections}></usa-footer>
+ *
+ * <!-- Footer with identifier (recommended pattern) -->
  * <usa-footer variant="medium" agencyName="Example Agency" .sections=${sections}></usa-footer>
  * <usa-identifier domain="example.gov" agency="Example Agency"></usa-identifier>
  * ```
  *
- * @element usa-footer
- * @fires footer-link-click - Dispatched when a footer link is clicked
- *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
  * @see CHANGELOG.mdx - Component version history and breaking changes
  * @see TESTING.mdx - Testing documentation and coverage reports
+ * @see usa-footer-behavior.ts - USWDS behavior mirror
  *
  * @uswds-js-reference https://github.com/uswds/uswds/tree/develop/packages/usa-footer/src/index.js
  * @uswds-css-reference https://github.com/uswds/uswds/tree/develop/packages/usa-footer/src/styles/_usa-footer.scss
