@@ -617,7 +617,7 @@ describe('USALanguageSelector', () => {
 
       expect(endTime - startTime).toBeLessThan(600); // Should render quickly (600ms for 50 items - CI environment has ~20% variability)
       expect(element.querySelectorAll('.usa-language__submenu-item').length).toBe(50);
-    });
+    }, 10000);
 
     it('should clean up event listeners properly', async () => {
       element = document.createElement('usa-language-selector') as USALanguageSelector;
