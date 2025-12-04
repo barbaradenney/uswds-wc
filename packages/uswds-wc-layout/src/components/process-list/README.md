@@ -20,16 +20,16 @@ import 'path/to/uswds-webcomponents/src/components/process-list/index.js';
 
 ## Properties
 
-| Property       | Type            | Default | Description          |
-| -------------- | --------------- | ------- | -------------------- |
-| `items`        | `ProcessItem[]` | `[]`    | Property description |
-| `headingLevel` | `any`           | `'h4'`  | Property description |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `items` | `ProcessItem[]` | `[]` | Property description |
+| `headingLevel` | `any` | `'h4'` | Property description |
 
 ## Events
 
-| Event            | Type | Description |
-| ---------------- | ---- | ----------- |
-| No custom events |      |             |
+| Event | Type | Description |
+|-------|------|-------------|
+| No custom events | | |
 
 ## Accessibility
 
@@ -67,4 +67,4 @@ View component examples: [USAProcessList Stories](http://localhost:6006/?path=/s
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-04_
