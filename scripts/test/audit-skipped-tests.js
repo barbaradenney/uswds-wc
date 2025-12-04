@@ -9,6 +9,7 @@
  *   node scripts/test/audit-skipped-tests.js
  *   node scripts/test/audit-skipped-tests.js --json    # Output as JSON
  *   node scripts/test/audit-skipped-tests.js --verbose # Include test code snippets
+ *   node scripts/test/audit-skipped-tests.js --summary # Brief summary for post-commit hook
  */
 
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from 'fs';
@@ -159,6 +160,7 @@ function auditSkippedTests() {
   const args = process.argv.slice(2);
   const jsonOutput = args.includes('--json');
   const verbose = args.includes('--verbose');
+  const summary = args.includes('--summary');
 
   const packagesDir = join(rootDir, 'packages');
   if (!existsSync(packagesDir)) {
@@ -225,6 +227,21 @@ function auditSkippedTests() {
   // Output results
   if (jsonOutput) {
     console.log(JSON.stringify(results, null, 2));
+    return results;
+  }
+
+  // Summary output for post-commit hook
+  if (summary) {
+    const fixableCount = results.byCategory.CI_TIMING?.count || 0;
+    const browserCount = results.byCategory.JSDOM_LIMITATION?.count || 0;
+    const uswdsCount = results.byCategory.USWDS_TIMING?.count || 0;
+    const unknownCount = results.byCategory.UNKNOWN?.count || 0;
+
+    console.log(`   📊 ${results.totalSkipped} skipped tests across ${Object.keys(results.byComponent).length} components`);
+    if (fixableCount > 0) console.log(`      • ${fixableCount} fixable (CI timing)`);
+    if (browserCount > 0) console.log(`      • ${browserCount} need browser tests`);
+    if (uswdsCount > 0) console.log(`      • ${uswdsCount} USWDS timing`);
+    if (unknownCount > 0) console.log(`      • ${unknownCount} need documentation`);
     return results;
   }
 

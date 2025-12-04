@@ -10,8 +10,9 @@
  *
  * @usage
  *   node scripts/validate/audit-component-anti-patterns.js
- *   node scripts/validate/audit-component-anti-patterns.js --fix    # Show fix suggestions
- *   node scripts/validate/audit-component-anti-patterns.js --json   # Output as JSON
+ *   node scripts/validate/audit-component-anti-patterns.js --fix     # Show fix suggestions
+ *   node scripts/validate/audit-component-anti-patterns.js --json    # Output as JSON
+ *   node scripts/validate/audit-component-anti-patterns.js --summary # Brief summary for post-commit hook
  */
 
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from 'fs';
@@ -288,6 +289,7 @@ function auditAntiPatterns() {
   const args = process.argv.slice(2);
   const jsonOutput = args.includes('--json');
   const showFix = args.includes('--fix');
+  const summary = args.includes('--summary');
 
   const packagesDir = join(rootDir, 'packages');
   if (!existsSync(packagesDir)) {
@@ -336,6 +338,17 @@ function auditAntiPatterns() {
   // Output results
   if (jsonOutput) {
     console.log(JSON.stringify(results, null, 2));
+    return results;
+  }
+
+  // Summary output for post-commit hook
+  if (summary) {
+    if (results.totalIssues === 0) {
+      console.log('   ✅ No anti-patterns detected');
+    } else {
+      console.log(`   📊 ${results.totalIssues} issues in ${results.files.length} files`);
+      console.log(`      • ${results.bySeverity.error} errors, ${results.bySeverity.warning} warnings`);
+    }
     return results;
   }
 

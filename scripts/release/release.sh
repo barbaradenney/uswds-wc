@@ -202,24 +202,33 @@ if [ -f "scripts/release/sync-documentation.sh" ]; then
   run_step "Documentation Sync" "bash scripts/release/sync-documentation.sh $NEW_VERSION"
 fi
 
-# Step 5: Build packages
-echo -e "${BOLD}Step 5: Build All Packages${NC}"
+# Step 5: Generate Custom Elements Manifest and Documentation
+echo -e "${BOLD}Step 5: Generate API Documentation${NC}"
+if [ "$NO_CONFIRM" = false ]; then
+  confirm "Generate Custom Elements Manifest and component docs?"
+fi
+
+run_step "Custom Elements Manifest" "pnpm run analyze"
+run_step "Component Documentation" "pnpm run generate:docs"
+
+# Step 6: Build packages
+echo -e "${BOLD}Step 6: Build All Packages${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Build all packages with Turborepo?"
 fi
 
 run_step "Package Build" "pnpm turbo build"
 
-# Step 6: Final tests
-echo -e "${BOLD}Step 6: Final Test Run${NC}"
+# Step 7: Final tests
+echo -e "${BOLD}Step 7: Final Test Run${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Run final comprehensive tests?"
 fi
 
 run_step "Final Tests" "pnpm test"
 
-# Step 7: Review changes
-echo -e "${BOLD}Step 7: Review Changes${NC}"
+# Step 8: Review changes
+echo -e "${BOLD}Step 8: Review Changes${NC}"
 if [ "$DRY_RUN" = false ]; then
   echo -e "${CYAN}Files that will be committed:${NC}"
   git status --short
@@ -230,7 +239,7 @@ if [ "$NO_CONFIRM" = false ]; then
   confirm "Commit these changes?"
 fi
 
-# Step 8: Commit version bump
+# Step 9: Commit version bump
 COMMIT_MSG="chore(release): bump version to $NEW_VERSION
 
 - Updated package versions
@@ -243,7 +252,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 run_step "Commit Version Bump" "git add -A && git commit --no-verify -m \"$COMMIT_MSG\""
 
-# Step 9: Create git tag
+# Step 10: Create git tag
 TAG_MSG="Release v$NEW_VERSION
 
 See CHANGELOG.md for details.
@@ -252,24 +261,24 @@ See CHANGELOG.md for details.
 
 run_step "Create Git Tag" "git tag -a \"v$NEW_VERSION\" -m \"$TAG_MSG\""
 
-# Step 10: Build Storybook
-echo -e "${BOLD}Step 10: Build Storybook${NC}"
+# Step 11: Build Storybook
+echo -e "${BOLD}Step 11: Build Storybook${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Build Storybook for deployment?"
 fi
 
 run_step "Build Storybook" "pnpm run build-storybook"
 
-# Step 11: Push to GitHub
-echo -e "${BOLD}Step 11: Push to GitHub${NC}"
+# Step 12: Push to GitHub
+echo -e "${BOLD}Step 12: Push to GitHub${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Push commits and tags to GitHub?"
 fi
 
 run_step "Push to GitHub" "git push origin develop --no-verify && git push origin \"v$NEW_VERSION\" --no-verify"
 
-# Step 12: Publish to npm
-echo -e "${BOLD}Step 12: Publish to npm${NC}"
+# Step 13: Publish to npm
+echo -e "${BOLD}Step 13: Publish to npm${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Publish all packages to npm?"
 fi
@@ -280,8 +289,8 @@ else
   echo -e "${YELLOW}[DRY RUN] Would publish to npm with provenance${NC}"
 fi
 
-# Step 13: Create GitHub Release
-echo -e "${BOLD}Step 13: GitHub Release${NC}"
+# Step 14: Create GitHub Release
+echo -e "${BOLD}Step 14: GitHub Release${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Create GitHub Release?"
 fi
@@ -304,8 +313,8 @@ else
   echo -e "${YELLOW}[DRY RUN] Would create GitHub release${NC}"
 fi
 
-# Step 14: Post-release verification
-echo -e "${BOLD}Step 14: Post-Release Verification${NC}"
+# Step 15: Post-release verification
+echo -e "${BOLD}Step 15: Post-Release Verification${NC}"
 if [ "$NO_CONFIRM" = false ]; then
   confirm "Run post-release verification checks?"
 fi
@@ -313,10 +322,10 @@ fi
 # Verification should now pass since we published to npm
 run_step "Post-Release Verification" "bash scripts/release/verify-release.sh $NEW_VERSION" || echo -e "${YELLOW}Note: Some verifications may still be propagating${NC}"
 
-# Step 15: Merge to main (if releasing from develop)
+# Step 16: Merge to main (if releasing from develop)
 CURRENT_BRANCH=$(git branch --show-current)
 if [ "$CURRENT_BRANCH" = "develop" ]; then
-  echo -e "${BOLD}Step 15: Merge to Main${NC}"
+  echo -e "${BOLD}Step 16: Merge to Main${NC}"
   if [ "$NO_CONFIRM" = false ]; then
     confirm "Merge release to main branch?"
   fi
@@ -327,7 +336,7 @@ if [ "$CURRENT_BRANCH" = "develop" ]; then
     git push origin main --no-verify && \\
     git checkout develop"
 else
-  echo -e "${BOLD}Step 15: Merge to Develop${NC}"
+  echo -e "${BOLD}Step 16: Merge to Develop${NC}"
   if [ "$NO_CONFIRM" = false ]; then
     confirm "Merge release to develop branch?"
   fi
@@ -350,6 +359,8 @@ echo -e "${CYAN}✅ Release Complete - All Steps Automated:${NC}"
 echo "   ✓ Validated pre-release checks"
 echo "   ✓ Generated changelog"
 echo "   ✓ Bumped all package versions"
+echo "   ✓ Generated Custom Elements Manifest"
+echo "   ✓ Generated component documentation"
 echo "   ✓ Built and tested packages"
 echo "   ✓ Committed and tagged release"
 echo "   ✓ Built Storybook"

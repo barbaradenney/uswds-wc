@@ -268,6 +268,44 @@ fi
 rm -f /tmp/ai-quality-report.txt
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Code Quality Audits (Informational)
+# Provides insights into test coverage and code patterns
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Skip if disabled via environment variable
+if [ "$SKIP_QUALITY_AUDITS" = "1" ]; then
+  echo "🔄 Post-commit: Quality audits skipped (SKIP_QUALITY_AUDITS=1)"
+else
+  echo ""
+  echo "📊 Running code quality audits (informational)..."
+  echo ""
+
+  # Audit skipped tests
+  echo "🧪 Skipped Tests Audit:"
+  if node scripts/test/audit-skipped-tests.js --summary 2>/dev/null; then
+    echo "   ✅ Skipped tests audit complete"
+  else
+    echo "   ⚠️  Could not run skipped tests audit"
+  fi
+
+  echo ""
+
+  # Audit anti-patterns
+  echo "🔍 Anti-Pattern Audit:"
+  if node scripts/validate/audit-component-anti-patterns.js --summary 2>/dev/null; then
+    echo "   ✅ Anti-pattern audit complete"
+  else
+    echo "   ⚠️  Could not run anti-pattern audit"
+  fi
+
+  echo ""
+  echo "💡 For detailed reports, run:"
+  echo "   pnpm run audit:skipped-tests"
+  echo "   pnpm run audit:anti-patterns"
+  echo ""
+fi
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Automated Code Cleanup (Opt-In)
 # Environment variables to enable:
 #   AUTO_FIX_LINT=1      - Auto-fix ESLint errors
