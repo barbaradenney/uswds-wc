@@ -20,16 +20,16 @@ import 'path/to/uswds-webcomponents/src/components/prose/index.js';
 
 ## Properties
 
-| Property  | Type       | Default     | Description          |
-| --------- | ---------- | ----------- | -------------------- | ----------- | -------------------- |
-| `variant` | `'default' | 'condensed' | 'expanded'`          | `'default'` | Property description |
-| `width`   | `'default' | 'narrow'    | 'wide'`              | `'default'` | Property description |
-| `content` | `any`      | `''`        | Property description |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `'default' | 'condensed' | 'expanded'` | `'default'` | Property description |
+| `width` | `'default' | 'narrow' | 'wide'` | `'default'` | Property description |
+| `content` | `any` | `''` | Property description |
 
 ## Events
 
-| Event          | Type        | Description       |
-| -------------- | ----------- | ----------------- |
+| Event | Type | Description |
+|-------|------|-------------|
 | `prose-change` | CustomEvent | Event description |
 
 ## Accessibility
@@ -68,4 +68,4 @@ View component examples: [USAProse Stories](http://localhost:6006/?path=/story/c
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-04_
