@@ -44,7 +44,14 @@ const DRY_RUN = args.includes('--dry-run');
 
 // Patterns for documentation files
 const DOC_PATTERNS = [
+  // Root documentation
+  'CLAUDE.md',
+  'README.md',
+  'CHANGELOG.md',
+  'CONTRIBUTING.md',
+  // Docs folder
   'docs/**/*.md',
+  // Legacy component structure
   'src/components/**/*.md',
   'src/components/**/*.mdx',
   // Monorepo package documentation
@@ -52,10 +59,14 @@ const DOC_PATTERNS = [
   'packages/*/src/components/**/*.mdx',
   'packages/*/*.md',
   'packages/*/README.md',
+  // Storybook
   '.storybook/**/*.md',
   '.storybook/**/*.mdx',
-  'CLAUDE.md',
-  'README.md',
+  // Test documentation
+  'tests/**/*.md',
+  'cypress/*.md',
+  // Changeset files (version management)
+  '.changeset/*.md',
 ];
 
 // This was removed - we now prompt for ALL fixes instead of auto-replacing URLs

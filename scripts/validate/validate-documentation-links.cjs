@@ -46,7 +46,14 @@ const projectRoot = path.resolve(__dirname, '../..');
 
 // Patterns for documentation files
 const DOC_PATTERNS = [
+  // Root documentation
+  'CLAUDE.md',
+  'README.md',
+  'CHANGELOG.md',
+  'CONTRIBUTING.md',
+  // Docs folder
   'docs/**/*.md',
+  // Legacy component structure
   'src/components/**/*.md',
   'src/components/**/*.mdx',
   // Monorepo package documentation
@@ -54,10 +61,14 @@ const DOC_PATTERNS = [
   'packages/*/src/components/**/*.mdx',
   'packages/*/*.md',
   'packages/*/README.md',
+  // Storybook
   '.storybook/**/*.md',
   '.storybook/**/*.mdx',
-  'CLAUDE.md',
-  'README.md',
+  // Test documentation
+  'tests/**/*.md',
+  'cypress/*.md',
+  // Changeset files (version management)
+  '.changeset/*.md',
 ];
 
 // Placeholder/example domains to skip
