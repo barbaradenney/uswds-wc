@@ -445,23 +445,26 @@ describe('USAProse', () => {
   });
 
   describe('Accessibility Compliance (CRITICAL)', () => {
-    it('should pass comprehensive accessibility tests (same as Storybook)', { timeout: 30000 }, async () => {
-      // Test default empty prose
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+    it(
+      'should pass comprehensive accessibility tests (same as Storybook)',
+      { timeout: 30000 },
+      async () => {
+        // Test default empty prose
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-      // Test simple prose content
-      element.content = `
+        // Test simple prose content
+        element.content = `
         <h2>Federal Program Information</h2>
         <p>This section provides important information about federal programs available to citizens.</p>
         <p>For more information, please contact your local representative.</p>
       `;
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-      // Test prose with condensed variant
-      element.variant = 'condensed';
-      element.content = `
+        // Test prose with condensed variant
+        element.variant = 'condensed';
+        element.content = `
         <h3>Application Requirements</h3>
         <p>Please ensure you have the following documents ready:</p>
         <ul>
@@ -470,13 +473,13 @@ describe('USAProse', () => {
           <li>Social Security card</li>
         </ul>
       `;
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-      // Test prose with expanded variant and narrow width
-      element.variant = 'expanded';
-      element.width = 'narrow';
-      element.content = `
+        // Test prose with expanded variant and narrow width
+        element.variant = 'expanded';
+        element.width = 'narrow';
+        element.content = `
         <h1>Government Services Portal</h1>
         <p>Welcome to the official government services portal. Here you can access various federal programs and services.</p>
         <h2>Available Services</h2>
@@ -485,13 +488,13 @@ describe('USAProse', () => {
           <p>"Government exists to serve the people, and we are committed to providing accessible, efficient services to all citizens."</p>
         </blockquote>
       `;
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-      // Test prose with wide width and rich content
-      element.variant = 'default';
-      element.width = 'wide';
-      element.content = `
+        // Test prose with wide width and rich content
+        element.variant = 'default';
+        element.width = 'wide';
+        element.content = `
         <h2>Federal Benefits Overview</h2>
         <p>The federal government offers a wide range of benefits and services to eligible citizens.</p>
         <table>
@@ -517,9 +520,10 @@ describe('USAProse', () => {
           </tbody>
         </table>
       `;
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+      }
+    );
 
     it('should maintain accessibility during dynamic updates', { timeout: 30000 }, async () => {
       // Set initial accessible state
@@ -560,11 +564,14 @@ describe('USAProse', () => {
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
     });
 
-    it('should pass accessibility with complex government content', { timeout: 30000 }, async () => {
-      // Federal agency content with proper structure
-      element.variant = 'default';
-      element.width = 'default';
-      element.content = `
+    it(
+      'should pass accessibility with complex government content',
+      { timeout: 30000 },
+      async () => {
+        // Federal agency content with proper structure
+        element.variant = 'default';
+        element.width = 'default';
+        element.content = `
         <h1>Department of Federal Services</h1>
         
         <h2>Mission Statement</h2>
@@ -594,8 +601,9 @@ describe('USAProse', () => {
         <h2>Accessibility Statement</h2>
         <p>This agency is committed to providing services that are accessible to all individuals. If you need assistance or have accessibility concerns, please contact us using the information above.</p>
       `;
-      await element.updateComplete;
-      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+        await element.updateComplete;
+        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+      }
+    );
   });
 });
