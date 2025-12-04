@@ -33,16 +33,20 @@ if echo "$COMMIT_MESSAGE" | grep -q "^chore: archive obsolete documentation"; th
 fi
 
 # Check for component file changes (for changelog updates)
-COMPONENT_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep "^src/components/" | grep -v -E "(CHANGELOG\.md|TESTING\.md|\.docs\.mdx)" | wc -l)
+# Support both legacy src/components/ and monorepo packages/*/src/components/ paths
+COMPONENT_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep -E "(^src/components/|^packages/.*/src/components/)" | grep -v -E "(CHANGELOG\.md|TESTING\.md|\.docs\.mdx|README\.mdx)" | wc -l)
 
 # Check for test file changes (for testing documentation updates)
 TEST_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep -E "\.(test|cy|stories)\.ts$" | wc -l)
 
-# Check for documentation file changes (for Storybook docs updates)
-DOCS_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep -E "(README\.md|CHANGELOG\.md|TESTING\.md)$" | wc -l)
+# Check for documentation file changes (README.md, README.mdx, CHANGELOG.md, TESTING.md)
+DOCS_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep -E "(README\.(md|mdx)|CHANGELOG\.md|TESTING\.md)$" | wc -l)
+
+# Check for MDX file changes specifically (Storybook docs)
+MDX_CHANGES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH | grep -E "\.mdx$" | wc -l)
 
 # Skip if no relevant changes
-if [ "$COMPONENT_CHANGES" -eq 0 ] && [ "$TEST_CHANGES" -eq 0 ] && [ "$DOCS_CHANGES" -eq 0 ]; then
+if [ "$COMPONENT_CHANGES" -eq 0 ] && [ "$TEST_CHANGES" -eq 0 ] && [ "$DOCS_CHANGES" -eq 0 ] && [ "$MDX_CHANGES" -eq 0 ]; then
   echo "🔄 Post-commit: No component, test, or documentation file changes detected, skipping updates"
   exit 0
 fi
@@ -54,8 +58,9 @@ README_UPDATED=false
 if [ "$COMPONENT_CHANGES" -gt 0 ]; then
   echo "🔄 Post-commit: Updating component changelogs for $COMPONENT_CHANGES component file changes..."
   node scripts/maintenance/manage-changelogs.js process-commit "$COMMIT_HASH" "$COMMIT_MESSAGE"
-  
-  if ! git diff --quiet --exit-code src/components/*/CHANGELOG.md 2>/dev/null; then
+
+  # Check both legacy and monorepo paths
+  if ! git diff --quiet --exit-code src/components/*/CHANGELOG.md packages/*/src/components/*/CHANGELOG.md 2>/dev/null; then
     echo "📝 Changelogs updated"
     CHANGELOG_UPDATED=true
   fi
@@ -65,24 +70,34 @@ fi
 if [ "$COMPONENT_CHANGES" -gt 0 ]; then
   echo "📖 Post-commit: Updating component README files for $COMPONENT_CHANGES component file changes..."
   node scripts/maintenance/manage-readmes.js process-commit "$COMMIT_HASH" "$COMMIT_MESSAGE"
-  
-  if ! git diff --quiet --exit-code src/components/*/README.md 2>/dev/null; then
+
+  # Check both legacy and monorepo paths for README.md and README.mdx
+  if ! git diff --quiet --exit-code src/components/*/README.md src/components/*/README.mdx packages/*/src/components/*/README.md packages/*/src/components/*/README.mdx 2>/dev/null; then
     echo "📖 README files updated"
     README_UPDATED=true
   fi
 fi
 
 TESTING_DOCS_UPDATED=false
+MDX_UPDATED=false
 
 # Update testing docs if test files changed
 if [ "$TEST_CHANGES" -gt 0 ]; then
   echo "📋 Post-commit: Updating testing documentation for $TEST_CHANGES test file changes..."
   node scripts/maintenance/manage-testing-docs.js process-commit "$COMMIT_HASH" "$COMMIT_MESSAGE"
 
-  if ! git diff --quiet --exit-code src/components/*/TESTING.md 2>/dev/null; then
+  # Check both legacy and monorepo paths
+  if ! git diff --quiet --exit-code src/components/*/TESTING.md packages/*/src/components/*/TESTING.md 2>/dev/null; then
     echo "📋 Testing docs updated"
     TESTING_DOCS_UPDATED=true
   fi
+fi
+
+# Check for any MDX changes that need to be staged
+if [ "$MDX_CHANGES" -gt 0 ]; then
+  echo "📚 Post-commit: Detected $MDX_CHANGES MDX file changes"
+  # MDX files are typically manually edited, just track them
+  MDX_UPDATED=true
 fi
 
 # Note: Automatic Storybook documentation generation has been disabled
@@ -92,17 +107,22 @@ echo "📝 Storybook documentation generation is disabled"
 if [ "$CHANGELOG_UPDATED" = true ] || [ "$README_UPDATED" = true ] || [ "$TESTING_DOCS_UPDATED" = true ]; then
   echo "📝 Staging documentation changes..."
 
-  # Stage any updated documentation files
+  # Stage any updated documentation files (support both legacy and monorepo paths)
   if [ "$CHANGELOG_UPDATED" = true ]; then
-    git add src/components/*/CHANGELOG.md
+    git add src/components/*/CHANGELOG.md 2>/dev/null || true
+    git add packages/*/src/components/*/CHANGELOG.md 2>/dev/null || true
   fi
 
   if [ "$README_UPDATED" = true ]; then
-    git add src/components/*/README.md
+    git add src/components/*/README.md 2>/dev/null || true
+    git add src/components/*/README.mdx 2>/dev/null || true
+    git add packages/*/src/components/*/README.md 2>/dev/null || true
+    git add packages/*/src/components/*/README.mdx 2>/dev/null || true
   fi
 
   if [ "$TESTING_DOCS_UPDATED" = true ]; then
-    git add src/components/*/TESTING.md
+    git add src/components/*/TESTING.md 2>/dev/null || true
+    git add packages/*/src/components/*/TESTING.md 2>/dev/null || true
   fi
 
   # Create commit message based on what was updated

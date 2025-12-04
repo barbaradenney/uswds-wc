@@ -13,8 +13,48 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configuration
-const COMPONENTS_DIR = path.join(__dirname, '../../src/components');
+// Configuration - support both legacy and monorepo structures
+const LEGACY_COMPONENTS_DIR = path.join(__dirname, '../../src/components');
+const PACKAGES_DIR = path.join(__dirname, '../../packages');
+
+// Get all component directories from both locations
+function getAllComponentDirs() {
+  const dirs = [];
+
+  // Legacy src/components structure
+  if (fs.existsSync(LEGACY_COMPONENTS_DIR)) {
+    try {
+      fs.readdirSync(LEGACY_COMPONENTS_DIR)
+        .filter(dir => fs.statSync(path.join(LEGACY_COMPONENTS_DIR, dir)).isDirectory())
+        .forEach(dir => dirs.push({ name: dir, path: path.join(LEGACY_COMPONENTS_DIR, dir) }));
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  // Monorepo packages/*/src/components structure
+  if (fs.existsSync(PACKAGES_DIR)) {
+    try {
+      fs.readdirSync(PACKAGES_DIR)
+        .filter(pkg => pkg.startsWith('uswds-wc-'))
+        .forEach(pkg => {
+          const componentsPath = path.join(PACKAGES_DIR, pkg, 'src/components');
+          if (fs.existsSync(componentsPath)) {
+            fs.readdirSync(componentsPath)
+              .filter(dir => fs.statSync(path.join(componentsPath, dir)).isDirectory())
+              .forEach(dir => dirs.push({ name: dir, path: path.join(componentsPath, dir) }));
+          }
+        });
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  return dirs;
+}
+
+// Backwards compatibility
+const COMPONENTS_DIR = LEGACY_COMPONENTS_DIR;
 
 console.log('📖 Component README Manager');
 console.log('============================');
@@ -241,6 +281,50 @@ function updateComponentReadme(componentName) {
 }
 
 /**
+ * Update README for a component at a specific path (for monorepo support)
+ */
+function updateComponentReadmeAtPath(componentName, componentDir) {
+  const componentFile = path.join(componentDir, `usa-${componentName}.ts`);
+  // Support both README.md and README.mdx
+  const readmeMdPath = path.join(componentDir, 'README.md');
+  const readmeMdxPath = path.join(componentDir, 'README.mdx');
+  const readmePath = fs.existsSync(readmeMdxPath) ? readmeMdxPath : readmeMdPath;
+
+  console.log(`📖 Processing ${componentName} at ${componentDir}...`);
+
+  // Analyze component
+  const analysis = analyzeComponentFile(componentFile);
+  if (!analysis) {
+    console.log(`   ⚠️  Component file not found: ${componentFile}`);
+    return false;
+  }
+
+  // Generate new README content
+  const newContent = generateReadmeMDXContent(componentName, analysis);
+
+  // Check if README exists and compare
+  let shouldUpdate = true;
+  if (fs.existsSync(readmePath)) {
+    const currentContent = fs.readFileSync(readmePath, 'utf8');
+
+    // Only update if content has meaningfully changed (ignore last updated date)
+    const normalizeContent = (content) => content.replace(/_Last updated: \d{4}-\d{2}-\d{2}_/, '');
+    if (normalizeContent(currentContent) === normalizeContent(newContent)) {
+      console.log(`   ✓ No changes needed`);
+      shouldUpdate = false;
+    }
+  }
+
+  if (shouldUpdate) {
+    fs.writeFileSync(readmePath, newContent);
+    console.log(`   ✅ Updated ${path.basename(readmePath)}`);
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Process commit to update README files for changed components
  */
 function processCommit(commitHash, commitMessage) {
@@ -257,18 +341,35 @@ function processCommit(commitHash, commitMessage) {
       .filter(Boolean);
 
     // Find changed components (exclude documentation files)
-    const changedComponents = new Set();
+    // Support both legacy src/components/ and monorepo packages/*/src/components/
+    const changedComponents = new Map(); // Map of componentName -> componentPath
+
     changedFiles.forEach((file) => {
+      // Legacy path: src/components/component-name/
       if (file.startsWith('src/components/')) {
         const pathParts = file.split('/');
         if (
           pathParts.length >= 3 &&
-          !file.includes('CHANGELOG.mdx') &&
+          !file.includes('CHANGELOG') &&
           !file.includes('TESTING.md') &&
-          !file.includes('README.md')
+          !file.includes('README')
         ) {
           const componentName = pathParts[2];
-          changedComponents.add(componentName);
+          changedComponents.set(componentName, path.join(LEGACY_COMPONENTS_DIR, componentName));
+        }
+      }
+
+      // Monorepo path: packages/uswds-wc-*/src/components/component-name/
+      const monorepoMatch = file.match(/^packages\/(uswds-wc-[^/]+)\/src\/components\/([^/]+)\//);
+      if (monorepoMatch) {
+        const [, pkgName, componentName] = monorepoMatch;
+        if (
+          !file.includes('CHANGELOG') &&
+          !file.includes('TESTING.md') &&
+          !file.includes('README')
+        ) {
+          const componentPath = path.join(PACKAGES_DIR, pkgName, 'src/components', componentName);
+          changedComponents.set(componentName, componentPath);
         }
       }
     });
@@ -278,11 +379,11 @@ function processCommit(commitHash, commitMessage) {
       return;
     }
 
-    console.log(`   Changed components: ${Array.from(changedComponents).join(', ')}`);
+    console.log(`   Changed components: ${Array.from(changedComponents.keys()).join(', ')}`);
 
     let updatedCount = 0;
-    for (const componentName of changedComponents) {
-      if (updateComponentReadme(componentName)) {
+    for (const [componentName, componentPath] of changedComponents) {
+      if (updateComponentReadmeAtPath(componentName, componentPath)) {
         updatedCount++;
       }
     }
@@ -298,16 +399,16 @@ function processCommit(commitHash, commitMessage) {
 }
 
 /**
- * Update all component README files
+ * Update all component README files (supports monorepo structure)
  */
 function updateAllReadmes() {
   console.log('📖 Updating all component README files...\n');
 
-  const components = getComponentDirs();
+  const components = getAllComponentDirs();
   let updatedCount = 0;
 
-  for (const componentName of components) {
-    if (updateComponentReadme(componentName)) {
+  for (const { name, path: componentPath } of components) {
+    if (updateComponentReadmeAtPath(name, componentPath)) {
       updatedCount++;
     }
   }
