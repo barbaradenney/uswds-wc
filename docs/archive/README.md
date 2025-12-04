@@ -238,3 +238,9 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 8 days
 
+
+### CI_CD_IMPROVEMENTS.md (Archived 2025-12-04)
+- **Reason**: Temporary doc older than 7 days (8 days)
+- **Category**: TEMPORARY
+- **Age**: 8 days
+
