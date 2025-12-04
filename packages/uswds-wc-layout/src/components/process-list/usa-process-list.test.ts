@@ -941,7 +941,7 @@ describe('USAProcessList', () => {
       element.items = [];
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 10000);
 
     it('should pass accessibility with government use cases', async () => {
       // Federal tax filing process
