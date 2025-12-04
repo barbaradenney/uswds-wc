@@ -20,14 +20,14 @@ import 'path/to/uswds-webcomponents/src/components/side-navigation/index.js';
 
 ## Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `items` | `SideNavItem[]` | `[]` | Property description |
+| Property | Type            | Default | Description          |
+| -------- | --------------- | ------- | -------------------- |
+| `items`  | `SideNavItem[]` | `[]`    | Property description |
 
 ## Events
 
-| Event | Type | Description |
-|-------|------|-------------|
+| Event           | Type        | Description       |
+| --------------- | ----------- | ----------------- |
 | `sidenav-click` | CustomEvent | Event description |
 
 ## Accessibility

@@ -784,70 +784,66 @@ describe('USASideNavigation', () => {
   });
 
   describe('Accessibility Compliance (CRITICAL)', () => {
-    it(
-      'should pass comprehensive accessibility tests (same as Storybook)',
-      async () => {
-        // Test default empty side navigation
-        await element.updateComplete;
-        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+    it('should pass comprehensive accessibility tests (same as Storybook)', async () => {
+      // Test default empty side navigation
+      await element.updateComplete;
+      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-        // Test simple navigation structure
-        element.items = [
-          { label: 'Home', href: '/' },
-          { label: 'About Us', href: '/about' },
-          { label: 'Services', href: '/services', current: true },
-          { label: 'Contact', href: '/contact' },
-        ];
-        element.ariaLabel = 'Main Navigation';
-        await element.updateComplete;
-        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+      // Test simple navigation structure
+      element.items = [
+        { label: 'Home', href: '/' },
+        { label: 'About Us', href: '/about' },
+        { label: 'Services', href: '/services', current: true },
+        { label: 'Contact', href: '/contact' },
+      ];
+      element.ariaLabel = 'Main Navigation';
+      await element.updateComplete;
+      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-        // Test navigation with subnav
-        element.items = [
-          {
-            label: 'Government Services',
-            href: '/services',
-            current: true,
-            subnav: [
-              { label: 'Apply for Benefits', href: '/services/benefits' },
-              { label: 'Pay Taxes', href: '/services/taxes' },
-              { label: 'Register to Vote', href: '/services/voting' },
-            ],
-          },
-          { label: 'About This Agency', href: '/about' },
-          { label: 'Contact Us', href: '/contact' },
-        ];
-        element.ariaLabel = 'Government Services Navigation';
-        await element.updateComplete;
-        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+      // Test navigation with subnav
+      element.items = [
+        {
+          label: 'Government Services',
+          href: '/services',
+          current: true,
+          subnav: [
+            { label: 'Apply for Benefits', href: '/services/benefits' },
+            { label: 'Pay Taxes', href: '/services/taxes' },
+            { label: 'Register to Vote', href: '/services/voting' },
+          ],
+        },
+        { label: 'About This Agency', href: '/about' },
+        { label: 'Contact Us', href: '/contact' },
+      ];
+      element.ariaLabel = 'Government Services Navigation';
+      await element.updateComplete;
+      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
 
-        // Test complex nested structure
-        element.items = [
-          {
-            label: 'Federal Programs',
-            href: '/programs',
-            subnav: [
-              { label: 'Healthcare', href: '/programs/healthcare' },
-              { label: 'Education', href: '/programs/education' },
-              { label: 'Employment', href: '/programs/employment' },
-            ],
-          },
-          {
-            label: 'Resources',
-            href: '/resources',
-            current: true,
-            subnav: [
-              { label: 'Forms & Documents', href: '/resources/forms' },
-              { label: 'FAQs', href: '/resources/faq' },
-              { label: 'Help Center', href: '/resources/help' },
-            ],
-          },
-        ];
-        await element.updateComplete;
-        await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-      },
-      10000
-    );
+      // Test complex nested structure
+      element.items = [
+        {
+          label: 'Federal Programs',
+          href: '/programs',
+          subnav: [
+            { label: 'Healthcare', href: '/programs/healthcare' },
+            { label: 'Education', href: '/programs/education' },
+            { label: 'Employment', href: '/programs/employment' },
+          ],
+        },
+        {
+          label: 'Resources',
+          href: '/resources',
+          current: true,
+          subnav: [
+            { label: 'Forms & Documents', href: '/resources/forms' },
+            { label: 'FAQs', href: '/resources/faq' },
+            { label: 'Help Center', href: '/resources/help' },
+          ],
+        },
+      ];
+      await element.updateComplete;
+      await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
+    }, 10000);
 
     it('should maintain accessibility during dynamic updates', async () => {
       // Set initial accessible state
