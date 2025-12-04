@@ -285,7 +285,94 @@ jobs:
           branch: contracts/add-baseline
           labels: testing,contracts,auto-generated
 
-  # Job 4: Performance Regression Tracking
+  # Job 4: Documentation Link Validation
+  documentation-links:
+    name: 🔗 Documentation Link Validation
+    runs-on: ubuntu-latest
+    if: github.event_name != 'push'
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate documentation links
+        id: link-check
+        run: |
+          echo "🔗 Checking documentation links..."
+          node scripts/validate/validate-documentation-links.cjs > link-report.txt 2>&1 || true
+          BROKEN_COUNT=$(grep -c "❌" link-report.txt || echo "0")
+          echo "broken_count=$BROKEN_COUNT" >> $GITHUB_OUTPUT
+          cat link-report.txt
+        continue-on-error: true
+
+      - name: Upload link report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: documentation-link-report
+          path: link-report.txt
+          retention-days: 30
+
+      - name: Create issue if broken links found
+        if: steps.link-check.outputs.broken_count != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const brokenCount = '${{ steps.link-check.outputs.broken_count }}';
+
+            let report = '';
+            if (fs.existsSync('link-report.txt')) {
+              report = fs.readFileSync('link-report.txt', 'utf8');
+            }
+
+            // Extract broken links from report
+            const brokenLines = report.split('\n')
+              .filter(line => line.includes('❌') || line.includes('Broken'))
+              .slice(0, 20)
+              .join('\n');
+
+            const body = [
+              '## 🔗 Broken Documentation Links Detected',
+              '',
+              `**Summary:** Found ${brokenCount} broken link(s)`,
+              '',
+              '**Sample of Broken Links:**',
+              '```',
+              brokenLines || 'See full report in workflow artifacts',
+              '```',
+              '',
+              '**How to Fix:**',
+              '1. Run `pnpm run validate:doc-links` to see all broken links',
+              '2. Run `pnpm run validate:doc-links:fix` to interactively fix links',
+              '3. Run `pnpm run validate:doc-links:fix:auto` to auto-fix all links',
+              '',
+              '📄 Full report available in workflow artifacts.'
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔗 Found ${brokenCount} Broken Documentation Link(s)`,
+              body: body,
+              labels: ['documentation', 'broken-links', 'needs-fix']
+            });
+
+  # Job 5: Performance Regression Tracking
   performance-regression:
     name: ⚡ Performance Regression
     runs-on: ubuntu-latest
@@ -384,7 +471,7 @@ jobs:
   summary:
     name: 📊 Weekly Testing Summary
     runs-on: ubuntu-latest
-    needs: [flaky-detection, mutation-testing, contract-testing, performance-regression]
+    needs: [flaky-detection, mutation-testing, contract-testing, documentation-links, performance-regression]
     if: github.event_name != 'push' && always()
     steps:
       - name: Generate summary
@@ -398,6 +485,7 @@ jobs:
           echo "| 🔍 Flaky Detection | ${{ needs.flaky-detection.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🧬 Mutation Testing | ${{ needs.mutation-testing.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 📜 Contract Testing | ${{ needs.contract-testing.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔗 Documentation Links | ${{ needs.documentation-links.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| ⚡ Performance Regression | ${{ needs.performance-regression.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📅 Scheduled run: Every Sunday at 3 AM UTC" >> $GITHUB_STEP_SUMMARY
