@@ -105,7 +105,21 @@ echo "📝 Storybook documentation generation is disabled"
 
 # Commit any documentation updates
 if [ "$CHANGELOG_UPDATED" = true ] || [ "$README_UPDATED" = true ] || [ "$TESTING_DOCS_UPDATED" = true ]; then
-  echo "📝 Staging documentation changes..."
+  echo "📝 Formatting and staging documentation changes..."
+
+  # Format auto-generated documentation with Prettier before staging
+  # This prevents CI failures due to formatting issues
+  if [ "$CHANGELOG_UPDATED" = true ]; then
+    npx prettier --write "src/components/*/CHANGELOG.md" "packages/*/src/components/*/CHANGELOG.md" 2>/dev/null || true
+  fi
+
+  if [ "$README_UPDATED" = true ]; then
+    npx prettier --write "src/components/*/README.md" "src/components/*/README.mdx" "packages/*/src/components/*/README.md" "packages/*/src/components/*/README.mdx" 2>/dev/null || true
+  fi
+
+  if [ "$TESTING_DOCS_UPDATED" = true ]; then
+    npx prettier --write "src/components/*/TESTING.md" "packages/*/src/components/*/TESTING.md" 2>/dev/null || true
+  fi
 
   # Stage any updated documentation files (support both legacy and monorepo paths)
   if [ "$CHANGELOG_UPDATED" = true ]; then
