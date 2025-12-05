@@ -35,59 +35,57 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium
 
-      - name: Build project
-        run: pnpm run build
+      - name: Build Storybook for performance testing
+        run: pnpm run build-storybook
 
       - name: Run performance tests
+        timeout-minutes: 5
         run: |
-          # Create performance test script (using .cjs extension for CommonJS in ES module project)
+          # Create performance test script
           cat > performance-test.cjs << 'EOF'
           const { chromium } = require('playwright');
           const fs = require('fs');
+          const path = require('path');
 
           async function runPerformanceTests() {
             const browser = await chromium.launch();
-            const page = await browser.newPage();
-            
-            // Enable performance metrics
-            await page.addInitScript(() => {
-              window.performance.mark('start');
-            });
+            const context = await browser.newContext();
+            const page = await context.newPage();
 
             const results = {};
-            
-            // Test 1: Bundle load time
-            console.log('Testing bundle load time...');
-            await page.goto('http://localhost:3000');
-            const loadTime = await page.evaluate(() => {
-              window.performance.mark('loaded');
-              return window.performance.measure('load-time', 'start', 'loaded').duration;
-            });
-            results.bundleLoadTime = loadTime;
 
-            // Test 2: Component render performance
+            // Test 1: Storybook load time
+            console.log('Testing Storybook load time...');
+            const startTime = Date.now();
+            await page.goto('http://localhost:6006', { waitUntil: 'domcontentloaded', timeout: 30000 });
+            // Wait for Storybook to be ready (look for the main content)
+            await page.waitForSelector('#storybook-root', { timeout: 30000 }).catch(() => {});
+            results.bundleLoadTime = Date.now() - startTime;
+            console.log(`Storybook loaded in ${results.bundleLoadTime}ms`);
+
+            // Test 2: Navigate to a component story and measure render time
             console.log('Testing component render performance...');
             const renderTimes = {};
-            
-            // Test accordion rendering
-            const accordionStart = Date.now();
-            await page.setContent(`
-              <usa-accordion>
-                <usa-accordion-item title="Test" expanded>Content</usa-accordion-item>
-              </usa-accordion>
-            `);
-            await page.waitForLoadState('networkidle');
-            renderTimes.accordion = Date.now() - accordionStart;
 
-            // Test button rendering (batch)
+            // Test button story
             const buttonStart = Date.now();
-            await page.setContent(`
-              <div>
-                ${Array.from({length: 100}, (_, i) => `<usa-button>Button ${i}</usa-button>`).join('')}
-              </div>
-            `);
-            await page.waitForLoadState('networkidle');
-            renderTimes.buttonBatch = Date.now() - buttonStart;
+            await page.goto('http://localhost:6006/?path=/story/components-button--default', {
+              waitUntil: 'domcontentloaded',
+              timeout: 30000
+            });
+            await page.waitForTimeout(2000); // Allow component to render
+            renderTimes.button = Date.now() - buttonStart;
+            console.log(`Button story loaded in ${renderTimes.button}ms`);
+
+            // Test accordion story
+            const accordionStart = Date.now();
+            await page.goto('http://localhost:6006/?path=/story/components-accordion--default', {
+              waitUntil: 'domcontentloaded',
+              timeout: 30000
+            });
+            await page.waitForTimeout(2000);
+            renderTimes.accordion = Date.now() - accordionStart;
+            console.log(`Accordion story loaded in ${renderTimes.accordion}ms`);
 
             results.componentRenderTimes = renderTimes;
 
@@ -98,42 +96,57 @@ jobs:
               jsHeapUsedSize: metrics.JSHeapUsedSize,
               jsHeapTotalSize: metrics.JSHeapTotalSize
             };
+            console.log(`Memory: ${(metrics.JSHeapUsedSize / 1024 / 1024).toFixed(1)}MB used`);
 
-            // Test 4: Bundle size analysis
+            // Test 4: Bundle size analysis (check storybook-static assets)
             console.log('Analyzing bundle sizes...');
             const bundleSizes = {};
-            const files = fs.readdirSync('dist');
-            for (const file of files) {
-              if (file.endsWith('.js') || file.endsWith('.css')) {
-                const stats = fs.statSync(`dist/${file}`);
-                bundleSizes[file] = stats.size;
+            const assetsDir = 'storybook-static/assets';
+            if (fs.existsSync(assetsDir)) {
+              const files = fs.readdirSync(assetsDir);
+              for (const file of files) {
+                if (file.endsWith('.js') || file.endsWith('.css')) {
+                  const stats = fs.statSync(path.join(assetsDir, file));
+                  bundleSizes[file] = stats.size;
+                }
               }
             }
             results.bundleSizes = bundleSizes;
+            console.log(`Found ${Object.keys(bundleSizes).length} asset files`);
 
             await browser.close();
-            
+
             // Save results
             fs.writeFileSync('performance-results.json', JSON.stringify(results, null, 2));
-            
+            console.log('Performance results saved');
+
             return results;
           }
 
-          runPerformanceTests().catch(console.error);
+          runPerformanceTests()
+            .then(() => process.exit(0))
+            .catch(err => {
+              console.error('Performance test failed:', err);
+              process.exit(1);
+            });
           EOF
 
-          # Start a simple server for testing
-          npx http-server dist -p 3000 &
+          # Start http-server to serve storybook-static
+          npx http-server storybook-static -p 6006 &
           SERVER_PID=$!
 
           # Wait for server to start
-          sleep 5
+          sleep 3
 
-          # Run performance tests
-          node performance-test.cjs
+          # Run performance tests with timeout
+          timeout 180 node performance-test.cjs || {
+            echo "Performance tests timed out or failed"
+            kill $SERVER_PID 2>/dev/null || true
+            exit 1
+          }
 
           # Kill server
-          kill $SERVER_PID
+          kill $SERVER_PID 2>/dev/null || true
 
       - name: Upload performance results
         uses: actions/upload-artifact@v4
