@@ -1,0 +1,99 @@
+# Create Account Template
+
+USA Create Account Template
+
+Registration page template following USWDS patterns.
+Composes name and email patterns with password fields.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header
+- Registration form in centered card
+- Sign-in link for existing users
+- Footer + Identifier
+
+## USWDS Reference
+
+[USWDS Create Account Template](https://designsystem.digital.gov/components/create-account-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-create-account-template></usa-create-account-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/create-account/usa-create-account-template.js';
+
+// The component is now available as <usa-create-account-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `heading` | `heading` | `string` | `'Create account'` | Page heading |
+| `formLegend` | `form-legend` | `string` | `'Create your account'` | Form legend (accessibility) |
+| `showNameFields` | `show-name-fields` | `boolean` | `true` | Whether to show name fields |
+| `showPasswordRequirements` | `show-password-requirements` | `boolean` | `true` | Whether to show password requirements |
+| `passwordRequirementsText` | `password-requirements-text` | `string` | `'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character.'` | Password requirements text |
+| `showTerms` | `show-terms` | `boolean` | `true` | Whether to show terms checkbox |
+| `termsUrl` | `terms-url` | `string` | `'/terms'` | Terms of service URL |
+| `privacyUrl` | `privacy-url` | `string` | `'/privacy'` | Privacy policy URL |
+| `submitText` | `submit-text` | `string` | `'Create account'` | Submit button text |
+| `showSignInLink` | `show-sign-in-link` | `boolean` | `true` | Whether to show sign-in link |
+| `signInUrl` | `sign-in-url` | `string` | `'/sign-in'` | Sign-in URL |
+| `signInText` | `sign-in-text` | `string` | `'Sign in'` | Sign-in link text |
+| `signInLabel` | `sign-in-label` | `string` | `'Already have an account?'` | Sign-in label text |
+| `actionUrl` | `action-url` | `string` | `''` | Form action URL |
+| `method` | `method` | `string` | `'POST'` | Form method |
+| `formData` | `formData` | `CreateAccountData` | `{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '', agreeToTerms: false, }` | Current form data state |
+| `passwordMismatch` | `passwordMismatch` | `boolean` | `false` | Password mismatch error state |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `form-header` | Custom content above the form |
+| `form-fields` | Additional form fields |
+| `form-footer` | Custom content below the form (terms, links) |
+| `header` | Site header |
+| `footer` | Site footer |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+| `create-account-submit` | `CustomEvent` | Fired when form is submitted |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-create-account-template--docs) for interactive examples.

@@ -1,0 +1,102 @@
+# Form Template
+
+USA Form Template
+
+Multi-step form page template following USWDS patterns.
+Supports step indicators, form sections, and progress tracking.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header
+- Optional step indicator
+- Form content area (patterns/components)
+- Action buttons (next, back, submit)
+- Optional sidebar
+- Footer + Identifier
+
+## USWDS Reference
+
+[USWDS Form Template](https://designsystem.digital.gov/components/form-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-form-template></usa-form-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/form/usa-form-template.js';
+
+// The component is now available as <usa-form-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `heading` | `heading` | `string` | `''` | Form heading/title |
+| `subheading` | `subheading` | `string` | `''` | Form subheading/description |
+| `showStepIndicator` | `show-step-indicator` | `boolean` | `false` | Whether to show step indicator |
+| `currentStep` | `current-step` | `number` | `1` | Current step number (1-based) |
+| `totalSteps` | `total-steps` | `number` | `1` | Total number of steps |
+| `steps` | `steps` | `FormStep[]` | `[]` | Step labels and statuses |
+| `centerStepLabels` | `center-step-labels` | `boolean` | `true` | Whether to center the step indicator labels |
+| `showSidebar` | `show-sidebar` | `boolean` | `false` | Whether to show sidebar |
+| `sidebarPosition` | `sidebar-position` | `'left' \| 'right'` | `'right'` | Sidebar position |
+| `submitText` | `submit-text` | `string` | `'Submit'` | Submit button text |
+| `backText` | `back-text` | `string` | `'Back'` | Back button text |
+| `nextText` | `next-text` | `string` | `'Continue'` | Next button text |
+| `showBackButton` | `show-back-button` | `boolean` | `false` | Whether to show back button |
+| `actionUrl` | `action-url` | `string` | `''` | Form action URL |
+| `method` | `method` | `string` | `'POST'` | Form method |
+| `isValid` | `isValid` | `boolean` | `true` | Form validation state |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `form-header` | Content above the form (title, intro) |
+| `form-content` | Form fields and patterns |
+| `form-actions` | Submit/navigation buttons |
+| `form-sidebar` | Optional sidebar content |
+| `header` | Site header |
+| `footer` | Site footer |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+| `form-submit` | `CustomEvent` | Fired when form is submitted |
+| `step-change` | `CustomEvent` | Fired when step changes |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-form-template--docs) for interactive examples.

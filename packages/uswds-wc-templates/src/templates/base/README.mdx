@@ -1,0 +1,94 @@
+# Base Template
+
+USA Base Template
+
+Foundation template that provides the standard USWDS page structure.
+All other templates extend or compose this base template.
+
+**Template Structure (from USWDS):**
+- Skip navigation link
+- Government banner
+- Header
+- Main content
+- Footer
+- Identifier
+
+**Architecture Note:**
+Uses Light DOM (no Shadow DOM) to allow USWDS styles to cascade properly.
+Provides slots for maximum customization while offering sensible defaults.
+
+## USWDS Reference
+
+[USWDS Base Template](https://designsystem.digital.gov/components/base-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-base-template></usa-base-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/base/usa-base-template.js';
+
+// The component is now available as <usa-base-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `skipText` | `skip-text` | `string` | `'Skip to main content'` | Text for the skip navigation link |
+| `skipHref` | `skip-href` | `string` | `'#main-content'` | Target for the skip navigation link |
+| `domain` | `domain` | `string` | `''` | Domain name for the identifier (e.g., "example.gov") |
+| `agency` | `agency` | `string` | `''` | Agency name for the identifier |
+| `parentAgency` | `parent-agency` | `string` | `''` | Parent agency name for the identifier |
+| `parentAgencyHref` | `parent-agency-href` | `string` | `''` | Parent agency URL for the identifier |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `skipnav` | Custom skip navigation (defaults to standard skip link) |
+| `banner` | Custom government banner (defaults to standard banner) |
+| `header` | Site header content |
+| `main` | Main page content |
+| `footer` | Site footer content |
+| `identifier` | Government identifier (defaults to standard identifier) |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-base-template--docs) for interactive examples.

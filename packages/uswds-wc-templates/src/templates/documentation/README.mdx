@@ -1,0 +1,85 @@
+# Documentation Template
+
+USA Documentation Template
+
+Documentation/content page template with side navigation.
+Ideal for help pages, guides, and structured content.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header
+- Side navigation (responsive)
+- Main content area with prose styling
+- Footer + Identifier
+
+## USWDS Reference
+
+[USWDS Documentation Template](https://designsystem.digital.gov/components/documentation-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-documentation-template></usa-documentation-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/documentation/usa-documentation-template.js';
+
+// The component is now available as <usa-documentation-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `sidenavPosition` | `sidenav-position` | `'left' \| 'right'` | `'left'` | Side navigation position |
+| `contentWidth` | `content-width` | `'narrow' \| 'wide'` | `'wide'` | Content column width |
+| `navItems` | `navItems` | `NavItem[]` | `[]` | Side navigation items (JSON array) |
+| `sidenavLabel` | `sidenav-label` | `string` | `'Secondary navigation'` | Side navigation aria label |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `sidenav` | Custom side navigation |
+| `breadcrumb` | Breadcrumb navigation |
+| `content` | Main documentation content |
+| `header` | Site header |
+| `footer` | Site footer |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-documentation-template--docs) for interactive examples.

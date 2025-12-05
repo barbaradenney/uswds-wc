@@ -1,0 +1,98 @@
+# Landing Template
+
+USA Landing Template
+
+Hero-focused landing page template following USWDS patterns.
+Extends the base template structure with hero, tagline, graphics list, and CTA sections.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header (inherited)
+- Hero section with callout
+- Tagline section
+- Graphics list section (dark background)
+- Call-to-action section
+- Footer + Identifier (inherited)
+
+## USWDS Reference
+
+[USWDS Landing Template](https://designsystem.digital.gov/components/landing-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-landing-template></usa-landing-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/landing/usa-landing-template.js';
+
+// The component is now available as <usa-landing-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `heroHeading` | `hero-heading` | `string` | `''` | Hero heading text (main headline) |
+| `heroHeadingAccent` | `hero-heading-accent` | `string` | `''` | Hero heading accent (smaller text above main heading) |
+| `heroDescription` | `hero-description` | `string` | `''` | Hero description text |
+| `heroCtaText` | `hero-cta-text` | `string` | `''` | Hero call-to-action button text |
+| `heroCtaUrl` | `hero-cta-url` | `string` | `'#'` | Hero call-to-action button URL |
+| `heroImageUrl` | `hero-image-url` | `string` | `''` | Hero background image URL |
+| `taglineHeading` | `tagline-heading` | `string` | `''` | Tagline heading text |
+| `taglineDescription` | `tagline-description` | `string` | `''` | Tagline description text |
+| `ctaHeading` | `cta-heading` | `string` | `''` | CTA section heading text |
+| `ctaDescription` | `cta-description` | `string` | `''` | CTA section description text |
+| `ctaButtonText` | `cta-button-text` | `string` | `''` | CTA button text |
+| `ctaButtonUrl` | `cta-button-url` | `string` | `'#'` | CTA button URL |
+| `graphics` | `graphics` | `GraphicItem[]` | `[]` | Graphics list items (JSON array) |
+| `imagePath` | `image-path` | `string` | `'/img'` | Default image path for graphics |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `hero` | Custom hero section content |
+| `tagline` | Custom tagline section |
+| `graphics` | Custom graphics list section |
+| `cta` | Custom call-to-action section |
+| `header` | Site header (inherited from base) |
+| `footer` | Site footer (inherited from base) |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-landing-template--docs) for interactive examples.

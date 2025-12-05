@@ -1,0 +1,88 @@
+# Error Template
+
+USA Error Template
+
+Error page template for 404, 500, and other error states.
+Provides a minimal, focused layout for error messaging.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header (optional)
+- Error content with code, title, message
+- Action buttons (home link, etc.)
+- Footer + Identifier (optional)
+
+## USWDS Reference
+
+[USWDS Error Template](https://designsystem.digital.gov/components/error-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-error-template></usa-error-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/error/usa-error-template.js';
+
+// The component is now available as <usa-error-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `false` | Whether to show the identifier at the bottom |
+| `errorCode` | `error-code` | `string` | `'404'` | Error code (e.g., "404", "500") |
+| `errorTitle` | `error-title` | `string` | `'Page not found'` | Error title/heading |
+| `errorMessage` | `error-message` | `string` | `"We couldn't find the page you're looking for."` | Error description message |
+| `homeUrl` | `home-url` | `string` | `'/'` | Home page URL |
+| `homeText` | `home-text` | `string` | `'Return to home'` | Home button text |
+| `showContact` | `show-contact` | `boolean` | `false` | Whether to show a contact link |
+| `contactUrl` | `contact-url` | `string` | `'/contact'` | Contact page URL |
+| `contactText` | `contact-text` | `string` | `'Contact us'` | Contact link text |
+| `helpText` | `help-text` | `string` | `''` | Additional help text |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `error-content` | Custom error content |
+| `header` | Site header |
+| `footer` | Site footer |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-error-template--docs) for interactive examples.

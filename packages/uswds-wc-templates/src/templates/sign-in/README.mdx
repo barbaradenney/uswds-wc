@@ -1,0 +1,99 @@
+# Sign In Template
+
+USA Sign-In Template
+
+Authentication page template following USWDS patterns.
+Composes the email-address pattern with password field.
+
+**Template Structure (from USWDS):**
+- Skip navigation + Banner + Header
+- Sign-in form in centered card
+- Create account link
+- Footer + Identifier
+
+## USWDS Reference
+
+[USWDS Sign In Template](https://designsystem.digital.gov/components/sign-in-template/)
+
+## Installation
+
+```bash
+npm install @uswds-wc/core
+```
+
+## Usage
+
+```html
+<usa-sign-in-template></usa-sign-in-template>
+```
+
+### TypeScript
+
+```typescript
+import '@uswds-wc/core/styles.css';
+import 'packages/uswds-wc-templates/src/templates/sign-in/usa-sign-in-template.js';
+
+// The component is now available as <usa-sign-in-template>
+```
+
+## Properties
+
+| Property | Attribute | Type | Default | Description |
+|----------|-----------|------|---------|-------------|
+| `lang` | `lang` | `string` | `'en'` | Page language attribute |
+| `showBanner` | `show-banner` | `boolean` | `true` | Whether to show the government banner |
+| `showIdentifier` | `show-identifier` | `boolean` | `true` | Whether to show the identifier at the bottom |
+| `heading` | `heading` | `string` | `'Sign in'` | Page heading |
+| `formLegend` | `form-legend` | `string` | `'Access your account'` | Form legend (accessibility) |
+| `emailLabel` | `email-label` | `string` | `'Email address'` | Email field label |
+| `passwordLabel` | `password-label` | `string` | `'Password'` | Password field label |
+| `submitText` | `submit-text` | `string` | `'Sign in'` | Submit button text |
+| `showRememberMe` | `show-remember-me` | `boolean` | `false` | Whether to show "Remember me" checkbox |
+| `showCreateAccount` | `show-create-account` | `boolean` | `true` | Whether to show the create account link |
+| `createAccountUrl` | `create-account-url` | `string` | `'/create-account'` | Create account URL |
+| `createAccountText` | `create-account-text` | `string` | `'Create your account now'` | Create account link text |
+| `createAccountLabel` | `create-account-label` | `string` | `"Don't have an account?"` | Create account label text |
+| `showForgotPassword` | `show-forgot-password` | `boolean` | `true` | Whether to show forgot password link |
+| `forgotPasswordUrl` | `forgot-password-url` | `string` | `'/forgot-password'` | Forgot password URL |
+| `forgotPasswordText` | `forgot-password-text` | `string` | `'Forgot password?'` | Forgot password link text |
+| `showPasswordToggle` | `show-password-toggle` | `boolean` | `true` | Whether to show password toggle |
+| `actionUrl` | `action-url` | `string` | `''` | Form action URL |
+| `method` | `method` | `string` | `'POST'` | Form method |
+| `formData` | `formData` | `SignInData` | `{ email: '', password: '', rememberMe: false, }` | Current form data state |
+
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `form-header` | Custom content above the form |
+| `form-footer` | Custom content below the form (links, etc.) |
+| `additional-options` | SSO or alternative login options |
+| `header` | Site header |
+| `footer` | Site footer |
+
+
+## Events
+
+| Event | Detail Type | Description |
+|-------|-------------|-------------|
+| `template-ready` | `CustomEvent` | Fired when template initializes |
+| `sign-in-submit` | `CustomEvent` | Fired when form is submitted |
+
+
+## CSS Custom Properties
+
+Uses USWDS CSS classes. No custom CSS properties defined.
+
+## Accessibility
+
+This component follows USWDS accessibility guidelines:
+
+- Uses semantic HTML elements
+- Supports keyboard navigation
+- Includes appropriate ARIA attributes
+- Meets WCAG 2.1 Level AA requirements
+
+## Examples
+
+See the [Storybook documentation](/?path=/docs/components-sign-in-template--docs) for interactive examples.
