@@ -89,14 +89,17 @@ jobs:
 
             results.componentRenderTimes = renderTimes;
 
-            // Test 3: Memory usage
+            // Test 3: Memory usage (using CDP session for Chrome metrics)
             console.log('Testing memory usage...');
-            const metrics = await page.metrics();
+            const cdpSession = await context.newCDPSession(page);
+            const metrics = await cdpSession.send('Performance.getMetrics');
+            const jsHeapUsed = metrics.metrics.find(m => m.name === 'JSHeapUsedSize')?.value || 0;
+            const jsHeapTotal = metrics.metrics.find(m => m.name === 'JSHeapTotalSize')?.value || 0;
             results.memoryUsage = {
-              jsHeapUsedSize: metrics.JSHeapUsedSize,
-              jsHeapTotalSize: metrics.JSHeapTotalSize
+              jsHeapUsedSize: jsHeapUsed,
+              jsHeapTotalSize: jsHeapTotal
             };
-            console.log(`Memory: ${(metrics.JSHeapUsedSize / 1024 / 1024).toFixed(1)}MB used`);
+            console.log(`Memory: ${(jsHeapUsed / 1024 / 1024).toFixed(1)}MB used`);
 
             // Test 4: Bundle size analysis (check storybook-static assets)
             console.log('Analyzing bundle sizes...');
