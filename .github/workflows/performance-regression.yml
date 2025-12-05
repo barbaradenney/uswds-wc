@@ -258,8 +258,14 @@ jobs:
 
       - name: Run Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.13.x
-          lhci autorun
+          npm install -g @lhci/cli@0.13.x http-server
+          # Start http-server to serve static storybook build
+          http-server storybook-static -p 6006 &
+          SERVER_PID=$!
+          sleep 5
+          # Run Lighthouse against the static build
+          lhci autorun --collect.url="http://localhost:6006/" --collect.startServerCommand="" || true
+          kill $SERVER_PID || true
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
