@@ -96,13 +96,34 @@ jobs:
           echo "See CLAUDE.md for complete documentation."
           echo ""
 
-          # Check commit message for release script signature
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          if echo "$COMMIT_MSG" | grep -q "chore(release): bump version to"; then
-            if echo "$COMMIT_MSG" | grep -q "Generated with \[Claude Code\]"; then
-              echo "✓ Release script signature found - allowing"
-              exit 0
-            fi
+          # Check commit messages for release script signature
+          # Search through all commits in this push, not just HEAD
+          # This handles cases where post-commit hooks add commits after the release commit
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMIT_RANGE="${{ github.event.pull_request.base.sha }}..HEAD"
+          else
+            COMMIT_RANGE="${{ github.event.before }}..HEAD"
+          fi
+
+          echo "Checking commits in range: $COMMIT_RANGE"
+
+          # Look for release commit with proper signature in any commit in the range
+          RELEASE_COMMITS=$(git log $COMMIT_RANGE --pretty=format:"%H %s" | grep "chore(release): bump version to" || true)
+
+          if [ ! -z "$RELEASE_COMMITS" ]; then
+            echo "Found release commit(s):"
+            echo "$RELEASE_COMMITS"
+
+            # Check each release commit for the signature
+            while IFS= read -r line; do
+              COMMIT_SHA=$(echo "$line" | cut -d' ' -f1)
+              COMMIT_MSG=$(git log -1 --pretty=%B "$COMMIT_SHA")
+
+              if echo "$COMMIT_MSG" | grep -q "Generated with \[Claude Code\]"; then
+                echo "✓ Release script signature found in commit $COMMIT_SHA - allowing"
+                exit 0
+              fi
+            done <<< "$RELEASE_COMMITS"
           fi
 
           echo "::error::This PR contains manual version changes."
