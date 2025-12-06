@@ -33,7 +33,6 @@ import 'path/to/uswds-webcomponents/src/components/select/index.js';
 | `options`       | `Array<{ value: string` | ``      | Property description |
 | `defaultOption` | `any`                   | `''`    | Property description |
 | `compact`       | `any`                   | `false` | Property description |
-| `noComboBox`    | `any`                   | `false` | Property description |
 
 ## Events
 
