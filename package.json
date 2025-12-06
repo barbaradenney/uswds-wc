@@ -1,6 +1,6 @@
 {
   "name": "uswds-webcomponents-monorepo",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "private": true,
   "description": "USWDS Web Components Monorepo - Production-Ready Components, Patterns, and Templates",
   "type": "module",

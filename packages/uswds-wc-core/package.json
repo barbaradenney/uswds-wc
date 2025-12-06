@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/core",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Core utilities and base components for USWDS Web Components",
   "type": "module",
   "main": "./dist/index.js",

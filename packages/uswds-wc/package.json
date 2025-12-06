@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/all",
-  "version": "2.3.0",
+  "version": "2.5.2",
   "description": "U.S. Web Design System components as Web Components - Complete Package",
   "type": "module",
   "main": "./dist/index.js",
@@ -24,14 +24,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@uswds-wc/actions": "workspace:*",
-    "@uswds-wc/core": "workspace:*",
-    "@uswds-wc/data-display": "workspace:*",
-    "@uswds-wc/feedback": "workspace:*",
-    "@uswds-wc/forms": "workspace:*",
-    "@uswds-wc/layout": "workspace:*",
-    "@uswds-wc/navigation": "workspace:*",
-    "@uswds-wc/structure": "workspace:*"
+    "@uswds-wc/actions": "^2.5.2",
+    "@uswds-wc/core": "^2.5.2",
+    "@uswds-wc/data-display": "^2.5.2",
+    "@uswds-wc/feedback": "^2.5.2",
+    "@uswds-wc/forms": "^2.5.2",
+    "@uswds-wc/layout": "^2.5.2",
+    "@uswds-wc/navigation": "^2.5.2",
+    "@uswds-wc/structure": "^2.5.2"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/feedback",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "USWDS Feedback Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -29,13 +29,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@uswds-wc/core": "workspace:*"
+    "@uswds-wc/core": "^2.5.2"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
   },
   "devDependencies": {
-    "@uswds-wc/test-utils": "workspace:*",
+    "@uswds-wc/test-utils": "^2.5.2",
     "jsdom": "27.0.1",
     "lit": "^3.0.0",
     "vitest": "3.2.4"
