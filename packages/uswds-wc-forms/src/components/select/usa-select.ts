@@ -79,10 +79,6 @@ export interface SelectOption {
  */
 @customElement('usa-select')
 export class USASelect extends LitElement {
-  // Store USWDS module for cleanup
-  private uswdsModule: any = null;
-  private usingUSWDSEnhancement = false;
-  private uswdsInitialized = false;
   private _selectId = '';
   static override styles = css`
     :host {
@@ -150,23 +146,13 @@ export class USASelect extends LitElement {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
-    // Don't capture innerHTML in connectedCallback - it's too early for composed components
-    // Light DOM parent components haven't rendered their children yet
-    // The <slot> in render() will handle slotted content naturally
-
-    // Note: For direct HTML usage like <usa-select><option>...</option></usa-select>,
-    // the options will be preserved via the <slot> element in the template
-
-    // Don't set role on the host element - it will be on the select
-    // Initialize progressive enhancement
-    this.initializeUSWDSSelect();
+    // Note: USWDS Select is CSS-only - no JavaScript initialization needed.
+    // The native <select> element with USWDS CSS classes provides all styling.
+    // This component works in all environments (bundled, CDN, SSR) without
+    // any dynamic imports or external dependencies.
   }
 
   override firstUpdated() {
-    // ARCHITECTURE: Script Tag Pattern
-    // USWDS is loaded globally via script tag in .storybook/preview-head.html
-    // Components just render HTML - USWDS enhances automatically via window.USWDS
-
     // Get reference to the select element after first render
     this.selectElement = this.querySelector('select') as HTMLSelectElement;
   }
@@ -277,112 +263,7 @@ export class USASelect extends LitElement {
     }
     return this._selectId;
   }
-  private async initializeUSWDSSelect() {
-    // Prevent multiple initializations
-    if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
-      return;
-    }
 
-    // Check if select is CSS-only before attempting to load JavaScript
-    const { isCSSOnlyComponent } = await import('@uswds-wc/core');
-    if (isCSSOnlyComponent('select')) {
-      console.log('✅ USWDS select is CSS-only, using web component behavior');
-      this.setupFallbackBehavior();
-      return;
-    }
-
-    console.log(`🎯 Select: Initializing with tree-shaking optimization`);
-
-    try {
-      // Tree-shaking: Import only the specific USWDS component module
-      // @ts-expect-error - @uswds/uswds doesn't have type definitions
-      const module = await import('@uswds/uswds');
-      this.uswdsModule = module.default;
-
-      // Initialize the USWDS component
-      if (this.uswdsModule && typeof this.uswdsModule.on === 'function') {
-        this.uswdsModule.on(this);
-        console.log(`✅ Tree-shaken USWDS select initialized successfully`);
-        this.usingUSWDSEnhancement = true;
-        return; // USWDS will handle component behavior
-      } else {
-        console.warn(`⚠️ Select: Module doesn't have expected initialization methods`);
-        console.log(`🔍 Available methods:`, Object.keys(this.uswdsModule || {}));
-        this.setupFallbackBehavior();
-      }
-    } catch (error) {
-      console.warn(`⚠️ Tree-shaking failed for Select, falling back to full USWDS:`, error);
-      await this.loadFullUSWDSLibrary();
-    }
-  }
-
-  private async loadFullUSWDSLibrary() {
-    try {
-      if (typeof (window as any).USWDS === 'undefined') {
-        // Full USWDS library not available, setup fallback
-        console.warn('⚠️ Full USWDS library not available, using fallback behavior');
-        this.setupFallbackBehavior();
-        return;
-      }
-      await this.initializeWithGlobalUSWDS();
-    } catch (error) {
-      console.warn('⚠️ Full USWDS initialization failed:', error);
-      this.setupFallbackBehavior();
-    }
-  }
-
-  private async initializeWithGlobalUSWDS() {
-    // Prevent multiple initializations
-    if (this.uswdsInitialized) {
-      console.log(`⚠️ Select: Already initialized globally, skipping duplicate initialization`);
-      return;
-    }
-
-    const USWDS = (window as any).USWDS;
-    if (USWDS && USWDS.select && typeof USWDS.select.on === 'function') {
-      USWDS.select.on(this);
-      this.uswdsInitialized = true;
-      console.log('✅ Global USWDS select initialized successfully');
-    } else {
-      console.warn('⚠️ Global USWDS select not available');
-      this.setupFallbackBehavior();
-    }
-  }
-
-  private setupFallbackBehavior() {
-    console.log('🚀 Setting up fallback select behavior');
-    // Basic select functionality is handled by the browser
-  }
-
-  private cleanupUSWDS() {
-    try {
-      if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
-        this.uswdsModule.off(this);
-        console.log('✅ Tree-shaken USWDS select cleaned up');
-      } else if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
-        if (USWDS.select && typeof USWDS.select.off === 'function') {
-          USWDS.select.off(this);
-          console.log('✅ Global USWDS select cleaned up');
-        }
-      }
-    } catch (error) {
-      console.warn('⚠️ USWDS cleanup failed:', error);
-    }
-    this.uswdsModule = null;
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    // Clean up tree-shaken USWDS module
-    this.cleanupUSWDS();
-
-    // Reset enhancement flag to allow reinitialization
-    this.usingUSWDSEnhancement = false;
-  }
   private renderLabel(selectId: string) {
     if (!this.label) return '';
 

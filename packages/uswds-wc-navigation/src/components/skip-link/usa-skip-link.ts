@@ -45,9 +45,6 @@ export class USASkipLink extends USWDSBaseComponent {
   @property({ type: Boolean, reflect: true })
   multiple = false;
 
-  // Store USWDS module for cleanup
-  private uswdsModule: any = null;
-  private usingUSWDSEnhancement = false;
   // Light DOM is handled by USWDSBaseComponent
 
   override connectedCallback() {
@@ -55,23 +52,19 @@ export class USASkipLink extends USWDSBaseComponent {
 
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
-    console.log('🔗 Skip Link: Using USWDS pattern (no external JavaScript needed)');
-    // Initialize progressive enhancement
-    this.initializeUSWDSSkipLink();
+
+    // Note: USWDS Skip Link is CSS-only for styling.
+    // Focus management is handled by the component's handleClick method.
+    // No dynamic imports needed - works in all environments (bundled, CDN, SSR).
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    console.log('🔗 Skip Link: Cleaning up USWDS patterns');
-    this.cleanupUSWDS();
 
     // Clean up timeout to prevent memory leaks and DOM access after disconnect
     if (this.timeoutId !== null) {
       clearTimeout(this.timeoutId);
       this.timeoutId = null;
-
-      // Reset enhancement flag to allow reinitialization
-      this.usingUSWDSEnhancement = false;
     }
   }
 
@@ -88,117 +81,6 @@ export class USASkipLink extends USWDSBaseComponent {
     }
 
     return classes.join(' ');
-  }
-  private async initializeUSWDSSkipLink() {
-    // Prevent multiple initializations
-    if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
-      return;
-    }
-
-    console.log('🎯 Skip Link: Initializing USWDS skipnav for focus management and accessibility');
-    try {
-      // Use standardized USWDS loader utility for consistency with other components
-      const { loadUSWDSModule } = await import('@uswds-wc/core');
-
-      await this.updateComplete;
-      const skipLinkElement = this.querySelector('.usa-skipnav');
-
-      if (skipLinkElement) {
-        // Let USWDS handle skip link clicks and focus management using standard loader
-        this.uswdsModule = await loadUSWDSModule('skipnav');
-
-        // Initialize the loaded module on the element
-        if (this.uswdsModule && typeof this.uswdsModule.on === 'function') {
-          this.uswdsModule.on(skipLinkElement);
-        }
-
-        this.usingUSWDSEnhancement = true;
-
-        console.log(
-          '✅ USWDS skipnav initialized successfully - focus management handled by USWDS'
-        );
-        return; // USWDS owns all skip link behavior now
-      } else {
-        console.warn(
-          '⚠️ Skip Link: No .usa-skipnav element found, using fallback focus management'
-        );
-        this.setupFallbackBehavior();
-      }
-    } catch (error) {
-      console.warn('🔧 Skip Link: USWDS integration failed, using fallback:', error);
-      await this.loadFullUSWDSLibrary();
-    }
-  }
-
-  /**
-   * Fallback: Check for existing USWDS or use component fallback
-   */
-  private async loadFullUSWDSLibrary(): Promise<void> {
-    // Check if USWDS is already loaded globally
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      console.log(`📦 USWDS already available globally`);
-      this.initializeWithGlobalUSWDS();
-      return;
-    }
-
-    // If not in browser environment, use fallback
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
-      console.log(`📦 Not in browser environment, using component fallback`);
-      this.setupFallbackBehavior();
-      return;
-    }
-
-    console.log(`📦 USWDS not available, using component fallback behavior`);
-    this.setupFallbackBehavior();
-  }
-
-  /**
-   * Initialize using global USWDS object (fallback mode)
-   */
-  private initializeWithGlobalUSWDS() {
-    // Prevent multiple initializations
-    if (this.usingUSWDSEnhancement) {
-      console.log(`⚠️ Skip Link: Already initialized globally, skipping duplicate initialization`);
-      return;
-    }
-
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
-      if (USWDS['skip-link'] && typeof USWDS['skip-link'].on === 'function') {
-        USWDS['skip-link'].on(this);
-        this.usingUSWDSEnhancement = true;
-        console.log(`🎯 USWDS skip link initialized (fallback mode)`);
-      }
-    }
-  }
-
-  /**
-   * Setup basic component functionality without USWDS enhancement
-   */
-  private setupFallbackBehavior() {
-    console.log(`🔍 Setting up basic skip link functionality`);
-    // Component already has full fallback behavior implemented
-    console.log(`🎯 Skip Link ready with basic functionality`);
-  }
-
-  /**
-   * Clean up USWDS module on component destruction
-   */
-  private async cleanupUSWDS() {
-    try {
-      // Cleanup USWDS module
-      if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
-        this.uswdsModule.off(this);
-      }
-    } catch (error) {
-      console.warn('⚠️ Skip Link: Cleanup error:', error);
-    }
-
-    this.uswdsModule = null;
-    this.usingUSWDSEnhancement = false;
   }
 
   // Use light DOM for USWDS compatibility
@@ -228,11 +110,18 @@ export class USASkipLink extends USWDSBaseComponent {
   private focusTarget() {
     const target = this.getTargetElement();
     if (target) {
-      // Add tabindex if not present to make element focusable
-      if (!target.hasAttribute('tabindex')) {
-        target.setAttribute('tabindex', '-1');
-      }
+      // USWDS behavior: Set tabindex="0" and outline to 0
+      // Source: https://github.com/uswds/uswds/blob/develop/packages/usa-skipnav/src/index.js
+      target.setAttribute('tabindex', '0');
+      target.style.outline = '0';
       target.focus();
+
+      // USWDS behavior: Reset tabindex to -1 on blur (one-time handler)
+      const handleBlur = () => {
+        target.setAttribute('tabindex', '-1');
+        target.removeEventListener('blur', handleBlur);
+      };
+      target.addEventListener('blur', handleBlur);
     }
   }
 
@@ -268,14 +157,18 @@ export class USASkipLink extends USWDSBaseComponent {
     // Guard against accessing document when component is not connected
     if (!this.isConnected) return null;
 
-    // Guard against empty or just '#' selector (common edge case, not an error)
-    if (!this.href || this.href === '#') {
+    // Guard against empty selector
+    if (!this.href) {
       return null;
     }
 
+    // USWDS behavior: "#" targets "main-content"
+    // Source: https://github.com/uswds/uswds/blob/develop/packages/usa-skipnav/src/index.js
+    const targetId = this.href === '#' ? 'main-content' : this.href.slice(1);
+
     // Guard against malformed selectors
     try {
-      return document.querySelector(this.href);
+      return document.getElementById(targetId);
     } catch (error) {
       console.warn(`Skip link: Invalid target selector "${this.href}"`, error);
       return null;

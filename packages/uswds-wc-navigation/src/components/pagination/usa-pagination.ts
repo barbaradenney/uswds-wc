@@ -33,8 +33,6 @@ import '@uswds-wc/core/styles.css';
  */
 @customElement('usa-pagination')
 export class USAPagination extends USWDSBaseComponent {
-  // Store USWDS module for cleanup
-  private uswdsModule: any = null;
   static override styles = css`
     :host {
       display: block;
@@ -144,79 +142,13 @@ export class USAPagination extends USWDSBaseComponent {
   }
 
   override firstUpdated(changedProperties: Map<string, any>) {
-    // ARCHITECTURE: Script Tag Pattern
-    // USWDS is loaded globally via script tag in .storybook/preview-head.html
-    // Components just render HTML - USWDS enhances automatically via window.USWDS
-
     super.firstUpdated(changedProperties);
-    // Initialize USWDS pagination after DOM is ready
-    this.initializeUSWDSPagination();
+
+    // Note: USWDS Pagination is CSS-only for styling.
+    // Page navigation is handled by the component's handlePageClick method.
+    // No dynamic imports needed - works in all environments (bundled, CDN, SSR).
   }
 
-  private async initializeUSWDSPagination() {
-    try {
-      // Check if pagination is CSS-only before attempting to load
-      const { isCSSOnlyComponent } = await import('@uswds-wc/core');
-      if (isCSSOnlyComponent('pagination')) {
-        console.log('✅ USWDS pagination is CSS-only, using web component behavior');
-        // Pagination is CSS-only - no JavaScript behavior needed from USWDS
-        // Web component handles all interactions via click handlers
-        return;
-      }
-
-      // Use standardized USWDS loader utility for consistency with other components
-      const { loadUSWDSModule } = await import('@uswds-wc/core');
-
-      await this.updateComplete;
-
-      const paginationElement = this.querySelector('.usa-pagination');
-
-      if (!paginationElement) {
-        console.warn('Pagination element not found');
-        return;
-      }
-
-      // Let USWDS handle the pagination using standard loader
-      this.uswdsModule = await loadUSWDSModule('pagination');
-
-      // Initialize the loaded module on the element
-      if (this.uswdsModule && typeof this.uswdsModule.on === 'function') {
-        this.uswdsModule.on(paginationElement);
-      }
-
-      if (this.uswdsModule) {
-        console.log('✅ USWDS pagination initialized successfully');
-      } else {
-        console.warn('⚠️ Pagination: USWDS module not available');
-      }
-    } catch (error) {
-      console.warn('🔧 Pagination: USWDS integration failed:', error);
-    }
-  }
-
-  private cleanupUSWDS() {
-    try {
-      if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
-        this.uswdsModule.off(this);
-        console.log('✅ Tree-shaken USWDS pagination cleaned up');
-      } else if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
-        if (USWDS.pagination && typeof USWDS.pagination.off === 'function') {
-          USWDS.pagination.off(this);
-          console.log('✅ Global USWDS pagination cleaned up');
-        }
-      }
-    } catch (error) {
-      console.warn('⚠️ USWDS cleanup failed:', error);
-    }
-    this.uswdsModule = null;
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    // Clean up tree-shaken USWDS module
-    this.cleanupUSWDS();
-  }
   private handlePageClick(event: Event, page: number) {
     event.preventDefault();
 

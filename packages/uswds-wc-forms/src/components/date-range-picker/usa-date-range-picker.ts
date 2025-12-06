@@ -49,9 +49,6 @@ export class USADateRangePicker extends USWDSBaseComponent {
     }
   `;
 
-  // USWDS module instance (loaded dynamically)
-  private uswdsModule: any = null;
-
   @property({ type: String })
   startDate = '';
 
@@ -110,17 +107,11 @@ export class USADateRangePicker extends USWDSBaseComponent {
   }
 
   override firstUpdated(changedProperties: Map<string, any>) {
-    // ARCHITECTURE: Script Tag Pattern
-    // USWDS is loaded globally via script tag in .storybook/preview-head.html
-    // Components just render HTML - USWDS enhances automatically via window.USWDS
-
     super.firstUpdated(changedProperties);
-    this.initializeUSWDSDateRangePicker();
-  }
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.cleanupUSWDS();
+    // Note: Date range picker coordination is handled by this component.
+    // Child usa-date-picker components handle their own calendar behavior.
+    // No dynamic imports needed - works in all environments (bundled, CDN, SSR).
   }
 
   override updated(changedProperties: Map<string, any>) {
@@ -179,51 +170,6 @@ export class USADateRangePicker extends USWDSBaseComponent {
       if (end < start) {
         this.endDate = '';
       }
-    }
-  }
-
-  private async initializeUSWDSDateRangePicker() {
-    try {
-      await this.updateComplete;
-
-      const dateRangePickerElement = this.querySelector('.usa-date-range-picker');
-
-      if (!dateRangePickerElement) {
-        console.warn('Date range picker element not found');
-        return;
-      }
-
-      // Wait for child date picker components to be fully ready
-      const datePickers = Array.from(
-        dateRangePickerElement.querySelectorAll('usa-date-picker')
-      ) as any[];
-
-      // Wait for all child date pickers to complete their rendering
-      await Promise.all(datePickers.map((picker) => picker.updateComplete || Promise.resolve()));
-
-      // Yield to event loop to allow DOM to settle
-      // Uses setTimeout(0) to defer execution - no cleanup needed as it resolves immediately
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      // Additional check: ensure input elements exist before initializing USWDS
-      const inputs = dateRangePickerElement.querySelectorAll('.usa-date-picker__external-input');
-      if (inputs.length < 2) {
-        // Silently skip initialization if inputs aren't ready
-        // This can happen in test environments with fast rendering
-        return;
-      }
-
-      // Use loadUSWDSModule for date range picker
-      const { loadUSWDSModule } = await import('@uswds-wc/core');
-      this.uswdsModule = await loadUSWDSModule('date-range-picker');
-
-      if (this.uswdsModule && typeof this.uswdsModule.on === 'function') {
-        this.uswdsModule.on(dateRangePickerElement);
-      } else {
-        console.warn('⚠️ Date Range Picker: USWDS module not available');
-      }
-    } catch (error) {
-      console.warn('🔧 Date Range Picker: USWDS integration failed:', error);
     }
   }
 
@@ -330,19 +276,6 @@ export class USADateRangePicker extends USWDSBaseComponent {
 
     // Same day should return 1 day, not 0
     return diffDays === 0 ? 1 : diffDays;
-  }
-
-  private async cleanupUSWDS() {
-    try {
-      // Cleanup USWDS module
-      if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
-        this.uswdsModule.off(this);
-      }
-    } catch (error) {
-      console.warn('⚠️ Date Range Picker: Cleanup error:', error);
-    }
-
-    this.uswdsModule = null;
   }
 
   private renderError() {

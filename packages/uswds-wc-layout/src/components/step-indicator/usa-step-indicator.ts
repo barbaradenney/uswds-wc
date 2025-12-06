@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { loadUSWDSModule } from '@uswds-wc/core';
 
 // Import official USWDS compiled CSS
 import '@uswds-wc/core/styles.css';
@@ -30,8 +29,6 @@ export interface StepItem {
  */
 @customElement('usa-step-indicator')
 export class USAStepIndicator extends LitElement {
-  // Store USWDS module for cleanup
-  private uswdsModule: any = null;
   static override styles = css`
     :host {
       display: block;
@@ -96,12 +93,11 @@ export class USAStepIndicator extends LitElement {
   }
 
   override firstUpdated(changedProperties: Map<string, any>) {
-    // ARCHITECTURE: Script Tag Pattern
-    // USWDS is loaded globally via script tag in .storybook/preview-head.html
-    // Components just render HTML - USWDS enhances automatically via window.USWDS
-
     super.firstUpdated?.(changedProperties);
-    this.initializeUSWDSStepIndicator();
+
+    // Note: USWDS Step Indicator is CSS-only for styling.
+    // Step navigation is handled by the component's public API methods.
+    // No dynamic imports needed - works in all environments (bundled, CDN, SSR).
   }
 
   override updated(changedProperties: Map<string | number | symbol, unknown>) {
@@ -201,45 +197,7 @@ export class USAStepIndicator extends LitElement {
       </li>
     `;
   }
-  private async initializeUSWDSStepIndicator() {
-    // Prevent duplicate initialization
-    if (this.uswdsModule) {
-      console.log('⚠️ Step Indicator: Already initialized, skipping duplicate initialization');
-      return;
-    }
 
-    try {
-      // Use standardized USWDS loader utility for consistency
-      await this.updateComplete;
-      const element = this.querySelector('.usa-step-indicator');
-
-      if (!element) {
-        console.warn('Step indicator element not found');
-        return;
-      }
-
-      // Let USWDS handle the component using standard loader
-      this.uswdsModule = await loadUSWDSModule('step-indicator');
-
-      // Initialize the loaded module on the element
-      if (this.uswdsModule && typeof this.uswdsModule.on === 'function') {
-        this.uswdsModule.on(element);
-      }
-
-      console.log('✅ USWDS step indicator initialized successfully');
-    } catch (error) {
-      console.warn('🔧 Step Indicator: USWDS integration failed:', error);
-    }
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    // Clean up USWDS module
-    if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
-      this.uswdsModule.off(this);
-    }
-    this.uswdsModule = null;
-  }
   private renderHeader() {
     if (this.steps.length === 0) return '';
 
