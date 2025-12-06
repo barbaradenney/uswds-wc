@@ -32,6 +32,8 @@ import 'path/to/uswds-webcomponents/src/components/select/index.js';
 | `required`      | `any`                   | `false` | Property description |
 | `options`       | `Array<{ value: string` | ``      | Property description |
 | `defaultOption` | `any`                   | `''`    | Property description |
+| `compact`       | `any`                   | `false` | Property description |
+| `noComboBox`    | `any`                   | `false` | Property description |
 
 ## Events
 
@@ -76,4 +78,4 @@ View component examples: [USASelect Stories](http://localhost:6006/?path=/story/
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-06_
