@@ -29,7 +29,6 @@ export interface SelectOption {
  * @attr {boolean} required - Whether the select is required.
  * @attr {string} defaultOption - Placeholder text for default empty option.
  * @attr {boolean} compact - Render without form-group wrapper for use in patterns.
- * @attr {boolean} no-combo-box - Disable combo-box enhancement for simple selects.
  *
  * @prop {Array<{value: string, text: string, disabled?: boolean}>} options - Array of select options.
  *
@@ -65,7 +64,7 @@ export interface SelectOption {
  * ></usa-select>
  *
  * <!-- Compact select for patterns -->
- * <usa-select compact no-combo-box label="Month" .options=${months}></usa-select>
+ * <usa-select compact label="Month" .options=${months}></usa-select>
  * ```
  *
  * @see README.mdx - Complete API documentation, usage examples, and implementation notes
@@ -124,14 +123,6 @@ export class USASelect extends LitElement {
    */
   @property({ type: Boolean })
   compact = false;
-
-  /**
-   * Whether to disable the combo-box wrapper
-   * Use this for simple selects like memorable date month field
-   * that don't need combo-box enhancement
-   */
-  @property({ type: Boolean, attribute: 'no-combo-box' })
-  noComboBox = false;
 
   private selectElement?: HTMLSelectElement;
 
@@ -363,7 +354,7 @@ export class USASelect extends LitElement {
     const selectTemplate = html`
       ${this.renderLabel(selectId)} ${this.renderHint(selectId)} ${this.renderError(selectId)}
       ${this.renderSuccess(selectId)}
-      ${this.noComboBox ? selectElement : html`<div class="usa-combo-box">${selectElement}</div>`}
+      ${selectElement}
     `;
 
     // Compact mode: no form-group wrapper (for use inside fieldsets/patterns)
