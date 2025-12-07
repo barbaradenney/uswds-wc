@@ -11,8 +11,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import pkg from 'glob';
-const { sync: globSync } = pkg;
+import { globSync } from 'glob';
 import path from 'path';
 import { getAllComponentPaths, getAllComponentNames } from '../utils/find-components.js';
 
