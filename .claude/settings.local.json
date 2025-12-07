@@ -7,7 +7,10 @@
       "Bash(gh run view:*)",
       "Bash(pnpm run typecheck)",
       "Bash(cd:*)",
-      "Bash(git push --no-verify origin develop)"
+      "Bash(git push --no-verify origin develop)",
+      "Bash(cd /Users/barbaramiles/Library/Mobile\\ Documents/com~apple~CloudDocs/Documents/Github/uswds-wc && grep:*)",
+      "Bash(find:*)",
+      "Bash(pnpm test:*)"
     ],
     "deny": [],
     "ask": []

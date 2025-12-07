@@ -132,21 +132,18 @@ export function validateFieldOrder(pattern: Element, expectedOrder: string[]) {
 }
 
 /**
- * Validates combo-box wrapper on select elements
+ * Validates select elements render correctly
+ * Note: usa-select no longer uses combo-box wrapper (simplified in v2.5.3)
  */
-export async function validateComboBoxWrapper(pattern: Element) {
+export async function validateSelectRendering(pattern: Element) {
   const selects = pattern.querySelectorAll('usa-select');
 
   for (const selectComponent of Array.from(selects)) {
     await (selectComponent as any)?.updateComplete;
 
-    const comboBox = selectComponent.querySelector('.usa-combo-box');
-    expect(comboBox).toBeTruthy();
-    expect(comboBox?.tagName).toBe('DIV');
-
-    const select = comboBox?.querySelector('select.usa-select');
+    // Select element should be directly inside usa-select component
+    const select = selectComponent.querySelector('select.usa-select');
     expect(select).toBeTruthy();
-    expect(select?.parentElement).toBe(comboBox);
   }
 }
 
@@ -231,9 +228,9 @@ export async function runGenericPatternCompliance(config: PatternComplianceConfi
   validateNoGridWrappers(pattern);
   validateFieldsAreDirectChildren(pattern);
 
-  // Combo-box validation (if selects present)
+  // Select validation (if selects present)
   if (pattern.querySelector('usa-select')) {
-    await validateComboBoxWrapper(pattern);
+    await validateSelectRendering(pattern);
   }
 
   // Label validation (if provided)
@@ -279,9 +276,9 @@ export function createGenericPatternComplianceTests(
       validateFieldsAreDirectChildren(getPattern());
     },
 
-    'should wrap selects in combo-box div': async () => {
+    'should render selects correctly': async () => {
       if (getPattern().querySelector('usa-select')) {
-        await validateComboBoxWrapper(getPattern());
+        await validateSelectRendering(getPattern());
       }
     },
 

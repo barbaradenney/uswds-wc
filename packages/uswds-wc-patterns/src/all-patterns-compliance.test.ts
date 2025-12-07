@@ -15,7 +15,7 @@ import {
   validateNoFormGroups,
   validateNoGridWrappers,
   validateFieldsAreDirectChildren,
-  validateComboBoxWrapper,
+  validateSelectRendering,
   validateCompactRendering,
 } from './test-utils/pattern-compliance-tests.js';
 
@@ -30,7 +30,7 @@ import {
  * - Compact mode usage
  * - No form-group wrappers
  * - No grid layout wrappers
- * - Combo-box wrappers (where applicable)
+ * - Select rendering (where applicable)
  * - Direct children structure
  * - Compact rendering
  *
@@ -157,22 +157,19 @@ PATTERNS.forEach((patternConfig) => {
 
     // Conditional tests based on pattern features
     if (patternConfig.hasSelects) {
-      describe('Combo-Box Wrapper (Select Components)', () => {
-        it('should wrap all select elements in usa-combo-box div', async () => {
-          await validateComboBoxWrapper(pattern);
+      describe('Select Components', () => {
+        it('should render select elements correctly', async () => {
+          await validateSelectRendering(pattern);
         });
 
-        it('should have select as direct child of combo-box', async () => {
+        it('should have select element with usa-select class', async () => {
           const selects = pattern.querySelectorAll('usa-select');
 
           for (const selectComponent of Array.from(selects)) {
             await (selectComponent as any)?.updateComplete;
 
-            const comboBox = selectComponent.querySelector('.usa-combo-box');
-            const select = comboBox?.querySelector('select.usa-select');
-
+            const select = selectComponent.querySelector('select.usa-select');
             expect(select).toBeTruthy();
-            expect(select?.parentElement).toBe(comboBox);
           }
         });
       });
@@ -335,7 +332,7 @@ describe('Pattern Test Coverage Report', () => {
 
     PATTERNS.forEach((config, index) => {
       const features = [];
-      if (config.hasSelects) features.push('Combo-box');
+      if (config.hasSelects) features.push('Selects');
       if (config.skipTests?.length) features.push(`Skipped: ${config.skipTests.join(', ')}`);
 
       console.log(`  ${index + 1}. ${config.displayName} (${config.tagName})`);

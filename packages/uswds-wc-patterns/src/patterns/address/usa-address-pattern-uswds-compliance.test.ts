@@ -118,25 +118,22 @@ describe('USAAddressPattern - USWDS Compliance', () => {
     });
   });
 
-  describe('Combo-Box Wrapper (USWDS Requirement)', () => {
-    it('should wrap select in usa-combo-box div', async () => {
+  describe('Select Component Rendering', () => {
+    it('should render select element with usa-select class', async () => {
       const selectComponent = pattern.querySelector('usa-select[name="state"]') as any;
       await selectComponent?.updateComplete;
 
-      const comboBox = selectComponent?.querySelector('.usa-combo-box');
-      expect(comboBox).toBeTruthy();
-      expect(comboBox?.tagName).toBe('DIV');
+      const select = selectComponent?.querySelector('select.usa-select');
+      expect(select).toBeTruthy();
     });
 
-    it('should have select as direct child of combo-box', async () => {
+    it('should have select element directly in usa-select component', async () => {
       const selectComponent = pattern.querySelector('usa-select[name="state"]') as any;
       await selectComponent?.updateComplete;
 
-      const comboBox = selectComponent?.querySelector('.usa-combo-box');
-      const select = comboBox?.querySelector('select.usa-select');
-
+      const select = selectComponent?.querySelector('select.usa-select');
       expect(select).toBeTruthy();
-      expect(select?.parentElement).toBe(comboBox);
+      expect(select?.closest('usa-select')).toBe(selectComponent);
     });
   });
 

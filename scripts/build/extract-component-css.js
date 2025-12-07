@@ -1,17 +1,83 @@
 #!/usr/bin/env node
 
 /**
- * CSS Tree-Shaking via CSS Extraction
+ * CSS Tree-Shaking via CSS Extraction (Monorepo Version)
  *
- * This script extracts component-specific CSS rules from the complete USWDS CSS,
+ * This script extracts component-specific CSS rules from the compiled USWDS CSS,
  * creating smaller, tree-shaken CSS files for individual components.
  */
 
-import { readFile, writeFile } from 'fs/promises';
-import { join } from 'path';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import postcss from 'postcss';
 
-// Component to CSS class mapping (ALL 46 components)
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT_DIR = join(__dirname, '../..');
+
+// Component to package mapping
+const componentPackageMap = {
+  // uswds-wc-actions
+  button: 'uswds-wc-actions',
+  'button-group': 'uswds-wc-actions',
+  link: 'uswds-wc-actions',
+  search: 'uswds-wc-actions',
+
+  // uswds-wc-data-display
+  card: 'uswds-wc-data-display',
+  collection: 'uswds-wc-data-display',
+  icon: 'uswds-wc-data-display',
+  'icon-list': 'uswds-wc-data-display',
+  list: 'uswds-wc-data-display',
+  'summary-box': 'uswds-wc-data-display',
+  table: 'uswds-wc-data-display',
+  tag: 'uswds-wc-data-display',
+
+  // uswds-wc-feedback
+  alert: 'uswds-wc-feedback',
+  banner: 'uswds-wc-feedback',
+  modal: 'uswds-wc-feedback',
+  'site-alert': 'uswds-wc-feedback',
+  tooltip: 'uswds-wc-feedback',
+
+  // uswds-wc-forms
+  'character-count': 'uswds-wc-forms',
+  checkbox: 'uswds-wc-forms',
+  'combo-box': 'uswds-wc-forms',
+  'date-picker': 'uswds-wc-forms',
+  'date-range-picker': 'uswds-wc-forms',
+  'file-input': 'uswds-wc-forms',
+  'input-prefix-suffix': 'uswds-wc-forms',
+  'memorable-date': 'uswds-wc-forms',
+  radio: 'uswds-wc-forms',
+  'range-slider': 'uswds-wc-forms',
+  select: 'uswds-wc-forms',
+  'text-input': 'uswds-wc-forms',
+  textarea: 'uswds-wc-forms',
+  'time-picker': 'uswds-wc-forms',
+  validation: 'uswds-wc-forms',
+
+  // uswds-wc-layout
+  identifier: 'uswds-wc-layout',
+  'process-list': 'uswds-wc-layout',
+  prose: 'uswds-wc-layout',
+  'step-indicator': 'uswds-wc-layout',
+
+  // uswds-wc-navigation
+  breadcrumb: 'uswds-wc-navigation',
+  footer: 'uswds-wc-navigation',
+  header: 'uswds-wc-navigation',
+  'in-page-navigation': 'uswds-wc-navigation',
+  'language-selector': 'uswds-wc-navigation',
+  pagination: 'uswds-wc-navigation',
+  'side-navigation': 'uswds-wc-navigation',
+  'skip-link': 'uswds-wc-navigation',
+
+  // uswds-wc-structure
+  accordion: 'uswds-wc-structure',
+};
+
+// Component to CSS class mapping (ALL components)
 const componentCssMap = {
   accordion: [
     'usa-accordion',
@@ -26,6 +92,7 @@ const componentCssMap = {
     'usa-alert__heading',
     'usa-alert__text',
     'usa-alert__body',
+    'usa-alert__icon',
     'usa-alert--info',
     'usa-alert--warning',
     'usa-alert--error',
@@ -53,9 +120,9 @@ const componentCssMap = {
   breadcrumb: [
     'usa-breadcrumb',
     'usa-breadcrumb__list',
-    'usa-breadcrumb__item',
-    'usa-breadcrumb__link',
     'usa-breadcrumb__list-item',
+    'usa-breadcrumb__link',
+    'usa-breadcrumb--wrap',
   ],
   button: [
     'usa-button',
@@ -68,8 +135,13 @@ const componentCssMap = {
     'usa-button--big',
     'usa-button--small',
     'usa-button--unstyled',
+    'usa-button--noBorder',
   ],
-  'button-group': ['usa-button-group', 'usa-button-group__item'],
+  'button-group': [
+    'usa-button-group',
+    'usa-button-group__item',
+    'usa-button-group--segmented',
+  ],
   card: [
     'usa-card',
     'usa-card__container',
@@ -88,13 +160,14 @@ const componentCssMap = {
     'usa-character-count__field',
     'usa-character-count__message',
     'usa-character-count__status',
-    'usa-character-count__sr-text',
+    'usa-character-count__sr-status',
   ],
   checkbox: [
     'usa-checkbox',
     'usa-checkbox__input',
     'usa-checkbox__label',
-    'usa-checkbox__label-text',
+    'usa-checkbox__label-description',
+    'usa-checkbox--tile',
   ],
   collection: [
     'usa-collection',
@@ -104,11 +177,18 @@ const componentCssMap = {
     'usa-collection__meta',
     'usa-collection__meta-item',
     'usa-collection__calendar-date',
+    'usa-collection__calendar-date-month',
+    'usa-collection__calendar-date-day',
+    'usa-collection__img',
+    'usa-collection__body',
   ],
   'combo-box': [
     'usa-combo-box',
     'usa-combo-box__input',
     'usa-combo-box__toggle-list',
+    'usa-combo-box__toggle-list__wrapper',
+    'usa-combo-box__clear-input',
+    'usa-combo-box__clear-input__wrapper',
     'usa-combo-box__list',
     'usa-combo-box__list-option',
     'usa-combo-box__list-option--focused',
@@ -122,6 +202,8 @@ const componentCssMap = {
     'usa-date-picker__button',
     'usa-date-picker__calendar',
     'usa-date-picker__calendar__table',
+    'usa-date-picker__calendar__row',
+    'usa-date-picker__calendar__cell',
     'usa-date-picker__calendar__date',
     'usa-date-picker__calendar__date--focused',
     'usa-date-picker__calendar__date--selected',
@@ -133,12 +215,10 @@ const componentCssMap = {
     'usa-date-picker__calendar__date--previous-month',
     'usa-date-picker__calendar__date--next-month',
     'usa-date-picker__external-input',
+    'usa-date-picker__status',
   ],
   'date-range-picker': [
     'usa-date-range-picker',
-    'usa-date-range-picker__wrapper',
-    'usa-date-range-picker__start-date',
-    'usa-date-range-picker__end-date',
     'usa-date-range-picker__range-start',
     'usa-date-range-picker__range-end',
   ],
@@ -152,8 +232,9 @@ const componentCssMap = {
     'usa-file-input__accepted-files-message',
     'usa-file-input__preview',
     'usa-file-input__preview-heading',
-    'usa-file-input__preview__heading',
-    'usa-file-input__disabled-text',
+    'usa-file-input__preview-image',
+    'usa-file-input__input',
+    'usa-file-input--disabled',
   ],
   footer: [
     'usa-footer',
@@ -163,27 +244,41 @@ const componentCssMap = {
     'usa-footer__primary-container',
     'usa-footer__primary-content',
     'usa-footer__nav',
+    'usa-footer__primary-link',
+    'usa-footer__secondary-link',
     'usa-footer__address',
     'usa-footer__logo',
     'usa-footer__logo-img',
     'usa-footer__logo-heading',
     'usa-footer__contact-info',
     'usa-footer__contact-links',
+    'usa-footer__contact-heading',
     'usa-footer__social-links',
+    'usa-footer--big',
+    'usa-footer--medium',
+    'usa-footer--slim',
   ],
   header: [
     'usa-header',
-    'usa-header__logo',
-    'usa-header__title',
+    'usa-header--basic',
+    'usa-header--extended',
+    'usa-logo',
+    'usa-logo__text',
     'usa-navbar',
     'usa-nav',
     'usa-nav__primary',
     'usa-nav__primary-item',
     'usa-nav__link',
+    'usa-nav__link--current',
     'usa-nav__submenu',
     'usa-nav__submenu-item',
+    'usa-nav__submenu-list',
     'usa-nav__close',
+    'usa-nav__secondary',
+    'usa-nav__secondary-links',
+    'usa-nav-container',
     'usa-menu-btn',
+    'usa-overlay',
   ],
   icon: [
     'usa-icon',
@@ -195,22 +290,35 @@ const componentCssMap = {
     'usa-icon--size-8',
     'usa-icon--size-9',
   ],
+  'icon-list': [
+    'usa-icon-list',
+    'usa-icon-list__item',
+    'usa-icon-list__icon',
+    'usa-icon-list__content',
+    'usa-icon-list__title',
+    'usa-icon-list--size-lg',
+  ],
   identifier: [
     'usa-identifier',
     'usa-identifier__container',
     'usa-identifier__section',
+    'usa-identifier__section--masthead',
+    'usa-identifier__section--required-links',
+    'usa-identifier__section--usagov',
+    'usa-identifier__logos',
     'usa-identifier__logo',
     'usa-identifier__logo-img',
     'usa-identifier__identity',
     'usa-identifier__identity-domain',
     'usa-identifier__identity-disclaimer',
+    'usa-identifier__required-links-list',
+    'usa-identifier__required-links-item',
     'usa-identifier__required-link',
-    'usa-identifier__links',
-    'usa-identifier__link',
+    'usa-identifier__usagov-description',
   ],
   'in-page-navigation': [
     'usa-in-page-nav',
-    'usa-in-page-nav__nav',
+    'usa-in-page-nav__heading',
     'usa-in-page-nav__list',
     'usa-in-page-nav__item',
     'usa-in-page-nav__link',
@@ -220,24 +328,27 @@ const componentCssMap = {
     'usa-input-prefix',
     'usa-input-suffix',
     'usa-input-group',
-    'usa-input-group__addon',
+    'usa-input-group--error',
+    'usa-input-group--success',
   ],
   'language-selector': [
-    'usa-language-selector',
-    'usa-language-selector__button',
-    'usa-language-selector__list',
-    'usa-language-selector__list-item',
-    'usa-language-selector__link',
+    'usa-language',
+    'usa-language__primary',
+    'usa-language__primary-content',
+    'usa-language__submenu',
+    'usa-language__submenu-item',
+    'usa-language__submenu-list',
+    'usa-language__link',
+    'usa-language--small',
   ],
   link: ['usa-link', 'usa-link--external', 'usa-link--alt'],
   list: ['usa-list', 'usa-list--unstyled'],
   'memorable-date': [
     'usa-memorable-date',
-    'usa-memorable-date__day',
-    'usa-memorable-date__month',
-    'usa-memorable-date__year',
+    'usa-form-group--day',
+    'usa-form-group--month',
+    'usa-form-group--year',
   ],
-  // menu: Removed - component not implemented yet
   modal: [
     'usa-modal',
     'usa-modal__content',
@@ -248,6 +359,8 @@ const componentCssMap = {
     'usa-modal__close',
     'usa-modal--lg',
     'usa-modal-wrapper',
+    'usa-modal-overlay',
+    'is-visible',
   ],
   pagination: [
     'usa-pagination',
@@ -255,46 +368,62 @@ const componentCssMap = {
     'usa-pagination__item',
     'usa-pagination__button',
     'usa-pagination__link',
+    'usa-pagination__link--current',
     'usa-pagination__arrow',
     'usa-pagination__overflow',
+    'usa-pagination__previous-page',
+    'usa-pagination__next-page',
   ],
   'process-list': [
     'usa-process-list',
     'usa-process-list__item',
     'usa-process-list__heading',
-    'usa-process-list__description',
   ],
   prose: ['usa-prose'],
-  radio: ['usa-radio', 'usa-radio__input', 'usa-radio__label', 'usa-radio__label-text'],
-  'range-slider': ['usa-range', 'usa-range__thumb'],
+  radio: [
+    'usa-radio',
+    'usa-radio__input',
+    'usa-radio__label',
+    'usa-radio__label-description',
+    'usa-radio--tile',
+  ],
+  'range-slider': [
+    'usa-range',
+    'usa-range--success',
+    'usa-range--error',
+  ],
   search: [
     'usa-search',
     'usa-search__input',
-    'usa-search__submit-text',
     'usa-search__submit',
+    'usa-search__submit-icon',
     'usa-search--small',
+    'usa-search--medium',
     'usa-search--big',
   ],
-  // section: Removed - component not implemented yet
   select: [
     'usa-select',
-    'usa-select--small',
-    'usa-select--big',
-    'usa-select--error',
     'usa-select--success',
+    'usa-select--error',
   ],
-  'side-navigation': ['usa-sidenav', 'usa-sidenav__item', 'usa-sidenav__sublist'],
+  'side-navigation': [
+    'usa-sidenav',
+    'usa-sidenav__item',
+    'usa-sidenav__sublist',
+    'usa-current',
+  ],
   'site-alert': [
     'usa-site-alert',
-    'usa-site-alert__body',
+    'usa-site-alert__content',
     'usa-site-alert__heading',
     'usa-site-alert__text',
     'usa-site-alert--emergency',
     'usa-site-alert--info',
     'usa-site-alert--no-icon',
+    'usa-site-alert--no-header',
     'usa-site-alert--slim',
   ],
-  'skip-link': ['usa-skipnav', 'usa-skipnav__list', 'usa-skipnav__item', 'usa-skipnav__link'],
+  'skip-link': ['usa-skipnav', 'usa-skipnav__container'],
   'step-indicator': [
     'usa-step-indicator',
     'usa-step-indicator__segments',
@@ -304,13 +433,11 @@ const componentCssMap = {
     'usa-step-indicator__segment--current',
     'usa-step-indicator__header',
     'usa-step-indicator__heading',
-    'usa-step-indicator__heading-counter',
     'usa-step-indicator__current-step',
     'usa-step-indicator__total-steps',
-    'usa-step-indicator__heading-text',
     'usa-step-indicator--counters',
+    'usa-step-indicator--counters-sm',
     'usa-step-indicator--center',
-    'usa-step-indicator--small',
     'usa-step-indicator--no-labels',
   ],
   'summary-box': [
@@ -322,98 +449,75 @@ const componentCssMap = {
   ],
   table: [
     'usa-table',
-    'usa-table__head',
+    'usa-table__header',
     'usa-table__body',
-    'usa-table__header__button',
+    'usa-table__row',
+    'usa-table__cell',
     'usa-table--borderless',
     'usa-table--compact',
     'usa-table--striped',
-    'usa-table--sortable',
+    'usa-table--stacked',
+    'usa-table--stacked-header',
+    'usa-table-container',
+    'usa-table-container--scrollable',
   ],
   tag: ['usa-tag', 'usa-tag--big'],
   'text-input': [
     'usa-input',
     'usa-input--small',
     'usa-input--medium',
-    'usa-input--big',
+    'usa-input--xl',
     'usa-input--error',
     'usa-input--success',
   ],
   textarea: [
     'usa-textarea',
-    'usa-textarea--small',
-    'usa-textarea--big',
     'usa-textarea--error',
     'usa-textarea--success',
   ],
-  'time-picker': ['usa-time-picker', 'usa-time-picker__filter'],
+  'time-picker': [
+    'usa-time-picker',
+    'usa-time-picker__input',
+  ],
   tooltip: [
     'usa-tooltip',
     'usa-tooltip__body',
+    'usa-tooltip__trigger',
     'usa-tooltip--top',
     'usa-tooltip--bottom',
     'usa-tooltip--left',
     'usa-tooltip--right',
+    'is-set',
+    'is-visible',
   ],
-  validation: ['usa-error-message', 'usa-hint'],
+  validation: [
+    'usa-error-message',
+    'usa-input--error',
+    'usa-select--error',
+    'usa-textarea--error',
+    'usa-form-group--error',
+    'usa-input--success',
+    'usa-select--success',
+    'usa-textarea--success',
+    'usa-form-group--success',
+  ],
 };
 
-// Core USWDS classes that should be included with every component
+// Minimal core classes - only true essentials
 const coreClasses = [
-  // Accessibility
+  // Screen reader only - used by many components
   'usa-sr-only',
+  // Focus styles
   'usa-focus',
-  'usa-current',
-  'usa-skipnav',
-
-  // Grid system (commonly used)
-  'grid-row',
-  'grid-col',
-  'grid-col-auto',
-  'grid-col-fill',
-  'grid-col-1',
-  'grid-col-2',
-  'grid-col-3',
-  'grid-col-4',
-  'grid-col-5',
-  'grid-col-6',
-  'grid-col-7',
-  'grid-col-8',
-  'grid-col-9',
-  'grid-col-10',
-  'grid-col-11',
-  'grid-col-12',
-  'tablet:grid-col-6',
-  'tablet:grid-col-4',
-  'desktop:grid-col-4',
-  'desktop:grid-col-6',
-  'desktop:grid-col-8',
-
-  // Media block (used by many components)
-  'usa-media-block',
-  'usa-media-block__img',
-  'usa-media-block__body',
-
-  // Form elements (shared across form components)
+  // Form group and label (used by all form components)
   'usa-form-group',
-  'usa-fieldset',
-  'usa-legend',
+  'usa-form-group--error',
   'usa-label',
+  'usa-label--error',
   'usa-hint',
   'usa-error-message',
-
-  // Common utility classes
-  'usa-layout-docs',
-  'usa-layout-docs__main',
-  'usa-layout-docs__sidenav',
-
-  // Typography utilities
+  // Typography
   'usa-prose',
-  'usa-intro',
-
-  // Button utilities (used across components)
-  'usa-button-group',
-  'usa-button-group__item',
 ];
 
 /**
@@ -424,27 +528,24 @@ function extractCssRules(css, classesToInclude) {
   const extractedRules = [];
   const includedSelectors = new Set();
 
-  // Create a comprehensive selector pattern
-  const classPattern = classesToInclude
-    .map((cls) => cls.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .join('|');
-
-  const selectorRegex = new RegExp(`\\.(${classPattern})(?:[:\\s,>+~]|$)`, 'g');
-
   ast.walkRules((rule) => {
     // Check if any selector in the rule matches our classes
     const shouldInclude = rule.selectors.some((selector) => {
-      return (
-        selectorRegex.test(selector) ||
-        // Include pseudo-states and modifiers
-        classesToInclude.some(
-          (cls) =>
-            selector.includes(`.${cls}:`) ||
-            selector.includes(`.${cls}[`) ||
-            selector.includes(`.${cls}.`) ||
-            selector === `.${cls}`
-        )
-      );
+      return classesToInclude.some((cls) => {
+        // Match exact class or class with pseudo/attribute selectors
+        const patterns = [
+          `.${cls}`,           // .usa-button
+          `.${cls}:`,          // .usa-button:hover
+          `.${cls}[`,          // .usa-button[disabled]
+          `.${cls}.`,          // .usa-button.usa-button--secondary
+          `.${cls} `,          // .usa-button descendant
+          `.${cls}>`,          // .usa-button > child
+          `.${cls}+`,          // .usa-button + sibling
+          `.${cls}~`,          // .usa-button ~ sibling
+          `.${cls},`,          // .usa-button, .other
+        ];
+        return patterns.some((p) => selector.includes(p)) || selector === `.${cls}`;
+      });
     });
 
     if (shouldInclude) {
@@ -453,22 +554,32 @@ function extractCssRules(css, classesToInclude) {
     }
   });
 
-  // Also include @media queries that contain our classes
+  // Include @media and @supports queries containing our classes
   ast.walkAtRules((rule) => {
     if (rule.name === 'media' || rule.name === 'supports') {
-      const hasMatchingRules = rule.nodes?.some((node) => {
-        if (node.type === 'rule') {
-          return node.selectors.some((selector) =>
-            classesToInclude.some((cls) => selector.includes(`.${cls}`))
-          );
+      const clonedRule = rule.clone();
+      let hasMatchingRules = false;
+
+      clonedRule.walkRules((innerRule) => {
+        const shouldKeep = innerRule.selectors.some((selector) => {
+          return classesToInclude.some((cls) => selector.includes(`.${cls}`));
+        });
+        if (shouldKeep) {
+          hasMatchingRules = true;
+        } else {
+          innerRule.remove();
         }
-        return false;
       });
 
       if (hasMatchingRules) {
-        extractedRules.push(rule.clone());
+        extractedRules.push(clonedRule);
       }
     }
+  });
+
+  // Include @font-face rules (needed for typography)
+  ast.walkAtRules('font-face', (rule) => {
+    extractedRules.push(rule.clone());
   });
 
   return {
@@ -479,18 +590,35 @@ function extractCssRules(css, classesToInclude) {
 }
 
 /**
+ * Get component directory path
+ */
+function getComponentPath(componentName) {
+  const packageName = componentPackageMap[componentName];
+  if (!packageName) {
+    return null;
+  }
+  return join(ROOT_DIR, 'packages', packageName, 'src', 'components', componentName);
+}
+
+/**
  * Process a single component
  */
-async function processComponent(componentName, fullCss) {
+async function processComponent(componentName, fullCss, verbose = false) {
   const componentClasses = componentCssMap[componentName];
   if (!componentClasses) {
     console.warn(`⚠️  No CSS class mapping found for component: ${componentName}`);
-    return { success: false, reason: 'No class mapping' };
+    return { success: false, componentName, reason: 'No class mapping' };
+  }
+
+  const componentPath = getComponentPath(componentName);
+  if (!componentPath) {
+    console.warn(`⚠️  No package mapping found for component: ${componentName}`);
+    return { success: false, componentName, reason: 'No package mapping' };
   }
 
   try {
-    // Combine component-specific classes with core classes
-    const allClasses = [...componentClasses, ...coreClasses];
+    // Combine component-specific classes with minimal core classes
+    const allClasses = [...new Set([...componentClasses, ...coreClasses])];
 
     // Extract CSS rules
     const extracted = extractCssRules(fullCss, allClasses);
@@ -501,33 +629,42 @@ async function processComponent(componentName, fullCss) {
 
     const extractedCss = newAst.toString();
 
-    // Write files
-    const componentDir = join('src/components', componentName);
-    const cssPath = join(componentDir, `${componentName}.css`);
-    const tsImportPath = join(componentDir, `${componentName}-styles.ts`);
+    // Ensure directory exists
+    await mkdir(componentPath, { recursive: true });
+
+    // Convert component name to CSS filename (e.g., button-group -> button-group.css)
+    const cssFilename = `${componentName}.css`;
+    const cssPath = join(componentPath, cssFilename);
+    const stylesPath = join(componentPath, `${componentName}-styles.ts`);
 
     await writeFile(cssPath, extractedCss);
 
-    const tsImport = `// Tree-shaken CSS import for ${componentName}
-// Extracted from USWDS CSS - includes only relevant classes
-import './${componentName}.css';
+    // Create the styles import file
+    const stylesContent = `// Tree-shaken CSS for ${componentName}
+// Auto-generated - do not edit manually
+// Run 'pnpm run css:tree-shake' to regenerate
+import './${cssFilename}';
 `;
-    await writeFile(tsImportPath, tsImport);
+    await writeFile(stylesPath, stylesContent);
 
-    console.log(
-      `✅ ${componentName}: extracted ${extracted.count} CSS rules (${(extractedCss.length / 1024).toFixed(1)}KB)`
-    );
+    const sizeKB = (extractedCss.length / 1024).toFixed(1);
+    if (verbose) {
+      console.log(`✅ ${componentName}: ${extracted.count} rules (${sizeKB}KB) → ${componentPackageMap[componentName]}`);
+    } else {
+      console.log(`✅ ${componentName}: ${sizeKB}KB`);
+    }
 
     return {
       success: true,
       componentName,
+      package: componentPackageMap[componentName],
       rulesCount: extracted.count,
       cssSize: extractedCss.length,
       includedSelectors: extracted.includedSelectors.length,
     };
   } catch (error) {
-    console.error(`❌ Error processing component ${componentName}:`, error.message);
-    return { success: false, reason: error.message };
+    console.error(`❌ Error processing ${componentName}:`, error.message);
+    return { success: false, componentName, reason: error.message };
   }
 }
 
@@ -535,24 +672,39 @@ import './${componentName}.css';
  * Main execution
  */
 async function main() {
-  console.log('🎯 Starting CSS Tree-Shaking via Extraction...\n');
+  const verbose = process.argv.includes('--verbose');
+
+  console.log('🎯 CSS Tree-Shaking for Monorepo\n');
 
   try {
-    // Read the full USWDS CSS
-    const fullCssPath = join('node_modules/@uswds/uswds/dist/css/uswds.css');
-    console.log('📖 Reading full USWDS CSS...');
-    const fullCss = await readFile(fullCssPath, 'utf8');
-    console.log(`📦 Full USWDS CSS: ${(fullCss.length / 1024 / 1024).toFixed(2)}MB\n`);
+    // Read the compiled USWDS CSS from core package
+    const coreCssPath = join(ROOT_DIR, 'packages/uswds-wc-core/src/styles/styles.css');
+    console.log('📖 Reading compiled USWDS CSS from @uswds-wc/core...');
 
-    // Process components that we have mappings for
-    const componentsToProcess = Object.keys(componentCssMap);
-    console.log(`🔨 Processing ${componentsToProcess.length} components...\n`);
+    let fullCss;
+    try {
+      fullCss = await readFile(coreCssPath, 'utf8');
+    } catch (e) {
+      console.log('📦 Core CSS not found, building first...');
+      const { execSync } = await import('child_process');
+      execSync('pnpm --filter @uswds-wc/core build:css', {
+        cwd: ROOT_DIR,
+        stdio: 'inherit'
+      });
+      fullCss = await readFile(coreCssPath, 'utf8');
+    }
+
+    console.log(`📦 Source CSS: ${(fullCss.length / 1024).toFixed(0)}KB\n`);
+
+    // Process all components
+    const components = Object.keys(componentCssMap);
+    console.log(`🔨 Processing ${components.length} components...\n`);
 
     const results = [];
     let totalExtractedSize = 0;
 
-    for (const componentName of componentsToProcess) {
-      const result = await processComponent(componentName, fullCss);
+    for (const componentName of components) {
+      const result = await processComponent(componentName, fullCss, verbose);
       results.push(result);
 
       if (result.success) {
@@ -560,48 +712,54 @@ async function main() {
       }
     }
 
-    // Calculate results
+    // Results summary
     const successCount = results.filter((r) => r.success).length;
     const failCount = results.filter((r) => !r.success).length;
-    const originalSize = fullCss.length * successCount; // Worst case
-    const savings = originalSize - totalExtractedSize;
-    const savingsPercent = ((savings / originalSize) * 100).toFixed(1);
+    const avgSize = totalExtractedSize / successCount;
 
-    console.log('\n📊 CSS Tree-Shaking Results:');
+    console.log('\n' + '─'.repeat(50));
+    console.log('📊 CSS Tree-Shaking Results:');
     console.log('─'.repeat(50));
-    console.log(`✅ Successfully processed: ${successCount} components`);
-    console.log(`❌ Failed: ${failCount} components`);
-    console.log(`📏 Original size estimate: ${(originalSize / 1024 / 1024).toFixed(2)}MB`);
-    console.log(`📦 Tree-shaken size: ${(totalExtractedSize / 1024 / 1024).toFixed(2)}MB`);
-    console.log(
-      `💾 Estimated savings: ${(savings / 1024 / 1024).toFixed(2)}MB (${savingsPercent}%)`
-    );
+    console.log(`✅ Processed: ${successCount} components`);
+    if (failCount > 0) {
+      console.log(`❌ Failed: ${failCount} components`);
+    }
+    console.log(`📦 Total extracted: ${(totalExtractedSize / 1024).toFixed(0)}KB`);
+    console.log(`📏 Average per component: ${(avgSize / 1024).toFixed(1)}KB`);
+    console.log(`💾 vs full CSS (${(fullCss.length / 1024).toFixed(0)}KB): ${((1 - avgSize / fullCss.length) * 100).toFixed(0)}% smaller per component`);
 
     if (failCount > 0) {
       console.log('\n❌ Failed components:');
       results
         .filter((r) => !r.success)
         .forEach((r) => {
-          console.log(`   • ${r.componentName || 'Unknown'}: ${r.reason}`);
+          console.log(`   • ${r.componentName}: ${r.reason}`);
         });
     }
 
-    console.log('\n🎉 CSS Tree-Shaking extraction complete!');
+    // Group by package for summary
+    if (verbose) {
+      console.log('\n📦 By Package:');
+      const byPackage = {};
+      results.filter((r) => r.success).forEach((r) => {
+        if (!byPackage[r.package]) byPackage[r.package] = [];
+        byPackage[r.package].push(r);
+      });
+
+      for (const [pkg, comps] of Object.entries(byPackage)) {
+        const totalSize = comps.reduce((sum, c) => sum + c.cssSize, 0);
+        console.log(`   ${pkg}: ${comps.length} components, ${(totalSize / 1024).toFixed(0)}KB total`);
+      }
+    }
+
+    console.log('\n🎉 CSS tree-shaking complete!');
+    console.log('💡 Components now import tree-shaken CSS via *-styles.ts files');
+
   } catch (error) {
     console.error('💥 Build failed:', error.message);
     process.exit(1);
   }
 }
 
-// Check if we need to install postcss
-try {
-  await import('postcss');
-} catch (error) {
-  console.error('❌ PostCSS not found. Please install it: npm install postcss');
-  process.exit(1);
-}
-
-// Run if this script is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main();
-}
+// Run
+main();
