@@ -20,20 +20,18 @@ import 'path/to/uswds-webcomponents/src/components/search/index.js';
 
 ## Properties
 
-| Property        | Type     | Default             | Description          |
-| --------------- | -------- | ------------------- | -------------------- | ---------- | -------------------- |
-| `placeholder`   | `any`    | `'Search'`          | Property description |
-| `label`         | `any`    | `''`                | Property description |
-| `buttonText`    | `any`    | `'Search'`          | Property description |
-| `value`         | `any`    | `''`                | Property description |
-| `size`          | `'small' | 'medium'            | 'big'`               | `'medium'` | Property description |
-| `disabled`      | `any`    | `false`             | Property description |
-| `name`          | `any`    | `'search'`          | Property description |
-| `inputId`       | `any`    | `'search-field'`    | Property description |
-| `buttonId`      | `any`    | `'search-button'`   | Property description |
-| `submitIconSrc` | `any`    | `'/img/search.svg'` | Property description |
-| `submitIconAlt` | `any`    | `''`                | Property description |
-| `toggleable`    | `any`    | `false`             | Property description |
+| Property      | Type     | Default           | Description          |
+| ------------- | -------- | ----------------- | -------------------- | ---------- | -------------------- |
+| `placeholder` | `any`    | `'Search'`        | Property description |
+| `label`       | `any`    | `''`              | Property description |
+| `buttonText`  | `any`    | `'Search'`        | Property description |
+| `value`       | `any`    | `''`              | Property description |
+| `size`        | `'small' | 'medium'          | 'big'`               | `'medium'` | Property description |
+| `disabled`    | `any`    | `false`           | Property description |
+| `name`        | `any`    | `'search'`        | Property description |
+| `inputId`     | `any`    | `'search-field'`  | Property description |
+| `buttonId`    | `any`    | `'search-button'` | Property description |
+| `toggleable`  | `any`    | `false`           | Property description |
 
 ## Events
 
@@ -78,4 +76,4 @@ View component examples: [USASearch Stories](http://localhost:6006/?path=/story/
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-07_

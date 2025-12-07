@@ -37,6 +37,7 @@ import 'path/to/uswds-webcomponents/src/components/text-input/index.js';
 | `pattern`      | `any`   | `''`    | Property description |
 | `maxlength`    | `number | null`   | `null`               | Property description |
 | `minlength`    | `number | null`   | `null`               | Property description |
+| `compact`      | `any`   | `false` | Property description |
 
 ## Events
 
@@ -81,4 +82,4 @@ View component examples: [USATextInput Stories](http://localhost:6006/?path=/sto
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-07_

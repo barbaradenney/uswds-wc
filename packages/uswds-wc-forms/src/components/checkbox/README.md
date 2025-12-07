@@ -32,6 +32,7 @@ import 'path/to/uswds-webcomponents/src/components/checkbox/index.js';
 | `required`      | `any` | `false` | Property description |
 | `indeterminate` | `any` | `false` | Property description |
 | `tile`          | `any` | `false` | Property description |
+| `compact`       | `any` | `false` | Property description |
 
 ## Events
 
@@ -76,4 +77,4 @@ View component examples: [USACheckbox Stories](http://localhost:6006/?path=/stor
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-10-18_
+_Last updated: 2025-12-07_
