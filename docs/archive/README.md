@@ -256,3 +256,9 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 9 days
 
+
+### RELEASE_CHECKLIST 2.md (Archived 2025-12-07)
+- **Reason**: Temporary doc older than 7 days (12 days)
+- **Category**: TEMPORARY
+- **Age**: 12 days
+
