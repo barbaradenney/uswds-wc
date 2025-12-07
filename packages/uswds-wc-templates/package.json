@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/templates",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "description": "USWDS Templates - Page-level Web Component Layouts",
   "type": "module",
   "main": "./dist/index.js",
@@ -29,21 +29,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@uswds-wc/core": "^2.5.2",
-    "@uswds-wc/actions": "^2.5.2",
-    "@uswds-wc/forms": "^2.5.2",
-    "@uswds-wc/navigation": "^2.5.2",
-    "@uswds-wc/data-display": "^2.5.2",
-    "@uswds-wc/feedback": "^2.5.2",
-    "@uswds-wc/layout": "^2.5.2",
-    "@uswds-wc/structure": "^2.5.2",
-    "@uswds-wc/patterns": "^2.5.2"
+    "@uswds-wc/core": "^2.5.3",
+    "@uswds-wc/actions": "^2.5.3",
+    "@uswds-wc/forms": "^2.5.3",
+    "@uswds-wc/navigation": "^2.5.3",
+    "@uswds-wc/data-display": "^2.5.3",
+    "@uswds-wc/feedback": "^2.5.3",
+    "@uswds-wc/layout": "^2.5.3",
+    "@uswds-wc/structure": "^2.5.3",
+    "@uswds-wc/patterns": "^2.5.3"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
   },
   "devDependencies": {
-    "@uswds-wc/test-utils": "^2.5.2",
+    "@uswds-wc/test-utils": "^2.5.3",
     "jsdom": "27.0.1",
     "lit": "^3.0.0",
     "vitest": "3.2.4"
