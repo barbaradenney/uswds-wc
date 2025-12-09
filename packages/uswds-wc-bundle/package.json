@@ -1,0 +1,52 @@
+{
+  "name": "@uswds-wc/bundle",
+  "version": "2.5.3",
+  "description": "Pre-bundled USWDS Web Components for CDN usage - includes all components and Lit",
+  "type": "module",
+  "main": "./uswds-wc.js",
+  "module": "./uswds-wc.js",
+  "types": "./uswds-wc.d.ts",
+  "exports": {
+    ".": {
+      "import": "./uswds-wc.js",
+      "types": "./uswds-wc.d.ts"
+    },
+    "./uswds-wc.js": "./uswds-wc.js",
+    "./uswds-wc.css": "./uswds-wc.css"
+  },
+  "files": [
+    "uswds-wc.js",
+    "uswds-wc.js.map",
+    "uswds-wc.js.gz",
+    "uswds-wc.js.br",
+    "uswds-wc.css",
+    "uswds-wc.css.map",
+    "uswds-wc.d.ts",
+    "README.md"
+  ],
+  "keywords": [
+    "uswds",
+    "web-components",
+    "custom-elements",
+    "lit",
+    "design-system",
+    "government",
+    "accessibility",
+    "cdn",
+    "bundle"
+  ],
+  "author": "Barbara Miles",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barbaradenney/uswds-wc.git",
+    "directory": "packages/uswds-wc-bundle"
+  },
+  "homepage": "https://barbaradenney.github.io/uswds-wc/",
+  "bugs": {
+    "url": "https://github.com/barbaradenney/uswds-wc/issues"
+  },
+  "scripts": {
+    "build": "echo 'Bundle is built from root with: npm run build:cdn'"
+  }
+}

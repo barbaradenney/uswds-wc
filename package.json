@@ -26,6 +26,7 @@
     "build:css": "pnpm --filter @uswds-wc/core build:css",
     "build:css:prod": "pnpm --filter @uswds-wc/core build:css",
     "build:css:watch": "pnpm --filter @uswds-wc/core build:css -- --watch",
+    "build:cdn": "node scripts/build/build-cdn.js",
     "build:watch": "pnpm -r build -- --watch",
     "build-storybook": "pnpm --filter @uswds-wc/core build:css && storybook build",
     "// CSS TREE-SHAKING": "",
