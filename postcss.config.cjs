@@ -1,5 +1,25 @@
+// USWDS version - must match the version in package.json dependencies
+const USWDS_VERSION = '3.8.1';
+const CDN_BASE = `https://cdn.jsdelivr.net/npm/@uswds/uswds@${USWDS_VERSION}/dist`;
+
 module.exports = {
   plugins: [
+    // Rewrite relative asset URLs to absolute CDN URLs (production only)
+    ...(process.env.NODE_ENV === 'production' ? [
+      require('postcss-url')({
+        url: (asset) => {
+          // Rewrite ../fonts/ to CDN
+          if (asset.url.startsWith('../fonts/')) {
+            return asset.url.replace('../fonts/', `${CDN_BASE}/fonts/`);
+          }
+          // Rewrite ../img/ to CDN
+          if (asset.url.startsWith('../img/')) {
+            return asset.url.replace('../img/', `${CDN_BASE}/img/`);
+          }
+          return asset.url;
+        }
+      }),
+    ] : []),
     // PurgeCSS - Only for production builds
     ...(process.env.NODE_ENV === 'production' ? [
       require('@fullhuman/postcss-purgecss').default({
