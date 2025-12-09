@@ -99,6 +99,10 @@ tsconfig.tsbuildinfo
 component-issues-report.json
 .turbo/
 
+# CDN build output
+cdn/
+packages/uswds-wc-bundle/uswds-wc.*
+
 # Temporary/Debug files
 debug/
 debug-*.html
