@@ -14,16 +14,20 @@ export interface DateRange {
 }
 
 /**
- * ARCHITECTURE: Option B (Pure Global Init)
- * - USWDS is initialized globally via .on(document) in .storybook/preview-head.html
- * - This component ONLY renders HTML structure
- * - All behavior managed by USWDS event delegation
- * - Component properties synced to USWDS-created elements
+ * ARCHITECTURE: Composition Wrapper Pattern
+ * @uswds-behavior-disabled - USWDS JS is handled by child usa-date-picker components
+ *
+ * This component is a composition wrapper that:
+ * - Coordinates two usa-date-picker child components (start/end dates)
+ * - Delegates all USWDS JavaScript behavior to child components
+ * - Manages date range validation and synchronization between pickers
+ * - Does NOT need direct USWDS initialization (children handle it)
  *
  * USA Date Range Picker Web Component
  *
  * Minimal wrapper around USWDS date range picker functionality.
- * All calendar behavior, date validation, and interactions are managed by USWDS JavaScript.
+ * All calendar behavior, date validation, and interactions are managed by USWDS JavaScript
+ * in the child usa-date-picker components.
  *
  * @element usa-date-range-picker
  * @fires date-range-change - Dispatched when date range changes (via USWDS)

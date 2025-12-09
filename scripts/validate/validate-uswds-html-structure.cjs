@@ -8,7 +8,7 @@
  *
  * This validates:
  * 1. Form components have compact mode
- * 2. Select elements have usa-combo-box wrapper
+ * 2. Select elements render with usa-select class (v2.5.3+, no combo-box wrapper)
  * 3. Width modifiers are correctly applied
  * 4. No form-group wrappers in patterns
  * 5. Required indicators are inline in labels
@@ -92,28 +92,33 @@ function validateCompactMode() {
 }
 
 /**
- * Check if select component has combo-box wrapper
+ * Check if select component renders correctly
+ * Note: As of v2.5.3, usa-select no longer uses combo-box wrapper.
+ * The select element is rendered directly with usa-select class.
  */
-function validateComboBoxWrapper() {
-  log('\n📋 Validating Combo-Box Wrapper\n', 'cyan');
+function validateSelectRendering() {
+  log('\n📋 Validating Select Rendering (v2.5.3+)\n', 'cyan');
 
   const selectPath = 'packages/uswds-wc-forms/src/components/select/usa-select.ts';
   const fullPath = path.join(process.cwd(), selectPath);
   const content = fs.readFileSync(fullPath, 'utf8');
 
-  // Check for combo-box wrapper
-  const hasComboBox = /<div class="usa-combo-box">/.test(content);
-  if (!hasComboBox) {
-    error('usa-select: Missing usa-combo-box wrapper');
-    info('  Add: <div class="usa-combo-box"><select>...</select></div>');
+  // Check for usa-select class on select element
+  const hasUSASelect = /class="usa-select"/.test(content) || /class="\${.*usa-select/.test(content);
+  if (!hasUSASelect) {
+    error('usa-select: Missing usa-select class on select element');
+    info('  Add: <select class="usa-select">...</select>');
   } else {
-    success('usa-select: Has usa-combo-box wrapper');
+    success('usa-select: Has usa-select class');
   }
 
-  // Check that select is inside combo-box
-  const comboBoxPattern = /<div class="usa-combo-box">\s*<select/;
-  if (!comboBoxPattern.test(content)) {
-    warning('usa-select: Select may not be properly nested in combo-box');
+  // Ensure combo-box wrapper is NOT used (v2.5.3 simplification)
+  const hasComboBox = /<div class="usa-combo-box">/.test(content);
+  if (hasComboBox) {
+    warning('usa-select: Contains combo-box wrapper (deprecated in v2.5.3)');
+    info('  usa-select should render directly without combo-box wrapper');
+  } else {
+    success('usa-select: No combo-box wrapper (correct for v2.5.3+)');
   }
 }
 
@@ -261,7 +266,7 @@ function main() {
   log('='.repeat(80));
 
   validateCompactMode();
-  validateComboBoxWrapper();
+  validateSelectRendering();
   validatePatternsUseCompact();
   validateWidthModifiers();
   validateNoFormGroups();

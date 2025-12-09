@@ -20,8 +20,7 @@
 
 import { readFileSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
-import pkg from 'glob';
-const { sync: globSync } = pkg;
+import { globSync } from 'glob';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 

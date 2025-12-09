@@ -551,7 +551,8 @@ function validateJSIntegration(content, componentName) {
       existsSync(join(componentDir, `usa-${componentName}-behavior.js`))
     );
 
-    // Check for @uswds-behavior-disabled annotation (intentionally disabled for Lit compatibility)
+    // Check for @uswds-behavior-disabled annotation (intentionally disabled for Lit compatibility
+    // or composition wrapper that delegates to child components)
     const hasBehaviorDisabled = content.includes('@uswds-behavior-disabled');
 
     if (hasJSIntegration) {
@@ -560,6 +561,9 @@ function validateJSIntegration(content, componentName) {
       successes.push('✓ Has USWDS-Mirrored Behavior (behavior disabled for Lit DOM compatibility)');
     } else if (hasBehaviorFile) {
       successes.push('✓ Has USWDS-Mirrored Behavior pattern (behavior file exists)');
+    } else if (hasBehaviorDisabled) {
+      // Composition wrapper pattern - delegates to child components that handle USWDS JS
+      successes.push('✓ Composition wrapper (USWDS JS delegated to child components)');
     } else {
       issues.push('Missing USWDS JavaScript integration for interactive component');
     }

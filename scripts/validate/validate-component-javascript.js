@@ -27,6 +27,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
 // Components that MUST have JavaScript integration
+// (Only components with USWDS JavaScript source files in node_modules/@uswds/uswds/packages/usa-*/src/index.js)
 const INTERACTIVE_COMPONENTS = [
   'accordion',
   'banner',
@@ -41,19 +42,20 @@ const INTERACTIVE_COMPONENTS = [
   'language-selector',
   'menu',
   'modal',
-  'pagination',
   'search',
-  'step-indicator',
   'time-picker',
   'tooltip',
 ];
 
 // Components that are CSS-only (no JavaScript needed)
+// These don't have USWDS JavaScript source files
 const CSS_ONLY_COMPONENTS = [
   'button',
   'alert',
   'card',
   'breadcrumb',
+  'pagination',
+  'step-indicator',
   'tag',
   'link',
   'prose',

@@ -12,8 +12,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import pkg from 'glob';
-const { glob } = pkg;
+import { glob } from 'glob';
 
 // ANSI color codes for better output
 const colors = {

@@ -9,8 +9,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import pkg from 'glob';
-const { glob } = pkg;
+import { glob } from 'glob';
 
 // Patterns that indicate violations of USWDS architecture
 const FORBIDDEN_PATTERNS = [

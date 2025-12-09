@@ -19,8 +19,7 @@
 
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
-import pkg from 'glob';
-const { sync: globSync } = pkg;
+import { globSync } from 'glob';
 
 const PACKAGES_DIR = 'packages';
 
