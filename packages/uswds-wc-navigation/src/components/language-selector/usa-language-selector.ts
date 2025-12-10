@@ -4,7 +4,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeLanguageSelector } from './usa-language-selector-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface LanguageOption {
   code: string;

@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/actions",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "USWDS Action Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@uswds-wc/test-utils": "^2.5.3",
-    "@uswds-wc/data-display": "^2.5.3",
+    "@uswds-wc/data-display": "^2.5.4",
     "jsdom": "27.0.1",
     "lit": "^3.0.0",
     "vitest": "3.2.4"

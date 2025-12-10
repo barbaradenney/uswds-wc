@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/templates",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "USWDS Templates - Page-level Web Component Layouts",
   "type": "module",
   "main": "./dist/index.js",
@@ -30,14 +30,14 @@
   },
   "dependencies": {
     "@uswds-wc/core": "^2.5.3",
-    "@uswds-wc/actions": "^2.5.3",
-    "@uswds-wc/forms": "^2.5.3",
-    "@uswds-wc/navigation": "^2.5.3",
-    "@uswds-wc/data-display": "^2.5.3",
-    "@uswds-wc/feedback": "^2.5.3",
-    "@uswds-wc/layout": "^2.5.3",
-    "@uswds-wc/structure": "^2.5.3",
-    "@uswds-wc/patterns": "^2.5.3"
+    "@uswds-wc/actions": "^2.5.5",
+    "@uswds-wc/forms": "^2.5.4",
+    "@uswds-wc/navigation": "^2.5.5",
+    "@uswds-wc/data-display": "^2.5.4",
+    "@uswds-wc/feedback": "^2.5.4",
+    "@uswds-wc/layout": "^2.5.4",
+    "@uswds-wc/structure": "^2.5.4",
+    "@uswds-wc/patterns": "^2.5.4"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

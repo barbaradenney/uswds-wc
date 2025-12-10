@@ -5,7 +5,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeHeader } from './usa-header-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 // Import usa-search component from actions package
 // Using main package entry point since component subpaths are not built separately

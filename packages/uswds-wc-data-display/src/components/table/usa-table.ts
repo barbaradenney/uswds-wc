@@ -6,7 +6,6 @@ import { USWDSVirtualScroller } from '@uswds-wc/core';
 import { initializeTable } from './usa-table-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface TableColumn {
   key: string;

@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import type { ButtonVariant, ButtonType } from '@uswds-wc/core';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Button Web Component

@@ -4,7 +4,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { USWDSBaseComponent } from '@uswds-wc/core';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Textarea Web Component

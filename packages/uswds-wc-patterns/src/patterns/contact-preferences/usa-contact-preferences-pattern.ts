@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 // Import USWDS core styles
-import '@uswds-wc/core/styles.css';
 
 // Import USWDS web components
 import '@uswds-wc/forms';

@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 // Removed unsafeHTML import - using safer HTML content handling
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface ProcessItem {
   heading: string;

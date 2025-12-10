@@ -4,7 +4,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeFileInput } from './usa-file-input-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA File Input Web Component

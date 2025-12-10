@@ -5,7 +5,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeDatePicker } from './usa-date-picker-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Date Picker Web Component

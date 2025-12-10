@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * ARCHITECTURE: Option B (Pure Global Init)

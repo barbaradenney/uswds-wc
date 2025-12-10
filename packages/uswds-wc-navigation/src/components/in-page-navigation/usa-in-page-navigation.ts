@@ -4,7 +4,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeInPageNavigation } from './usa-in-page-navigation-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA In-Page Navigation Web Component

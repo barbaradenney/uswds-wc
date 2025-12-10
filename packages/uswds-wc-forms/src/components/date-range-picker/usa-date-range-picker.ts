@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { USWDSBaseComponent } from '@uswds-wc/core';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 // Import the date picker component
 import '../date-picker/usa-date-picker.js';

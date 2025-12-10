@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Card Web Component

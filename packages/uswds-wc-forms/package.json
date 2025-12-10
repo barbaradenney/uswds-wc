@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/forms",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "USWDS Form Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@uswds-wc/core": "^2.5.3",
-    "@uswds-wc/data-display": "^2.5.3"
+    "@uswds-wc/data-display": "^2.5.4"
   },
   "peerDependencies": {
     "lit": "^3.0.0"

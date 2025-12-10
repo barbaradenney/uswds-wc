@@ -5,7 +5,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeTooltip } from './usa-tooltip-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Tooltip Web Component

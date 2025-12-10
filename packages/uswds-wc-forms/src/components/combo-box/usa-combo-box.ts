@@ -5,7 +5,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeComboBox } from './usa-combo-box-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface ComboBoxOption {
   value: string;

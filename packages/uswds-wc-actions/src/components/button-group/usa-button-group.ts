@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface ButtonGroupItem {
   text: string;

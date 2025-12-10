@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/layout",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "USWDS Layout Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",

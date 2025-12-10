@@ -6,7 +6,6 @@ import { initializeModal } from './usa-modal-behavior.js';
 import { SELECTORS, TIMING, CLASSES } from './modal-constants.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Modal Web Component

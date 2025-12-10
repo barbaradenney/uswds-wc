@@ -5,7 +5,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import '../icon/index.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 export interface IconListItem {
   icon: string;

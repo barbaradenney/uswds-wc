@@ -4,7 +4,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeSearch } from './usa-search-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 // Import usa-icon component for search icon
 import '@uswds-wc/data-display';

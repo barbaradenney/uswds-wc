@@ -4,7 +4,6 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 import { initializeBanner } from './usa-banner-behavior.js';
 
 // Import official USWDS compiled CSS
-import '@uswds-wc/core/styles.css';
 
 /**
  * USA Banner Web Component

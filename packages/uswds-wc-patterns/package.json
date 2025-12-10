@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/patterns",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "USWDS Patterns - Web Component Compositions",
   "type": "module",
   "main": "./dist/index.js",
@@ -30,13 +30,13 @@
   },
   "dependencies": {
     "@uswds-wc/core": "^2.5.3",
-    "@uswds-wc/actions": "^2.5.3",
-    "@uswds-wc/forms": "^2.5.3",
-    "@uswds-wc/navigation": "^2.5.3",
-    "@uswds-wc/data-display": "^2.5.3",
-    "@uswds-wc/feedback": "^2.5.3",
-    "@uswds-wc/layout": "^2.5.3",
-    "@uswds-wc/structure": "^2.5.3"
+    "@uswds-wc/actions": "^2.5.5",
+    "@uswds-wc/forms": "^2.5.4",
+    "@uswds-wc/navigation": "^2.5.5",
+    "@uswds-wc/data-display": "^2.5.4",
+    "@uswds-wc/feedback": "^2.5.4",
+    "@uswds-wc/layout": "^2.5.4",
+    "@uswds-wc/structure": "^2.5.4"
   },
   "peerDependencies": {
     "lit": "^3.0.0"
