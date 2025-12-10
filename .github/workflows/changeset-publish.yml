@@ -1,6 +1,9 @@
 name: Publish Packages
 
 on:
+  push:
+    paths:
+      - '.github/workflows/changeset-publish.yml'
   workflow_dispatch:
     inputs:
       dry_run:
