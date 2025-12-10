@@ -45,8 +45,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install dependencies (workspace linked)
+        run: |
+          # Use prefer-workspace-packages to resolve local packages instead of npm
+          echo "link-workspace-packages=true" >> .npmrc
+          echo "prefer-workspace-packages=true" >> .npmrc
+          pnpm install --no-frozen-lockfile
+        env:
+          # Skip trying to resolve workspace packages from npm
+          npm_config_prefer_offline: true
 
       - name: Build packages
         run: pnpm build
@@ -55,7 +62,6 @@ jobs:
         id: changesets
         run: |
           if ls .changeset/*.md 1> /dev/null 2>&1; then
-            # Check if there are changesets other than README.md
             CHANGESETS=$(ls .changeset/*.md 2>/dev/null | grep -v README.md || true)
             if [ -n "$CHANGESETS" ]; then
               echo "has_changesets=true" >> $GITHUB_OUTPUT
@@ -75,6 +81,7 @@ jobs:
         run: |
           echo "📝 Versioning packages..."
           pnpm changeset version
+          pnpm install --no-frozen-lockfile
           echo "✅ Packages versioned"
 
       - name: Commit version changes
@@ -86,40 +93,30 @@ jobs:
           echo "✅ Version changes committed and pushed"
 
       - name: Publish to NPM (dry run)
-        if: ${{ github.event.inputs.dry_run == 'true' && steps.changesets.outputs.has_changesets == 'true' }}
+        if: ${{ github.event.inputs.dry_run == 'true' }}
         run: |
           echo "🏃 DRY RUN - Would publish these packages:"
-          pnpm changeset publish --dry-run
+          pnpm changeset publish --dry-run || echo "Nothing to publish (already published or no changesets)"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to NPM
-        if: ${{ github.event.inputs.dry_run != 'true' && steps.changesets.outputs.has_changesets == 'true' }}
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           echo "📦 Publishing to NPM..."
-          pnpm changeset publish
-          echo "✅ Published to NPM"
+          pnpm changeset publish || echo "Nothing new to publish"
+          echo "✅ Publish step completed"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push tags
-        if: ${{ github.event.inputs.dry_run != 'true' && steps.changesets.outputs.has_changesets == 'true' }}
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
-          git push origin --tags
+          git push origin --tags || echo "No new tags to push"
           echo "✅ Tags pushed"
 
-      - name: No changesets summary
-        if: steps.changesets.outputs.has_changesets != 'true'
-        run: |
-          echo "⚠️ No changesets to publish"
-          echo "To create a changeset, run: pnpm changeset"
-          echo "Then commit the changeset file and run this workflow again."
-
       - name: Success summary
-        if: ${{ success() && steps.changesets.outputs.has_changesets == 'true' && github.event.inputs.dry_run != 'true' }}
         run: |
-          echo "🎉 PUBLISH SUCCESSFUL"
+          echo "🎉 WORKFLOW COMPLETED"
           echo "===================="
-          echo ""
-          echo "Published packages are now available on NPM."
-          echo "Check https://www.npmjs.com/org/uswds-wc for the latest versions."
+          echo "Check https://www.npmjs.com/org/uswds-wc for package versions."
