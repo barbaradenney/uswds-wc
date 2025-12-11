@@ -1,4 +1,6 @@
 # Publish workflow for changesets
+# Uses OIDC Trusted Publishing - no NPM_TOKEN needed!
+# Configure trusted publishers at: https://www.npmjs.com/package/@uswds-wc/[package]/access
 name: Publish Packages
 
 on:
@@ -20,7 +22,7 @@ jobs:
     permissions:
       contents: write
       packages: write
-      id-token: write
+      id-token: write  # Required for OIDC trusted publishing
 
     steps:
       - name: Checkout code
@@ -98,17 +100,13 @@ jobs:
         run: |
           echo "🏃 DRY RUN - Would publish these packages:"
           pnpm changeset publish --dry-run || echo "Nothing to publish (already published or no changesets)"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to NPM
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
-          echo "📦 Publishing to NPM..."
-          pnpm changeset publish || echo "Nothing new to publish"
+          echo "📦 Publishing to NPM with OIDC trusted publishing..."
+          pnpm changeset publish --provenance --access public || echo "Nothing new to publish"
           echo "✅ Publish step completed"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push tags
         if: ${{ github.event.inputs.dry_run != 'true' }}
