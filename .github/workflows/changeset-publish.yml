@@ -106,8 +106,24 @@ jobs:
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           echo "📦 Publishing to NPM with OIDC trusted publishing..."
-          pnpm changeset publish --provenance --access public || echo "Nothing new to publish"
+          # Use npm directly with OIDC for each unpublished package
+          for pkg in packages/uswds-wc-*/; do
+            if [ -f "$pkg/package.json" ]; then
+              name=$(jq -r '.name' "$pkg/package.json")
+              version=$(jq -r '.version' "$pkg/package.json")
+              # Check if version exists on npm
+              if ! npm view "$name@$version" version 2>/dev/null; then
+                echo "📤 Publishing $name@$version..."
+                cd "$pkg" && npm publish --provenance --access public || echo "Failed to publish $name"
+                cd - > /dev/null
+              else
+                echo "⏭️ $name@$version already published"
+              fi
+            fi
+          done
           echo "✅ Publish step completed"
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Push tags
         if: ${{ github.event.inputs.dry_run != 'true' }}
