@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/core",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "Core utilities and base components for USWDS Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -14,8 +14,7 @@
     "./utils/*": {
       "import": "./dist/utils/*.js",
       "types": "./dist/utils/*.d.ts"
-    },
-    "./styles.css": "./src/styles/styles.css"
+    }
   },
   "files": [
     "dist",
