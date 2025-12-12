@@ -1,7 +1,7 @@
 # Publish workflow for changesets
 # Uses OIDC Trusted Publishing - no NPM_TOKEN needed!
 # Configure trusted publishers at: https://www.npmjs.com/package/@uswds-wc/[package]/access
-# Trusted publishers configured: 2025-12-11
+# Trusted publishers configured: 2025-12-12
 # IMPORTANT: npm v11.5.1+ required for OIDC trusted publishing
 name: Publish Packages
 
