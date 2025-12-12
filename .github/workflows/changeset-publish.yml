@@ -1,7 +1,8 @@
 # Publish workflow for changesets
 # Uses OIDC Trusted Publishing - no NPM_TOKEN needed!
 # Configure trusted publishers at: https://www.npmjs.com/package/@uswds-wc/[package]/access
-# Trusted publishers configured: 2025-12-11 (retry)
+# Trusted publishers configured: 2025-12-11
+# IMPORTANT: npm v11.5.1+ required for OIDC trusted publishing
 name: Publish Packages
 
 on:
@@ -95,6 +96,12 @@ jobs:
           git commit -m "chore: version packages" || echo "No changes to commit"
           git push origin main
           echo "✅ Version changes committed and pushed"
+
+      - name: Upgrade npm for OIDC support
+        run: |
+          echo "📦 Upgrading npm to latest for OIDC trusted publishing..."
+          npm install -g npm@latest
+          echo "✅ npm version: $(npm --version)"
 
       - name: Publish to NPM (dry run)
         if: ${{ github.event.inputs.dry_run == 'true' }}
