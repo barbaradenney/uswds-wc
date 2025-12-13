@@ -20,13 +20,13 @@ import 'path/to/uswds-webcomponents/src/components/icon/index.js';
 
 ## Properties
 
-| Property     | Type    | Default             | Description          |
-| ------------ | ------- | ------------------- | -------------------- | ---- | -------------------- | --- | --- | ---- | ---- | -------------------- |
-| `name`       | `any`   | `''`                | Property description |
-| `size`       | `''     | '3'                 | '4'                  | '5'  | '6'                  | '7' | '8' | '9'` | `''` | Property description |
-| `decorative` | `'true' | 'false'             | ''`                  | `''` | Property description |
-| `spriteUrl`  | `any`   | `'/img/sprite.svg'` | Property description |
-| `useSprite`  | `any`   | `true`              | Property description |
+| Property     | Type    | Default                                                                 | Description          |
+| ------------ | ------- | ----------------------------------------------------------------------- | -------------------- | ---- | -------------------- | --- | --- | ---- | ---- | -------------------- |
+| `name`       | `any`   | `''`                                                                    | Property description |
+| `size`       | `''     | '3'                                                                     | '4'                  | '5'  | '6'                  | '7' | '8' | '9'` | `''` | Property description |
+| `decorative` | `'true' | 'false'                                                                 | ''`                  | `''` | Property description |
+| `spriteUrl`  | `any`   | `'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg'` | Property description |
+| `useSprite`  | `any`   | `true`                                                                  | Property description |
 
 ## Events
 
@@ -70,4 +70,4 @@ View component examples: [USAIcon Stories](http://localhost:6006/?path=/story/co
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-13_
