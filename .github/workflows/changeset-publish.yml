@@ -3,6 +3,7 @@
 # Configure trusted publishers at: https://www.npmjs.com/package/@uswds-wc/[package]/access
 # Trusted publishers configured: 2025-12-12
 # IMPORTANT: npm v11.5.1+ required for OIDC trusted publishing
+# Trigger: 2025-12-13 - Publishing bundle@2.5.4 and data-display@2.5.5 (icon CDN fix)
 name: Publish Packages
 
 on:
