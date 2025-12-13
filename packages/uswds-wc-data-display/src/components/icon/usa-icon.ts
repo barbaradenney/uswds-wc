@@ -1,8 +1,56 @@
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 // Import official USWDS compiled CSS
+
+// Sprite injection state - shared across all instances
+let spriteInjected = false;
+let spriteLoading: Promise<void> | null = null;
+const SPRITE_CONTAINER_ID = 'uswds-icon-sprite';
+
+/**
+ * Fetches and injects the USWDS sprite into the document
+ * This allows cross-origin sprite usage by making the sprite same-origin
+ */
+async function injectSprite(spriteUrl: string): Promise<void> {
+  // Already injected
+  if (spriteInjected || document.getElementById(SPRITE_CONTAINER_ID)) {
+    spriteInjected = true;
+    return;
+  }
+
+  // Already loading
+  if (spriteLoading) {
+    return spriteLoading;
+  }
+
+  spriteLoading = (async () => {
+    try {
+      const response = await fetch(spriteUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch sprite: ${response.status}`);
+      }
+      const svgText = await response.text();
+
+      // Create a hidden container for the sprite
+      const container = document.createElement('div');
+      container.id = SPRITE_CONTAINER_ID;
+      container.style.cssText = 'position: absolute; width: 0; height: 0; overflow: hidden;';
+      container.setAttribute('aria-hidden', 'true');
+      container.innerHTML = svgText;
+
+      // Insert at the beginning of body
+      document.body.insertBefore(container, document.body.firstChild);
+      spriteInjected = true;
+    } catch (error) {
+      console.warn('📋 Icon: Failed to inject sprite, falling back to inline SVG:', error);
+      spriteLoading = null;
+    }
+  })();
+
+  return spriteLoading;
+}
 
 /**
  * USA Icon Web Component
@@ -41,6 +89,9 @@ export class USAIcon extends LitElement {
   @property({ type: Boolean, reflect: true })
   useSprite = true;
 
+  @state()
+  private _spriteReady = false;
+
   // Use light DOM for USWDS compatibility
   protected override createRenderRoot(): HTMLElement {
     return this as HTMLElement;
@@ -51,6 +102,17 @@ export class USAIcon extends LitElement {
 
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
+
+    // Inject sprite if using sprite mode
+    if (this.useSprite && this.spriteUrl) {
+      this._loadSprite();
+    }
+  }
+
+  private async _loadSprite() {
+    await injectSprite(this.spriteUrl);
+    this._spriteReady = spriteInjected;
+    this.requestUpdate();
   }
 
   override disconnectedCallback() {
@@ -74,8 +136,8 @@ export class USAIcon extends LitElement {
     const iconClasses = ['usa-icon', sizeClass].filter(Boolean).join(' ');
 
     // Support both sprite files and inline paths for flexibility
-    if (this.useSprite && this.spriteUrl) {
-      // USWDS standard structure with sprite file
+    if (this.useSprite && this._spriteReady) {
+      // Use local reference to injected sprite (avoids cross-origin issues)
       return html`
         <svg
           class="${iconClasses}"
@@ -86,7 +148,7 @@ export class USAIcon extends LitElement {
           focusable="false"
           role="img"
         >
-          <use href="${this.spriteUrl}#${this.name}"></use>
+          <use href="#${this.name}"></use>
         </svg>
       `;
     }

@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/bundle",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "Pre-bundled USWDS Web Components for CDN usage - includes all components and Lit",
   "type": "module",
   "main": "./uswds-wc.js",
