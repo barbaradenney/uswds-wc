@@ -51,7 +51,7 @@ describe('Icon Visual Regression Prevention', () => {
       // Monorepo migration (Oct 22) reverted these defaults
       expect(freshIcon.useSprite, 'useSprite should default to true').toBe(true);
       expect(freshIcon.spriteUrl, 'spriteUrl should default to /img/sprite.svg').toBe(
-        '/img/sprite.svg'
+        'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg'
       );
     });
 
@@ -228,7 +228,7 @@ describe('Icon Visual Regression Prevention', () => {
         const href = use?.getAttribute('href');
         const spriteUrl = href?.split('#')[0];
 
-        expect(spriteUrl).toBe('/img/sprite.svg');
+        expect(spriteUrl).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
       }
     });
 
@@ -255,7 +255,7 @@ describe('Icon Visual Regression Prevention', () => {
 
       // PASS CONDITIONS (correct defaults):
       expect(freshIcon.useSprite).toBe(true);
-      expect(freshIcon.spriteUrl).toBe('/img/sprite.svg');
+      expect(freshIcon.spriteUrl).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
     });
 
     it('REGRESSION: prevents icons from showing only 21 inline SVGs', async () => {

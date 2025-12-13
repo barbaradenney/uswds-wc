@@ -36,7 +36,7 @@ describe('USAIcon - Sprite File Integration', () => {
 
     it('should have default sprite URL configured', () => {
       // Default should point to USWDS sprite file location
-      expect(element.spriteUrl).toBe('/img/sprite.svg');
+      expect(element.spriteUrl).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
     });
 
     it('should render <use> element with sprite reference', async () => {
@@ -262,7 +262,7 @@ describe('USAIcon - Sprite File Integration', () => {
       // FAIL CONDITIONS (regressions to catch):
       expect(freshElement.useSprite, 'useSprite should default to true').toBe(true);
       expect(freshElement.spriteUrl, 'spriteUrl should default to /img/sprite.svg').toBe(
-        '/img/sprite.svg'
+        'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg'
       );
 
       // PASS CONDITIONS (correct sprite-first architecture):
@@ -273,7 +273,7 @@ describe('USAIcon - Sprite File Integration', () => {
     it('prevents inline-first fallback in production', async () => {
       // Ensure we don't fall back to inline mode when sprite URL is set
       element.useSprite = true;
-      element.spriteUrl = '/img/sprite.svg';
+      element.spriteUrl = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg';
       element.name = 'search';
       await element.updateComplete;
 
@@ -314,9 +314,9 @@ describe('USAIcon - Sprite File Integration', () => {
       const use3 = icon3.querySelector('use');
 
       // All should reference same sprite file (performance benefit)
-      expect(use1?.getAttribute('href')?.split('#')[0]).toBe('/img/sprite.svg');
-      expect(use2?.getAttribute('href')?.split('#')[0]).toBe('/img/sprite.svg');
-      expect(use3?.getAttribute('href')?.split('#')[0]).toBe('/img/sprite.svg');
+      expect(use1?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
+      expect(use2?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
+      expect(use3?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
 
       document.body.removeChild(icon1);
       document.body.removeChild(icon2);

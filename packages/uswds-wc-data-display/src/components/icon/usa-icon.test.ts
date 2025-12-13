@@ -42,7 +42,7 @@ describe('USAIcon', () => {
       expect(element.decorative).toBe(''); // String type: '' | 'true' | 'false'
 
       // SPRITE-FIRST ARCHITECTURE: Icons use sprite by default (regression test)
-      expect(element.spriteUrl).toBe('/img/sprite.svg');
+      expect(element.spriteUrl).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
       expect(element.useSprite).toBe(true);
     });
 
@@ -419,7 +419,7 @@ describe('USAIcon', () => {
     it('should handle government sprite URLs correctly', async () => {
       element.name = 'flag';
       element.useSprite = true;
-      element.spriteUrl = '/img/sprite.svg';
+      element.spriteUrl = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg';
       element.ariaLabel = 'Official government website';
       await waitForPropertyPropagation(element);
 

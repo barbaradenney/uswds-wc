@@ -36,7 +36,7 @@ export class USAIcon extends LitElement {
   decorative: 'true' | 'false' | '' = '';
 
   @property({ type: String })
-  spriteUrl = '/img/sprite.svg';
+  spriteUrl = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg';
 
   @property({ type: Boolean, reflect: true })
   useSprite = true;
