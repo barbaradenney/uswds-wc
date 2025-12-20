@@ -262,3 +262,24 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 12 days
 
+
+### COMPONENT_STATUS.md (Archived 2025-12-20)
+- **Reason**: Status doc older than 60 days (62 days)
+- **Category**: STATUS
+- **Age**: 62 days
+
+### CYPRESS_E2E_TEST_STATUS.md (Archived 2025-12-20)
+- **Reason**: Status doc older than 60 days (62 days)
+- **Category**: STATUS
+- **Age**: 62 days
+
+### TESTING_CLEANUP_COMPLETE.md (Archived 2025-12-20)
+- **Reason**: Status doc older than 60 days (62 days)
+- **Category**: STATUS
+- **Age**: 62 days
+
+### TEST_100_PERCENT_STATUS.md (Archived 2025-12-20)
+- **Reason**: Status doc older than 60 days (62 days)
+- **Category**: STATUS
+- **Age**: 62 days
+
