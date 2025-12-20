@@ -35,6 +35,9 @@ export class USALink extends USWDSBaseComponent {
   href = '';
 
   @property({ type: String })
+  text = '';
+
+  @property({ type: String })
   target = '';
 
   @property({ type: String })
@@ -191,8 +194,7 @@ export class USALink extends USWDSBaseComponent {
     const target = this.getTarget();
     const rel = this.getRel();
 
-    // In light DOM, we need to move the content into the anchor
-    // We'll do this after render in override updated()
+    // Use text property if set, otherwise content will be moved from children
     return html`
       <a
         class="${linkClasses}"
@@ -201,15 +203,20 @@ export class USALink extends USWDSBaseComponent {
         rel="${ifDefined(rel ? rel : undefined)}"
         aria-label="${ifDefined(this.ariaLabel ? this.ariaLabel : undefined)}"
         download="${ifDefined(this.download ? this.download : undefined)}"
-      ></a>
+      >${this.text}</a>
     `;
   }
 
   override updated(changedProperties: Map<string, any>) {
     super.updated(changedProperties);
 
-    // Move the original content into the anchor element using base class helper
-    this.moveChildrenToElement('a');
+    // Only move children if we're not using the text property
+    // This allows both usage patterns:
+    // <usa-link text="Click me" href="#">  (attribute-based)
+    // <usa-link href="#">Click me</usa-link>  (slot-based)
+    if (!this.text) {
+      this.moveChildrenToElement('a');
+    }
   }
 
   // Public API methods
