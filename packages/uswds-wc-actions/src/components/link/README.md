@@ -23,6 +23,7 @@ import 'path/to/uswds-webcomponents/src/components/link/index.js';
 | Property   | Type       | Default    | Description          |
 | ---------- | ---------- | ---------- | -------------------- | ----------- | ----------- | -------------------- |
 | `href`     | `any`      | `''`       | Property description |
+| `text`     | `any`      | `''`       | Property description |
 | `target`   | `any`      | `''`       | Property description |
 | `rel`      | `any`      | `''`       | Property description |
 | `variant`  | `'default' | 'external' | 'alt'                | 'unstyled'` | `'default'` | Property description |
@@ -72,4 +73,4 @@ View component examples: [USALink Stories](http://localhost:6006/?path=/story/co
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-20_
