@@ -256,3 +256,24 @@ For bundle optimization, see:
 - **Category**: TEMPORARY
 - **Age**: 11 days
 
+
+### COMPONENT_STATUS.md (Archived 2025-12-22)
+- **Reason**: Status doc older than 60 days (64 days)
+- **Category**: STATUS
+- **Age**: 64 days
+
+### CYPRESS_E2E_TEST_STATUS.md (Archived 2025-12-22)
+- **Reason**: Status doc older than 60 days (64 days)
+- **Category**: STATUS
+- **Age**: 64 days
+
+### TESTING_CLEANUP_COMPLETE.md (Archived 2025-12-22)
+- **Reason**: Status doc older than 60 days (64 days)
+- **Category**: STATUS
+- **Age**: 64 days
+
+### TEST_100_PERCENT_STATUS.md (Archived 2025-12-22)
+- **Reason**: Status doc older than 60 days (64 days)
+- **Category**: STATUS
+- **Age**: 64 days
+
