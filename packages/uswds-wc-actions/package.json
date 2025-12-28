@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/actions",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "USWDS Action Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",

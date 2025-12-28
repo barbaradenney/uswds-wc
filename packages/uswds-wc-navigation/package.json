@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/navigation",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "USWDS Navigation Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
@@ -29,7 +29,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@uswds-wc/actions": "^2.5.5",
+    "@uswds-wc/actions": "^2.5.6",
     "@uswds-wc/core": "^2.5.3",
     "@uswds-wc/data-display": "^2.5.4",
     "@uswds-wc/feedback": "^2.5.4"
