@@ -45,6 +45,9 @@ export class USAButtonGroup extends LitElement {
   @property({ type: Number })
   activeIndex = 0; // Track which button is active in segmented mode
 
+  @property({ type: Number, attribute: 'btn-count' })
+  btnCount = 0;
+
   private slottedContent: string = '';
 
   // Use light DOM for USWDS compatibility
@@ -58,11 +61,58 @@ export class USAButtonGroup extends LitElement {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse button attributes if buttons array is empty
+    this.parseButtonAttributes();
+
     // Capture any initial light DOM content before render to prevent duplication
-    if (this.childNodes.length > 0) {
+    if (this.buttons.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
+  }
+
+  /**
+   * Parse btn1-text, btn1-variant, btn2-text, etc. attributes into buttons array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseButtonAttributes() {
+    // Only parse if buttons is empty and we have btn-count or button attributes
+    if (this.buttons.length > 0) return;
+
+    const count = this.btnCount || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedButtons: ButtonGroupItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const text = this.getAttribute(`btn${i}-text`);
+      if (text) {
+        const variant = this.getAttribute(`btn${i}-variant`) as ButtonGroupItem['variant'];
+        parsedButtons.push({
+          text,
+          variant: variant || 'primary',
+          disabled: this.getAttribute(`btn${i}-disabled`) === 'true',
+        });
+      }
+    }
+
+    if (parsedButtons.length > 0) {
+      this.buttons = parsedButtons;
+    }
+  }
+
+  /**
+   * Detect button count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 10; i++) {
+      if (this.getAttribute(`btn${i}-text`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   override updated(changedProperties: Map<string, any>) {

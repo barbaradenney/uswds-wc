@@ -42,6 +42,9 @@ export class USABreadcrumb extends LitElement {
   @property({ type: Boolean, reflect: true })
   wrap = false;
 
+  @property({ type: Number, attribute: 'count' })
+  count = 0;
+
   // Use light DOM for USWDS compatibility
   protected override createRenderRoot(): HTMLElement {
     return this as any;
@@ -52,6 +55,52 @@ export class USABreadcrumb extends LitElement {
 
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
+
+    // Parse item attributes if items array is empty and count is specified
+    this.parseItemAttributes();
+  }
+
+  /**
+   * Parse item1-label, item1-href, item2-label, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseItemAttributes() {
+    // Only parse if items is empty and we have count or item attributes
+    if (this.items.length > 0) return;
+
+    const count = this.count || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedItems: BreadcrumbItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const label = this.getAttribute(`item${i}-label`);
+      if (label) {
+        parsedItems.push({
+          label,
+          href: this.getAttribute(`item${i}-href`) || undefined,
+          current: i === count, // Last item is current by default
+        });
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect item count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 10; i++) {
+      if (this.getAttribute(`item${i}-label`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   private handleItemClick(item: BreadcrumbItem, e: Event) {

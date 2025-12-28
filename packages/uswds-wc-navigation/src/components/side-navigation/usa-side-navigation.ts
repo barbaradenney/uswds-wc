@@ -43,6 +43,9 @@ export class USASideNavigation extends LitElement {
   @property({ type: String, attribute: 'aria-label' })
   override ariaLabel = 'Secondary navigation';
 
+  @property({ type: Number, attribute: 'count' })
+  count = 0;
+
   private slottedContent: string = '';
   private slottedContentApplied: boolean = false;
   private uswdsInitialized = false;
@@ -58,14 +61,60 @@ export class USASideNavigation extends LitElement {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse item attributes if items array is empty
+    this.parseItemAttributes();
+
     // Capture any initial slotted content before render
     // This allows using BOTH property-based items AND custom slotted navigation
-    if (this.childNodes.length > 0) {
+    if (this.items.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
 
     this.initializeUSWDSSideNavigation();
+  }
+
+  /**
+   * Parse item1-label, item1-href, item1-current, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseItemAttributes() {
+    // Only parse if items is empty and we have count or item attributes
+    if (this.items.length > 0) return;
+
+    const count = this.count || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedItems: SideNavItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const label = this.getAttribute(`item${i}-label`);
+      if (label) {
+        parsedItems.push({
+          label,
+          href: this.getAttribute(`item${i}-href`) || undefined,
+          current: this.getAttribute(`item${i}-current`) === 'true',
+        });
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect item count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`item${i}-label`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   override updated(changedProperties: Map<string, any>) {
