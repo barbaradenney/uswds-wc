@@ -25,6 +25,7 @@ import 'path/to/uswds-webcomponents/src/components/button-group/index.js';
 | `type`        | `'default'          | 'segmented'` | `'default'`          | Property description |
 | `buttons`     | `ButtonGroupItem[]` | `[]`         | Property description |
 | `activeIndex` | `any`               | `0`          | Property description |
+| `btnCount`    | `any`               | `0`          | Property description |
 
 ## Events
 
@@ -68,4 +69,4 @@ View component examples: [USAButtonGroup Stories](http://localhost:6006/?path=/s
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-28_

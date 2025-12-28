@@ -23,6 +23,7 @@ import 'path/to/uswds-webcomponents/src/components/side-navigation/index.js';
 | Property | Type            | Default | Description          |
 | -------- | --------------- | ------- | -------------------- |
 | `items`  | `SideNavItem[]` | `[]`    | Property description |
+| `count`  | `any`           | `0`     | Property description |
 
 ## Events
 
@@ -66,4 +67,4 @@ View component examples: [USASideNavigation Stories](http://localhost:6006/?path
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-28_
