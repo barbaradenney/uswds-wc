@@ -277,3 +277,24 @@ For bundle optimization, see:
 - **Category**: STATUS
 - **Age**: 64 days
 
+
+### MONOREPO_MIGRATION_COMPLETE.md (Archived 2025-12-29)
+- **Reason**: Status doc older than 60 days (63 days)
+- **Category**: STATUS
+- **Age**: 63 days
+
+### MONOREPO_MIGRATION_FINAL_STATUS.md (Archived 2025-12-29)
+- **Reason**: Status doc older than 60 days (63 days)
+- **Category**: STATUS
+- **Age**: 63 days
+
+### MONOREPO_OPTIMIZATION_PHASE1_COMPLETE.md (Archived 2025-12-29)
+- **Reason**: Status doc older than 60 days (65 days)
+- **Category**: STATUS
+- **Age**: 65 days
+
+### MONOREPO_OPTIONAL_STEPS_COMPLETE.md (Archived 2025-12-29)
+- **Reason**: Status doc older than 60 days (63 days)
+- **Category**: STATUS
+- **Age**: 63 days
+
