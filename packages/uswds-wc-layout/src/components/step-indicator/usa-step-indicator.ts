@@ -66,6 +66,9 @@ export class USAStepIndicator extends LitElement {
   @property({ type: String, attribute: 'aria-label' })
   override ariaLabel = 'Step indicator';
 
+  @property({ type: Number, attribute: 'step-count' })
+  stepCount = 0;
+
   private slottedContent: string = '';
   private slottedContentApplied: boolean = false;
 
@@ -77,18 +80,64 @@ export class USAStepIndicator extends LitElement {
   override connectedCallback() {
     super.connectedCallback?.();
 
+    // Set web component managed flag to prevent USWDS auto-initialization conflicts
+    this.setAttribute('data-web-component-managed', 'true');
+
+    // Parse step attributes if steps array is empty
+    this.parseStepAttributes();
+
     // Capture any initial slotted content before render
     // This allows using BOTH property-based steps AND custom slotted content
-    if (this.childNodes.length > 0) {
+    if (this.steps.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
 
-    // Set web component managed flag to prevent USWDS auto-initialization conflicts
-    this.setAttribute('data-web-component-managed', 'true');
-
     // If steps array is provided, sync currentStep with current status
     this.syncCurrentStep();
+  }
+
+  /**
+   * Parse step1-label, step1-status, etc. attributes into steps array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseStepAttributes() {
+    // Only parse if steps is empty and we have step-count or step attributes
+    if (this.steps.length > 0) return;
+
+    const count = this.stepCount || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedSteps: StepItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const label = this.getAttribute(`step${i}-label`);
+      if (label) {
+        const status = this.getAttribute(`step${i}-status`) as StepItem['status'];
+        parsedSteps.push({
+          label,
+          status: status || 'incomplete',
+        });
+      }
+    }
+
+    if (parsedSteps.length > 0) {
+      this.steps = parsedSteps;
+    }
+  }
+
+  /**
+   * Detect step count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`step${i}-label`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   override firstUpdated(changedProperties: Map<string, any>) {

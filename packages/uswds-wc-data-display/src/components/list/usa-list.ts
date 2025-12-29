@@ -46,6 +46,12 @@ export class USAList extends USWDSBaseComponent {
   @property({ type: Boolean, reflect: true })
   unstyled = false;
 
+  @property({ type: Number, attribute: 'count' })
+  count = 0;
+
+  @property({ type: Array })
+  items: string[] = [];
+
   private slottedContent: string = '';
 
   // Light DOM is handled by USWDSBaseComponent
@@ -56,8 +62,11 @@ export class USAList extends USWDSBaseComponent {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse item attributes if items array is empty
+    this.parseItemAttributes();
+
     // Capture any initial content before render
-    if (this.childNodes.length > 0) {
+    if (this.items.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
@@ -69,6 +78,45 @@ export class USAList extends USWDSBaseComponent {
 
     // Force re-render if innerHTML was manipulated
     this.requestUpdate();
+  }
+
+  /**
+   * Parse item1, item2, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseItemAttributes() {
+    // Only parse if items is empty and we have count or item attributes
+    if (this.items.length > 0) return;
+
+    const itemCount = this.count || this.getAttributeCount();
+    if (itemCount === 0) return;
+
+    const parsedItems: string[] = [];
+    for (let i = 1; i <= itemCount; i++) {
+      const item = this.getAttribute(`item${i}`);
+      if (item) {
+        parsedItems.push(item);
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect item count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let itemCount = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`item${i}`)) {
+        itemCount = i;
+      } else {
+        break;
+      }
+    }
+    return itemCount;
   }
 
   override firstUpdated(changedProperties: Map<string, unknown>) {
@@ -168,16 +216,21 @@ export class USAList extends USWDSBaseComponent {
       .filter(Boolean)
       .join(' ');
 
+    // If items array is populated, render them
+    const listContent = this.items.length > 0
+      ? this.items.map(item => html`<li>${item}</li>`)
+      : html`<slot></slot>`;
+
     if (this.type === 'ordered') {
       return html`
         <ol class="${classes}">
-          <slot></slot>
+          ${listContent}
         </ol>
       `;
     } else {
       return html`
         <ul class="${classes}">
-          <slot></slot>
+          ${listContent}
         </ul>
       `;
     }

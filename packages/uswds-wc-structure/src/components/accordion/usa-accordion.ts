@@ -80,6 +80,7 @@ export class USAAccordion extends USWDSBaseComponent {
   @property({ type: Array }) items: AccordionItem[] = [];
   @property({ type: Boolean, reflect: true }) multiselectable = false;
   @property({ type: Boolean, reflect: true }) bordered = false;
+  @property({ type: Number, attribute: 'section-count' }) sectionCount = 0;
 
   // Slot content handling to prevent duplication
   private slottedContent: string = '';
@@ -93,8 +94,11 @@ export class USAAccordion extends USWDSBaseComponent {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse section attributes if items array is empty
+    this.parseSectionAttributes();
+
     // Capture any initial light DOM content before render to prevent duplication
-    if (this.childNodes.length > 0) {
+    if (this.items.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
@@ -104,6 +108,50 @@ export class USAAccordion extends USWDSBaseComponent {
       ...item,
       id: item.id || `accordion-item-${index}`,
     }));
+  }
+
+  /**
+   * Parse section1-title, section1-content, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseSectionAttributes() {
+    // Only parse if items is empty and we have section-count or section attributes
+    if (this.items.length > 0) return;
+
+    const count = this.sectionCount || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedItems: AccordionItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const title = this.getAttribute(`section${i}-title`);
+      if (title) {
+        parsedItems.push({
+          id: `section-${i}`,
+          title,
+          content: this.getAttribute(`section${i}-content`) || '',
+          expanded: this.getAttribute(`section${i}-expanded`) === 'true',
+        });
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect section count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`section${i}-title`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   override async firstUpdated(changedProperties: Map<string, any>) {

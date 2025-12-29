@@ -40,6 +40,9 @@ export class USAProcessList extends LitElement {
   @property({ type: String })
   headingLevel = 'h4';
 
+  @property({ type: Number, attribute: 'item-count' })
+  itemCount = 0;
+
   private slottedContent: string = '';
   private slottedContentApplied: boolean = false;
 
@@ -54,12 +57,57 @@ export class USAProcessList extends LitElement {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse item attributes if items array is empty
+    this.parseItemAttributes();
+
     // Capture any initial slotted content before render
     // This allows using BOTH property-based items AND custom slotted process list content
-    if (this.childNodes.length > 0) {
+    if (this.items.length === 0 && this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
     }
+  }
+
+  /**
+   * Parse item1-heading, item1-content, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseItemAttributes() {
+    // Only parse if items is empty and we have item-count or item attributes
+    if (this.items.length > 0) return;
+
+    const count = this.itemCount || this.getAttributeCount();
+    if (count === 0) return;
+
+    const parsedItems: ProcessItem[] = [];
+    for (let i = 1; i <= count; i++) {
+      const heading = this.getAttribute(`item${i}-heading`);
+      if (heading) {
+        parsedItems.push({
+          heading,
+          content: this.getAttribute(`item${i}-content`) || '',
+        });
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect item count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let count = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`item${i}-heading`)) {
+        count = i;
+      } else {
+        break;
+      }
+    }
+    return count;
   }
 
   override updated(changedProperties: Map<string, any>) {

@@ -57,6 +57,9 @@ export class USACollection extends LitElement {
   @property({ type: Array })
   items: CollectionItem[] = [];
 
+  @property({ type: Number, attribute: 'count' })
+  count = 0;
+
   private usingUSWDSEnhancement = false;
 
   @property({ type: Boolean, reflect: true })
@@ -94,6 +97,9 @@ export class USACollection extends LitElement {
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
 
+    // Parse item attributes if items array is empty
+    this.parseItemAttributes();
+
     // Initialize CSS custom property for container height
     this.style.setProperty('--usa-collection-container-height', `${this.containerHeight}px`);
 
@@ -102,6 +108,52 @@ export class USACollection extends LitElement {
       // Initialize progressive enhancement
       this.initializeUSWDSCollection();
     }
+  }
+
+  /**
+   * Parse item1-title, item1-description, etc. attributes into items array
+   * This supports declarative HTML usage for prototyping tools
+   */
+  private parseItemAttributes() {
+    // Only parse if items is empty and we have count or item attributes
+    if (this.items.length > 0) return;
+
+    const itemCount = this.count || this.getAttributeCount();
+    if (itemCount === 0) return;
+
+    const parsedItems: CollectionItem[] = [];
+    for (let i = 1; i <= itemCount; i++) {
+      const title = this.getAttribute(`item${i}-title`);
+      if (title) {
+        parsedItems.push({
+          id: `item-${i}`,
+          title,
+          description: this.getAttribute(`item${i}-description`) || undefined,
+          href: this.getAttribute(`item${i}-href`) || undefined,
+          date: this.getAttribute(`item${i}-date`) || undefined,
+          author: this.getAttribute(`item${i}-author`) || undefined,
+        });
+      }
+    }
+
+    if (parsedItems.length > 0) {
+      this.items = parsedItems;
+    }
+  }
+
+  /**
+   * Detect item count from attributes if not explicitly set
+   */
+  private getAttributeCount(): number {
+    let itemCount = 0;
+    for (let i = 1; i <= 20; i++) {
+      if (this.getAttribute(`item${i}-title`)) {
+        itemCount = i;
+      } else {
+        break;
+      }
+    }
+    return itemCount;
   }
 
   override disconnectedCallback() {
