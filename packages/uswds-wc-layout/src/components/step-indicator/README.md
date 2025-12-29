@@ -29,6 +29,7 @@ import 'path/to/uswds-webcomponents/src/components/step-indicator/index.js';
 | `center`      | `any`        | `false` | Property description |
 | `small`       | `any`        | `false` | Property description |
 | `heading`     | `any`        | `''`    | Property description |
+| `stepCount`   | `any`        | `0`     | Property description |
 
 ## Events
 
@@ -72,4 +73,4 @@ View component examples: [USAStepIndicator Stories](http://localhost:6006/?path=
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-29_

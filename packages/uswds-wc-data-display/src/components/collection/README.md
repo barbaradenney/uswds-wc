@@ -23,6 +23,7 @@ import 'path/to/uswds-webcomponents/src/components/collection/index.js';
 | Property          | Type               | Default | Description          |
 | ----------------- | ------------------ | ------- | -------------------- |
 | `items`           | `CollectionItem[]` | `[]`    | Property description |
+| `count`           | `any`              | `0`     | Property description |
 | `virtual`         | `any`              | `false` | Property description |
 | `itemHeight`      | `any`              | `120`   | Property description |
 | `containerHeight` | `any`              | `600`   | Property description |
@@ -69,4 +70,4 @@ View component examples: [USACollection Stories](http://localhost:6006/?path=/st
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-29_

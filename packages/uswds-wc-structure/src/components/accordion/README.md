@@ -25,6 +25,7 @@ import 'path/to/uswds-webcomponents/src/components/accordion/index.js';
 | `items`           | `AccordionItem[]` | `[]`    | Property description |
 | `multiselectable` | `any`             | `false` | Property description |
 | `bordered`        | `any`             | `false` | Property description |
+| `sectionCount`    | `any`             | `0`     | Property description |
 
 ## Events
 
@@ -68,4 +69,4 @@ View component examples: [USAAccordion Stories](http://localhost:6006/?path=/sto
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-29_

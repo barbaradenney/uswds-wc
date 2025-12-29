@@ -24,6 +24,7 @@ import 'path/to/uswds-webcomponents/src/components/process-list/index.js';
 | -------------- | --------------- | ------- | -------------------- |
 | `items`        | `ProcessItem[]` | `[]`    | Property description |
 | `headingLevel` | `any`           | `'h4'`  | Property description |
+| `itemCount`    | `any`           | `0`     | Property description |
 
 ## Events
 
@@ -67,4 +68,4 @@ View component examples: [USAProcessList Stories](http://localhost:6006/?path=/s
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2025-12-29_
