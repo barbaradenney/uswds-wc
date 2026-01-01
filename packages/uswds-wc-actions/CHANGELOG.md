@@ -1,5 +1,11 @@
 # @uswds-wc/actions
 
+## 2.5.7
+
+### Patch Changes
+
+- c52248f: Add text property to usa-link component for attribute-based text content
+
 ## 2.5.6
 
 ### Patch Changes
