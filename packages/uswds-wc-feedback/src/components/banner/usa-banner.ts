@@ -59,16 +59,16 @@ export class USABanner extends USWDSBaseComponent {
   // The component uses USWDS CSS classes which handle all styling
 
   @property({ type: String })
-  flagImageSrc = '/img/us_flag_small.png';
+  flagImageSrc = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/us_flag_small.png';
 
   @property({ type: String })
   flagImageAlt = 'U.S. flag';
 
   @property({ type: String })
-  dotGovIconSrc = '/img/icon-dot-gov.svg';
+  dotGovIconSrc = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-dot-gov.svg';
 
   @property({ type: String })
-  httpsIconSrc = '/img/icon-https.svg';
+  httpsIconSrc = 'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-https.svg';
 
   @property({ type: String })
   headerText = 'An official website of the United States government';
