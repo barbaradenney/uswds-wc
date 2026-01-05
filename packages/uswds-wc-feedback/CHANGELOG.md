@@ -1,5 +1,11 @@
 # @uswds-wc/feedback
 
+## 2.5.5
+
+### Patch Changes
+
+- Fix broken banner image URLs by changing defaults from relative paths to absolute CDN URLs
+
 ## 2.5.4
 
 ### Patch Changes

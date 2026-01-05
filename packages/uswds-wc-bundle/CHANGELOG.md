@@ -1,5 +1,11 @@
 # @uswds-wc/bundle
 
+## 2.5.11
+
+### Patch Changes
+
+- Fix broken banner image URLs by changing defaults from relative paths to absolute CDN URLs
+
 ## 2.5.10
 
 ### Patch Changes
