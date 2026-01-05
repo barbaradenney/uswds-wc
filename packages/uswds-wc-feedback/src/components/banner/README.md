@@ -20,15 +20,15 @@ import 'path/to/uswds-webcomponents/src/components/banner/index.js';
 
 ## Properties
 
-| Property        | Type  | Default                                                 | Description          |
-| --------------- | ----- | ------------------------------------------------------- | -------------------- |
-| `flagImageSrc`  | `any` | `'/img/us_flag_small.png'`                              | Property description |
-| `flagImageAlt`  | `any` | `'U.S. flag'`                                           | Property description |
-| `dotGovIconSrc` | `any` | `'/img/icon-dot-gov.svg'`                               | Property description |
-| `httpsIconSrc`  | `any` | `'/img/icon-https.svg'`                                 | Property description |
-| `headerText`    | `any` | `'An official website of the United States government'` | Property description |
-| `actionText`    | `any` | `"Here's how you know"`                                 | Property description |
-| `expanded`      | `any` | `false`                                                 | Property description |
+| Property        | Type  | Default                                                                        | Description          |
+| --------------- | ----- | ------------------------------------------------------------------------------ | -------------------- |
+| `flagImageSrc`  | `any` | `'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/us_flag_small.png'` | Property description |
+| `flagImageAlt`  | `any` | `'U.S. flag'`                                                                  | Property description |
+| `dotGovIconSrc` | `any` | `'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-dot-gov.svg'`  | Property description |
+| `httpsIconSrc`  | `any` | `'https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-https.svg'`    | Property description |
+| `headerText`    | `any` | `'An official website of the United States government'`                        | Property description |
+| `actionText`    | `any` | `"Here's how you know"`                                                        | Property description |
+| `expanded`      | `any` | `false`                                                                        | Property description |
 
 ## Events
 
@@ -72,4 +72,4 @@ View component examples: [USABanner Stories](http://localhost:6006/?path=/story/
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2025-12-10_
+_Last updated: 2026-01-05_
