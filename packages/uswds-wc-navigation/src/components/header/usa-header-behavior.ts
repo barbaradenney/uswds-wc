@@ -43,9 +43,23 @@ const NON_NAV_HIDDEN = `[${NON_NAV_HIDDEN_ATTRIBUTE}]`;
 const ACTIVE_CLASS = 'usa-js-mobile-nav--active';
 const VISIBLE_CLASS = 'is-visible';
 
+/**
+ * Options for header behavior initialization
+ */
+export interface HeaderBehaviorOptions {
+  /**
+   * Whether to hide non-nav elements with aria-hidden when mobile menu opens.
+   * Set to false for web component contexts where this causes issues with
+   * ancestor elements being incorrectly hidden.
+   * @default true
+   */
+  hideNonNavElements?: boolean;
+}
+
 let navigation: any;
 let navActive: HTMLElement | null = null;
 let nonNavElements: NodeListOf<Element>;
+let behaviorOptions: HeaderBehaviorOptions = { hideNonNavElements: true };
 
 /**
  * Check if mobile nav is active
@@ -116,6 +130,11 @@ const showNonNavItems = (): void => {
  * @param active - Whether nav is active
  */
 const toggleNonNavItems = (active: boolean): void => {
+  // Skip if hideNonNavElements is disabled (web component contexts)
+  if (!behaviorOptions.hideNonNavElements) {
+    return;
+  }
+
   if (active) {
     hideNonNavItems();
   } else {
@@ -283,13 +302,20 @@ function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => vo
  * SOURCE: index.js (Lines 176-228)
  *
  * @param root - Root element or document
+ * @param options - Behavior options
  * @returns Cleanup function
  */
-export function initializeHeader(root: HTMLElement | Document = document): () => void {
+export function initializeHeader(
+  root: HTMLElement | Document = document,
+  options: HeaderBehaviorOptions = {}
+): () => void {
   // Guard against undefined window/document in test teardown (prevents "window is not defined" in CI)
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return () => {}; // Return noop cleanup function
   }
+
+  // Store options for use by toggleNonNavItems
+  behaviorOptions = { hideNonNavElements: true, ...options };
 
   const trapContainer = (root as HTMLElement).matches?.(NAV)
     ? (root as HTMLElement)

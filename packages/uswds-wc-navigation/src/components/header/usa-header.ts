@@ -193,7 +193,9 @@ export class USAHeader extends USWDSBaseComponent {
     await new Promise((resolve) => requestAnimationFrame(() => resolve(undefined)));
 
     // Initialize using mirrored USWDS behavior
-    this.cleanup = initializeHeader(this);
+    // Disable hideNonNavElements to prevent ancestor elements from being hidden
+    // The web component handles visibility via CSS class toggle instead
+    this.cleanup = initializeHeader(this, { hideNonNavElements: false });
   }
 
   override shouldUpdate(changedProperties: Map<string, any>): boolean {
