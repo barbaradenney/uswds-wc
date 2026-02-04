@@ -345,7 +345,7 @@ export class USASelect extends LitElement {
         .value="${this.value}"
         @change=${this.handleChange}
       >
-        ${this.renderDefaultOption()} ${this.options.map((option) => this.renderOption(option))}
+        ${this.renderDefaultOption()} ${(this.options || []).map((option) => this.renderOption(option))}
         <slot></slot>
       </select>
     `;
