@@ -51,6 +51,15 @@ export interface SecondaryLink {
  * @attr {boolean} showSearch - Show search form in header.
  * @attr {string} searchPlaceholder - Placeholder text for search input. Defaults to 'Search'.
  * @attr {boolean} showLanguageSelector - Show language selector.
+ * @attr {number} sec-count - Number of secondary (utility) links to display (0-4).
+ * @attr {string} sec1-label - Label for secondary link 1.
+ * @attr {string} sec1-href - URL for secondary link 1.
+ * @attr {string} sec2-label - Label for secondary link 2.
+ * @attr {string} sec2-href - URL for secondary link 2.
+ * @attr {string} sec3-label - Label for secondary link 3.
+ * @attr {string} sec3-href - URL for secondary link 3.
+ * @attr {string} sec4-label - Label for secondary link 4.
+ * @attr {string} sec4-href - URL for secondary link 4.
  *
  * @prop {Array<{label: string, href?: string, current?: boolean, submenu?: NavItem[], megamenu?: MegamenuColumn[]}>} navItems - Navigation items array.
  * @prop {Array<{label: string, href: string}>} secondaryLinks - Secondary navigation links.
@@ -170,6 +179,27 @@ export class USAHeader extends USWDSBaseComponent {
     if (this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
+    }
+
+    // Initialize secondary links from sec-count/sec1-label/sec1-href attributes
+    this.initSecondaryLinksFromAttributes();
+  }
+
+  /**
+   * Read sec-count, sec1-label, sec1-href, etc. attributes and populate
+   * the existing secondaryLinks property.
+   */
+  private initSecondaryLinksFromAttributes() {
+    const count = parseInt(this.getAttribute('sec-count') || '0', 10);
+    if (count > 0) {
+      const links: SecondaryLink[] = [];
+      for (let i = 1; i <= count; i++) {
+        links.push({
+          label: this.getAttribute(`sec${i}-label`) || `Link ${i}`,
+          href: this.getAttribute(`sec${i}-href`) || '#',
+        });
+      }
+      this.secondaryLinks = links;
     }
   }
 
