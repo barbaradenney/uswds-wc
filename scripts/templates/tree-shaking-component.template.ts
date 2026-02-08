@@ -107,7 +107,7 @@ export class {{COMPONENT_CLASS}} extends LitElement {
   private async loadFullUSWDSLibrary(): Promise<void> {
     return new Promise((resolve, reject) => {
       // Check if USWDS is already loaded globally
-      if (typeof (window as any).USWDS !== 'undefined') {
+      if (typeof window.USWDS !== 'undefined') {
         console.log(`📦 USWDS already available globally`);
         this.initializeWithGlobalUSWDS();
         resolve();
@@ -143,8 +143,8 @@ export class {{COMPONENT_CLASS}} extends LitElement {
    */
   private initializeWithGlobalUSWDS() {
     const componentElement = this.querySelector('.usa-{{COMPONENT_KEBAB}}');
-    if (componentElement && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
+    if (componentElement && typeof window.USWDS !== 'undefined') {
+      const USWDS = window.USWDS;
       if (USWDS.{{COMPONENT_CAMEL}} && typeof USWDS.{{COMPONENT_CAMEL}}.on === 'function') {
         USWDS.{{COMPONENT_CAMEL}}.on(componentElement);
         console.log(`🎯 USWDS {{COMPONENT_KEBAB}} initialized (fallback mode)`);
@@ -180,8 +180,8 @@ export class {{COMPONENT_CLASS}} extends LitElement {
     }
 
     // Fallback to global USWDS cleanup
-    if (typeof (window as any).USWDS !== 'undefined' && componentElement) {
-      const USWDS = (window as any).USWDS;
+    if (typeof window.USWDS !== 'undefined' && componentElement) {
+      const USWDS = window.USWDS;
       if (USWDS.{{COMPONENT_CAMEL}}?.off) {
         try {
           USWDS.{{COMPONENT_CAMEL}}.off(componentElement);

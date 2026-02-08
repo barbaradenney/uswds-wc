@@ -190,28 +190,22 @@ export class USARadio extends LitElement {
   private async initializeUSWDSRadio() {
     // Prevent multiple initializations
     if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
       return;
     }
 
-    console.log(`🔘 Radio: Initializing (presentational component - no USWDS JavaScript needed)`);
-
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.radio && typeof USWDS.radio.on === 'function') {
           USWDS.radio.on(this);
-          console.log(`🔘 Radio: Enhanced with global USWDS JavaScript`);
           return;
         }
       }
 
-      console.log(`🔘 Radio: Using presentational component behavior (USWDS Radio is CSS-only)`);
-    } catch (error) {
-      console.warn(`🔘 Radio: Initialization completed with basic behavior:`, error);
+      // Radio is a presentational component (USWDS Radio is CSS-only)
+    } catch {
+      // Initialization completed with basic behavior
     }
   }
 
@@ -229,14 +223,13 @@ export class USARadio extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (radio components are presentational)
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
+    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+      const USWDS = window.USWDS;
       if (USWDS.radio?.off) {
         try {
           USWDS.radio.off(this);
-          console.log(`🧹 Cleaned up USWDS radio`);
-        } catch (error) {
-          console.warn(`⚠️ Error cleaning up USWDS:`, error);
+        } catch {
+          // Cleanup failed silently
         }
       }
     }

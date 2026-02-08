@@ -103,8 +103,6 @@ export class USAAlert extends USWDSBaseComponent {
       this.childNodes_ = Array.from(this.childNodes);
       this.hasProcessedChildren = true;
     }
-
-    console.log('📋 Alert: Initialized as presentational component (no USWDS JavaScript required)');
   }
 
   override firstUpdated(changedProperties: Map<string, any>) {
@@ -137,7 +135,6 @@ export class USAAlert extends USWDSBaseComponent {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    console.log('📋 Alert: Cleanup complete (no USWDS JavaScript required)');
   }
 
   private updateAriaRole() {
@@ -155,11 +152,6 @@ export class USAAlert extends USWDSBaseComponent {
 
     return classes.filter(Boolean).join(' ');
   }
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   private renderHeading() {
     if (!this.heading) return '';
     return html`<h4 class="usa-alert__heading">${this.heading}</h4>`;

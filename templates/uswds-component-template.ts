@@ -88,8 +88,8 @@ export class USA[ComponentName] extends USWDSBaseComponent {
 
     // Strategy 2: Try global USWDS fallback
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.[componentName] && typeof USWDS.[componentName].on === 'function') {
           USWDS.[componentName].on(this);
           this.initialized = true; // REQUIRED: Set flag after successful initialization
@@ -115,8 +115,8 @@ export class USA[ComponentName] extends USWDSBaseComponent {
       if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
         this.uswdsModule.off(this);
         console.log(\`✅ [ComponentName]: USWDS module cleaned up\`);
-      } else if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      } else if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.[componentName] && typeof USWDS.[componentName].off === 'function') {
           USWDS.[componentName].off(this);
           console.log(\`✅ [ComponentName]: Global USWDS cleaned up\`);

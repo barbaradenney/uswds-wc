@@ -83,7 +83,7 @@ export class USA{{ComponentName}} extends USWDSBaseComponent {
 
   private async loadFullUSWDSLibrary() {
     try {
-      if (typeof (window as any).USWDS === 'undefined') {
+      if (typeof window.USWDS === 'undefined') {
         console.warn('⚠️ Full USWDS library not available, using fallback behavior');
         this.setupFallbackBehavior();
         return;
@@ -96,7 +96,7 @@ export class USA{{ComponentName}} extends USWDSBaseComponent {
   }
 
   private async initializeWithGlobalUSWDS() {
-    const USWDS = (window as any).USWDS;
+    const USWDS = window.USWDS;
     if (USWDS && USWDS.{{componentName}} && typeof USWDS.{{componentName}}.on === 'function') {
       USWDS.{{componentName}}.on(this);
       this.usingUSWDSEnhancement = true; // CRITICAL: Set flag after success
@@ -117,8 +117,8 @@ export class USA{{ComponentName}} extends USWDSBaseComponent {
       if (this.uswdsModule && typeof this.uswdsModule.off === 'function') {
         this.uswdsModule.off(this);
         console.log('✅ USWDS {{component-name}} cleaned up');
-      } else if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      } else if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.{{componentName}} && typeof USWDS.{{componentName}}.off === 'function') {
           USWDS.{{componentName}}.off(this);
           console.log('✅ Global USWDS {{component-name}} cleaned up');

@@ -171,28 +171,20 @@ export class USAButton extends LitElement {
   private async initializeUSWDSButton() {
     // Prevent multiple initializations
     if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
       return;
     }
 
-    console.log(`🔘 Button: Initializing (presentational component - no USWDS JavaScript needed)`);
-
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.button && typeof USWDS.button.on === 'function') {
           USWDS.button.on(this);
-          console.log(`🔘 Button: Enhanced with global USWDS JavaScript`);
           return;
         }
       }
-
-      console.log(`🔘 Button: Using presentational component behavior (USWDS Button is CSS-only)`);
-    } catch (error) {
-      console.warn(`🔘 Button: Initialization completed with basic behavior:`, error);
+    } catch {
+      // Initialization continues with basic behavior
     }
   }
 
@@ -230,14 +222,13 @@ export class USAButton extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (button components are presentational)
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
+    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+      const USWDS = window.USWDS;
       if (USWDS.button?.off) {
         try {
           USWDS.button.off(this);
-          console.log(`🧹 Cleaned up USWDS button`);
-        } catch (error) {
-          console.warn(`⚠️ Error cleaning up USWDS:`, error);
+        } catch {
+          // Cleanup may fail if USWDS was already torn down
         }
       }
     }

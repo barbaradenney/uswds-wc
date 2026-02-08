@@ -674,11 +674,6 @@ export class USATable extends USWDSBaseComponent {
     `;
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   override render() {
     // Always include table container wrapper for USWDS compatibility
     const containerClasses = [
@@ -691,9 +686,9 @@ export class USATable extends USWDSBaseComponent {
     return html`
       <div
         class="${containerClasses}"
-        tabindex="${this.scrollable ? '0' : ''}"
-        role="${this.scrollable ? 'region' : ''}"
-        aria-labelledby="${this.scrollable ? 'table-title' : ''}"
+        tabindex="${ifDefined(this.scrollable ? '0' : undefined)}"
+        role="${ifDefined(this.scrollable ? 'region' : undefined)}"
+        aria-labelledby="${ifDefined(this.scrollable ? 'table-title' : undefined)}"
       >
         ${this.renderTable()}
       </div>

@@ -144,8 +144,8 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
             if (!element) return;
 
             // Check if global USWDS is available
-            if (typeof window !== 'undefined' && (window as any).USWDS) {
-              const USWDS = (window as any).USWDS;
+            if (typeof window !== 'undefined' && window.USWDS) {
+              const USWDS = window.USWDS;
 
               console.log(`🔍 USWDS object inspection for ${moduleName}:`, {
                 hasUSWDS: !!USWDS,
@@ -189,8 +189,8 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
           },
           on: (element: Element) => {
             // Check if global USWDS is available
-            if (typeof window !== 'undefined' && (window as any).USWDS) {
-              const USWDS = (window as any).USWDS;
+            if (typeof window !== 'undefined' && window.USWDS) {
+              const USWDS = window.USWDS;
 
               // For modal, try to access the modal behavior directly
               if (moduleName === 'modal' && USWDS.modal && typeof USWDS.modal.init === 'function') {

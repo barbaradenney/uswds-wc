@@ -206,11 +206,6 @@ export class USAInPageNavigation extends USWDSBaseComponent {
     `;
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   override render() {
     // If sections are provided manually, render the structure
     if (this.sections && this.sections.length > 0) {

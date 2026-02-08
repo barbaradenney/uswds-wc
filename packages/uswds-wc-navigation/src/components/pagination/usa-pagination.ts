@@ -50,11 +50,6 @@ export class USAPagination extends USWDSBaseComponent {
   @property({ type: String, attribute: 'aria-label' })
   override ariaLabel = 'Pagination';
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   public getVisiblePages(): (number | string)[] {
     if (this.totalPages <= this.maxVisible) {
       // Show all pages if total pages is less than max visible

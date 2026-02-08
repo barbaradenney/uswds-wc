@@ -44,7 +44,7 @@ async function injectSprite(spriteUrl: string): Promise<void> {
       document.body.insertBefore(container, document.body.firstChild);
       spriteInjected = true;
     } catch (error) {
-      console.warn('📋 Icon: Failed to inject sprite, falling back to inline SVG:', error);
+      // Sprite injection failed, falling back to inline SVG
       spriteLoading = null;
     }
   })();
@@ -117,15 +117,6 @@ export class USAIcon extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    // Clean up USWDS behavior
-    try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        // USWDS available but no setup needed
-      }
-    } catch (error) {
-      console.warn('📋 Icon: Cleanup failed:', error);
-    }
-    // Additional cleanup for event listeners would go here
   }
   override render() {
     // Only apply size class for valid sizes

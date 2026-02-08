@@ -319,11 +319,6 @@ export class USAFooter extends USWDSBaseComponent {
     `;
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   override render() {
     const footerClasses = ['usa-footer', `usa-footer--${this.variant}`].filter(Boolean).join(' ');
 

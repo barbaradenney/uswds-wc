@@ -230,7 +230,6 @@ export class USAMemorableDate extends LitElement {
   private async initializeUSWDSMemorableDate() {
     if (this.uswdsInitialized) return;
 
-    console.log('📋 Memorable Date: Initializing USWDS memorable date for enhanced validation');
     try {
       // Note: USWDS memorable date is primarily a presentational component
       // However, it can benefit from USWDS form validation and accessibility enhancements
@@ -241,12 +240,8 @@ export class USAMemorableDate extends LitElement {
 
       // Memorable Date is a CSS-only component (no USWDS JavaScript required)
       // This component provides HTML structure and lets USWDS CSS handle the styling
-      console.log('📋 Memorable Date: CSS-only component (no USWDS JavaScript needed)');
-    } catch (error) {
-      console.warn(
-        '🔧 Memorable Date: USWDS integration failed, using standalone implementation:',
-        error
-      );
+    } catch {
+      // USWDS integration failed, using standalone implementation
     }
   }
 
@@ -281,14 +276,14 @@ export class USAMemorableDate extends LitElement {
 
   private cleanupUSWDS() {
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS['memorable-date'] && typeof USWDS['memorable-date'].off === 'function') {
           USWDS['memorable-date'].off(this);
         }
       }
-    } catch (error) {
-      console.warn('📋 MemorableDate: Cleanup failed:', error);
+    } catch {
+      // Cleanup failed silently
     }
     this.uswdsInitialized = false;
   }

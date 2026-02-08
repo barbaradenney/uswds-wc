@@ -19,12 +19,26 @@ describe('USAIcon', () => {
   let element: USAIcon;
 
   beforeEach(() => {
+    // Inject a mock sprite container so injectSprite() short-circuits
+    // and _spriteReady becomes true (fetch won't work in test env)
+    if (!document.getElementById('uswds-icon-sprite')) {
+      const spriteContainer = document.createElement('div');
+      spriteContainer.id = 'uswds-icon-sprite';
+      spriteContainer.style.cssText = 'position: absolute; width: 0; height: 0; overflow: hidden;';
+      spriteContainer.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(spriteContainer, document.body.firstChild);
+    }
+
     element = document.createElement('usa-icon') as USAIcon;
     document.body.appendChild(element);
   });
 
   afterEach(() => {
     element.remove();
+    const spriteContainer = document.getElementById('uswds-icon-sprite');
+    if (spriteContainer) {
+      spriteContainer.remove();
+    }
   });
 
   describe('Basic Functionality', () => {
@@ -184,7 +198,7 @@ describe('USAIcon', () => {
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
       expect(use).toBeTruthy();
-      expect(use?.getAttribute('href')).toBe('/icons.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
     });
 
     it('should use sprite by default (sprite-first architecture)', async () => {
@@ -194,7 +208,7 @@ describe('USAIcon', () => {
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
       expect(use).toBeTruthy();
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
       expect(svg?.querySelector('path')).toBe(null);
     });
 
@@ -425,7 +439,7 @@ describe('USAIcon', () => {
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#flag');
+      expect(use?.getAttribute('href')).toBe('#flag');
     });
   });
 
@@ -437,7 +451,7 @@ describe('USAIcon', () => {
       await waitForPropertyPropagation(element);
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('https://secure.gov/assets/icons.svg#security');
+      expect(use?.getAttribute('href')).toBe('#security');
     });
 
     it('should sanitize icon names for security', async () => {
@@ -529,7 +543,7 @@ describe('USAIcon', () => {
 
       const svg = element.querySelector('svg');
       const use = svg?.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/sprite.svg#flag');
+      expect(use?.getAttribute('href')).toBe('#flag');
       expect(svg?.classList.contains('usa-icon')).toBe(true);
     });
 

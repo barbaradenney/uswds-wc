@@ -14,6 +14,7 @@
 
 import { selectOrMatches } from '@uswds-wc/core';
 import { Sanitizer } from '@uswds-wc/core';
+import { keymap } from '@uswds-wc/core';
 
 /**
  * Constants from USWDS
@@ -2055,21 +2056,6 @@ const tabHandler = (focusable: string) => {
 const datePickerTabEventHandler = tabHandler(DATE_PICKER_FOCUSABLE);
 const monthPickerTabEventHandler = tabHandler(MONTH_PICKER_FOCUSABLE);
 const yearPickerTabEventHandler = tabHandler(YEAR_PICKER_FOCUSABLE);
-
-/**
- * Keymap helper - inline implementation
- *
- * SOURCE: Adapted from receptor/keymap pattern
- */
-function keymap(mappings: Record<string, (this: HTMLElement, event: KeyboardEvent) => void>) {
-  return function (this: HTMLElement, event: KeyboardEvent) {
-    const key = event.shiftKey ? `Shift+${event.key}` : event.key;
-    const handler = mappings[key];
-    if (handler) {
-      handler.call(this, event);
-    }
-  };
-}
 
 /**
  * Date Picker Event Delegation and Initialization

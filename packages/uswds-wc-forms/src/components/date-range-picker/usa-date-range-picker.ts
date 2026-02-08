@@ -323,11 +323,6 @@ export class USADateRangePicker extends USWDSBaseComponent {
     `;
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   override render() {
     const groupClasses = [
       'usa-form-group',

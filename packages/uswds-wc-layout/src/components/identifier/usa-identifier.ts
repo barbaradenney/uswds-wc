@@ -214,15 +214,6 @@ export class USAIdentifier extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    // Clean up USWDS behavior
-    try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        // USWDS available but no setup needed
-      }
-    } catch (error) {
-      console.warn('📋 Identifier: Cleanup failed:', error);
-    }
-    // Additional cleanup for event listeners would go here
   }
   override render() {
     return html`

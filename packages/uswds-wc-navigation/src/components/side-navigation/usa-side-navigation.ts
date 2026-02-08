@@ -167,7 +167,7 @@ export class USASideNavigation extends LitElement {
     return html`
       <li class="${itemClasses}">
         <a
-          href="${item.href || 'javascript:void(0);'}"
+          href="${item.href || '#'}"
           class="${linkClasses}"
           aria-current="${ifDefined(item.current ? 'page' : undefined)}"
           @click="${(e: Event) => this.handleItemClick(item, e)}"
@@ -185,9 +185,6 @@ export class USASideNavigation extends LitElement {
     }
 
     // Note: USWDS side navigation is purely presentational with no JavaScript behavior
-    console.log(
-      '📋 SideNavigation: Initialized as presentational component (no USWDS JavaScript required)'
-    );
     this.uswdsInitialized = true;
   }
 

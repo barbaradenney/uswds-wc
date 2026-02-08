@@ -72,7 +72,7 @@ export class USAList extends USWDSBaseComponent {
     }
 
     // Set appropriate ARIA role if needed
-    if (this.type === 'ordered') {
+    if (this.type === 'ordered' || this.unstyled) {
       this.setAttribute('role', 'list');
     }
 
@@ -130,9 +130,8 @@ export class USAList extends USWDSBaseComponent {
 
   override updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
-    if (changedProperties.has('type')) {
-      // Set appropriate ARIA role if needed
-      if (this.type === 'ordered') {
+    if (changedProperties.has('type') || changedProperties.has('unstyled')) {
+      if (this.type === 'ordered' || this.unstyled) {
         this.setAttribute('role', 'list');
       } else {
         this.removeAttribute('role');
@@ -203,12 +202,6 @@ export class USAList extends USWDSBaseComponent {
   override disconnectedCallback() {
     super.disconnectedCallback();
     // Note: USWDS lists are purely presentational with no JavaScript behavior
-    console.log('📋 List: Disconnected (presentational component, no cleanup needed)');
-  }
-
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
   }
 
   override render() {

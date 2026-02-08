@@ -14,6 +14,7 @@
 
 import { selectOrMatches } from '@uswds-wc/core';
 import { Sanitizer } from '@uswds-wc/core';
+import { keymap } from '@uswds-wc/core';
 
 /**
  * Constants from USWDS
@@ -66,21 +67,6 @@ interface ComboBoxContext {
   clearInputBtnEl: HTMLButtonElement;
   isPristine: boolean;
   disableFiltering: boolean;
-}
-
-/**
- * Keymap helper - maps keyboard events to handlers
- *
- * SOURCE: Inline implementation of receptor/keymap pattern
- */
-function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => void>) {
-  return function (this: HTMLElement, event: KeyboardEvent) {
-    const key = event.shiftKey ? `Shift+${event.key}` : event.key;
-    const handler = mappings[key];
-    if (handler) {
-      handler.call(this, event);
-    }
-  };
 }
 
 /**

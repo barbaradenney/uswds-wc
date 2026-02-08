@@ -122,14 +122,9 @@ export interface SecondaryLink {
  */
 @customElement('usa-header')
 export class USAHeader extends USWDSBaseComponent {
-  // CRITICAL: Light DOM implementation for USWDS compatibility
-  protected override createRenderRoot() {
-    return this;
-  }
   static override styles = css`
     :host {
       display: block;
-      margin-top: 1rem;
     }
   `;
 
@@ -616,11 +611,6 @@ export class USAHeader extends USWDSBaseComponent {
       .join(' ');
 
     return html`
-      <style>
-        usa-header .usa-header {
-          position: relative;
-        }
-      </style>
       <a class="usa-skipnav" href="#main-content">Skip to main content</a>
       <header class="${headerClasses}" role="banner">
         ${this.extended ? this.renderExtendedHeader() : this.renderBasicHeader()}

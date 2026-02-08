@@ -167,14 +167,13 @@ export class USACollection extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (collection components are presentational)
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
+    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+      const USWDS = window.USWDS;
       if (USWDS.collection?.off) {
         try {
           USWDS.collection.off(this);
-          console.log(`🧹 Cleaned up USWDS collection`);
-        } catch (error) {
-          console.warn(`⚠️ Error cleaning up USWDS:`, error);
+        } catch {
+          // Cleanup may fail if USWDS was already torn down
         }
       }
     }
@@ -329,32 +328,20 @@ export class USACollection extends LitElement {
   private async initializeUSWDSCollection() {
     // Prevent multiple initializations
     if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
       return;
     }
 
-    console.log(
-      `🗑️ Collection: Initializing (presentational component - no USWDS JavaScript needed)`
-    );
-
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.collection && typeof USWDS.collection.on === 'function') {
           USWDS.collection.on(this);
-          console.log(`🗑️ Collection: Enhanced with global USWDS JavaScript`);
           return;
         }
       }
-
-      console.log(
-        `🗑️ Collection: Using presentational component behavior (USWDS Collection is CSS-only)`
-      );
-    } catch (error) {
-      console.warn(`🗑️ Collection: Initialization completed with basic behavior:`, error);
+    } catch {
+      // Initialization continues with basic behavior
     }
   }
 

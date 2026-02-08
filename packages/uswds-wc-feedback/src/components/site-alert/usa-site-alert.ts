@@ -138,14 +138,14 @@ export class USASiteAlert extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS['site-alert'] && typeof USWDS['site-alert'].off === 'function') {
           USWDS['site-alert'].off(this);
         }
       }
     } catch (error) {
-      console.warn('📋 SiteAlert: Cleanup failed:', error);
+      // Silently ignore cleanup errors
     }
     // Additional cleanup for event listeners would go here
   }
@@ -166,7 +166,7 @@ export class USASiteAlert extends LitElement {
       .join(' ');
 
     return html`
-      <section class="${alertClasses}" aria-label="Site alert" role="region">
+      <section class="${alertClasses}" aria-label="Site alert" role="${this.type === 'emergency' ? 'alert' : 'region'}">
         <div class="usa-alert">
           <div class="usa-alert__body">
             <h3 class="usa-alert__heading">${this.heading}</h3>

@@ -17,6 +17,16 @@ describe('USAIcon - Sprite File Integration', () => {
   let element: USAIcon;
 
   beforeEach(async () => {
+    // Inject a mock sprite container so injectSprite() short-circuits
+    // and _spriteReady becomes true (fetch won't work in test env)
+    if (!document.getElementById('uswds-icon-sprite')) {
+      const spriteContainer = document.createElement('div');
+      spriteContainer.id = 'uswds-icon-sprite';
+      spriteContainer.style.cssText = 'position: absolute; width: 0; height: 0; overflow: hidden;';
+      spriteContainer.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(spriteContainer, document.body.firstChild);
+    }
+
     element = document.createElement('usa-icon') as USAIcon;
     element.name = 'search';
     document.body.appendChild(element);
@@ -25,6 +35,10 @@ describe('USAIcon - Sprite File Integration', () => {
 
   afterEach(() => {
     document.body.removeChild(element);
+    const spriteContainer = document.getElementById('uswds-icon-sprite');
+    if (spriteContainer) {
+      spriteContainer.remove();
+    }
   });
 
   describe('Sprite-First Architecture Defaults', () => {
@@ -48,7 +62,7 @@ describe('USAIcon - Sprite File Integration', () => {
 
       expect(svg).toBeTruthy();
       expect(use).toBeTruthy();
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
     });
 
     it('should NOT render inline path element when using sprite', async () => {
@@ -68,7 +82,7 @@ describe('USAIcon - Sprite File Integration', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/custom/path/sprite.svg#flag');
+      expect(use?.getAttribute('href')).toBe('#flag');
     });
 
     it('should update sprite reference when URL changes', async () => {
@@ -79,7 +93,7 @@ describe('USAIcon - Sprite File Integration', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/new/sprite.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
     });
 
     it('should update icon when name changes with sprite', async () => {
@@ -189,7 +203,7 @@ describe('USAIcon - Sprite File Integration', () => {
 
         const use = element.querySelector('use');
         expect(use, `Icon "${iconName}" should render with sprite`).toBeTruthy();
-        expect(use?.getAttribute('href')).toBe(`/img/sprite.svg#${iconName}`);
+        expect(use?.getAttribute('href')).toBe(`#${iconName}`);
       }
     });
 
@@ -208,8 +222,8 @@ describe('USAIcon - Sprite File Integration', () => {
         const use = element.querySelector('use');
         const href = use?.getAttribute('href');
 
-        expect(href).toBe(`/img/sprite.svg#${iconName}`);
-        expect(href).toMatch(/^\/img\/sprite\.svg#[a-z_]+$/);
+        expect(href).toBe(`#${iconName}`);
+        expect(href).toMatch(/^#[a-z_]+$/);
       }
     });
   });
@@ -313,10 +327,10 @@ describe('USAIcon - Sprite File Integration', () => {
       const use2 = icon2.querySelector('use');
       const use3 = icon3.querySelector('use');
 
-      // All should reference same sprite file (performance benefit)
-      expect(use1?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
-      expect(use2?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
-      expect(use3?.getAttribute('href')?.split('#')[0]).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
+      // All should use local sprite references (sprite injected into page DOM)
+      expect(use1?.getAttribute('href')).toBe('#search');
+      expect(use2?.getAttribute('href')).toBe('#close');
+      expect(use3?.getAttribute('href')).toBe('#menu');
 
       document.body.removeChild(icon1);
       document.body.removeChild(icon2);
@@ -345,7 +359,7 @@ describe('USAIcon - Sprite File Integration', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#');
+      expect(use?.getAttribute('href')).toBe('#');
     });
 
     it('should handle special characters in icon names', async () => {
@@ -354,7 +368,7 @@ describe('USAIcon - Sprite File Integration', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#arrow_back');
+      expect(use?.getAttribute('href')).toBe('#arrow_back');
     });
 
     it('should handle numeric suffixes in icon names', async () => {
@@ -363,7 +377,7 @@ describe('USAIcon - Sprite File Integration', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#sentiment_satisfied_alt');
+      expect(use?.getAttribute('href')).toBe('#sentiment_satisfied_alt');
     });
   });
 });

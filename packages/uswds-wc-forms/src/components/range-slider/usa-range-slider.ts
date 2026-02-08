@@ -106,9 +106,8 @@ export class USARangeSlider extends LitElement {
       // NOTE: We render the wrapper ourselves to have control over showValue property
       // USWDS.range.on() would create a duplicate wrapper, so we don't call it
       // Instead, we handle value updates manually in updated() lifecycle
-      console.log('✅ Range Slider: Using component-managed wrapper (preventing USWDS duplicate)');
-    } catch (error) {
-      console.warn('🔧 Range Slider: Initialization failed:', error);
+    } catch {
+      // Initialization failed, component will still render with basic behavior
     }
   }
 
@@ -132,11 +131,11 @@ export class USARangeSlider extends LitElement {
 
   private updateUSWDSCallout() {
     try {
-      if (typeof window !== 'undefined' && (window as any).USWDS?.range) {
+      if (typeof window !== 'undefined' && window.USWDS?.range) {
         const input = this.querySelector('.usa-range') as HTMLInputElement;
         if (input) {
-          (window as any).USWDS.range.updateCallout(input);
-          (window as any).USWDS.range.updateVisualCallout(input);
+          window.USWDS.range.updateCallout(input);
+          window.USWDS.range.updateVisualCallout(input);
         }
       }
     } catch (error) {

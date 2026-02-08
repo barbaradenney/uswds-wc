@@ -421,11 +421,11 @@ export class USAValidation extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
         // USWDS available but no setup needed
       }
-    } catch (error) {
-      console.warn('📋 Validation: Cleanup failed:', error);
+    } catch {
+      // Cleanup failed silently
     }
     // Additional cleanup for event listeners would go here
   }

@@ -317,11 +317,6 @@ export class USACharacterCount extends USWDSBaseComponent {
     return this.inputType === 'textarea' ? this.renderTextarea() : this.renderInput();
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   override render() {
     // Calculate over limit state directly from current value
     const isOverLimit = this.maxlength > 0 && this.value.length > this.maxlength;

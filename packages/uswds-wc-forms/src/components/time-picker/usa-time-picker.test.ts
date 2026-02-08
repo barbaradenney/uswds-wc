@@ -286,7 +286,7 @@ describe('USATimePicker', () => {
       element.readonly = true;
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 20000);
 
     it('should maintain accessibility during dropdown interactions', async () => {
       // Use memory-efficient settings

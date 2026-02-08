@@ -187,15 +187,15 @@ export class USAButtonGroup extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
         // USWDS variable removed (unused)
-        const USWDS = (window as any).USWDS;
+        const USWDS = window.USWDS;
         if (USWDS.buttonGroup && typeof USWDS.buttonGroup.off === 'function') {
           USWDS.buttonGroup.off(this);
         }
       }
-    } catch (error) {
-      console.warn('📋 ButtonGroup: Cleanup failed:', error);
+    } catch {
+      // Cleanup may fail if USWDS was already torn down
     }
     // Additional cleanup for event listeners would go here
   }

@@ -52,17 +52,9 @@ export class USASummaryBox extends LitElement {
   override connectedCallback() {
     // CRITICAL: Capture slotted content BEFORE calling super.connectedCallback()
     // This ensures we capture it before Lit's rendering lifecycle starts
-    console.log('[SummaryBox] connectedCallback', {
-      childNodesCount: this.childNodes.length,
-      innerHTML: this.innerHTML?.substring(0, 100),
-    });
-
     if (this.childNodes.length > 0) {
       this.slottedContent = this.innerHTML;
       this.innerHTML = '';
-      console.log('[SummaryBox] Captured and cleared slotted content', {
-        capturedLength: this.slottedContent.length,
-      });
     }
 
     super.connectedCallback();
@@ -122,39 +114,14 @@ export class USASummaryBox extends LitElement {
   private applySlottedContent() {
     // Only apply slotted content once to prevent duplication
     // Only apply if NOT using content property (content property takes precedence)
-    console.log('[SummaryBox] applySlottedContent called', {
-      hasSlottedContent: !!this.slottedContent,
-      slottedContentLength: this.slottedContent?.length,
-      alreadyApplied: this.slottedContentApplied,
-      hasContentProp: !!this.content,
-      slotElement: this.querySelector('slot'),
-    });
-
     if (this.slottedContent && !this.slottedContentApplied && !this.content) {
       const slotElement = this.querySelector('slot');
-      console.log('[SummaryBox] Applying slotted content', {
-        slotElement,
-        content: this.slottedContent.substring(0, 100),
-      });
       if (slotElement) {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = this.slottedContent;
         slotElement.replaceWith(...Array.from(tempDiv.childNodes));
         this.slottedContentApplied = true;
-        console.log('[SummaryBox] Slotted content applied successfully');
-      } else {
-        console.warn('[SummaryBox] Slot element not found!');
       }
-    } else {
-      console.log('[SummaryBox] Skipping slot application', {
-        reason: !this.slottedContent
-          ? 'no slotted content'
-          : this.slottedContentApplied
-            ? 'already applied'
-            : this.content
-              ? 'using content property'
-              : 'unknown',
-      });
     }
   }
 
@@ -162,14 +129,14 @@ export class USASummaryBox extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS['summary-box'] && typeof USWDS['summary-box'].off === 'function') {
           USWDS['summary-box'].off(this);
         }
       }
-    } catch (error) {
-      console.warn('📋 SummaryBox: Cleanup failed:', error);
+    } catch {
+      // Cleanup may fail if USWDS was already torn down
     }
     // Additional cleanup for event listeners would go here
   }

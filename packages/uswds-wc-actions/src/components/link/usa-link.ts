@@ -31,6 +31,9 @@ import { USWDSBaseComponent } from '@uswds-wc/core';
 export class USALink extends USWDSBaseComponent {
   // No shadow DOM styles since we use light DOM
 
+  // Store bound handler for proper cleanup
+  private boundHandleLinkClick = this.handleLinkClick.bind(this);
+
   @property({ type: String })
   href = '';
 
@@ -78,7 +81,7 @@ export class USALink extends USWDSBaseComponent {
   private setupEventListeners() {
     const anchor = this.querySelector('a');
     if (anchor) {
-      anchor.addEventListener('click', this.handleLinkClick.bind(this));
+      anchor.addEventListener('click', this.boundHandleLinkClick);
     }
   }
 
@@ -170,21 +173,11 @@ export class USALink extends USWDSBaseComponent {
   }
 
   override disconnectedCallback() {
-    super.disconnectedCallback();
-    // Clean up USWDS behavior
-    try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        // USWDS available but no setup needed
-      }
-    } catch (error) {
-      console.warn('📋 Link: Cleanup failed:', error);
+    const anchor = this.querySelector('a');
+    if (anchor) {
+      anchor.removeEventListener('click', this.boundHandleLinkClick);
     }
-    // Additional cleanup for event listeners would go here
-  }
-
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
+    super.disconnectedCallback();
   }
 
   override render() {

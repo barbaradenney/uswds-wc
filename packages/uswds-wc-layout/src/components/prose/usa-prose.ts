@@ -137,15 +137,6 @@ export class USAProse extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    // Clean up USWDS behavior
-    try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        // USWDS available but no setup needed
-      }
-    } catch (error) {
-      console.warn('📋 Prose: Cleanup failed:', error);
-    }
-    // Additional cleanup for event listeners would go here
   }
   override render() {
     return html`

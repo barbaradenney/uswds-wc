@@ -14,6 +14,7 @@
 
 import { selectOrMatches } from '@uswds-wc/core';
 import { Sanitizer } from '@uswds-wc/core';
+import { keymap } from '@uswds-wc/core';
 
 /**
  * Constants from USWDS
@@ -453,21 +454,6 @@ const handleEnterFromLink = (event: Event): void => {
   }
   handleScrollToSection(targetAnchor);
 };
-
-/**
- * Keymap helper for keyboard events
- *
- * SOURCE: receptor/keymap pattern
- */
-function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => void>) {
-  return function (this: HTMLElement, event: KeyboardEvent) {
-    const key = event.shiftKey ? `Shift+${event.key}` : event.key;
-    const handler = mappings[key];
-    if (handler) {
-      handler.call(this, event);
-    }
-  };
-}
 
 /**
  * Initialize in-page navigation behavior

@@ -142,8 +142,8 @@ export class USAInputPrefixSuffix extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (
           USWDS['input-prefix-suffix'] &&
           typeof USWDS['input-prefix-suffix'].off === 'function'
@@ -151,8 +151,8 @@ export class USAInputPrefixSuffix extends LitElement {
           USWDS['input-prefix-suffix'].off(this);
         }
       }
-    } catch (error) {
-      console.warn('📋 InputPrefixSuffix: Cleanup failed:', error);
+    } catch {
+      // Cleanup failed silently
     }
     // Additional cleanup for event listeners would go here
   }

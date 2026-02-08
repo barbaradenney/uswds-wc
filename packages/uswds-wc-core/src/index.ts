@@ -19,6 +19,7 @@ export * from './utils/focus-trap.js';
 export * from './utils/form-helpers.js';
 export * from './utils/iframe-delegation-mixin.js';
 export * from './utils/is-in-viewport.js';
+export * from './utils/keymap.js';
 export * from './utils/lazy-uswds-loader.js';
 export * from './utils/partial-hydration.js';
 export * from './utils/performance-helpers.js';

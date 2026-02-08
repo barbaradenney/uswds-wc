@@ -16,6 +16,16 @@ describe('Icon Visual Regression Prevention', () => {
   let element: USAIcon;
 
   beforeEach(async () => {
+    // Inject a mock sprite container so injectSprite() short-circuits
+    // and _spriteReady becomes true (fetch won't work in test env)
+    if (!document.getElementById('uswds-icon-sprite')) {
+      const spriteContainer = document.createElement('div');
+      spriteContainer.id = 'uswds-icon-sprite';
+      spriteContainer.style.cssText = 'position: absolute; width: 0; height: 0; overflow: hidden;';
+      spriteContainer.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(spriteContainer, document.body.firstChild);
+    }
+
     element = document.createElement('usa-icon') as USAIcon;
     document.body.appendChild(element);
     await element.updateComplete;
@@ -23,6 +33,10 @@ describe('Icon Visual Regression Prevention', () => {
 
   afterEach(() => {
     element.remove();
+    const spriteContainer = document.getElementById('uswds-icon-sprite');
+    if (spriteContainer) {
+      spriteContainer.remove();
+    }
   });
 
   describe('Sprite Rendering Validation (Prevents monorepo migration regression)', () => {
@@ -37,7 +51,7 @@ describe('Icon Visual Regression Prevention', () => {
       // FAIL CONDITIONS (regression to catch):
       expect(use, 'Icons should use sprite, not inline SVG').toBeTruthy();
       expect(use?.getAttribute('href'), 'Should reference sprite file').toBe(
-        '/img/sprite.svg#search'
+        '#search'
       );
       expect(path, 'Should NOT have inline path element').toBeFalsy();
 
@@ -78,7 +92,7 @@ describe('Icon Visual Regression Prevention', () => {
         const path = element.querySelector('path');
 
         expect(use, `Icon "${iconName}" should use sprite`).toBeTruthy();
-        expect(use?.getAttribute('href')).toBe(`/img/sprite.svg#${iconName}`);
+        expect(use?.getAttribute('href')).toBe(`#${iconName}`);
         expect(path, `Icon "${iconName}" should not have inline path`).toBeFalsy();
       }
     });
@@ -155,7 +169,7 @@ describe('Icon Visual Regression Prevention', () => {
       const use = svg?.querySelector('use');
 
       expect(svg?.classList.contains('usa-icon--size-5')).toBe(true);
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#menu');
+      expect(use?.getAttribute('href')).toBe('#menu');
     });
   });
 
@@ -208,13 +222,13 @@ describe('Icon Visual Regression Prevention', () => {
       await element.updateComplete;
 
       let use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
 
       element.name = 'flag';
       await element.updateComplete;
 
       use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#flag');
+      expect(use?.getAttribute('href')).toBe('#flag');
     });
 
     it('should use consistent sprite URL across icons', async () => {
@@ -226,9 +240,9 @@ describe('Icon Visual Regression Prevention', () => {
 
         const use = element.querySelector('use');
         const href = use?.getAttribute('href');
-        const spriteUrl = href?.split('#')[0];
 
-        expect(spriteUrl).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/sprite.svg');
+        // Component uses local references since sprite is injected into page DOM
+        expect(href).toBe(`#${iconName}`);
       }
     });
 
@@ -238,7 +252,7 @@ describe('Icon Visual Regression Prevention', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/custom/icons.svg#search');
+      expect(use?.getAttribute('href')).toBe('#search');
     });
   });
 
@@ -291,7 +305,7 @@ describe('Icon Visual Regression Prevention', () => {
 
         const use = element.querySelector('use');
         expect(use, `Icon "${iconName}" should be accessible via sprite`).toBeTruthy();
-        expect(use?.getAttribute('href')).toBe(`/img/sprite.svg#${iconName}`);
+        expect(use?.getAttribute('href')).toBe(`#${iconName}`);
       }
     });
 
@@ -346,13 +360,13 @@ describe('Icon Visual Regression Prevention', () => {
 
       const svg = element.querySelector('svg');
       const use1 = element.querySelector('use');
-      expect(use1?.getAttribute('href')).toBe('/img/sprite.svg#search');
+      expect(use1?.getAttribute('href')).toBe('#search');
 
       element.name = 'flag';
       await element.updateComplete;
 
       const use2 = element.querySelector('use');
-      expect(use2?.getAttribute('href')).toBe('/img/sprite.svg#flag');
+      expect(use2?.getAttribute('href')).toBe('#flag');
       expect(svg).toBe(element.querySelector('svg')); // Same SVG
     });
   });
@@ -366,7 +380,7 @@ describe('Icon Visual Regression Prevention', () => {
       const use = element.querySelector('use');
 
       expect(svg).toBeTruthy();
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#');
+      expect(use?.getAttribute('href')).toBe('#');
     });
 
     it('should handle icon names with underscores', async () => {
@@ -374,7 +388,7 @@ describe('Icon Visual Regression Prevention', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#arrow_forward');
+      expect(use?.getAttribute('href')).toBe('#arrow_forward');
     });
 
     it('should handle icon names with numbers', async () => {
@@ -382,7 +396,7 @@ describe('Icon Visual Regression Prevention', () => {
       await element.updateComplete;
 
       const use = element.querySelector('use');
-      expect(use?.getAttribute('href')).toBe('/img/sprite.svg#sentiment_satisfied_alt');
+      expect(use?.getAttribute('href')).toBe('#sentiment_satisfied_alt');
     });
   });
 });

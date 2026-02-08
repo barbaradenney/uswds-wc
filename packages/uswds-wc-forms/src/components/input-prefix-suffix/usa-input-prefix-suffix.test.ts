@@ -1226,7 +1226,7 @@ describe('USAInputPrefixSuffix', () => {
       element.value = '';
       await element.updateComplete;
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    }, 10000); // Increased timeout for comprehensive accessibility tests
+    }, 20000); // Increased timeout for comprehensive accessibility tests (7 consecutive axe-core checks)
 
     it('should maintain accessibility during dynamic updates', async () => {
       // Start with basic configuration

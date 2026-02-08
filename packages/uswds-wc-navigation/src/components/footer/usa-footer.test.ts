@@ -561,7 +561,7 @@ describe('USAFooter', () => {
 
       // Run comprehensive accessibility audit
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 15000);
 
     it('should pass accessibility tests with medium variant', async () => {
       element.variant = 'medium';

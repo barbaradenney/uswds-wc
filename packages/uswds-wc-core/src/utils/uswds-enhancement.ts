@@ -231,8 +231,8 @@ export class USWDSEnhancer {
   ): Promise<USWDSModule | null> {
     try {
       // Check if USWDS is available globally (from uswds.min.js)
-      if (typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS[moduleName] && typeof USWDS[moduleName].init === 'function') {
           // Initialize USWDS module on this element
           USWDS[moduleName].init(element);
@@ -245,8 +245,8 @@ export class USWDSEnhancer {
       await this.loadUSWDSScript();
 
       // Try again after loading
-      if (typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS[moduleName] && typeof USWDS[moduleName].init === 'function') {
           USWDS[moduleName].init(element);
           console.log(`✨ ${componentName}: Enhanced with dynamically loaded USWDS JavaScript`);

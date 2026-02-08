@@ -27,6 +27,14 @@ export const TIMING = {
   /** Wait for next animation frame to ensure DOM is ready */
   ANIMATION_FRAME_DELAY: () =>
     new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
+  /** Delay after initialization before attempting slot application (ms) */
+  POST_INIT_DELAY_MS: 100,
+  /** Interval between slot application retry attempts (ms) */
+  SLOT_RETRY_INTERVAL_MS: 50,
+  /** Maximum time to wait for USWDS transformation observer (ms) */
+  OBSERVER_TIMEOUT_MS: 5000,
+  /** Maximum number of slot application attempts (40 * 50ms = 2s max) */
+  MAX_SLOT_ATTEMPTS: 40,
 } as const;
 
 /**

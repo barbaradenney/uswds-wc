@@ -99,8 +99,6 @@ export class USALanguageSelector extends USWDSBaseComponent {
   }
 
   private handleLanguageSelect(language: LanguageOption, e?: Event) {
-    console.log('🌐 Language Selector: Language selected using USWDS pattern:', language.code);
-
     if (e) {
       e.preventDefault();
     }
@@ -254,11 +252,6 @@ export class USALanguageSelector extends USWDSBaseComponent {
         </a>
       </li>
     `;
-  }
-
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
   }
 
   override render() {

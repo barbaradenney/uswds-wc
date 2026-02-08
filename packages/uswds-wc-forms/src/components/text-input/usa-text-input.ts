@@ -132,14 +132,10 @@ export class USATextInput extends USWDSBaseComponent {
 
     // Set web component managed flag to prevent USWDS auto-initialization conflicts
     this.setAttribute('data-web-component-managed', 'true');
-    console.log(
-      '📝 Text Input: Initialized as presentational component (no USWDS JavaScript required)'
-    );
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    console.log('📝 Text Input: Cleanup complete (no USWDS JavaScript required)');
   }
 
   private handleInput(e: Event) {
@@ -255,11 +251,6 @@ export class USATextInput extends USWDSBaseComponent {
         <span class="usa-sr-only">Error:</span> ${this.error}
       </span>
     `;
-  }
-
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
   }
 
   override render() {

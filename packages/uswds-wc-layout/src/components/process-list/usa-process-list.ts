@@ -171,14 +171,14 @@ export class USAProcessList extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS['process-list'] && typeof USWDS['process-list'].off === 'function') {
           USWDS['process-list'].off(this);
         }
       }
-    } catch (error) {
-      console.warn('📋 ProcessList: Cleanup failed:', error);
+    } catch {
+      // Cleanup may fail if USWDS was already torn down
     }
     // Additional cleanup for event listeners would go here
   }

@@ -34,10 +34,10 @@ describe('USABanner', () => {
     });
 
     it('should have default properties', () => {
-      expect(element.flagImageSrc).toBe('/img/us_flag_small.png');
+      expect(element.flagImageSrc).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/us_flag_small.png');
       expect(element.flagImageAlt).toBe('U.S. flag');
-      expect(element.dotGovIconSrc).toBe('/img/icon-dot-gov.svg');
-      expect(element.httpsIconSrc).toBe('/img/icon-https.svg');
+      expect(element.dotGovIconSrc).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-dot-gov.svg');
+      expect(element.httpsIconSrc).toBe('https://cdn.jsdelivr.net/npm/@uswds/uswds@3.8.1/dist/img/icon-https.svg');
       expect(element.headerText).toBe('An official website of the United States government');
       expect(element.actionText).toBe("Here's how you know");
       expect(element.expanded).toBe(false);

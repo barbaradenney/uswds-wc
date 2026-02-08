@@ -246,7 +246,6 @@ export class USAComboBox extends USWDSBaseComponent {
   }
 
   updateOptions() {
-    console.log('Combo Box: Update options triggered - requesting re-render');
     // Trigger re-render to update the select options
     this.requestUpdate();
   }

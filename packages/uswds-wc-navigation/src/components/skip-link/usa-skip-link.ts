@@ -82,11 +82,6 @@ export class USASkipLink extends USWDSBaseComponent {
     return classes.join(' ');
   }
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as any;
-  }
-
   private handleClick(e: Event) {
     e.preventDefault();
 
@@ -169,7 +164,6 @@ export class USASkipLink extends USWDSBaseComponent {
     try {
       return document.getElementById(targetId);
     } catch (error) {
-      console.warn(`Skip link: Invalid target selector "${this.href}"`, error);
       return null;
     }
   }

@@ -83,11 +83,6 @@ export class USADatePicker extends USWDSBaseComponent {
   // Store cleanup function from behavior
   private cleanup?: () => void;
 
-  // CRITICAL: Light DOM implementation for USWDS compatibility
-  protected override createRenderRoot() {
-    return this;
-  }
-
   override connectedCallback() {
     super.connectedCallback();
     // Set web component managed flag to prevent USWDS auto-initialization conflicts

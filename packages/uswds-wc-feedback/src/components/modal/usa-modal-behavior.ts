@@ -344,13 +344,11 @@ const setUpModal = (baseComponent: HTMLElement): void => {
   const modalID = baseComponent.getAttribute('id');
 
   if (!modalID) {
-    console.warn('Modal setup skipped - element missing ID');
     return;
   }
 
   // Safety check for test environments
   if (typeof document === 'undefined' || !document.body) {
-    console.warn('Modal setup skipped - document not available');
     return;
   }
 
@@ -422,12 +420,17 @@ export function initializeModal(root: HTMLElement | Document = document): () => 
   // Store modalIds for cleanup BEFORE setup (setup removes IDs from modal elements!)
   const modalIds = modals.map((m) => (m as HTMLElement).id).filter(Boolean);
 
+  // Named handler for anchor preventDefault - stored for proper cleanup
+  const preventDefaultHandler = (e: Event) => e.preventDefault();
+
+  // Track anchor triggers that get the preventDefault listener
+  const anchorTriggers: Element[] = [];
+
   modals.forEach((modalWindow) => {
     const modalElement = modalWindow as HTMLElement;
 
     // Ensure modal has an ID before setup
     if (!modalElement.id) {
-      console.warn('Modal element missing ID, skipping setup');
       return;
     }
 
@@ -445,7 +448,8 @@ export function initializeModal(root: HTMLElement | Document = document): () => 
         modalTrigger.setAttribute('role', 'button');
 
         // Prevent modal triggers from acting like links
-        modalTrigger.addEventListener('click', (e) => e.preventDefault());
+        modalTrigger.addEventListener('click', preventDefaultHandler);
+        anchorTriggers.push(modalTrigger);
       }
 
       // Can uncomment when aria-haspopup="dialog" is supported
@@ -460,6 +464,11 @@ export function initializeModal(root: HTMLElement | Document = document): () => 
 
   // Return cleanup function
   return () => {
+    // Clean up anchor preventDefault listeners
+    anchorTriggers.forEach((trigger) => {
+      trigger.removeEventListener('click', preventDefaultHandler);
+    });
+
     // Use stored modal IDs to find and remove listeners
     modalIds.forEach((modalId) => {
       // Find all triggers using the wrapper ID (which doesn't change)

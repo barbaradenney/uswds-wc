@@ -60,19 +60,8 @@ export class USACheckbox extends LitElement {
   @property({ type: Boolean, reflect: true })
   tile = false;
 
-  /**
-   * Whether to render in compact mode (no form-group wrapper)
-   * Use this when the checkbox is inside a fieldset or pattern where
-   * the parent handles spacing and grouping
-   */
-  @property({ type: Boolean })
-  compact = false;
-
   private checkboxElement?: HTMLInputElement;
   private _checkboxId?: string;
-  private usingUSWDSEnhancement = false;
-
-  // Store USWDS module for cleanup
 
   // Use light DOM for USWDS compatibility
   protected override createRenderRoot(): HTMLElement {
@@ -204,34 +193,19 @@ export class USACheckbox extends LitElement {
     return this._checkboxId;
   }
   private async initializeUSWDSCheckbox() {
-    // Prevent multiple initializations
-    if (this.usingUSWDSEnhancement) {
-      console.log(
-        `⚠️ ${this.constructor.name}: Already initialized, skipping duplicate initialization`
-      );
-      return;
-    }
-
-    console.log(
-      `☑️ Checkbox: Initializing (presentational component - no USWDS JavaScript needed)`
-    );
-
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-        const USWDS = (window as any).USWDS;
+      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+        const USWDS = window.USWDS;
         if (USWDS.checkbox && typeof USWDS.checkbox.on === 'function') {
           USWDS.checkbox.on(this);
-          console.log(`☑️ Checkbox: Enhanced with global USWDS JavaScript`);
           return;
         }
       }
 
-      console.log(
-        `☑️ Checkbox: Using presentational component behavior (USWDS Checkbox is CSS-only)`
-      );
-    } catch (error) {
-      console.warn(`☑️ Checkbox: Initialization completed with basic behavior:`, error);
+      // Checkbox is a presentational component (USWDS Checkbox is CSS-only)
+    } catch {
+      // Initialization completed with basic behavior
     }
   }
 
@@ -249,14 +223,13 @@ export class USACheckbox extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (checkbox components are presentational)
-    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
-      const USWDS = (window as any).USWDS;
+    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+      const USWDS = window.USWDS;
       if (USWDS.checkbox?.off) {
         try {
           USWDS.checkbox.off(this);
-          console.log(`🧹 Cleaned up USWDS checkbox`);
-        } catch (error) {
-          console.warn(`⚠️ Error cleaning up USWDS:`, error);
+        } catch {
+          // Cleanup failed silently
         }
       }
     }

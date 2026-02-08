@@ -15,6 +15,7 @@
 import { selectOrMatches } from '@uswds-wc/core';
 import { FocusTrap } from '@uswds-wc/core';
 import { getScrollbarWidth } from '@uswds-wc/core';
+import { keymap } from '@uswds-wc/core';
 import { toggle } from '@uswds-wc/feedback';
 
 /**
@@ -280,21 +281,6 @@ const handleEscape = (event: Event): void => {
   hideActiveNavDropdown();
   focusNavButton(event);
 };
-
-/**
- * Keymap helper for keyboard events
- *
- * SOURCE: receptor/keymap pattern
- */
-function keymap(mappings: Record<string, (this: HTMLElement, event: Event) => void>) {
-  return function (this: HTMLElement, event: KeyboardEvent) {
-    const key = event.shiftKey ? `Shift+${event.key}` : event.key;
-    const handler = mappings[key];
-    if (handler) {
-      handler.call(this, event);
-    }
-  };
-}
 
 /**
  * Initialize header behavior

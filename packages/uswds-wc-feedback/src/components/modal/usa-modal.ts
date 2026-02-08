@@ -85,11 +85,6 @@ import { SELECTORS, TIMING, CLASSES } from './modal-constants.js';
  */
 @customElement('usa-modal')
 export class USAModal extends USWDSBaseComponent {
-  // CRITICAL: Light DOM implementation for USWDS compatibility
-  protected override createRenderRoot() {
-    return this;
-  }
-
   // NOTE: static styles do NOT apply in Light DOM
   // The display style is applied directly in connectedCallback()
 
@@ -126,7 +121,7 @@ export class USAModal extends USWDSBaseComponent {
   // Slot content handling to prevent duplication
   private slottedContent: string = '';
   private slotApplicationAttempts = 0;
-  private maxSlotApplicationAttempts = 40; // 40 * 50ms = 2 seconds max
+  private maxSlotApplicationAttempts = TIMING.MAX_SLOT_ATTEMPTS;
   private transformationObserver?: MutationObserver;
 
   // Cleanup function from USWDS behavior
@@ -137,6 +132,9 @@ export class USAModal extends USWDSBaseComponent {
   private isInitializing = false; // Guard against concurrent initialization
   private initializationPromise: Promise<void> | null = null;
   private listenersAttached = false;
+
+  // Store timeout IDs for proper cleanup
+  private pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
 
   // Store event handlers for proper cleanup
   private handlePrimaryClick = () => {
@@ -212,7 +210,7 @@ export class USAModal extends USWDSBaseComponent {
     await this.initializationPromise;
 
     // Fallback: If observer didn't trigger, try applying slots after delay
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, TIMING.POST_INIT_DELAY_MS));
     if (this.slottedContent) {
       this.applySlottedContent();
     }
@@ -340,9 +338,11 @@ export class USAModal extends USWDSBaseComponent {
     });
 
     // Set a timeout to disconnect observer if transformation takes too long
-    setTimeout(() => {
-      this.transformationObserver?.disconnect();
-    }, 5000); // 5 second timeout
+    this.pendingTimeouts.push(
+      setTimeout(() => {
+        this.transformationObserver?.disconnect();
+      }, TIMING.OBSERVER_TIMEOUT_MS)
+    );
   }
 
   private applySlottedContent(): void {
@@ -360,7 +360,7 @@ export class USAModal extends USWDSBaseComponent {
     if (!wrapper || wrapper.getAttribute('role') !== 'dialog') {
       // USWDS hasn't transformed yet, wait and retry
       if (this.slotApplicationAttempts < this.maxSlotApplicationAttempts) {
-        setTimeout(() => this.applySlottedContent(), 50);
+        this.pendingTimeouts.push(setTimeout(() => this.applySlottedContent(), TIMING.SLOT_RETRY_INTERVAL_MS));
       }
       return;
     }
@@ -370,7 +370,7 @@ export class USAModal extends USWDSBaseComponent {
     const modal = wrapper.querySelector('.usa-modal');
     if (!modal) {
       if (this.slotApplicationAttempts < this.maxSlotApplicationAttempts) {
-        setTimeout(() => this.applySlottedContent(), 50);
+        this.pendingTimeouts.push(setTimeout(() => this.applySlottedContent(), TIMING.SLOT_RETRY_INTERVAL_MS));
       }
       return;
     }
@@ -379,7 +379,7 @@ export class USAModal extends USWDSBaseComponent {
     if (slots.length === 0) {
       // No slots found yet, but we have content - retry
       if (this.slotApplicationAttempts < this.maxSlotApplicationAttempts) {
-        setTimeout(() => this.applySlottedContent(), 50);
+        this.pendingTimeouts.push(setTimeout(() => this.applySlottedContent(), TIMING.SLOT_RETRY_INTERVAL_MS));
       }
       return;
     }
@@ -526,6 +526,9 @@ export class USAModal extends USWDSBaseComponent {
   }
 
   override disconnectedCallback() {
+    // Clean up pending timeouts
+    this.pendingTimeouts.forEach(clearTimeout);
+    this.pendingTimeouts = [];
     // Clean up button listeners to prevent memory leaks
     this.cleanupButtonListeners();
     // Clean up mutation observer

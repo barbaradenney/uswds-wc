@@ -39,11 +39,6 @@ export class USAIconList extends USWDSBaseComponent {
   @property({ type: String })
   size: '' | 'lg' | 'xl' = '';
 
-  // Use light DOM for USWDS compatibility
-  protected override createRenderRoot(): HTMLElement {
-    return this as HTMLElement;
-  }
-
   override connectedCallback() {
     super.connectedCallback();
     this.setAttribute('data-web-component-managed', 'true');

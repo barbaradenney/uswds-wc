@@ -66,11 +66,6 @@ export interface AccordionItem {
  */
 @customElement('usa-accordion')
 export class USAAccordion extends USWDSBaseComponent {
-  // Light DOM for USWDS compatibility
-  protected override createRenderRoot() {
-    return this;
-  }
-
   static override styles = css`
     :host {
       display: block;

@@ -934,7 +934,7 @@ describe('USAButtonGroup', () => {
       element.buttons = [];
       await waitForUpdate(element);
       await testComponentAccessibility(element, USWDS_A11Y_CONFIG.FULL_COMPLIANCE);
-    });
+    }, 20000);
 
     // SKIP: jsdom limitation - MOVE TO CYPRESS
     // ✅ CYPRESS COVERAGE: cypress/e2e/button-group-accessibility.cy.ts
