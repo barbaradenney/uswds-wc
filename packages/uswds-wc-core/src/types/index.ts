@@ -2,7 +2,7 @@
  * @fileoverview Type definitions for USWDS Web Components core
  */
 
-/// <reference path="./uswds-global.d.ts" />
+import './uswds-global.d.ts';
 
 /**
  * Accessibility properties for ARIA attributes
