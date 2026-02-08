@@ -85,8 +85,8 @@ async function validateComponentFile(filePath, name) {
     }
   });
 
-  // Check for USWDS CSS import
-  if (!content.includes('../../styles/styles.css')) {
+  // Check for USWDS CSS import (loaded globally via script tag, or comment marker)
+  if (!content.includes('../../styles/styles.css') && !content.includes('// Import official USWDS compiled CSS')) {
     errors.push(`❌ ${name}: Missing USWDS styles import`);
   }
 

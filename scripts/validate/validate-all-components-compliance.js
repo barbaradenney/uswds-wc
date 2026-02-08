@@ -317,10 +317,11 @@ const LIGHT_WRAPPER_REQUIREMENTS = {
     /extends USWDSBaseComponent/
   ],
 
-  // Must import USWDS styles
+  // Must use USWDS styles (loaded globally via script tag, not per-component import)
   stylesImport: [
     /import.*styles\.css/,
-    /import.*'.*styles\.css'/
+    /import.*'.*styles\.css'/,
+    /\/\/ Import official USWDS compiled CSS/  // Comment marker indicating styles loaded globally
   ],
 
   // Should have web component management

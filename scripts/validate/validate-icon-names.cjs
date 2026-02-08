@@ -132,7 +132,9 @@ function searchDirectory(dir, extensions = ['.ts', '.tsx', '.js', '.jsx']) {
 const srcDir = path.join(__dirname, '../../src');
 const packagesDir = path.join(__dirname, '../../packages');
 
-searchDirectory(srcDir);
+if (fs.existsSync(srcDir)) {
+  searchDirectory(srcDir);
+}
 if (fs.existsSync(packagesDir)) {
   searchDirectory(packagesDir);
 }
