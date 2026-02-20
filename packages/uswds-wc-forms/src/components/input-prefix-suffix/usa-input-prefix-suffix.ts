@@ -142,8 +142,8 @@ export class USAInputPrefixSuffix extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (
           USWDS['input-prefix-suffix'] &&
           typeof USWDS['input-prefix-suffix'].off === 'function'

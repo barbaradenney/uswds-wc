@@ -167,8 +167,8 @@ export class USACollection extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (collection components are presentational)
-    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-      const USWDS = window.USWDS;
+    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+      const USWDS = (window as any).USWDS;
       if (USWDS.collection?.off) {
         try {
           USWDS.collection.off(this);
@@ -333,8 +333,8 @@ export class USACollection extends LitElement {
 
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS.collection && typeof USWDS.collection.on === 'function') {
           USWDS.collection.on(this);
           return;

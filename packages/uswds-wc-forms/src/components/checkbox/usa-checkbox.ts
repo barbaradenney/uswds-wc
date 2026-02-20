@@ -195,8 +195,8 @@ export class USACheckbox extends LitElement {
   private async initializeUSWDSCheckbox() {
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS.checkbox && typeof USWDS.checkbox.on === 'function') {
           USWDS.checkbox.on(this);
           return;
@@ -223,8 +223,8 @@ export class USACheckbox extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (checkbox components are presentational)
-    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-      const USWDS = window.USWDS;
+    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+      const USWDS = (window as any).USWDS;
       if (USWDS.checkbox?.off) {
         try {
           USWDS.checkbox.off(this);

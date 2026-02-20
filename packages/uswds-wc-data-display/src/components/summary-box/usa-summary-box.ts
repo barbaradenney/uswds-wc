@@ -129,8 +129,8 @@ export class USASummaryBox extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS['summary-box'] && typeof USWDS['summary-box'].off === 'function') {
           USWDS['summary-box'].off(this);
         }

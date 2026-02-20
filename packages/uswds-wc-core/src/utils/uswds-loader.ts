@@ -120,7 +120,7 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
       // we need to create a compatible module object that can initialize the component
       // using the global USWDS behavior system
       //
-      // CRITICAL: Modal requires window.USWDS.modal.init() to properly create wrapper elements
+      // CRITICAL: Modal requires (window as any).USWDS.modal.init() to properly create wrapper elements
       // with .is-hidden class for visibility control. This is set up via script tag in
       // .storybook/preview-head.html (not ES module imports).
       // See docs/guides/STORYBOOK_GUIDE.md#uswds-integration for details.
@@ -144,8 +144,8 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
             if (!element) return;
 
             // Check if global USWDS is available
-            if (typeof window !== 'undefined' && window.USWDS) {
-              const USWDS = window.USWDS;
+            if (typeof window !== 'undefined' && (window as any).USWDS) {
+              const USWDS = (window as any).USWDS;
 
               console.log(`🔍 USWDS object inspection for ${moduleName}:`, {
                 hasUSWDS: !!USWDS,
@@ -158,13 +158,13 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
               // For modal, try to access the modal behavior directly
               if (moduleName === 'modal' && USWDS.modal && typeof USWDS.modal.init === 'function') {
                 console.log(`✅ Using USWDS.modal.init() for modal initialization`);
-                USWDS.modal.init(element);
+                USWDS.modal.init(element as HTMLElement);
                 return;
               }
 
               // For other components, use global init
               if (typeof USWDS.init === 'function') {
-                USWDS.init(element);
+                USWDS.init(element as HTMLElement);
                 console.log(`✅ Initialized ${moduleName} using USWDS.init() via global bundle`);
                 return;
               }
@@ -189,19 +189,19 @@ export async function loadUSWDSModule(moduleName: string): Promise<USWDSModule |
           },
           on: (element: Element) => {
             // Check if global USWDS is available
-            if (typeof window !== 'undefined' && window.USWDS) {
-              const USWDS = window.USWDS;
+            if (typeof window !== 'undefined' && (window as any).USWDS) {
+              const USWDS = (window as any).USWDS;
 
               // For modal, try to access the modal behavior directly
               if (moduleName === 'modal' && USWDS.modal && typeof USWDS.modal.init === 'function') {
                 console.log(`✅ Using USWDS.modal.init() for modal initialization`);
-                USWDS.modal.init(element);
+                USWDS.modal.init(element as HTMLElement);
                 return;
               }
 
               // For other components, use global init
               if (typeof USWDS.init === 'function') {
-                USWDS.init(element);
+                USWDS.init(element as HTMLElement);
                 console.log(`✅ Initialized ${moduleName} using USWDS.init() via on() method`);
                 return;
               }

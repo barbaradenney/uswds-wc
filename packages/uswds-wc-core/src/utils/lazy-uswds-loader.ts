@@ -102,7 +102,7 @@ export interface USWDSLoaderConfig {
  * Check if USWDS is already loaded globally
  */
 function isUSWDSAvailable(): boolean {
-  return typeof window !== 'undefined' && typeof window.USWDS !== 'undefined';
+  return typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined';
 }
 
 /**

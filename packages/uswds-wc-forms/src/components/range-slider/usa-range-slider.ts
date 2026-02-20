@@ -131,11 +131,11 @@ export class USARangeSlider extends LitElement {
 
   private updateUSWDSCallout() {
     try {
-      if (typeof window !== 'undefined' && window.USWDS?.range) {
+      if (typeof window !== 'undefined' && (window as any).USWDS?.range) {
         const input = this.querySelector('.usa-range') as HTMLInputElement;
         if (input) {
-          window.USWDS.range.updateCallout(input);
-          window.USWDS.range.updateVisualCallout(input);
+          (window as any).USWDS.range.updateCallout(input);
+          (window as any).USWDS.range.updateVisualCallout(input);
         }
       }
     } catch (error) {

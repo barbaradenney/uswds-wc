@@ -276,8 +276,8 @@ export class USAMemorableDate extends LitElement {
 
   private cleanupUSWDS() {
     try {
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS['memorable-date'] && typeof USWDS['memorable-date'].off === 'function') {
           USWDS['memorable-date'].off(this);
         }

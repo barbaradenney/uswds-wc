@@ -188,8 +188,8 @@ export class USAButton extends LitElement {
 
     try {
       // Check if global USWDS is available for potential future enhancements
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS.button && typeof USWDS.button.on === 'function') {
           USWDS.button.on(this);
           return;
@@ -234,8 +234,8 @@ export class USAButton extends LitElement {
    */
   private cleanupUSWDS() {
     // Try cleanup with global USWDS (button components are presentational)
-    if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-      const USWDS = window.USWDS;
+    if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+      const USWDS = (window as any).USWDS;
       if (USWDS.button?.off) {
         try {
           USWDS.button.off(this);

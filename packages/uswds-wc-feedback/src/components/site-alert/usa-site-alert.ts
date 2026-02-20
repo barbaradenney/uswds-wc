@@ -138,8 +138,8 @@ export class USASiteAlert extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
-        const USWDS = window.USWDS;
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
+        const USWDS = (window as any).USWDS;
         if (USWDS['site-alert'] && typeof USWDS['site-alert'].off === 'function') {
           USWDS['site-alert'].off(this);
         }

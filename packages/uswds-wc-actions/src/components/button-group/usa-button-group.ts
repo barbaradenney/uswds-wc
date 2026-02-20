@@ -190,9 +190,9 @@ export class USAButtonGroup extends LitElement {
     super.disconnectedCallback();
     // Clean up USWDS behavior
     try {
-      if (typeof window !== 'undefined' && typeof window.USWDS !== 'undefined') {
+      if (typeof window !== 'undefined' && typeof (window as any).USWDS !== 'undefined') {
         // USWDS variable removed (unused)
-        const USWDS = window.USWDS;
+        const USWDS = (window as any).USWDS;
         if (USWDS.buttonGroup && typeof USWDS.buttonGroup.off === 'function') {
           USWDS.buttonGroup.off(this);
         }
