@@ -26,6 +26,7 @@ import 'path/to/uswds-webcomponents/src/components/button/index.js';
 | `size`     | `'small'        | 'medium'    | 'big'`               | `'medium'` | Property description |
 | `disabled` | `any`           | `false`     | Property description |
 | `type`     | `ButtonType`    | `'button'`  | Property description |
+| `text`     | `any`           | `''`        | Property description |
 
 ## Events
 
@@ -69,4 +70,4 @@ View component examples: [USAButton Stories](http://localhost:6006/?path=/story/
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2026-02-08_
+_Last updated: 2026-02-20_

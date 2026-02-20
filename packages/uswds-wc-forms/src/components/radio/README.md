@@ -75,4 +75,4 @@ View component examples: [USARadio Stories](http://localhost:6006/?path=/story/c
 ---
 
 _This README is automatically updated when component code changes._
-_Last updated: 2026-02-08_
+_Last updated: 2026-02-20_
