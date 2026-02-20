@@ -114,13 +114,14 @@ describe('USARadio', () => {
       expect(description?.textContent?.trim()).toBe('This is a test description');
     });
 
-    it('should not render description when tile is false', async () => {
+    it('should render description even when tile is false', async () => {
       element.tile = false;
-      element.description = 'This should not appear';
+      element.description = 'Non-tile description';
       await element.updateComplete;
 
       const description = element.querySelector('.usa-radio__label-description');
-      expect(description).toBeNull();
+      expect(description).not.toBeNull();
+      expect(description?.textContent?.trim()).toBe('Non-tile description');
     });
 
     it('should generate ID when not provided', async () => {
