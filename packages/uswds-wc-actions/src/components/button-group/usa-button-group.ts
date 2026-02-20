@@ -8,6 +8,7 @@ export interface ButtonGroupItem {
   variant?: 'primary' | 'secondary' | 'outline' | 'base';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  href?: string;
   onclick?: () => void;
 }
 
@@ -87,10 +88,12 @@ export class USAButtonGroup extends LitElement {
       const text = this.getAttribute(`btn${i}-text`);
       if (text) {
         const variant = this.getAttribute(`btn${i}-variant`) as ButtonGroupItem['variant'];
+        const href = this.getAttribute(`btn${i}-href`) || undefined;
         parsedButtons.push({
           text,
           variant: variant || 'primary',
           disabled: this.getAttribute(`btn${i}-disabled`) === 'true',
+          href,
         });
       }
     }
@@ -200,6 +203,19 @@ export class USAButtonGroup extends LitElement {
     // Additional cleanup for event listeners would go here
   }
   private renderButtonItem(button: ButtonGroupItem, index: number) {
+    if (button.href) {
+      return html`
+        <li class="usa-button-group__item">
+          <a
+            href="${button.href}"
+            class="${this.getButtonClasses(button, index)}"
+            @click="${() => this.handleButtonClick(button, index)}"
+          >
+            ${button.text}
+          </a>
+        </li>
+      `;
+    }
     return html`
       <li class="usa-button-group__item">
         <button

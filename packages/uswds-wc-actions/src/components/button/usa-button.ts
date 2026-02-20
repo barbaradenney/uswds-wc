@@ -80,6 +80,9 @@ export class USAButton extends LitElement {
   @property({ type: String, attribute: 'aria-pressed' })
   override ariaPressed: string | null = null;
 
+  @property({ type: String })
+  text = '';
+
   private buttonElement?: HTMLButtonElement;
   private originalContent: Node[] = [];
   private usingUSWDSEnhancement = false;
@@ -112,11 +115,16 @@ export class USAButton extends LitElement {
     this.buttonElement = this.querySelector('button') as HTMLButtonElement;
     if (this.buttonElement) {
       this.updateButtonElement();
-      // Move the original content into the button (not clone, move)
-      while (this.originalContent.length > 0) {
-        const node = this.originalContent.shift()!;
-        if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
-          this.buttonElement.appendChild(node);
+      // If a text property was set, use it for button content
+      if (this.text) {
+        this.buttonElement.textContent = this.text;
+      } else {
+        // Move the original content into the button (not clone, move)
+        while (this.originalContent.length > 0) {
+          const node = this.originalContent.shift()!;
+          if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
+            this.buttonElement.appendChild(node);
+          }
         }
       }
       // Native button click events bubble naturally - no custom forwarding needed
@@ -129,6 +137,10 @@ export class USAButton extends LitElement {
     // Update the button element if it exists
     if (this.buttonElement) {
       this.updateButtonElement();
+      // Sync text property changes to button content
+      if (changedProperties.has('text') && this.text) {
+        this.buttonElement.textContent = this.text;
+      }
     }
   }
 

@@ -246,7 +246,7 @@ export class USARadio extends LitElement {
   }
 
   private renderLabelDescription(radioId: string) {
-    if (!this.description || !this.tile) return '';
+    if (!this.description) return '';
 
     return html`
       <span class="usa-radio__label-description" id="${radioId}-description">
@@ -263,7 +263,7 @@ export class USARadio extends LitElement {
       .join(' ');
 
     const describedByIds: string[] = [];
-    if (this.description && this.tile) {
+    if (this.description) {
       describedByIds.push(`${radioId}-description`);
     }
     if (this.error) {
