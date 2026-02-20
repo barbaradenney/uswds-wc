@@ -1,6 +1,6 @@
 {
   "name": "@uswds-wc/feedback",
-  "version": "2.5.4",
+  "version": "2.6.0",
   "description": "USWDS Feedback Components - Web Components",
   "type": "module",
   "main": "./dist/index.js",
