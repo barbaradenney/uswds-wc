@@ -32,13 +32,17 @@ if grep -q "v[0-9]\+\.[0-9]\+\.[0-9]\+" README.md 2>/dev/null; then
   echo "  ✓ Updated version references"
 fi
 
-# 3. Validate documentation links
-echo "▶ Validating documentation links..."
-if pnpm run validate:doc-links > /dev/null 2>&1; then
-  echo "  ✓ All documentation links valid"
+# 3. Validate documentation links (skip in CI to avoid hangs)
+if [ "${CI}" = "true" ]; then
+  echo "▶ Skipping documentation link validation (CI mode)"
 else
-  echo "  ⚠️  Some documentation links may be broken"
-  echo "  Run 'pnpm run validate:doc-links' for details"
+  echo "▶ Validating documentation links..."
+  if pnpm run validate:doc-links > /dev/null 2>&1; then
+    echo "  ✓ All documentation links valid"
+  else
+    echo "  ⚠️  Some documentation links may be broken"
+    echo "  Run 'pnpm run validate:doc-links' for details"
+  fi
 fi
 
 # 4. Update CHANGELOG.md date
